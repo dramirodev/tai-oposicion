@@ -6,14 +6,14 @@ import { navigationIcons } from '../navigation-icons.js';
 
 interface Destination { route: string; label: string; icon: LucideIcon }
 const destinations: Destination[] = [
-  { route: 'home', label: 'Inicio', icon: navigationIcons.home },
-  { route: 'test', label: 'Test por tema', icon: navigationIcons.test },
+  { route: 'home', label: 'Hoy', icon: navigationIcons.home },
+  { route: 'test', label: 'Practicar', icon: navigationIcons.test },
   { route: 'sim', label: 'Simulacros', icon: navigationIcons.sim },
   { route: 'falladas', label: 'Preguntas falladas', icon: navigationIcons.failures },
   { route: 'lectura', label: 'Lectura atenta', icon: navigationIcons.reading },
   { route: 'trampas', label: 'Detective de trampas', icon: navigationIcons.traps },
   { route: 'relampago', label: 'Relámpago', icon: navigationIcons.lightning },
-  { route: 'temario', label: 'Temas estudiados', icon: navigationIcons.topics },
+  { route: 'temario', label: 'Temario', icon: navigationIcons.topics },
   { route: 'planificacion', label: 'Planificación', icon: navigationIcons.planning },
   { route: 'stats', label: 'Progreso', icon: navigationIcons.stats },
   { route: 'ayuda', label: 'Ayuda', icon: navigationIcons.help },

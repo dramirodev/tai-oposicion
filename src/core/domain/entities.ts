@@ -35,7 +35,7 @@ export interface Topic { id: string; name: string }
 export interface Preferences {
   exam?: string;
   training?: TrainingPreferences;
-  ui?: { theme?: 'auto' | 'light' | 'dark'; size?: number; lectura?: number };
+  ui?: { visualTheme?: 'soft-brutalism' | 'living-notebook' | 'momentum' | 'tai-lab' | 'classic' | 'precision'; theme?: 'auto' | 'light' | 'dark'; size?: number; lectura?: number };
   test?: { all?: boolean; sel?: string[]; n?: number; mode?: 'nuevas' | 'aleatorio' | 'falladas' | 'dudosas' | 'trampas'; o?: Origin[]; pt?: number; min?: number };
   sim?: { n?: number; min?: number; o?: Origin[]; parte2?: boolean; scope?: 'vistos' | 'todos' };
   cardsc?: { n?: number; scope?: 'vistos' | 'todos' };

@@ -21,7 +21,7 @@ test('registra, recupera, corrige y anula un test en papel en viewport móvil', 
   await page.getByLabel('En blanco').fill('2');
   await page.getByLabel('Duración aproximada en minutos').fill('30');
   await page.getByLabel('Corrección disponible').selectOption('answer-key-only');
-  await page.getByLabel('Recuerdo del tramo (autoevaluación)').selectOption('partial');
+  await expect(page.getByLabel('Recuerdo del tramo (autoevaluación)')).toHaveCount(0);
   await page.getByRole('button', { name:'Guardar tramo' }).click();
   await expect(page.getByText(/Prueba E2E papel · 20 preguntas/)).toBeVisible();
   await page.reload();

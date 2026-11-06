@@ -26,9 +26,11 @@ it('presenta ajustes por secciones y persiste los cambios de apariencia', async 
  const user = userEvent.setup();
  await renderSettings();
  expect(screen.getByRole('heading', { level: 1, name: 'Ajustes' })).toBeInTheDocument();
- expect(screen.getByRole('group', { name: 'Tema' })).toBeInTheDocument();
+ expect(screen.getByRole('group', { name: 'Modo de color' })).toBeInTheDocument();
  expect(screen.getByText('Diagnóstico técnico')).toBeInTheDocument();
  expect(screen.getAllByRole('status').length).toBeGreaterThan(0);
+ expect(screen.getAllByRole('radio')).toHaveLength(5);
+ await user.click(screen.getByRole('radio', { name: /Cuaderno vivo/ })); expect(settings.setPreference).toHaveBeenCalledWith('visualTheme', 'living-notebook');
  await user.click(screen.getByRole('button', { name: 'Claro' })); expect(settings.setPreference).toHaveBeenCalledWith('theme', 'light');
 });
 it('expone la versión visible completa en el nombre accesible del control de versión', async () => {

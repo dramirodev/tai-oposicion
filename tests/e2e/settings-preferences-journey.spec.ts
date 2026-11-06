@@ -25,7 +25,7 @@ for (const width of [320, 1440]) {
     await page.goto('/#/settings');
     await expect(page.getByRole('heading', { name: 'Ajustes' })).toBeVisible();
 
-    const theme = page.getByRole('group', { name: 'Tema' });
+    const theme = page.getByRole('group', { name: 'Modo de color' });
     const textSize = page.getByRole('group', { name: 'Tamaño de letra' });
     await theme.getByRole('button', { name: 'Oscuro' }).click();
     await textSize.getByRole('button', { name: 'A+++' }).click();
@@ -64,7 +64,7 @@ for (const width of [320, 1440]) {
     await page.reload();
     await expect(page.locator('html')).toHaveAttribute('data-color-scheme', 'dark');
     await expect(page.locator('html')).toHaveAttribute('data-text-size', '3');
-    await expect(page.getByRole('group', { name: 'Tema' }).getByRole('button', { name: 'Oscuro' })).toHaveAttribute(
+    await expect(page.getByRole('group', { name: 'Modo de color' }).getByRole('button', { name: 'Oscuro' })).toHaveAttribute(
       'aria-pressed',
       'true',
     );

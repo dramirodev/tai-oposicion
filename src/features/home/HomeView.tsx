@@ -19,7 +19,7 @@ function Row({ id, icon, title, subtitle, disabled, onClick, priority = false }:
 
 function HomeHeader({ access, overview, onOpenMenu }: { access: AccessOverview; overview: HomeOverview; onOpenMenu(): void }) {
   return <><p className="product-brand mb-2 flex flex-wrap items-baseline gap-2.5 font-[750] text-ink navigation:hidden" translate="no">TAI <span className="text-[length:var(--fs-s)] font-normal text-muted">Preparación de oposiciones</span></p>
-    <div className="hhead mt-2 mb-4 flex items-start justify-between gap-4 motion-safe:animate-[hero-arrive_320ms_cubic-bezier(.16,1,.3,1)_both]"><div><h1 className="mt-1.5 mb-3 [font:600_var(--fs-h1)/1.25_var(--font-ui)] tracking-[-.035em]" id="hola">{access.greeting}</h1><div className="hsub mt-1.5 max-w-[58ch] text-[length:var(--fs-m)] leading-[1.6] text-muted">{overview.daysToExam !== null ? <><b className="[color:var(--emphasis-ink)]">{overview.daysToExam} {overview.daysToExam === 1 ? 'día' : 'días'}</b> hasta tu fecha objetivo</> : <Link to="/settings">Configurar fecha objetivo</Link>}{overview.streak >= 2 ? ` · racha de ${overview.streak} días` : ''}</div></div>
+    <div className="hhead mt-2 mb-4 flex items-start justify-between gap-4 motion-safe:animate-[hero-arrive_320ms_cubic-bezier(.16,1,.3,1)_both]"><div><h1 className="mt-1.5 mb-3 [font:var(--heading-weight)_var(--fs-h1)/1.25_var(--font-heading)] tracking-[-.035em]" id="hola">{access.greeting}</h1><div className="hsub mt-1.5 max-w-[58ch] text-[length:var(--fs-m)] leading-[1.6] text-muted">{overview.daysToExam !== null ? <><b className="[color:var(--emphasis-ink)]">{overview.daysToExam} {overview.daysToExam === 1 ? 'día' : 'días'}</b> hasta tu fecha objetivo</> : <Link to="/settings">Configurar fecha objetivo</Link>}{overview.streak >= 2 ? ` · racha de ${overview.streak} días` : ''}</div></div>
       <button className="inline-flex h-12 w-12 flex-none items-center justify-center rounded-[var(--r-m)] border border-line bg-[var(--card)] text-[length:var(--fs-xl)] text-ink motion-safe:transition-[transform,background-color,color,border-color] motion-safe:duration-[var(--duration-fast)] active:translate-y-[.0625rem] active:scale-[.985] motion-reduce:transform-none" id="menu" aria-label="Menú" aria-haspopup="dialog" onClick={event => { event.currentTarget.focus({ preventScroll:true }); onOpenMenu(); }}><Menu className="mx-auto block h-6 w-6 fill-none stroke-current [stroke-width:2] [stroke-linecap:round]" size="1.25rem" strokeWidth={1.7} aria-hidden="true" /></button></div>
   </>;
 }
@@ -87,13 +87,12 @@ export interface HomeViewProps {
 export function HomeView({ overview, access, run, pending, onNavigate, onQuickSession, onStartReview, onOpenMenu, onLogin, onRequestAccess }: HomeViewProps) {
   return <>
     <HomeHeader access={access} overview={overview} onOpenMenu={onOpenMenu} />
-    <HomeMetrics overview={overview} />
-    <QuickSessionButton overview={overview} access={access} pending={pending} onQuickSession={onQuickSession} />
-    {access.full && <section className="home-planning-shortcut mt-4 mb-7 flex flex-wrap items-center gap-x-4 gap-y-2 border-y border-line py-4 max-[520px]:items-start" aria-labelledby="home-planning-title"><h2 className="section-title !m-0 !flex-[1_1_100%]" id="home-planning-title">Tu estudio de hoy</h2><p className="m-0 flex-[1_1_22rem] text-muted">La sesión preparada, los temas y el calendario semanal están en Planificación.</p><Link className="btn" to="/planificacion">Abrir Planificación de estudio</Link></section>}
-    <div className={`home-workspace grid grid-cols-1 items-start gap-6${run ? ' has-active-session min-[840px]:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] min-[840px]:gap-8' : ''}`}>
-      {run && <PrimaryStudy run={run} navigate={onNavigate} />}
+    {run ? <><PrimaryStudy run={run} navigate={onNavigate} /><button id="quick" className="btn sec mt-4" disabled={pending.has('quick')} onClick={onQuickSession}>Empezar otra sesión rápida</button></> : <QuickSessionButton overview={overview} access={access} pending={pending} onQuickSession={onQuickSession} />}
+    {access.full && <section className="home-planning-shortcut mt-4 mb-7 flex flex-wrap items-center gap-x-4 gap-y-2 border-y border-line py-4 max-[520px]:items-start" aria-labelledby="home-planning-title"><h2 className="section-title !m-0 !flex-[1_1_100%]" id="home-planning-title">Tu estudio de hoy</h2><p className="m-0 flex-[1_1_22rem] text-muted">La sesión preparada, los temas y el calendario semanal están en Planificación.</p><Link className="btn sec" to="/planificacion">Abrir Planificación de estudio</Link></section>}
+    <div className="home-workspace grid grid-cols-1 items-start gap-6">
       {access.full ? <FullAccessReview overview={overview} pending={pending} navigate={onNavigate} onStartReview={onStartReview} /> : <GuestAccess access={access} pending={pending} onLogin={onLogin} onRequestAccess={onRequestAccess} />}
     </div>
+    <HomeMetrics overview={overview} />
     <HomeDomain blocks={overview.blocks} full={access.full} />
     <SyncNote access={access} />
   </>;

@@ -659,3 +659,35 @@ Pruebas: regresión roja de contenido anterior, preflight/rollback/idempotencia/
 **Prioridad:** P2, infraestructura de prueba; impacto de producto no demostrado. **Estado:** ANALIZADO.
 
 El primer intento de deploy42237352967 del merge PR116/f6aa79f falló en `tests/firestore-rules.test.js:244`: segundo cliente sin estado inicial al vencer un bucle de50×20ms; 26 pruebas pasaron y no se publicaron reglas o Hosting. El test, adaptador de calendario y reglas son idénticos a la entrega anterior. Las 27 pruebas originales pasaron en un emulador local nuevo, sin modificaciones. La inicialización asíncrona del listener bajo carga es una hipótesis, no una causa demostrada ni una pérdida de datos confirmada. Se conserva el fallo y se ejecuta un único reintento oficial del job completo, sin relajar aserciones o aumentar plazos. Si se repite, instrumentar la recepción inicial y diferenciar disponibilidad del servidor, caché y entrega al segundo cliente antes de cambiar código o pruebas. No se consultaron ni modificaron datos de estudiantes.
+
+### UX-THEMES-001 — Identidad visual única y elección de apariencia ausente
+
+- **Categoría / funcionalidad:** Diseño compartido / preferencias.
+- **Descripción y comportamiento actual anterior:** Una identidad Precisión con modo de color; no había elección de cinco temas. El modo claro/oscuro no representa una elección de identidad.
+- **Propuesta / consecuencias:** Cinco temas con tokens centrales, misma funcionalidad y selector inmediato en Ajustes → Apariencia. Neobrutalismo suave por defecto; elección válida prevalece; alias `precision` → `classic`. Se conserva modo de color y alcance local por cuenta, sin nueva sincronización.
+- **Evidencia / causa:** `ui-preferences`, `config`, composición UI, startup-theme y estilos inspeccionados; cuatro conceptos locales leídos.
+- **Severidad / prioridad:** P1 / requisito explícito de producto.
+- **Solución / archivos:** `visual-themes.ts`, `VisualThemeSelector.tsx`, SettingsPage/mapper, config/entities, composición UI y startup-theme, `index.css`.
+- **Estado de implementación:** CORREGIDO SIN VERIFICAR.
+- **Pruebas / resultado provisional:** Nuevas pruebas parametrizadas de persistencia, alias/default, cuenta y bootstrap; matriz Chromium/WebKit en ejecución. El alcance no acredita lector de pantalla ni dispositivos físicos.
+
+### UX-TESTS-001 — Flujos aún proponen autoexplicación y recuerdo libre
+
+- **Categoría / funcionalidad:** Estudio / planificación / compatibilidad histórica.
+- **Descripción y comportamiento anterior:** Formularios de recuerdo por tema/apartado, autoexplicación tras corrección y generación de seguimientos podían exigir modalidades retiradas por el propietario.
+- **Propuesta / consecuencias:** Retirar controles, recomendaciones y generación de esas modalidades. Conservar esquemas, datos, historial y sincronización. Continuar checkpoints antiguos mediante preguntas reales; ausencia de preguntas/temas vistos ofrece salidas sin acreditar resultados.
+- **Evidencia / causa:** TopicsPage/AcademyCurriculumPanel, PlanningPage/StudyCalendar, QuizFeedback y estudio semanal; implementación distribuida entre contenido, agenda y feedback.
+- **Severidad / prioridad:** P1 / requisito explícito de producto.
+- **Solución / archivos:** Los anteriores, `planned-training-activity.ts`, `study-training-plan.ts`, `study-weekly-agenda.ts`, TestPage, composición de overview, ayuda. Los algoritmos de nota y repaso de preguntas no cambian.
+- **Estado de implementación:** CORREGIDO SIN VERIFICAR.
+- **Pruebas / resultado provisional:** Suite base 1088/29 omitidas; nuevos tests de lector antiguo, no generación, transiciones sin escrituras y empty recuperable. E2E de papel, materiales, bridge y Emulator adaptados a la decisión de producto; ejecución integral pendiente.
+
+### UX-THEMES-002 — Bucle en bloques de Temario y tinta de calendario con contraste insuficiente
+
+- **Categoría / funcionalidad:** Regresión de implementación / navegación y accesibilidad.
+- **Descripción / evidencia:** La revisión independiente detectó callback de toggle incondicional frente a details controlado; también `text-brand` amarillo #FFE778 sobre #FFFDF7 (1,22:1) en calendario. Hallazgos de revisión estática, no incidencias heredadas de main.
+- **Severidad / prioridad:** P1 bucle; P2 contraste.
+- **Causa:** Inversión en lugar de asignación idempotente; uso de token de fondo como tinta.
+- **Solución / archivos:** Restaurado callback `(block, expanded)` con guardia de igualdad/búsqueda en TopicsPage; PlanningPage/StudyCalendar usan `text-accent` independiente del botón amarillo.
+- **Estado de implementación:** CORREGIDO SIN VERIFICAR.
+- **Pruebas / resultado provisional:** Segunda revisión estática confirma las correcciones. Se añade cierre estable de bloque en E2E y contraste parametrizado. Espera resultados finales de navegador.

@@ -33,8 +33,6 @@ import type { Origin, QuestionStats, StudyReviewMode, TrainingActivity, Training
 import type { TrainingActivityReference } from '../core/domain/study-training-session.js';
 import type { PaperRecallRating } from '../core/domain/paper-recall-assessment.js';
 import { daysUntilStudyDate, isStudyDateKey } from '../core/domain/study-training-calendar.js';
-import { latestPaperRecallByTopic, needsPaperRecallFollowUp } from '../core/domain/paper-recall-assessment.js';
-import { paperTestFollowUpTopicIds } from '../core/domain/paper-test-attempt.js';
 import { buildDailyTrainingPlan, normalizeTrainingPreferences, selectNextAcademyTopic } from '../core/domain/study-training-plan.js';
 import { buildTrainingCalendarEvent } from '../core/domain/study-training-events.js';
 import { localTrainingDateKey } from '../core/domain/study-training-session.js';
@@ -271,10 +269,10 @@ const settingsServices = {
     await refreshSettingsProgressQuestionCount();
     notifySettings();
   },
-  setPreference(key: 'theme' | 'size' | 'lectura', value: string | number) {
+  setPreference(key: 'visualTheme' | 'theme' | 'size' | 'lectura', value: string | number) {
     localStudyProgressGateway.updatePreferences(current => {
       const ui = normalizeUiPreferences(current.ui);
-      return { ...current, ui: { ...ui, [key]: key === 'theme' ? value : Number(value) } };
+      return { ...current, ui: { ...ui, [key]: key === 'theme' || key === 'visualTheme' ? value : Number(value) } };
     });
   },
   setTrainingPreferences(value: TrainingPreferences) {
@@ -766,10 +764,7 @@ export const studyServices: StudyServices = {
       const studiedMastery = filterTopicMasteryToSeen(mastery, studiedTopicIds);
       const studiedWeakTopics = studiedMastery.filter(topic => topic.est === 'r').sort((left, right) => left.score - right.score);
       const recallAssessments = paperRecall.get().filter(item => studiedTopicSet.has(item.topicId));
-      const latestRecall = latestPaperRecallByTopic(recallAssessments);
-      const selfReportedWeakTopics = [...latestRecall.values()].filter(item => needsPaperRecallFollowUp(item, studyQuestionCatalog.now())).map(item => item.topicId);
-      const paperTestWeakTopics = paperTestFollowUpTopicIds(paperTestAttempts.get(), seenTopics, studyQuestionCatalog.now());
-      const weakTopicIds = [...new Set([...studiedWeakTopics.map(topic => topic.id), ...selfReportedWeakTopics, ...paperTestWeakTopics])];
+      const weakTopicIds = [...new Set([...studiedWeakTopics.map(topic => topic.id)])];
       const studiedDueCount = dueIds.filter(id => studiedTopicSet.has(studyQuestionCatalog.getTopicForQuestion(id) || '')).length;
       const studiedFailureCount = failureIds.filter(id => studiedTopicSet.has(studyQuestionCatalog.getTopicForQuestion(id) || '')).length;
       const topicForCard = (id: string): string | undefined => {

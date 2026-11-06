@@ -68,7 +68,20 @@ jobs:
 
       # Rules forman parte del límite de autorización: si este paso falla, la release se detiene antes de publicar Hosting.
       # La cuenta de servicio necesita el rol «Firebase Rules Admin».
+      # The version tag is created only after a successful deploy. Comparing with
+      # it also catches rules left pending by an earlier failed main deployment.
+      - name: Seleccionar recursos desde la última publicación correcta
+        id: deploy_scope
+        run: |
+          published_tag=$(git describe --tags --match 'v*+*' --abbrev=0 "$GITHUB_SHA" 2>/dev/null || true)
+          if [[ "$published_tag" =~ ^v[0-9]+\.[0-9]+\.[0-9]+\+[a-f0-9]{7}$ ]] && git diff --quiet "$published_tag" "$GITHUB_SHA" -- firestore.rules firebase.json .firebaserc; then
+            echo "rules_changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "rules_changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Desplegar reglas de Firestore
+        if: github.event_name != 'push' || steps.deploy_scope.outputs.rules_changed == 'true'
         run: npx --yes firebase-tools@13.35.1 deploy --only firestore:rules --project tai-oposicion --non-interactive
 
       - name: Desplegar hosting

@@ -28,7 +28,7 @@ export function toSettingsSnapshot(input: SettingsSnapshotInput): SettingsSnapsh
     level: input.level,
     devMode: input.devMode,
     devRevealed: input.devRevealed,
-    ui: { theme: ui.theme, size: ui.size, lectura: ui.lectura },
+    ui: { visualTheme: ui.visualTheme, theme: ui.theme, size: ui.size, lectura: ui.lectura },
     training: normalizeTrainingPreferences(input.trainingPreferences),
     progress: input.progress,
     exam: String(input.exam || ''),

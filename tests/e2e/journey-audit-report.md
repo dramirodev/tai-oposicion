@@ -543,3 +543,51 @@ El journey owner añade Planificación → estudio de tema → autoevaluación �
 ATE-005/015/016: Ajustes→importar300 sesiones dos veces→verificar colección remota completa→contexto limpio→login→Progreso→comparar primer/último intento(+20). Igualdad exacta300DTO, sin duplicados; Supertest13/13. Se corrigió la repetición de escrituras pendientes que agotaba localStorage de Firestore, y los helpers de paginación/reautenticación. Check1049/29 omitidas y sync26/26. Evidencia: [historial autenticado](evidence/history-sync-2026-11-06/README.md). No demuestra todas las variantes longitudinales ni conformidad WCAG.
 
 CI Linux42190272937 para2e85f9e: éxito, baseline76/76 y candidata306/30 omitidas/0 fallos; QUICK12/12 y Auth2/2. Es anterior al arreglo ATE-015 y a los nuevos tests, cuya verificación local se indica arriba.
+
+## Handoff de producto · Simplificación y cinco temas · 6/11/2026
+
+Objetivo autorizado: simplificación transversal, práctica exclusivamente mediante tests, cinco identidades seleccionables, integración y publicación con controles. Worktree exclusivo `/Users/dramiro/.codex/worktrees/simplificacion-cinco-temas/tai-oposicion`, rama `codex/simplificacion-cinco-temas`, base `origin/main` 1.1.22. Checkout original y trabajo concurrente preservados. CodeGraph se consultó primero: el servicio declara que este worktree no está indexado; se continúa con lecturas directas, sin crear índice.
+
+Línea base: `npm run check` correcto, 199 archivos de tests aprobados, 3 omitidos; 1088 pruebas aprobadas y 29 omitidas. Build correcto; aviso preexistente de chunks >500 kB y avisos jsdom `scrollTo` en tarjetas históricas. No se añaden dependencias ni fuentes: Geist OFL existente y serif del sistema para Cuaderno.
+
+### Inventario y decisiones antes de simplificación de flujos
+
+Hechos: rutas y guardas de `route-runtime.tsx`; componentes de cada feature; las pestañas y controles se conservan salvo autoevaluación de recuerdo. Hipótesis de diseño: reducir competencia entre empezar y métricas facilita decidir; no es una medición de uso. Clasificaciones siguientes son propuestas de presentación, no prueba de ausencia de uso.
+
+| Pantalla / estados y controles reales | Necesidad / acción principal | Principal / secundario / duplicidad | Clasificación y propuesta | Dependencias, archivos y verificación |
+|---|---|---|---|---|
+| Inicio público y completo: carga/error/reintento, invitado/pendiente/aprobado/owner, sesión activa, sin pendientes, menú y acceso | Empezar o continuar | Sesión primero; métricas/mapa después; dos accesos de menú | Simplificar: un protagonista; conservar repaso, entrenamientos y cuenta | HomeView/HomePage, sesión y permisos; E2E con/sin sesión, reload |
+| Temario: búsqueda, bloques, temas marcados, material solicitado, sin catálogo/error, formularios PDF y selección de edición, índices y cobertura | Elegir tema o consultar material | Buscar/marcar/abrir; metadatos y trazabilidad secundarios | Mantener consulta y cobertura; retirar autoevaluación libre, conservar su historial | TopicsPage/TopicsView/AcademyCurriculumPanel; edición y hashes intactos; PDF, vacío, links antiguos |
+| Planificación: hoy, pausa/descanso/continuación, semana/mes/horizonte, eventos, propuestas, recuperación, historial, tests en papel | Abrir próxima actividad | Hoy primero; horizonte y evidencia secundarios | Simplificar orden; retirar generación/controles recall; resolver pendientes antiguos a tests sin acreditarlos | PlanningPage/StudyCalendar, study-weekly-agenda, planned-training-activity; agenda y checkpoint antiguo |
+| Test: preguntas/tiempo, cantidad, orden, origen, temas, búsqueda, selección por bloque, vacío/error/inicio | Empezar test válido | Frecuentes primero; origen como avanzado | Mostrar bajo demanda el origen sin quitarlo; mantener modos | TestPage, selección y contrato de inicio; filtros/empty sin spinner infinito |
+| Quiz: test/rápida/repaso/simulacro, selección/corrección/acierto/fallo/blanco, código/tablas/largo, descarte/confianza, pausa, abandono y reanudación | Responder y avanzar | Enunciado/respuestas primero; ayudas secundarias | Mantener lógica y jerarquía; tokens globales tranquilos | QuizPage/componentes, motor y persistencia; teclado, pausa, confidencialidad simulacro |
+| Resultado y revisión: resumen, errores/filtros, fuente, siguiente paso, sin sesión | Entender resultado y revisar | Balance y siguiente test primero; detalle después | Mantener cálculos y revisión; tokens compartidos | ResultPage, SimulationReviewPage; aciertos/blancos/penalización intactos |
+| Simulacros Parte1/Parte2 y Exámenes redirect: completo/examen/tema, tiempo, configuración, sin preguntas | Empezar simulacro | Configuración necesaria; opciones compatibles | Mantener; no revelar soluciones hasta terminar | SimulationPage/Review, ExamsRedirect; rutas, pausa y revisión |
+| Falladas: búsqueda, tema, lectura, racha, vacío, referencia y repaso | Practicar fallos | Pregunta y test; etiquetas secundarias | Mantener capacidad y tres aciertos; presentación común | FailuresPage y repaso; filtros y prueba de práctica |
+| Progreso: resumen, temas, gráficas/tablas, evolución/origen/trampas, vacío y datos, detalle histórico | Decidir siguiente práctica | Resumen inicial; evidencia detallada después | Mantener métricas; no mezclar recall histórico con rendimiento objetivo | StatsPage y componentes; reflujo, gráficas, enlaces de práctica |
+| Lectura, Detective, Relámpago: configurar, pregunta, respuesta, solución, vacío/error | Entrenar mediante preguntas | Pregunta y corrección | Mantener capacidades de tests; no son recuerdo libre | trainers; corrección, tiempos y respuestas |
+| Ajustes: cuenta/login/logout/solicitud/reintento, Apariencia, fecha, semana, informes, offline, versión, ZIP IA, backup/importar/restablecer, diagnósticos y dev local | Configurar cuenta y estudio | Grupos nombrados; cinco temas en Apariencia; peligros diferenciados | Simplificar nombres, selector inmediato y accesible; detalles existentes conservados | SettingsPage, ui-preferences, config, composición; persistencia por cuenta/dispositivo y modos de color |
+| Ayuda/onboarding y tooltips, diálogos de confirmación/menú/informes | Comprender flujos | Instrucciones accionables | Retirar indicaciones de escribir/explicar/recordar sin opciones; conservar explicaciones de app | HelpPage/contenidos y diálogos; texto, foco/escape/teclado |
+| Accesos y Curar vínculos: owner, denegado, pendiente, formularios/listas/errores | Administración autorizada | Permisos y acción explícita | Mantener, no alterar autorizaciones ni contenido editorial | AccessPage/ContentMap; Emulator y guardas |
+| Errores del banco: listado, resolver/reabrir/exportar, vacío | Revisar calidad | Incidencia y estado | Mantener; sin envío externo de prueba | ErrorsPage; permisos y exportación |
+| Cards histórico → Inicio, rutas desconocidas → Inicio, deep links y sin permisos | Recuperar navegación | Destino válido | Mantener compatibilidad; recall antiguo → test del tema, no nota sintética | Router/TopicsPage/planned-training-activity; reload y links |
+| Shell global: offline/online, sync fallida, actualización PWA, carga inicial, portales y errores | Continuar conservando progreso | Avisos necesarios visibles | Mantener; tokens en html cubren portales; tema aplicado antes de React | composición UI, index.css, SW; offline/actualización/recarga |
+
+Candidatas adicionales a eliminar: ninguna ejecutada. Entrenamientos, administración, import/export y test en papel resuelven tareas diferenciadas; no hay evidencia de falta de uso. Eliminar accesos duplicados no autoriza eliminar sus capacidades.
+
+### Seguimiento vigente
+
+| Unidad | Estado | Criterio |
+|---|---|---|
+| Inventario/código/base/referencias | COMPLETADO Y VERIFICADO | Lecturas y check/build base registrados; inventario no equivale a verificación visual |
+| Cinco temas/selector/persistencia | EN PROGRESO | Defaults, compatibilidad, color independiente, recarga y cobertura visual |
+| Recall y transiciones históricas | EN PROGRESO | Sin nuevos ejercicios; historial conservado; test válido o estado vacío |
+| Simplificación transversal | EN PROGRESO | Inicio, navegación, planificación, test, consulta, resultados/progreso y utilidades |
+| Matriz visual y regresiones | PENDIENTE | 5 temas × modos existentes × móvil/escritorio; estados y variantes documentados |
+| PR/main/publicación | PENDIENTE | Diff revisado, checks/revisiones, commit limpio integrado y deploy comprobado |
+
+Hito de revisión: la skill `requesting-code-review` solicitó una revisión independiente. Se detectó y corrigió el toggle no idempotente de Temario y el uso de amarillo como tinta (UX-THEMES-002); la segunda revisión confirmó ambas correcciones por lectura. Se añadió salida hacia la consulta del tema en pendientes sin temas vistos, sin eludir filtros ni puntuar actividades antiguas. La revisión posterior localizó también autoexplicación en QuizFeedback: retirada manteniendo feedback, explicaciones editoriales, fuentes, marcas de duda y motivos del fallo.
+
+Se modifica únicamente la selección de recursos del workflow de publicación: en push sin cambios de reglas/configuración desde el último tag de publicación correcta, se omite desplegar reglas; esto también conserva reglas pendientes de un despliegue previo fallido; Hosting conserva el pipeline completo de validación. La ejecución manual mantiene su semántica anterior. No se cambian reglas, permisos, proyecto ni infraestructura Firebase. `git diff --quiet origin/main -- firestore.rules` confirma ausencia de cambios en esta rama.
+
+Aislamiento autenticado de esta entrega: el runner Supertest se alinea al puerto 4187. Antes de cada escritura de fixtures exige `assertEmulators`, configura el guard fail-closed del navegador, lee la configuración efectiva y observa peticiones GET a Auth 9099 y Firestore 8080 del proyecto `demo-tai-auth`; conserva `isolation-before-writes.json`. Solo después prepara las cuatro identidades reservadas `@example.test`. No se prueba escritura en producción ni se reutilizan credenciales reales.

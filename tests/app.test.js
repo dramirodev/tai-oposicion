@@ -96,7 +96,7 @@ it('navega por las pantallas y oculta la ruta de tarjetas sin afectar al resto',
 
   await navigate('settings', 'Ajustes');
   expect(document.querySelector('#app').textContent).not.toContain('Exportar tarjetas a Anki');
-  [...document.querySelectorAll('[aria-label="Tema"] button')].find(button => button.textContent === 'Oscuro').click();
+  [...document.querySelectorAll('[aria-label="Modo de color"] button')].find(button => button.textContent === 'Oscuro').click();
   expect(document.documentElement.getAttribute('data-theme')).toBe('dark');
   await navigate('cards', 'Sesión rápida');
   expect(document.querySelector('#app').textContent).not.toContain('Tarjetas de repaso');

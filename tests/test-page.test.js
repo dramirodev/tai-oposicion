@@ -95,3 +95,20 @@ it('explica si no quedan temas nuevos y no cambia la configuración habitual', a
   expect(await screen.findByText(/No hay temas nuevos sin respuestas disponibles/)).toHaveAttribute('role', 'status');
   expect(test.saveConfiguration).not.toHaveBeenCalled();
 });
+
+it('un pendiente antiguo sin temas vistos ofrece salidas válidas sin iniciar ni puntuar un test', async () => {
+  test.seenTopics.mockReturnValue([]);
+  await render(['/test?dailyTraining=activeRecall&topic=T1.01&trainingTopics=T1.01&trainingSessionId=legacy-1&trainingActivityId=legacy-step']);
+  expect(await screen.findByRole('alert')).toHaveTextContent('No tienes temas marcados como vistos');
+  expect(test.start).not.toHaveBeenCalled();
+  expect(screen.getByRole('link', { name:'Elegir otra práctica' })).toHaveAttribute('href','/test');
+  expect(screen.getByRole('link', { name:'Consultar tema y revisar su marca de estudio' })).toHaveAttribute('href','/temario?topic=T1.01');
+});
+
+it('un pendiente antiguo sin preguntas termina en un estado vacío recuperable', async () => {
+  test.start.mockResolvedValue('empty');
+  await render(['/test?dailyTraining=activeRecall&topic=T1.01&trainingTopics=T1.01&trainingSessionId=legacy-1&trainingActivityId=legacy-step']);
+  expect(await screen.findByRole('alert')).toHaveTextContent('No hay preguntas disponibles');
+  expect(test.start).toHaveBeenCalledTimes(1);
+  expect(screen.getByRole('link', { name:'Volver al plan de hoy' })).toHaveAttribute('href','/planificacion');
+});

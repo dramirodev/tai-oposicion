@@ -15,6 +15,6 @@ describe('study presentation labels', () => {
     expect(READING_TIPS.length).toBeGreaterThan(3);
     expect(UI_THEMES).toContain('dark');
     expect(UI_ZOOMS).toHaveLength(4);
-    expect(normalizeUiPreferences(null)).toEqual({ theme: 'auto', size: 0, lectura: 0 });
+    expect(normalizeUiPreferences(null)).toEqual({ visualTheme: 'soft-brutalism', theme: 'auto', size: 0, lectura: 0 });
   });
 });

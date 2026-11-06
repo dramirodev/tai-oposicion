@@ -367,7 +367,7 @@ it('muestra en el historial solo la duración y las actividades de sesiones comp
   renderApp(createElement(PlanningPage), { services:servicesFor(sessionOverview) });
   expect(await screen.findByRole('heading', { name:'Sesiones recientes' })).toBeInTheDocument();
   expect(screen.getByText('1 min 15 s · 1 actividad')).toBeInTheDocument();
-  expect(screen.getByText('Recuperación activa')).toBeInTheDocument();
+  expect(screen.getByText('Test de práctica')).toBeInTheDocument();
 });
 
 it('permite desplegar el historial completo y volver a las cinco sesiones más recientes', async () => {
@@ -381,11 +381,11 @@ it('permite desplegar el historial completo y volver a las cinco sesiones más r
   renderApp(createElement(PlanningPage), { services:servicesFor(overview(newTopicPlan, { trainingHistory })) });
 
   expect(await screen.findByRole('heading', { name:'Sesiones recientes' })).toBeInTheDocument();
-  expect(screen.getAllByText('Recuperación activa')).toHaveLength(5);
+  expect(screen.getAllByText('Test de práctica')).toHaveLength(5);
   const showAll = screen.getByRole('button', { name:'Mostrar todas las sesiones (6)' });
   expect(showAll).toHaveAttribute('aria-expanded', 'false');
   await user.click(showAll);
-  expect(screen.getAllByText('Recuperación activa')).toHaveLength(6);
+  expect(screen.getAllByText('Test de práctica')).toHaveLength(6);
   expect(screen.getByRole('button', { name:'Mostrar solo las cinco más recientes' })).toHaveAttribute('aria-expanded', 'true');
 });
 

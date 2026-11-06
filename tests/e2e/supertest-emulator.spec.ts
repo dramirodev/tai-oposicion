@@ -36,14 +36,39 @@ const restrictedRoutes = [
 test.describe('Firebase Auth Emulator supertest', () => {
   test.describe.configure({ mode: 'default' });
   test.skip(process.env.TAI_AUTH_EMULATOR !== '1');
-  test.beforeEach(async ({ context }) => {
+  test.beforeEach(async ({ context }, testInfo) => {
     assertEmulators();
+    await guardSyntheticBrowser(context, 4187);
+    // Read-only preflight precedes every fixture write. Inspect the effective
+    // browser config and observe GET traffic to both fixed emulators.
+    const probe = await context.newPage();
+    const endpoints: { url:string; method:string; status:number }[] = [];
+    probe.on('response', response => {
+      const url = new URL(response.url());
+      if (['9099','8080'].includes(url.port)) endpoints.push({ url:response.url(), method:response.request().method(), status:response.status() });
+    });
+    try {
+      await probe.goto('http://127.0.0.1:4187/#/settings');
+      const configuration = await probe.evaluate(async () => {
+        const config = await (await fetch('/firebase-config.json')).json();
+        await Promise.all([
+          fetch('http://127.0.0.1:9099/emulator/v1/projects/demo-tai-auth/config').catch(() => null),
+          fetch('http://127.0.0.1:8080/v1/projects/demo-tai-auth/databases/(default)/documents/_preflight/probe').catch(() => null),
+        ]);
+        return config;
+      });
+      expect(configuration.projectId).toBe('demo-tai-auth');
+      expect(configuration.taiEmulators).toEqual({ authHost:'127.0.0.1', authPort:9099, firestoreHost:'127.0.0.1', firestorePort:8080 });
+      expect(endpoints.some(endpoint => new URL(endpoint.url).port === '9099' && endpoint.method === 'GET')).toBe(true);
+      expect(endpoints.some(endpoint => new URL(endpoint.url).port === '8080' && endpoint.method === 'GET')).toBe(true);
+      mkdirSync(testInfo.outputDir, { recursive:true });
+      writeFileSync(testInfo.outputPath('isolation-before-writes.json'), JSON.stringify({ configuration, endpoints, phase:'before-fixtures' },null,2));
+    } finally { await probe.close(); }
     execFileSync(process.execPath, ['scripts/e2e/prepare-synthetic-users.mjs'], {
       env: process.env,
       timeout: 30_000,
       stdio: 'inherit',
     });
-    await guardSyntheticBrowser(context);
   });
   for (const writeLatencyMs of [0,500])
    for (const offline of [false, true])
@@ -89,11 +114,11 @@ test.describe('Firebase Auth Emulator supertest', () => {
         )
         .toBe(300);
       const fresh = await browser.newContext({
-        baseURL: 'http://127.0.0.1:4191',
+        baseURL: 'http://127.0.0.1:4187',
         viewport: { width: 320, height: 900 },
       });
       try {
-        await guardSyntheticBrowser(fresh);
+        await guardSyntheticBrowser(fresh, 4187);
         const recovered = await fresh.newPage();
         await recovered.goto('/#/settings');
         expect(await recovered.evaluate(() => localStorage.getItem('tai.v1:tai-supertest'))).toBeNull();
@@ -177,13 +202,8 @@ test.describe('Firebase Auth Emulator supertest', () => {
     const topic = new URLSearchParams(new URL(page.url()).hash.split('?')[1]).get('topic');
     await page.locator(`[data-t="${topic}"]`).click({ noWaitAfter: true });
     await expect(page).toHaveURL(/#\/planificacion$/);
-    const rating = page.getByRole('group', {
-      name: 'Después de estudiar en papel y cerrar los apuntes, ¿cuánto recordaste?',
-    });
-    await expect(rating).toBeVisible();
-    await capture('owner-planificacion-autoevaluacion');
-    await rating.getByRole('button', { name: 'Parcialmente' }).click();
-    await expect(rating.getByText(/Autoevaluación guardada/)).toBeVisible();
+    await expect(page.getByRole('button', { name:'Lo recordé', exact:true })).toHaveCount(0);
+    await capture('owner-planificacion-solo-tests');
     // A short real simulation creates answers and a scored result through the UI.
     await page.goto('/#/settings');
     await page.getByLabel('Tipo de evento').selectOption('milestone');
@@ -203,11 +223,7 @@ test.describe('Firebase Auth Emulator supertest', () => {
     }
     await expect(page.locator('#app h1')).toHaveText('Resultado');
     await capture('owner-resultado');
-    await expect
-      .poll(async () => (await readSyntheticRemote(page, 'users/tai-supertest/cfg/trainingRecall')).status)
-      .toBe(200);
-    const recall = await readSyntheticRemote(page, 'users/tai-supertest/cfg/trainingRecall');
-    expect(recall.data.fields.assessments.arrayValue.values).toHaveLength(1);
+    expect((await readSyntheticRemote(page, 'users/tai-supertest/cfg/trainingRecall')).status).toBe(404);
     await expect
       .poll(
         async () =>
@@ -609,9 +625,9 @@ test.describe('Firebase Auth Emulator supertest', () => {
     await page.goto('/#/acceso');
     const member = page.locator('.arow').filter({ hasText: identities.pending.email });
     await expect(member.getByRole('button', { name: 'Aprobar', exact: true })).toBeVisible();
-    const studentContext = await browser.newContext({ baseURL: 'http://127.0.0.1:4191' });
+    const studentContext = await browser.newContext({ baseURL: 'http://127.0.0.1:4187' });
     try {
-      await guardSyntheticBrowser(studentContext);
+      await guardSyntheticBrowser(studentContext, 4187);
       const student = await studentContext.newPage();
       await signInSynthetic(student, identities.pending.email);
       await expect(student.getByText('Acceso completo aprobado.')).toHaveCount(0);

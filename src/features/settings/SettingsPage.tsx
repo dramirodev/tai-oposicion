@@ -7,6 +7,7 @@ import { ask, toast } from '../../shared/ui/dialog-actions.js';
 import { saveExportBlob, saveExportFile } from '../../shared/ui/download-file.js';
 import { createAiStudyExportZip } from '../../shared/presentation/ai-study-export-zip.js';
 import { useStudyService, type SettingsServices, type SettingsSnapshot } from '../../shared/ui/study-services.js';
+import { VisualThemeSelector } from './VisualThemeSelector.js';
 import { HelpIconLink } from '../../shared/ui/HelpIconLink.js';
 
 interface AiExport {
@@ -84,8 +85,9 @@ function AccessStatus({ snapshot, requesting, onRequest }: { snapshot: SettingsS
 }
 
 function AppearanceSection({ settings, snapshot }: { settings: SettingsServices; snapshot: SettingsSnapshot }) {
-  return <section className="card"><h2 className="h3">Lectura y apariencia</h2>
-    <PreferenceGroup title="Tema" current={snapshot.ui.theme} values={[["auto", "Automático"], ["light", "Claro"], ["dark", "Oscuro"]]} onChange={value => settings.setPreference('theme', value)} />
+  return <section className="card"><h2 className="h3">Apariencia</h2>
+    <VisualThemeSelector value={snapshot.ui.visualTheme} onChange={value => settings.setPreference('visualTheme', value)} />
+    <PreferenceGroup title="Modo de color" current={snapshot.ui.theme} values={[["auto", "Sistema"], ["light", "Claro"], ["dark", "Oscuro"]]} onChange={value => settings.setPreference('theme', value)} />
     <PreferenceGroup title="Tamaño de letra" current={String(snapshot.ui.size)} values={[["0", "A"], ["1", "A+"], ["2", "A++"], ["3", "A+++"]]} onChange={value => settings.setPreference('size', value)} />
     <PreferenceGroup title="Lectura atenta" current={String(snapshot.ui.lectura)} values={[["0", "Normal"], ["1", "Resaltar clave"], ["2", "Resaltar + frenar"]]} onChange={value => settings.setPreference('lectura', value)} />
     <p><small>«Resaltar clave» marca NO, SALVO, EXCEPTO, absolutos y cifras. «Frenar» bloquea las opciones unos segundos según la longitud de la pregunta (en modo test).</small></p>

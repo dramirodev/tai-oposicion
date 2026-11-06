@@ -20,6 +20,8 @@ afterEach(() => {
   document.documentElement.removeAttribute('data-color-scheme');
   document.documentElement.removeAttribute('data-text-size');
   document.documentElement.style.removeProperty('--z');
+  document.documentElement.style.removeProperty('--bg');
+  document.documentElement.removeAttribute('data-visual-theme');
   document.querySelector('meta[name="theme-color"]')?.remove();
   progress.listener = undefined;
   progress.unsubscribe.mockClear();
@@ -36,18 +38,21 @@ it('applies saved preferences before render and tracks system theme changes', ()
   themeColor.name = 'theme-color';
   document.head.append(themeColor);
 
+  document.documentElement.style.setProperty('--bg', '#123456');
   const stop = initializeUiPreferences();
 
   expect(document.documentElement.dataset.colorScheme).toBe('dark');
   expect(document.documentElement.dataset.textSize).toBe('2');
   expect(document.documentElement.style.getPropertyValue('--z')).not.toBe('');
-  expect(themeColor.content).toBe('#111113');
+  expect(document.documentElement.dataset.visualTheme).toBe('soft-brutalism');
+  expect(themeColor.content).toBe('#123456');
   expect(addEventListener).toHaveBeenCalledWith('change', expect.any(Function));
 
+  document.documentElement.style.setProperty('--bg', '#fff9ed');
   media.matches = false;
   media.dispatchEvent(new Event('change'));
   expect(document.documentElement.dataset.colorScheme).toBe('light');
-  expect(themeColor.content).toBe('#f5f6f7');
+  expect(themeColor.content).toBe('#fff9ed');
 
   stop();
   expect(progress.unsubscribe).toHaveBeenCalledOnce();

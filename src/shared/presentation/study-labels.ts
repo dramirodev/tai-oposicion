@@ -18,7 +18,7 @@ export const FAILURE_REASONS = [
 ] as const;
 
 export const READING_TIPS = [
-  'Antes de mirar las opciones, di con tus palabras qué te piden (¿la correcta o la incorrecta?).',
+  'Identifica si piden la opción correcta o la incorrecta.',
   'Marca negaciones y excepciones: NO, SALVO, EXCEPTO, INCORRECTA, FALSA.',
   'Subraya cifras, plazos y unidades (días hábiles vs naturales, bits vs bytes).',
   'Desconfía de los absolutos (siempre, nunca, solo, todos): busca la excepción.',

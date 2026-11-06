@@ -20,10 +20,10 @@ it('keeps help instructions aligned with current menu labels and measured study 
   expect(section('acceso')).toContain('abre «Accesos» en el menú');
   expect(section('inicio')).toContain('10 preguntas y suele llevar unos cinco minutos; no tiene cronómetro');
   expect(section('inicio')).toContain('«Temas vistos»');
-  expect(section('inicio')).toContain('la lectura de apuntes o la reconstrucción mental no se observa directamente');
+  expect(section('inicio')).toContain('la lectura de apuntes no se observa directamente');
   expect(section('inicio')).toContain('checkpoint se conserva en este dispositivo');
   expect(section('inicio')).toContain('cinco sesiones completadas más recientes y permite desplegar hasta 30 sesiones guardadas');
   expect(section('inicio')).toContain('vista «Mes» para programar una comprobación futura');
-  expect(section('inicio')).toContain('no necesita ni enlaza PDFs');
+  expect(section('inicio')).toContain('guardar una copia del PDF en este dispositivo');
   expect(section('errores')).toContain('En el menú abre «Errores del banco»');
 });

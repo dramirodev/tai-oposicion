@@ -2,9 +2,9 @@
 
 TAI es una aplicación web progresiva (PWA) para preparar las oposiciones del cuerpo de Técnicos Auxiliares de Informática (TAI). Sirve para practicar preguntas y supuestos, preparar simulacros, repasar fallos con repetición espaciada y seguir el progreso por temas. Se puede instalar en móviles y tabletas y está diseñada para conservar el estudio sin conexión.
 
-La aplicación combina un banco de preguntas de distintos orígenes —oficial, academia y generado— con tarjetas de repaso y herramientas para organizar el estudio. El origen del contenido se muestra para que se pueda valorar junto con cada respuesta.
+La aplicación combina un banco de preguntas de distintos orígenes —oficial, academia y generado— con herramientas para organizar el estudio mediante tests. El origen del contenido se muestra para que se pueda valorar junto con cada respuesta.
 
-> **Estado del proyecto:** `package.json` declara la versión 1.1.17. Las cifras del banco pueden cambiar al publicar contenido; consulta los índices de `public/data/` y `public/cards/` para conocer los datos incluidos en este checkout. El código y los datos locales no acreditan por sí solos el estado del despliegue ni el funcionamiento de una cuenta Firebase concreta.
+> **Estado del proyecto:** `package.json` declara la versión 1.1.22. Las cifras del banco pueden cambiar al publicar contenido; consulta los índices de `public/data/` y `public/cards/` para conocer los datos incluidos en este checkout. El código y los datos locales no acreditan por sí solos el estado del despliegue ni el funcionamiento de una cuenta Firebase concreta.
 
 ## Contenido
 
@@ -50,8 +50,7 @@ Las funcionalidades se agrupan por el momento del estudio en que resultan útile
 
 - **Falladas:** buscar por texto, filtrar por tema, por lectura del temario y por racha. Cada pregunta muestra la respuesta y su referencia; se puede marcar si se ha repasado en el temario. Tres aciertos seguidos sacan la pregunta de esta lista; un nuevo fallo reinicia la racha.
 - **Repaso de fallos:** las preguntas falladas vuelven a la cola en intervalos de 2, 5, 14, 30 y 60 días. El intento puntuado posterior al vencimiento completa la comprobación pendiente.
-- **Tarjetas de repaso:** estudiar tarjetas curadas por tema y tarjetas creadas desde preguntas falladas. Elegir sesiones de 10, 20 o 30 tarjetas; las vencidas tienen prioridad y se intercalan por tema.
-- **Valoración de tarjetas:** intentar recordar antes de revelar y marcar «Fallé», «Dudaba» o «Lo sabía». El calendario avanza con los aciertos; fallar o dudar vuelve a programar la tarjeta a corto plazo. Se pueden usar teclado y gestos compatibles.
+- **Práctica mediante tests:** preguntas por tema, repaso de fallos y simulacros. No se solicitan ejercicios de recuerdo libre ni autoexplicación. Las tarjetas y autoevaluaciones antiguas siguen en los datos compatibles; no se convierten en aciertos ni resultados de test.
 - **Cobertura y referencias:** consultar nuevas, vencidas, en repaso y dominadas; ver referencias al revelar y avisar de errores del contenido.
 
 ### 5. Entender el progreso y gestionar la cuenta
@@ -62,7 +61,7 @@ Las funcionalidades se agrupan por el momento del estudio en que resultan útile
 - **Ayuda:** consultar las instrucciones de uso y orientación sobre las pantallas de estudio.
 - **Sincronización:** con Firebase configurado, sincronizar progreso, sesiones, tarjetas, temas vistos, avisos, planificación y otros datos compatibles por cuenta.
 - **Importar y exportar:** crear una copia de progreso, recuperar una copia anterior, gestionar el historial detallado y exportar tarjetas a Anki en texto tabulado. El análisis asistido se descarga como un único ZIP con manifiesto, informe y partes JSON; se prepara bajo petición y no envía datos automáticamente.
-- **Preferencias:** elegir tema claro, oscuro o automático, tamaño de letra, fecha objetivo, temas de estudio y opciones de práctica.
+- **Preferencias:** elegir entre Neobrutalismo suave (predeterminado), Cuaderno vivo, Impulso, Laboratorio TAI y Clásico en Ajustes → Apariencia; elegir por separado modo Claro, Oscuro o Sistema, tamaño de letra, fecha objetivo, temas de estudio y opciones de práctica.
 - **Actualizaciones:** consultar la versión y aplicar una actualización de la PWA conservando la sesión en curso.
 
 ## Cómo funciona la aplicación
