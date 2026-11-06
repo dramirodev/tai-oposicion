@@ -66,6 +66,7 @@ it('reconstruye exactamente la edición aprobada y confina cambios desconocidos 
   const generator = path.join(f.root, 'build_data.py');
   copyFileSync(script, generator);
   copyFileSync(path.resolve('scripts/bank_release.py'), path.join(f.root, 'scripts/bank_release.py'));
+  copyFileSync(path.resolve('scripts/citation_release.py'), path.join(f.root, 'scripts/citation_release.py'));
   const files = {};
   const sha = value => createHash('sha256').update(value).digest('hex');
   for (const name of readdirSync(f.out)) {
