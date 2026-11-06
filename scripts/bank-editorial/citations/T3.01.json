@@ -1,0 +1,2690 @@
+{
+  "schemaVersion": 1,
+  "topicId": "T3.01",
+  "baseCommit": "454a025ae26390dee0f057a4cfa9b6d5fc758fba",
+  "status": "CITATIONS_ACCEPTED_UNDER_USER_DELEGATION",
+  "scope": "Solo adición de citas para lectura; no concede nueva puntuabilidad ni altera pruebas editoriales previas.",
+  "file": {
+    "beforeSha256": "b990b22f185850480a5f3f01d85ab2bd94cfacf6e932862f48f6288bf8e36551",
+    "afterSha256": "1653d0af47c72582f63c6e0497169061f000147289be49f6416fdf78a45aa0b8"
+  },
+  "sample": {
+    "beforeSha256": "66c792faa93fac1d18a479f21b03be1e32214ce279c184cd57a72bac278847d4",
+    "afterSha256": "66c792faa93fac1d18a479f21b03be1e32214ce279c184cd57a72bac278847d4"
+  },
+  "sourceRoot": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario",
+  "sources": {
+    "e-L2025X-P1-36": {
+      "path": "T3.01 Modelo Entidad-Relación/T3.01 Modelo Entidad-Relación - Temario.pdf",
+      "sourceHash": "8387ad4087fdfbfc2b78acbb97f0fd3b58bb034d732cfa06e5791e4b5ac7785a",
+      "physicalPage": 14,
+      "printedPage": 14,
+      "excerpt": "- La AGREGACIÓN consiste en construir un nuevo tipo de entidad como composición de otros y su tipo de relación y así poder manejarlo en un nivel de abstracción mayor.",
+      "label": "Pasaje del temario"
+    },
+    "e-P2022-P1-17": {
+      "path": "T3.01 Modelo Entidad-Relación/T3.01 Modelo Entidad-Relación - Temario.pdf",
+      "sourceHash": "8387ad4087fdfbfc2b78acbb97f0fd3b58bb034d732cfa06e5791e4b5ac7785a",
+      "physicalPage": 10,
+      "printedPage": 10,
+      "excerpt": "- TIPO DE CORRESPONDENCIA (o razón de cardinalidad): es el número máximo de ocurrencias de cada tipo de entidad que pueden intervenir en una ocurrencia de la relación que se está tratando.",
+      "label": "Pasaje del temario"
+    },
+    "e-AT301-P1-35": {
+      "path": "T3.01 Modelo Entidad-Relación/T3.01 Modelo Entidad-Relación - Temario.pdf",
+      "sourceHash": "8387ad4087fdfbfc2b78acbb97f0fd3b58bb034d732cfa06e5791e4b5ac7785a",
+      "physicalPage": 14,
+      "printedPage": 14,
+      "excerpt": "En el triángulo se representará: - Con una letra d el hecho de que los subtipos sean disjuntos. - Con un círculo o una O si los subtipos pueden solaparse. - Con una U el caso de uniones por categorías. - La presencia de una jerarquía total se representa con una doble línea entre el supertipo y el triángulo.",
+      "label": "Pasaje del temario"
+    },
+    "e-AT301-P1-37": {
+      "path": "T3.01 Modelo Entidad-Relación/T3.01 Modelo Entidad-Relación - Temario.pdf",
+      "sourceHash": "8387ad4087fdfbfc2b78acbb97f0fd3b58bb034d732cfa06e5791e4b5ac7785a",
+      "physicalPage": 15,
+      "printedPage": 15,
+      "excerpt": "De las representaciones anteriores podemos enunciar las siguientes definiciones: - Jerarquía TOTAL: toda ocurrencia del supertipo pertenece siempre a algún subtipo. - Jerarquía PARCIAL: una ocurrencia del supertipo no pertenece a algún subtipo. - Jerarquía DISJUNTA: una ocurrencia del supertipo solo puede pertenecer a uno de los subtipos. - Jerarquía SOLAPADA: una ocurrencia del supertipo puede pertenecer a varios subtipos.",
+      "label": "Pasaje del temario"
+    },
+    "e-AT301-P1-38": {
+      "path": "T3.01 Modelo Entidad-Relación/T3.01 Modelo Entidad-Relación - Temario.pdf",
+      "sourceHash": "8387ad4087fdfbfc2b78acbb97f0fd3b58bb034d732cfa06e5791e4b5ac7785a",
+      "physicalPage": 15,
+      "printedPage": 15,
+      "excerpt": "De las representaciones anteriores podemos enunciar las siguientes definiciones: - Jerarquía TOTAL: toda ocurrencia del supertipo pertenece siempre a algún subtipo. - Jerarquía PARCIAL: una ocurrencia del supertipo no pertenece a algún subtipo. - Jerarquía DISJUNTA: una ocurrencia del supertipo solo puede pertenecer a uno de los subtipos. - Jerarquía SOLAPADA: una ocurrencia del supertipo puede pertenecer a varios subtipos.",
+      "label": "Pasaje del temario"
+    },
+    "e-AT301-P1-39": {
+      "path": "T3.01 Modelo Entidad-Relación/T3.01 Modelo Entidad-Relación - Temario.pdf",
+      "sourceHash": "8387ad4087fdfbfc2b78acbb97f0fd3b58bb034d732cfa06e5791e4b5ac7785a",
+      "physicalPage": 15,
+      "printedPage": 15,
+      "excerpt": "De las representaciones anteriores podemos enunciar las siguientes definiciones: - Jerarquía TOTAL: toda ocurrencia del supertipo pertenece siempre a algún subtipo. - Jerarquía PARCIAL: una ocurrencia del supertipo no pertenece a algún subtipo. - Jerarquía DISJUNTA: una ocurrencia del supertipo solo puede pertenecer a uno de los subtipos. - Jerarquía SOLAPADA: una ocurrencia del supertipo puede pertenecer a varios subtipos.",
+      "label": "Pasaje del temario"
+    },
+    "e-AT301-P1-46": {
+      "path": "T3.01 Modelo Entidad-Relación/T3.01 Modelo Entidad-Relación - Temario.pdf",
+      "sourceHash": "8387ad4087fdfbfc2b78acbb97f0fd3b58bb034d732cfa06e5791e4b5ac7785a",
+      "physicalPage": 10,
+      "printedPage": 10,
+      "excerpt": "- TIPO DE CORRESPONDENCIA (o razón de cardinalidad): es el número máximo de ocurrencias de cada tipo de entidad que pueden intervenir en una ocurrencia de la relación que se está tratando.",
+      "label": "Pasaje del temario"
+    },
+    "e-AS01-P1-20": {
+      "path": "T3.01 Modelo Entidad-Relación/T3.01 Modelo Entidad-Relación - Temario.pdf",
+      "sourceHash": "8387ad4087fdfbfc2b78acbb97f0fd3b58bb034d732cfa06e5791e4b5ac7785a",
+      "physicalPage": 9,
+      "printedPage": 9,
+      "excerpt": "Además, se dice que una relación es EXCLUSIVA cuando la existencia de una relación entre dos tipos de entidades implica la no existencia de las otras relaciones.",
+      "label": "Pasaje del temario"
+    },
+    "e-AS04-P1-48": {
+      "path": "T3.01 Modelo Entidad-Relación/T3.01 Modelo Entidad-Relación - Temario.pdf",
+      "sourceHash": "8387ad4087fdfbfc2b78acbb97f0fd3b58bb034d732cfa06e5791e4b5ac7785a",
+      "physicalPage": 14,
+      "printedPage": 14,
+      "excerpt": "- La AGREGACIÓN consiste en construir un nuevo tipo de entidad como composición de otros y su tipo de relación y así poder manejarlo en un nivel de abstracción mayor.",
+      "label": "Pasaje del temario"
+    },
+    "e-AS07-P1-61": {
+      "path": "T3.01 Modelo Entidad-Relación/T3.01 Modelo Entidad-Relación - Temario.pdf",
+      "sourceHash": "8387ad4087fdfbfc2b78acbb97f0fd3b58bb034d732cfa06e5791e4b5ac7785a",
+      "physicalPage": 10,
+      "printedPage": 10,
+      "excerpt": "- TIPO DE CORRESPONDENCIA (o razón de cardinalidad): es el número máximo de ocurrencias de cada tipo de entidad que pueden intervenir en una ocurrencia de la relación que se está tratando.",
+      "label": "Pasaje del temario"
+    },
+    "e-AS07-P1-62": {
+      "path": "T3.01 Modelo Entidad-Relación/T3.01 Modelo Entidad-Relación - Temario.pdf",
+      "sourceHash": "8387ad4087fdfbfc2b78acbb97f0fd3b58bb034d732cfa06e5791e4b5ac7785a",
+      "physicalPage": 6,
+      "printedPage": 6,
+      "excerpt": "Ejemplo: son tipos de entidades débiles ejemplar, línea de factura, movimientos. Así, la existencia de un ejemplar depende un libro, la de una línea de factura de una factura y la de un movimiento de una cuenta.",
+      "label": "Pasaje del temario"
+    }
+  },
+  "questions": [
+    {
+      "id": "L2025X-P1-36",
+      "before": {
+        "i": "L2025X-P1-36",
+        "t": "T3.01",
+        "o": "O",
+        "q": "Indique cuál de las siguientes definiciones es correcta respecto al modelo Entidad/Relación extendido.",
+        "a": [
+          "La generalización permite abstraer un tipo de entidad de nivel inferior (subtipo) a partir de varios tipos de entidad (supertipos).",
+          "En la especialización, un subtipo se descompone en uno o varios supertipos, los cuales heredan todos los atributos y relaciones del subtipo, además de tener los suyos propios.",
+          "La agregación consiste en construir un nuevo tipo de entidad como composición de otros y su tipo de relación y así poder manejarlo en un nivel de abstracción mayor.",
+          "En una asociación se relacionan dos tipos de entidades independientes que pertenecen al mismo dominio y que coyunturalmente no se asocian."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          8
+        ],
+        "d": 3,
+        "n": "ER extendido: generalización/especialización invertidas.",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1
+      },
+      "after": {
+        "i": "L2025X-P1-36",
+        "t": "T3.01",
+        "o": "O",
+        "q": "Indique cuál de las siguientes definiciones es correcta respecto al modelo Entidad/Relación extendido.",
+        "a": [
+          "La generalización permite abstraer un tipo de entidad de nivel inferior (subtipo) a partir de varios tipos de entidad (supertipos).",
+          "En la especialización, un subtipo se descompone en uno o varios supertipos, los cuales heredan todos los atributos y relaciones del subtipo, además de tener los suyos propios.",
+          "La agregación consiste en construir un nuevo tipo de entidad como composición de otros y su tipo de relación y así poder manejarlo en un nivel de abstracción mayor.",
+          "En una asociación se relacionan dos tipos de entidades independientes que pertenecen al mismo dominio y que coyunturalmente no se asocian."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          8
+        ],
+        "d": 3,
+        "n": "ER extendido: generalización/especialización invertidas.",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1,
+        "u": "T3.01 Modelo Entidad-Relación - Temario.pdf — Pasaje del temario\n\nTemario, p. 14 (PDF p. 14)\n\n- La AGREGACIÓN consiste en construir un nuevo tipo de entidad como composición de otros y su tipo de relación y así poder manejarlo en un nivel de abstracción mayor.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "a930f23ffd68f8ea115a5c699657a23c044903980bf3312f67626bb87192f6f4",
+      "afterSha256": "2bba719749bce2275140a412d737f40c7cd60a98a2f45afbb974964d22b71e4a",
+      "evidenceKeys": [
+        "e-L2025X-P1-36"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "P2022-P1-17",
+      "before": {
+        "i": "P2022-P1-17",
+        "t": "T3.01",
+        "o": "O",
+        "q": "Según describe METRICA v3 referente al Modelo Entidad/Relación Extendido, el número máximo de ocurrencias de cada tipo de entidad que pueden intervenir en una ocurrencia de la relación que se está tratando se llama:",
+        "a": [
+          "Tipo de correspondencia.",
+          "Cardinalidad.",
+          "Especialización.",
+          "Agregación."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Tipo de correspondencia frente a cardinalidad (catálogo).",
+        "y": "Promoción interna OEP 2022 (2023)"
+      },
+      "after": {
+        "i": "P2022-P1-17",
+        "t": "T3.01",
+        "o": "O",
+        "q": "Según describe METRICA v3 referente al Modelo Entidad/Relación Extendido, el número máximo de ocurrencias de cada tipo de entidad que pueden intervenir en una ocurrencia de la relación que se está tratando se llama:",
+        "a": [
+          "Tipo de correspondencia.",
+          "Cardinalidad.",
+          "Especialización.",
+          "Agregación."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Tipo de correspondencia frente a cardinalidad (catálogo).",
+        "y": "Promoción interna OEP 2022 (2023)",
+        "u": "T3.01 Modelo Entidad-Relación - Temario.pdf — Pasaje del temario\n\nTemario, p. 10 (PDF p. 10)\n\n- TIPO DE CORRESPONDENCIA (o razón de cardinalidad): es el número máximo de ocurrencias de cada tipo de entidad que pueden intervenir en una ocurrencia de la relación que se está tratando.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "333730fbb017790431c9e054d94ee59362328e09a8102601a29c0ffbd0a951fc",
+      "afterSha256": "63c56d5544502693a17fb650385783d8f6aaaed56aa6c1e7fa2a22e2d6faaa2d",
+      "evidenceKeys": [
+        "e-P2022-P1-17"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT301-P1-35",
+      "before": {
+        "i": "AT301-P1-35",
+        "t": "T3.01",
+        "o": "A",
+        "q": "¿Cómo se representa en el modelo Entidad-Relación extendido una jerarquía total?",
+        "a": [
+          "Con una doble línea entre el supertipo y el triángulo.",
+          "Con una línea simple entre el supertipo y el triángulo.",
+          "Con un círculo o una O en el triángulo invertido.",
+          "Con una letra d en el triángulo invertido."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT301-P1-35",
+        "t": "T3.01",
+        "o": "A",
+        "q": "¿Cómo se representa en el modelo Entidad-Relación extendido una jerarquía total?",
+        "a": [
+          "Con una doble línea entre el supertipo y el triángulo.",
+          "Con una línea simple entre el supertipo y el triángulo.",
+          "Con un círculo o una O en el triángulo invertido.",
+          "Con una letra d en el triángulo invertido."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "T3.01 Modelo Entidad-Relación - Temario.pdf — Pasaje del temario\n\nTemario, p. 14 (PDF p. 14)\n\nEn el triángulo se representará: - Con una letra d el hecho de que los subtipos sean disjuntos. - Con un círculo o una O si los subtipos pueden solaparse. - Con una U el caso de uniones por categorías. - La presencia de una jerarquía total se representa con una doble línea entre el supertipo y el triángulo.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "e864d2dd96175464ca39b54734968ed9d8a89187f3231e3aad6bc78c3f620444",
+      "afterSha256": "72e4e1b8615cb2b709df7b1af74ddeab065110ad932d5a27302951e4358f4854",
+      "evidenceKeys": [
+        "e-AT301-P1-35"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT301-P1-37",
+      "before": {
+        "i": "AT301-P1-37",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En una jerarquía del modelo Entidad-Relación extendido, si una ocurrencia del supertipo solo puede pertenecer a uno de los subtipos, se denomina:",
+        "a": [
+          "Jerarquía total.",
+          "Jerarquía parcial.",
+          "Jerarquía disjunta.",
+          "Jerarquía solapada."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT301-P1-37",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En una jerarquía del modelo Entidad-Relación extendido, si una ocurrencia del supertipo solo puede pertenecer a uno de los subtipos, se denomina:",
+        "a": [
+          "Jerarquía total.",
+          "Jerarquía parcial.",
+          "Jerarquía disjunta.",
+          "Jerarquía solapada."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T3.01 Modelo Entidad-Relación - Temario.pdf — Pasaje del temario\n\nTemario, p. 15 (PDF p. 15)\n\nDe las representaciones anteriores podemos enunciar las siguientes definiciones: - Jerarquía TOTAL: toda ocurrencia del supertipo pertenece siempre a algún subtipo. - Jerarquía PARCIAL: una ocurrencia del supertipo no pertenece a algún subtipo. - Jerarquía DISJUNTA: una ocurrencia del supertipo solo puede pertenecer a uno de los subtipos. - Jerarquía SOLAPADA: una ocurrencia del supertipo puede pertenecer a varios subtipos.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "01f85c5ccc336b056ef8954527533208e25387f7f3569266be34521ed28ac2a7",
+      "afterSha256": "9219fe5a4c024f10b2a45991f42ce66ed6f646277af5ca2d75c1a2c76ada86d0",
+      "evidenceKeys": [
+        "e-AT301-P1-37"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT301-P1-38",
+      "before": {
+        "i": "AT301-P1-38",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En una jerarquía del modelo Entidad-Relación extendido, si toda ocurrencia del supertipo pertenece siempre a algún subtipo, se denomina:",
+        "a": [
+          "Jerarquía total.",
+          "Jerarquía parcial.",
+          "Jerarquía disjunta.",
+          "Jerarquía solapada."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT301-P1-38",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En una jerarquía del modelo Entidad-Relación extendido, si toda ocurrencia del supertipo pertenece siempre a algún subtipo, se denomina:",
+        "a": [
+          "Jerarquía total.",
+          "Jerarquía parcial.",
+          "Jerarquía disjunta.",
+          "Jerarquía solapada."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T3.01 Modelo Entidad-Relación - Temario.pdf — Pasaje del temario\n\nTemario, p. 15 (PDF p. 15)\n\nDe las representaciones anteriores podemos enunciar las siguientes definiciones: - Jerarquía TOTAL: toda ocurrencia del supertipo pertenece siempre a algún subtipo. - Jerarquía PARCIAL: una ocurrencia del supertipo no pertenece a algún subtipo. - Jerarquía DISJUNTA: una ocurrencia del supertipo solo puede pertenecer a uno de los subtipos. - Jerarquía SOLAPADA: una ocurrencia del supertipo puede pertenecer a varios subtipos.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "bc90cb6d4c75a319c013a668989f859f2cef00076aad9bae1acd9097b37a2178",
+      "afterSha256": "92fcbafe122b9a7a757554f5180e4977fec122172360140a1b738a1cce8a7092",
+      "evidenceKeys": [
+        "e-AT301-P1-38"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT301-P1-39",
+      "before": {
+        "i": "AT301-P1-39",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En una jerarquía del modelo Entidad-Relación extendido, si una ocurrencia del supertipo puede pertenecer a varios subtipos, se denomina:",
+        "a": [
+          "Jerarquía total.",
+          "Jerarquía parcial.",
+          "Jerarquía disjunta.",
+          "Jerarquía solapada."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT301-P1-39",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En una jerarquía del modelo Entidad-Relación extendido, si una ocurrencia del supertipo puede pertenecer a varios subtipos, se denomina:",
+        "a": [
+          "Jerarquía total.",
+          "Jerarquía parcial.",
+          "Jerarquía disjunta.",
+          "Jerarquía solapada."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T3.01 Modelo Entidad-Relación - Temario.pdf — Pasaje del temario\n\nTemario, p. 15 (PDF p. 15)\n\nDe las representaciones anteriores podemos enunciar las siguientes definiciones: - Jerarquía TOTAL: toda ocurrencia del supertipo pertenece siempre a algún subtipo. - Jerarquía PARCIAL: una ocurrencia del supertipo no pertenece a algún subtipo. - Jerarquía DISJUNTA: una ocurrencia del supertipo solo puede pertenecer a uno de los subtipos. - Jerarquía SOLAPADA: una ocurrencia del supertipo puede pertenecer a varios subtipos.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "91ebb764cb74ca45c1a843e8ebcd0155c70f9552f688995fda443d70abd19367",
+      "afterSha256": "a488cb915ffc59195cf2e4a7235a63447ef6692df0ef5a94192878cdabfe9aaa",
+      "evidenceKeys": [
+        "e-AT301-P1-39"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT301-P1-46",
+      "before": {
+        "i": "AT301-P1-46",
+        "t": "T3.01",
+        "o": "A",
+        "q": "La razón de cardinalidad es:",
+        "a": [
+          "Es el número mínimo de ocurrencias de cada tipo de entidad que pueden intervenir en una ocurrencia de la relación que se está tratando.",
+          "Es el número máximo de ocurrencias de cada tipo de entidad que pueden intervenir en una ocurrencia de la relación que se está tratando.",
+          "Es la participación en la relación de cada una de las entidades afectadas.",
+          "Es el número de atributos de una entidad."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT301-P1-46",
+        "t": "T3.01",
+        "o": "A",
+        "q": "La razón de cardinalidad es:",
+        "a": [
+          "Es el número mínimo de ocurrencias de cada tipo de entidad que pueden intervenir en una ocurrencia de la relación que se está tratando.",
+          "Es el número máximo de ocurrencias de cada tipo de entidad que pueden intervenir en una ocurrencia de la relación que se está tratando.",
+          "Es la participación en la relación de cada una de las entidades afectadas.",
+          "Es el número de atributos de una entidad."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T3.01 Modelo Entidad-Relación - Temario.pdf — Pasaje del temario\n\nTemario, p. 10 (PDF p. 10)\n\n- TIPO DE CORRESPONDENCIA (o razón de cardinalidad): es el número máximo de ocurrencias de cada tipo de entidad que pueden intervenir en una ocurrencia de la relación que se está tratando.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "0e20fe252abd67960823370d402f31d8f12c6ef5158918073333153a91a7f4e6",
+      "afterSha256": "31f4c956a5f1f3e50e36ec005405439edd6c4b0a0c88808288893d0a21be1e95",
+      "evidenceKeys": [
+        "e-AT301-P1-46"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AS01-P1-20",
+      "before": {
+        "i": "AS01-P1-20",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En referencia al modelo Entidad-Relación, una relación es exclusiva cuando:",
+        "a": [
+          "La entidad se relaciona con ella misma.",
+          "La existencia de una relación entre dos tipos de entidades implica la no existencia de las otras relaciones.",
+          "Se agrupan entidades en una sola entidad general la cual tendrá todos los atributos o la mayoría.",
+          "La existencia de una relación entre dos tipos de entidades implica la existencia de las otras relaciones."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AS01-P1-20",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En referencia al modelo Entidad-Relación, una relación es exclusiva cuando:",
+        "a": [
+          "La entidad se relaciona con ella misma.",
+          "La existencia de una relación entre dos tipos de entidades implica la no existencia de las otras relaciones.",
+          "Se agrupan entidades en una sola entidad general la cual tendrá todos los atributos o la mayoría.",
+          "La existencia de una relación entre dos tipos de entidades implica la existencia de las otras relaciones."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T3.01 Modelo Entidad-Relación - Temario.pdf — Pasaje del temario\n\nTemario, p. 9 (PDF p. 9)\n\nAdemás, se dice que una relación es EXCLUSIVA cuando la existencia de una relación entre dos tipos de entidades implica la no existencia de las otras relaciones.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "047fc8afa5d945ac15d4c3554978d9c0d92fdc57363e6dc0ceee97147e5a92e2",
+      "afterSha256": "5ae124be90a55efc554eeaeb89ce56ef0a962a33eef730966f857e6988b040c1",
+      "evidenceKeys": [
+        "e-AS01-P1-20"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AS04-P1-48",
+      "before": {
+        "i": "AS04-P1-48",
+        "t": "T3.01",
+        "o": "A",
+        "q": "La agregación en el modelo Entidad/Relación extendido sirve para:",
+        "a": [
+          "Indicar que un conjunto (o tipo) de entidades está formado por otro conjunto de entidades.",
+          "Construir un nuevo tipo de entidad como composición de otros y su tipo de relación.",
+          "Especializar un conjunto (o tipo) de entidades, por ejemplo un empleado puede ser un administrativo, un analista, etc.",
+          "Indicar que un conjunto (o tipo) de entidades se identifican con el identificador de otro conjunto de entidades, más un conjunto de atributos propios."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AS04-P1-48",
+        "t": "T3.01",
+        "o": "A",
+        "q": "La agregación en el modelo Entidad/Relación extendido sirve para:",
+        "a": [
+          "Indicar que un conjunto (o tipo) de entidades está formado por otro conjunto de entidades.",
+          "Construir un nuevo tipo de entidad como composición de otros y su tipo de relación.",
+          "Especializar un conjunto (o tipo) de entidades, por ejemplo un empleado puede ser un administrativo, un analista, etc.",
+          "Indicar que un conjunto (o tipo) de entidades se identifican con el identificador de otro conjunto de entidades, más un conjunto de atributos propios."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T3.01 Modelo Entidad-Relación - Temario.pdf — Pasaje del temario\n\nTemario, p. 14 (PDF p. 14)\n\n- La AGREGACIÓN consiste en construir un nuevo tipo de entidad como composición de otros y su tipo de relación y así poder manejarlo en un nivel de abstracción mayor.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "ef42cb487cd33e8d745a9f13b34fdbc3c36ae0823ef9b4fb9097f68b343f794f",
+      "afterSha256": "3eedb57567f670227cf11fcfce2fb92f834ec6b82f900daffd7072076f308c51",
+      "evidenceKeys": [
+        "e-AS04-P1-48"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AS07-P1-61",
+      "before": {
+        "i": "AS07-P1-61",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En una relación de un modelo entidad/relación extendido, el número máximo de ocurrencias de un tipo de entidad que pueden intervenir por cada ocurrencia del otro tipo de entidad se denomina:",
+        "a": [
+          "Tipo de correspondencia.",
+          "Cardinalidad mínima.",
+          "Grado.",
+          "Dominio."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AS07-P1-61",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En una relación de un modelo entidad/relación extendido, el número máximo de ocurrencias de un tipo de entidad que pueden intervenir por cada ocurrencia del otro tipo de entidad se denomina:",
+        "a": [
+          "Tipo de correspondencia.",
+          "Cardinalidad mínima.",
+          "Grado.",
+          "Dominio."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T3.01 Modelo Entidad-Relación - Temario.pdf — Pasaje del temario\n\nTemario, p. 10 (PDF p. 10)\n\n- TIPO DE CORRESPONDENCIA (o razón de cardinalidad): es el número máximo de ocurrencias de cada tipo de entidad que pueden intervenir en una ocurrencia de la relación que se está tratando.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "a23d1379199e2a2e24e092b33c89a874717741970af6410db8418b3aa02f333f",
+      "afterSha256": "693a9f5285edb20a0598a7f422e5836e26299d1daaa8cd1ff42f11c9c9efc675",
+      "evidenceKeys": [
+        "e-AS07-P1-61"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AS07-P1-62",
+      "before": {
+        "i": "AS07-P1-62",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En los modelos E/R, aquellos tipos de entidades en los que la existencia de ocurrencias depende de la existencia de ocurrencias de otro tipo de entidad se denominan:",
+        "a": [
+          "Entidades fuertes.",
+          "Entidades regulares.",
+          "Entidades débiles.",
+          "Entidades independientes."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AS07-P1-62",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En los modelos E/R, aquellos tipos de entidades en los que la existencia de ocurrencias depende de la existencia de ocurrencias de otro tipo de entidad se denominan:",
+        "a": [
+          "Entidades fuertes.",
+          "Entidades regulares.",
+          "Entidades débiles.",
+          "Entidades independientes."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T3.01 Modelo Entidad-Relación - Temario.pdf — Pasaje del temario\n\nTemario, p. 6 (PDF p. 6)\n\nEjemplo: son tipos de entidades débiles ejemplar, línea de factura, movimientos. Así, la existencia de un ejemplar depende un libro, la de una línea de factura de una factura y la de un movimiento de una cuenta.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "b9417d0ad45c8819a02279d0d744c1f9671b5033f2658a08d42a8bd7e27ff82c",
+      "afterSha256": "1a875af94d72eb83f87ef6751ab3e7eaa89e85ea4235684f47c04a751318bcc5",
+      "evidenceKeys": [
+        "e-AS07-P1-62"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    }
+  ],
+  "pending": [
+    {
+      "question": {
+        "i": "TAI2024B-P1-31",
+        "t": "T3.01",
+        "o": "O",
+        "q": "Señale, de entre las siguientes opciones, el mecanismo en el Modelo Entidad/Relación Extendido que recoge Métrica v3 consistente en relacionar dos tipos de entidades que normalmente son de dominios independientes, pero coyunturalmente se asocian:",
+        "a": [
+          "Asociación.",
+          "Generalización.",
+          "PERT.",
+          "Regresión."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7,
+          13
+        ],
+        "d": 2,
+        "n": "Asociación frente a generalización (hermano) y PERT/regresión (otras técnicas).",
+        "y": "Ingreso libre OEP 2023-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAI2024B-P1-33",
+        "t": "T3.01",
+        "o": "O",
+        "q": "De acuerdo con Métrica v3, en el Modelo Entidad/Relación Extendido, ¿cuál es el término que representa la participación en la relación de cada una de las entidades afectadas?",
+        "a": [
+          "Atributo.",
+          "Cardinalidad.",
+          "Tipo de Correspondencia.",
+          "Dominio."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Cardinalidad frente a tipo de correspondencia (catálogo).",
+        "y": "Ingreso libre OEP 2023-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAIL2022-P1-36",
+        "t": "T3.01",
+        "o": "O",
+        "q": "Señale la respuesta correcta relativa al Modelo Entidad/Relación Extendido según establece METRICA v3:",
+        "a": [
+          "Un atributo se define sobre diversos dominios.",
+          "El dominio no tiene existencia propia y depende de las entidades, las relaciones o los atributos.",
+          "La entidad es aquel objeto, real o abstracto, acerca del cual se desea almacenar información en la base de datos.",
+          "La clave candidata es el conjunto de atributos que garantizan la unicidad de las ocurrencias e identifican la ocurrencia unívocamente."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Definiciones de Métrica v3 con un concepto intercambiado.",
+        "y": "Ingreso libre OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025A-P1-39",
+        "t": "T3.01",
+        "o": "O",
+        "q": "Un atributo representado con una elipse discontinua en un diagrama entidad-relación significa que es un atributo:",
+        "a": [
+          "Clave primaria.",
+          "Compuesto.",
+          "Multivaluado.",
+          "Derivado."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Notación ER: tipos de atributo.",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025X-P1-35",
+        "t": "T3.01",
+        "o": "O",
+        "q": "En el diseño conceptual de bases de datos, un atributo es:",
+        "a": [
+          "Un objeto, real o abstracto, distinguible de otros objetos.",
+          "Una conexión semántica entre dos, o más, conjuntos de entidades.",
+          "Una propiedad asociada a un conjunto de entidades.",
+          "Una asociación que se establece entre tipos de entidad."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Definiciones de entidad/relación/atributo cruzadas.",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2019-P1-19",
+        "t": "T3.01",
+        "o": "O",
+        "q": "En diseño de bases de datos, al conjunto de valores que puede tomar un atributo se le denomina:",
+        "a": [
+          "Entidad",
+          "Recorrido",
+          "Cardinalidad",
+          "Dominio"
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Dominio frente a cardinalidad/recorrido.",
+        "y": "Promoción interna OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2018-P1-40",
+        "t": "T3.01",
+        "o": "O",
+        "q": "Según Métrica v3, en el modelo Entidad/Relación extendido las relaciones se definen por:",
+        "a": [
+          "Categoría, nombre, tipo de correspondencia.",
+          "Atributo, cardinalidad, nombre.",
+          "Atributo, dominio, nombre.",
+          "Cardinalidad, nombre, tipo de correspondencia."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Elementos que definen una relación (Métrica).",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT301-P1-01",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En el modelo Entidad-Relación, el conjunto nominado de valores homogéneos que puede tomar una cierta característica, se denomina:",
+        "a": [
+          "Atributo.",
+          "Dominio.",
+          "Entidad.",
+          "Diccionario de datos."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Dominio (repite el anterior en otra redacción)."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT301-P1-02",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En el modelo Entidad-Relación extendido:",
+        "a": [
+          "Una entidad regular es aquella cuya existencia depende de otra entidad.",
+          "Una entidad débil es aquella que tiene existencia por sí misma.",
+          "Todas las ocurrencias de un tipo de entidad deben tener los mismos atributos.",
+          "Una relación es regular si asocia una entidad regular y una entidad fuerte."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          4
+        ],
+        "d": 2,
+        "n": "Entidad regular/débil intercambiadas."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT301-P1-03",
+        "t": "T3.01",
+        "o": "A",
+        "q": "Una relación del modelo Entidad-Relación extendido según Métrica v3, NO se caracteriza por:",
+        "a": [
+          "Nombre.",
+          "Tipo de Correspondencia.",
+          "Cardinalidad.",
+          "Dominio."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT301-P1-04",
+        "t": "T3.01",
+        "o": "A",
+        "q": "¿Cuál de los siguientes enunciados NO es un objetivo en la elaboración del modelo conceptual de datos?",
+        "a": [
+          "Identificar y definir las entidades que quedan dentro del ámbito del sistema.",
+          "Identificar y definir los métodos asociados a cada una de las entidades del sistema.",
+          "Identificar y definir los atributos de cada entidad y sus dominios correspondientes.",
+          "Identificar y definir las relaciones existentes entre las entidades."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT301-P1-05",
+        "t": "T3.01",
+        "o": "A",
+        "q": "Señale cómo se denomina, en el modelo Entidad-Relación extendido, al número máximo de ocurrencias de cada tipo de entidad que pueden intervenir en una ocurrencia de la relación que se está tratando:",
+        "a": [
+          "Tipo de correspondencia de la asociación.",
+          "Cardinalidad de la entidad.",
+          "Grado de la asociación.",
+          "Dominio de las entidades de la asociación."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 3,
+        "n": "Tipo de correspondencia vs cardinalidad."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT301-P1-06",
+        "t": "T3.01",
+        "o": "A",
+        "q": "Señale cómo se denomina, en el modelo Entidad-Relación extendido, la relación por la que un supertipo se descompone en uno o varios subtipos, los cuales heredan todos los atributos y relaciones del supertipo, además de tener los suyos propios:",
+        "a": [
+          "Generalización.",
+          "Asociación.",
+          "Especialización.",
+          "Agregación."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT301-P1-07",
+        "t": "T3.01",
+        "o": "A",
+        "q": "El modelo entidad-relación está formado por:",
+        "a": [
+          "Clases, objetos e instancias.",
+          "Variables y métodos.",
+          "Entidades, atributos y relaciones.",
+          "Entidades, objetos y clases."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT301-P1-08",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En un modelo de datos Entidad-Relación, ¿qué se entiende por “entidad débil”?",
+        "a": [
+          "Una entidad que no se encuentra relacionada con otra.",
+          "Una entidad que hereda todos sus atributos de otra.",
+          "Una entidad cuya existencia depende de la existencia de otra.",
+          "Ninguna de las respuestas anteriores define una entidad débil."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT301-P1-09",
+        "t": "T3.01",
+        "o": "A",
+        "q": "Qué esquema de bases de datos incluye la descripción de todos los datos e interrelaciones entre éstos, así como las restricciones de integridad y de confidencialidad:",
+        "a": [
+          "Esquema interno.",
+          "Esquema conceptual.",
+          "Esquema externo.",
+          "Esquema físico."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "La fuente localizada solo asimila el modelo E/R al esquema conceptual; no acredita las restricciones de confidencialidad que añade el enunciado. Necesita un pasaje completo de la arquitectura.",
+      "reviewStatus": "reviewed-pending",
+      "evidenceKeys": [
+        "e-AT301-P1-09"
+      ]
+    },
+    {
+      "question": {
+        "i": "AT301-P1-10",
+        "t": "T3.01",
+        "o": "A",
+        "q": "Señale la respuesta INCORRECTA sobre las relaciones en el modelo Entidad-Relación Extendido:",
+        "a": [
+          "Una relación se caracteriza por el nombre, tipo de correspondencia y la cardinalidad.",
+          "La relación puede ser regular, si asocia tipos de entidad regulares, o débil, si asocia un tipo de entidad débil con un tipo de entidad regular.",
+          "Dentro de las relaciones débiles se distinguen la dependencia en existencia y la dependencia en identificación.",
+          "Se dice que una relación es exclusiva cuando la existencia de una relación entre dos tipos de entidades implica la existencia de las otras relaciones."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT301-P1-11",
+        "t": "T3.01",
+        "o": "A",
+        "q": "Señale la respuesta correcta de las siguientes afirmaciones sobre el modelo Entidad- Relación Extendido:",
+        "a": [
+          "Es un requisito el conocer el SGDB en el que se va a implementar.",
+          "Es dependiente del entorno físico.",
+          "Se centra en los datos, independientemente del procesamiento que los transforma.",
+          "Debe proporcionar a los usuarios toda la información que necesiten garantizando la eficiencia del proceso."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT301-P1-12",
+        "t": "T3.01",
+        "o": "A",
+        "q": "Tenemos las entidades “opositor” y “oposición” y sabemos que a los opositores se les permite apuntase a varias oposiciones distintas. Si quisiera crear el modelo conceptual de base de datos, ¿qué relación crearía?",
+        "a": [
+          "Una relación N:M.",
+          "Una relación 1:N.",
+          "Una relación 1:1.",
+          "El modelo conceptual no admite relaciones, sólo el modelo relacional lo permite."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT301-P1-13",
+        "t": "T3.01",
+        "o": "A",
+        "q": "¿Cuál de las siguientes afirmaciones sobre el modelo Entidad-Relación es correcta?",
+        "a": [
+          "En la especialización un supertipo se descompone en uno o varios subtipos, los cuales heredan todos los atributos y relaciones del supertipo.",
+          "La generalización consiste en relacionar dos tipos de entidades que normalmente son de dominios independientes, pero coyunturalmente se asocian.",
+          "La agregación permite abstraer un tipo de entidad de nivel superior (supertipo) a partir de varios tipos de entidad (subtipos).",
+          "La asociación consiste en construir un nuevo tipo de entidad como composición de otros."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT301-P1-14",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En una relación del modelo Entidad-Relación:",
+        "a": [
+          "La cardinalidad es igual que el tipo de correspondencia.",
+          "La cardinalidad máxima es igual que el tipo de correspondencia.",
+          "La cardinalidad mínima es igual con el tipo de correspondencia.",
+          "Todas las respuestas son falsas."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT301-P1-15",
+        "t": "T3.01",
+        "o": "A",
+        "q": "Un atributo puede ser:",
+        "a": [
+          "Derivado, compuesto o significado.",
+          "Obligatorio, derivado o compuesto.",
+          "Obligatorio, derivado o significado.",
+          "Obligatorio, compuesto o significado."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT301-P1-16",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En el modelo Entidad-Relación Extendido, a la abstracción de un tipo de entidad superior (supertipo) a partir de varios tipos de entidad (subtipos) se le denomina:",
+        "a": [
+          "Generalización.",
+          "Especialización.",
+          "Agregación.",
+          "Asociación."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT301-P1-17",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En el modelo Entidad-Relación podemos definir entidad como:",
+        "a": [
+          "Cualquier objeto u elemento (real o abstracto) acerca del cual se puede almacenar información en la base de datos.",
+          "Cualquier asociación entre elementos.",
+          "El número de relaciones en las que un elemento puede aparecer.",
+          "Una propiedad concreta de una relación."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT301-P1-18",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En el modelo Entidad-Relación, ¿qué se entiende por “tipo de correspondencia”?",
+        "a": [
+          "El número máximo de ocurrencias de cada entidad que pueden intervenir en la relación.",
+          "El número de entidades que participan en una relación.",
+          "El número mínimo y máximo de ocurrencias de una entidad que pueden estar relacionadas con una ocurrencia de otra entidad participante en la relación.",
+          "Es el número de elementos con características comunes que componen una entidad."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT301-P1-19",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En el modelo Entidad-Relación extendido, se tiene la siguiente jerarquía: empleado público es el supertipo y funcionario de carrera, funcionario interino y personal laboral, son los subtipos. Teniendo en cuenta que todo empleado público será un funcionario de carrera, un funcionario interino o personal laboral y que todo empleado público solo estar un uno de los subtipos. La jerarquía es:",
+        "a": [
+          "Total y solapada.",
+          "Parcial y solapada.",
+          "Total y disjunta.",
+          "Parcial y disjunta."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT301-P1-20",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En el modelo Entidad-Relación extendido, se tiene la siguiente jerarquía: documento es el supertipo y documento público, documento privado y documento mixto, son los subtipos. Teniendo en cuenta que un documento puede ser o no un documento público, privado o mixto, y que todo documento puede estar clasificado en más de un subtipo. La jerarquía es:",
+        "a": [
+          "Total y solapada.",
+          "Parcial y solapada.",
+          "Total y disjunta.",
+          "Parcial y disjunta."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT301-P1-21",
+        "t": "T3.01",
+        "o": "A",
+        "q": "Teniendo en cuenta la jerarquía anterior (sobre tipos de documentos), la descomposición del supertipo documento en los subtipos descritos, se conoce como:",
+        "a": [
+          "Asociación.",
+          "Exclusividad.",
+          "Especialización.",
+          "Generalización."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT301-P1-22",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En el modelo Entidad-Relación extendido, si la entidad Aspirante se relaciona con la entidad Empresa a través de la relación Entrevista y se necesita modelar una relación entre la relación entrevista y la entidad Oferta de trabajo, ¿qué extensión se debería utilizar?",
+        "a": [
+          "Asociación.",
+          "Categorías.",
+          "Agregación.",
+          "Generalización."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT301-P1-23",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En el modelo Entidad-Relación extendido, NO es una restricción sobre atributo:",
+        "a": [
+          "Derivado.",
+          "Compuesto.",
+          "Exclusivo.",
+          "Simple."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT301-P1-24",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En el modelo Entidad-Relación extendido, las entidades pueden ser:",
+        "a": [
+          "Normales o específicas.",
+          "Regulares o débiles.",
+          "Generales o dependientes.",
+          "Reales o abstractas."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT301-P1-25",
+        "t": "T3.01",
+        "o": "A",
+        "q": "La intensión es:",
+        "a": [
+          "El número ocurrencias de una entidad.",
+          "La capacidad que tienen los modelos conceptuales de datos para representar entidades abstractas del mundo real.",
+          "Una ocurrencia concreta de una entidad.",
+          "El conjunto de entidades que poseen la misma estructura."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT301-P1-26",
+        "t": "T3.01",
+        "o": "A",
+        "q": "La extensión es:",
+        "a": [
+          "El número de entidades representadas en un modelo de datos concreto.",
+          "El número de relaciones de un modelo de datos concreto.",
+          "El conjunto de ocurrencias de una entidad concreta.",
+          "Una ocurrencia concreta de una entidad."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT301-P1-27",
+        "t": "T3.01",
+        "o": "A",
+        "q": "Sobre el modelo Entidad-Relación extendido, señale la respuesta correcta:",
+        "a": [
+          "Permite representar parte de los datos de un sistema.",
+          "Está ligado a una tecnología concreta.",
+          "Una de las extensiones permite modelas la funcionalidad de un sistema.",
+          "Es independiente del entorno físico."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT301-P1-28",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En el modelo Entidad-Relación extendido, las relaciones reflexivas:",
+        "a": [
+          "Son aquellas entre dos entidades independientes.",
+          "Se denominan también recursivas o exclusivas.",
+          "Son las llamadas relaciones ternarias.",
+          "Son aquellas en las que entidad se relaciona consigo misma."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT301-P1-29",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En los modelos Entidad-Relación que se usan para modelar conceptualmente un esquema relacional:",
+        "a": [
+          "Se produce dependencia por existencia cuando una entidad fuerte no puede existir sin otra entidad débil.",
+          "Se produce dependencia por identificación cuando las ocurrencias de la entidad fuerte no se pueden identificar solo mediante sus propios atributos, si no que se tiene que añadir la clave de la ocurrencia de otra entidad débil.",
+          "La cardinalidad es el número de entidades con la cual otra entidad se puede asociar mediante una relación binaria.",
+          "El grado es el número de valores que puede tomar el atributo de una entidad."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT301-P1-30",
+        "t": "T3.01",
+        "o": "A",
+        "q": "De entre los siguientes, ¿cuál NO es una técnica para crear modelos conceptuales de bases de datos?",
+        "a": [
+          "Diagramas de estructura.",
+          "Diagramas ORM.",
+          "Diagramas UML.",
+          "Diagramas IDEF1X."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT301-P1-31",
+        "t": "T3.01",
+        "o": "A",
+        "q": "¿Cuál de las siguientes características relacionadas con los modelos conceptuales de datos es FALSA?",
+        "a": [
+          "Representan la visión estática del dominio de la información del Sistema de información a modelar.",
+          "Ayudan a representar las necesidades de usuario.",
+          "Representan toda la información que va a tratar el Sistema de Información objeto del análisis.",
+          "Representan también el dominio de negocio del sistema de información."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT301-P1-32",
+        "t": "T3.01",
+        "o": "A",
+        "q": "¿Cómo se representa en el modelo Entidad-Relación extendido una relación?",
+        "a": [
+          "Rectángulo simple.",
+          "Rectángulo doble.",
+          "Arco.",
+          "Rombo."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT301-P1-33",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En el modelo Entidad-Relación extendido, señale la respuesta correcta:",
+        "a": [
+          "Una relación no puede tener atributos propios.",
+          "Las relaciones unarias se conocen también como relaciones exclusivas.",
+          "La razón de cardinalidad es el número máximo de ocurrencias de cada tipo de entidad que pueden intervenir en una ocurrencia de la relación que se está tratando.",
+          "No hay obligación en que una relación tenga un nombre."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT301-P1-34",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En el modelo Entidad-Relación extendido, construir un nuevo tipo de entidad como composición de otros y su tipo de relación y así poder manejarlo en un nivel de abstracción mayor se conoce como:",
+        "a": [
+          "Categorías.",
+          "Agregación.",
+          "Desagregación.",
+          "Generalización."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT301-P1-36",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En el modelo Entidad-Relación extendido, ¿con qué letra se representa las uniones por categorías?",
+        "a": [
+          "d.",
+          "O.",
+          "U.",
+          "C."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT301-P1-40",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En una jerarquía del modelo Entidad-Relación extendido, si una ocurrencia del supertipo no pertenece a algún subtipo, se denomina:",
+        "a": [
+          "Jerarquía total.",
+          "Jerarquía parcial.",
+          "Jerarquía disjunta.",
+          "Jerarquía solapada."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT301-P1-41",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En el modelo Entidad-Relación extendido, ¿con qué letra se representa una jerarquía disjunta?",
+        "a": [
+          "d.",
+          "O.",
+          "U.",
+          "C."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT301-P1-42",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En el modelo Entidad-Relación extendido, ¿con qué letra se representa una jerarquía solapada?",
+        "a": [
+          "d.",
+          "O.",
+          "U.",
+          "C."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT301-P1-45",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En el Entidad-Relación extendido, las relaciones N:M:",
+        "a": [
+          "Cada ocurrencia de una entidad puede estar relacionada con cero, una o varias ocurrencias de la otra entidad y cada ocurrencia de la otra entidad puede corresponder a cero, una o varias ocurrencias de la primera.",
+          "Cada ocurrencia de una entidad puede estar relacionada con cero, una o varias ocurrencias de la otra entidad.",
+          "Cada ocurrencia de una entidad se relaciona con una y sólo una ocurrencia de la otra entidad.",
+          "Son las llamadas muchos a uno."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT301-P1-47",
+        "t": "T3.01",
+        "o": "A",
+        "q": "El rol de una entidad:",
+        "a": [
+          "Se especifica en las relaciones exclusivas.",
+          "Se especifica en las relaciones reflexivas.",
+          "Se especifica en las entidades débiles.",
+          "Se especifica en las relaciones ternarias."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT301-P1-48",
+        "t": "T3.01",
+        "o": "A",
+        "q": "Una relación se caracteriza por:",
+        "a": [
+          "El grado y el tipo de correspondencia.",
+          "El tipo de correspondencia, el nombre y la cardinalidad.",
+          "El nombre, la cardinalidad, la extensión y la intensión.",
+          "El nombre, el grado, el tipo de correspondencia y la cardinalidad."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-19",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En el modelo Entidad-Relación extendido, el número máximo y mínimo de ocurrencias de un tipo de entidad que pueden estar interrelacionadas con una ocurrencia de otro tipo de entidad, se denomina:",
+        "a": [
+          "Cardinalidad.",
+          "Grado.",
+          "Asociación.",
+          "Tipo de correspondencia."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-63",
+        "t": "T3.01",
+        "o": "A",
+        "q": "Tenemos las entidades \"solicitante\" y \"solicitud\" y sabemos que a los solicitantes se les permite presentar varias solicitudes distintas, pero una solicitud solo puede ser presentada por un único solicitante. Si se quisiera crear el modelo conceptual de base de datos, ¿qué relación crearía?",
+        "a": [
+          "Una relación N:M.",
+          "Una relación 1:N.",
+          "Una relación 1:1.",
+          "El modelo conceptual no admite relaciones, sólo el modelo relacional lo permite."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-64",
+        "t": "T3.01",
+        "o": "A",
+        "q": "Teniendo en cuenta que en la estructura orgánica de un Ministerio, los departamentos se componen de a su vez de departamentos, ¿cómo se reflejaría en el modelo Entidad/Relación extendido?",
+        "a": [
+          "Definir una entidad Departamento y una relación reflexiva \"pertenece a\" cuyo tipo de correspondencia es 1:N.",
+          "Definir las entidades Departamento superior y Departamento subordinado y una relación entre ellos \"pertenece a\" cuyo tipo de correspondencia es 1:1.",
+          "Definir las entidades Departamento superior y Departamento subordinado y una relación entre ellos \"pertenece a\" y \"está formado por\" cuyos tipos de correspondencia son 1:N respectivamente.",
+          "Con la información suministrada no se puede crear un diagrama entidad/relación extendido."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-65",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En el modelo Entidad/Relación extendido, un atributo cuyo valor se obtiene a partir de los valores de otros atributos de la misma o de otro tipo de entidad se denomina:",
+        "a": [
+          "Simple.",
+          "Univaluado.",
+          "Compuesto.",
+          "Derivado."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-66",
+        "t": "T3.01",
+        "o": "A",
+        "q": "¿Cuál de los siguientes conceptos NO está permitido en el modelo Entidad/Relación extendido?",
+        "a": [
+          "Relación entre entidades.",
+          "Generalización.",
+          "Categorías.",
+          "Relaciones relacionadas."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-69",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En el modelo E/R extendido, cuando una ocurrencia de un supertipo puede no pertenecer a ninguno de los subtipos y además una ocurrencia del supertipo puede pertenecer a más de un subtipo a la vez, decimos que:",
+        "a": [
+          "La jerarquía parcial y disjunta.",
+          "La jerarquía total y disjunta.",
+          "La jerarquía parcial y no disjunta.",
+          "La jerarquía total y no disjunta."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-70",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En el modelo E/R extendido, cuando una ocurrencia de un supertipo siempre pertenece a alguno de los subtipos y además una ocurrencia del supertipo solo puede pertenecer a un subtipo, decimos que:",
+        "a": [
+          "La jerarquía parcial y disjunta.",
+          "La jerarquía total y disjunta.",
+          "La jerarquía parcial y no disjunta.",
+          "La jerarquía total y no disjunta."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-71",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En el modelo E/R extendido, cuando una ocurrencia de un supertipo siempre pertenece a alguno de los subtipos y además una ocurrencia del supertipo puede pertenecer a más de un subtipo a la vez, decimos que:",
+        "a": [
+          "La jerarquía parcial y disjunta.",
+          "La jerarquía total y disjunta.",
+          "La jerarquía parcial y no disjunta.",
+          "La jerarquía total y no disjunta."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-72",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En el modelo E/R extendido, indique la respuesta correcta sobre el concepto \"discriminante\":",
+        "a": [
+          "Es un tipo de relación especial utilizada en las agregaciones que identifica a la superentidad creada.",
+          "Es el atributo especial perteneciente a una categoría para poder ser identificada.",
+          "Es un atributo utilizado en las jerarquías que determina a qué subtipo pertenece una ocurrencia del supertipo.",
+          "Es un atributo genérico que puede ser utilizado en cualquier entidad para identificar las ocurrencias de la misma."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-74",
+        "t": "T3.01",
+        "o": "A",
+        "q": "El modelo Entidad-Relación es un:",
+        "a": [
+          "Modelo conceptual.",
+          "Modelo lógico.",
+          "Modelo físico.",
+          "Modelo multidimensional."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-76",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En relación al modelo Entidad-Relación, indique cuál de las siguientes afirmaciones es correcta:",
+        "a": [
+          "Un tipo de entidad fuerte no puede tener una dependencia de existencia con respecto a otro tipo de entidad.",
+          "Un atributo multivaluado se representa con un óvalo con línea discontinua.",
+          "El discriminante o clave parcial de una entidad débil se indica con un óvalo con línea doble.",
+          "El grado de una relación es el número de tipos de entidad que pueden intervenir en una ocurrencia de ese tipo de relación."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-77",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En el modelo Entidad-Relación:",
+        "a": [
+          "Los atributos son independientes de las entidades y relaciones.",
+          "Solo las entidades pueden tener atributos.",
+          "Tanto las relaciones como las entidades pueden tener atributos.",
+          "Solo las relaciones pueden tener atributos."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-78",
+        "t": "T3.01",
+        "o": "A",
+        "q": "Sea una relación 1:N entre dos entidades A y B. Si para toda ocurrencia de A pueden existir, o no, una o varias ocurrencias de B asociadas, y para una ocurrencia de B existe una ocurrencia de A asociada, se dice que esta interrelación es:",
+        "a": [
+          "Obligatoria en A y opcional en B.",
+          "Obligatoria en B y opcional en A.",
+          "Obligatoria en ambos extremos.",
+          "Opcional en ambos extremos."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-88",
+        "t": "T3.01",
+        "o": "A",
+        "q": "Respecto al diagrama E/R anterior, ¿qué extensión del modelo Entidad/Relación extendido es aplicada en el recuadro de color azul?",
+        "a": [
+          "Categorías.",
+          "Unión.",
+          "Agregación.",
+          "Asociación."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS02-P1-31",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En el modelo E/R, ¿cuál es el motivo por el cual un tipo de entidad es débil?",
+        "a": [
+          "Porque no tiene una dependencia de existencia con otro tipo de entidad.",
+          "Porque tiene poca importancia en la base de datos.",
+          "Por no tiene suficientes atributos para formar una clave primaria.",
+          "Porque la existencia de cada ocurrencia de entidad débil depende de la existencia de otra entidad débil."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS02-P1-37",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En Métrica v3, en relación al modelo Entidad/Relación extendido, dentro de las relaciones débiles, ¿qué dos divisiones se distinguen?",
+        "a": [
+          "Dependencia en existencia y dependencia en identificación.",
+          "Dependencia en composición y dependencia en identificación.",
+          "Dependencia en existencia y dependencia en discriminación.",
+          "Dependencia en composición y dependencia en discriminación."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS02-P1-73",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En un modelo Entidad/Relación, un tipo de interrelación se caracteriza por:",
+        "a": [
+          "El nombre y el tipo de correspondencia.",
+          "El nombre y el grado.",
+          "El nombre, el nivel y el tipo de correspondencia.",
+          "El nombre, el grado y el tipo de correspondencia."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS02-P1-74",
+        "t": "T3.01",
+        "o": "A",
+        "q": "¿Cuándo puede ser conveniente transformar una jerarquía de un esquema Entidad-Relación en tantas relaciones como subtipos tenga la jerarquía?",
+        "a": [
+          "Cuando los subtipos tienen muchos atributos comunes.",
+          "Cuando se va a realizar un número elevado de consultas al supertipo.",
+          "Cuando el supertipo no participa en ninguna relación.",
+          "Ninguna de las respuestas anteriores es correcta."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS02-P1-80",
+        "t": "T3.01",
+        "o": "A",
+        "q": "El modelo Entidad-Relación extendido:",
+        "a": [
+          "Modela los datos de un sistema de información sin tener en cuenta las necesidades de la tecnología subyacente ni otras restricciones.",
+          "Modela el flujo de datos del sistema de información.",
+          "Modela los datos de un sistema de información, teniendo en cuenta las restricciones de la tecnología de bases de datos subyacente y las restricciones de eficiencia.",
+          "Modela los procesos, actividades y datos de la organización."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS02-P1-81",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En el modelo Entidad-Relación, cuál es la definición básica que corresponde con el elemento entidad:",
+        "a": [
+          "Es aquel objeto que existe en el mundo real con una identificación distinta y con un significado propio.",
+          "Es aquella propiedad que tiene asignado un dominio.",
+          "Es el conjunto de valores que puede tomar un atributo.",
+          "Es la relación que se establece entre los objetos del modelo."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS02-P1-84",
+        "t": "T3.01",
+        "o": "A",
+        "q": "Dada una jerarquía total con solapamiento en el modelo Entidad-Relación, ¿cuál de las siguientes afirmaciones es cierta?",
+        "a": [
+          "No es necesario que toda ocurrencia del supertipo se encuentre en alguno de los subtipos.",
+          "Cuando se borra una ocurrencia de un subtipo hay que borrarla también del supertipo.",
+          "Cuando se borra una ocurrencia de un subtipo se borra del supertipo si sólo pertenece a ese subtipo.",
+          "Si se borra una ocurrencia del supertipo no siempre hay que eliminarla de los subtipos a los que pertenece."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS03-P1-R-04",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En el modelo Entidad/Relación extendido, los cuatro elementos fundamentales son:",
+        "a": [
+          "Entidad, relación, dominio y atributo.",
+          "Entidad, relación, estructura y ocurrencia.",
+          "Entidad, relación, atributo y categoría.",
+          "Entidad, relación, dominio y cardinalidad."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS04-P1-46",
+        "t": "T3.01",
+        "o": "A",
+        "q": "Respecto al diseño conceptual de datos, en una jerarquía de generalización se dice que un subconjunto (caso particular de generalización con una sola entidad como subentidad) siempre es una jerarquía:",
+        "a": [
+          "Total y exclusiva.",
+          "Parcial y superpuesta.",
+          "Parcial y exclusiva.",
+          "Total y superpuesta."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS04-P1-47",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En Métrica v3, en relación al modelo Entidad/Relación extendido, dentro de las relaciones débiles, ¿qué dos tipos se distinguen?",
+        "a": [
+          "Dependencia en existencia y dependencia en identificación.",
+          "Dependencia en composición y dependencia en identificación.",
+          "Dependencia en existencia y dependencia en discriminación.",
+          "Dependencia en composición y dependencia en discriminación."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS04-P1-57",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En el modelo Entidad/Relación extendido, ¿cuál de los siguientes NO es un elemento de una relación?",
+        "a": [
+          "Nombre.",
+          "Tipo de correspondencia.",
+          "Cardinalidad.",
+          "Identificador."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS04-P1-59",
+        "t": "T3.01",
+        "o": "A",
+        "q": "Con los códigos de caracteres ASCII extendido y EBCDIC el número máximo de caracteres que se puede representar es:",
+        "a": [
+          "ASCII extendido y EBCDIC pueden representar como máximo 128.",
+          "ASCII extendido y EBCDIC pueden representar como máximo 256.",
+          "ASCII extendido como máximo 128 y EBCDIC como máximo 256.",
+          "ASCII extendido como máximo 256 y EBCDIC como máximo 128."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS04-P1-67",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En relación a los SGBD relacionales y los tipos de integridad, indique cuál NO es uno de ellos:",
+        "a": [
+          "Integridad de dominio.",
+          "Integridad de entidad.",
+          "Integridad de concurrencia.",
+          "Integridad referencial."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS04-P1-73",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En relación a la representación habitual del modelo entidad-relación, señale la afirmación correcta:",
+        "a": [
+          "Tanto las entidades como las relaciones se representan con rectángulos.",
+          "Las entidades se representan con rombos y las relaciones con rectángulos.",
+          "Las entidades se representan con rectángulos y las relaciones con triángulos.",
+          "Las relaciones se representan con rombos y las entidades con rectángulos."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS05G-P1-66",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En el modelo Entidad-Relación extendido, una entidad debe cumplir las siguientes reglas (señale la respuesta INCORRECTA):",
+        "a": [
+          "Tienen que tener existencia propia.",
+          "Cada ocurrencia de un tipo de entidad debe poder distinguirse de las demás.",
+          "Todas las entidades de un tipo de entidad deben tener los mismos atributos.",
+          "Debe existir al menos una ocurrencia de un tipo de entidad."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS05G-P1-67",
+        "t": "T3.01",
+        "o": "A",
+        "q": "Respecto al concepto de relación en el modelo Entidad-Relación extendido:",
+        "a": [
+          "Tipo de correspondencia es el número de tipos de entidad sobre las que se establece la relación.",
+          "Grado es el número máximo de ocurrencias de cada tipo de entidad que pueden intervenir en una ocurrencia de la relación que se está tratando.",
+          "La cardinalidad representa la participación en la relación de cada una de las entidades afectadas, es decir, el número máximo y mínimo de ocurrencias de un tipo de entidad que pueden estar interrelacionadas con una ocurrencia de otro tipo de entidad.",
+          "Una relación es inclusiva cuando la existencia de una relación entre dos tipos de entidades implica la existencia de las otras relaciones."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS05G-P1-69",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En relación con las entidades del modelo Entidad-Relación extendido, señale la respuesta INCORRECTA:",
+        "a": [
+          "Tienen que tener existencia propia.",
+          "Cada ocurrencia de un tipo de entidad debe poder distinguirse de las demás.",
+          "Todas las entidades de un tipo de entidad deben tener los mismos atributos.",
+          "Debe existir al menos una ocurrencia de un tipo de entidad."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS06-P1-11",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En un diagrama E/R, otra forma de representar un atributo multivalor en una entidad es trasladar el atributo a una nueva entidad, que tendrá con la entidad original una relación:",
+        "a": [
+          "N a N.",
+          "1 a 1.",
+          "1 a N.",
+          "Débil."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS06-P1-17",
+        "t": "T3.01",
+        "o": "A",
+        "q": "Dada la entidad Persona del modelo Entidad-Relación, con los atributos DNI, Nombre, Edad y Fecha_Nacimiento, indique el tipo de atributo que representa la Edad:",
+        "a": [
+          "Atributo multivaluado.",
+          "Atributo derivado.",
+          "Atributo compuesto.",
+          "Atributo débil."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS06-P1-18",
+        "t": "T3.01",
+        "o": "A",
+        "q": "El modelo Entidad-Relación, es uno de los modelos de datos de tipo:",
+        "a": [
+          "Físico.",
+          "Lógico.",
+          "Conceptual.",
+          "Descriptivo."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS07-P1-63",
+        "t": "T3.01",
+        "o": "A",
+        "q": "Señale la respuesta correcta sobre las relaciones del modelo Entidad-Relación extendido:",
+        "a": [
+          "La entidad regular asocia un tipo de entidad débil con un tipo de entidad regular.",
+          "La entidades normales asocian tipos de entidad regulares.",
+          "La dependencia en identificación asocia dos tipos de entidades débiles.",
+          "La dependencia en existencia asocia un tipo de entidad débil con un tipo de entidad regular."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS07-P1-64",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En el modelo Entidad-Relación extendido, en la jerarquía:",
+        "a": [
+          "Parcial toda ocurrencia del supertipo pertenece siempre a alguno de los subtipos.",
+          "Solapada una ocurrencia del supertipo puede pertenecer a varios subtipos.",
+          "Disjunta una ocurrencia del supertipo no pertenece a algún subtipo.",
+          "Total una ocurrencia del supertipo solo puede pertenecer a uno de los subtipos."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS07-P1-65",
+        "t": "T3.01",
+        "o": "A",
+        "q": "Indique la respuesta INCORRECTA en relación con las jerarquías del modelo Entidad-Relación extendido:",
+        "a": [
+          "Una jerarquía puede ser total y disjunta.",
+          "Una jerarquía puede ser solapada y disjunta.",
+          "Una jerarquía puede ser solapada y parcial.",
+          "Una jerarquía puede ser parcial y disjunta."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08-P1-51",
+        "t": "T3.01",
+        "o": "A",
+        "q": "Tenemos las entidades “oposición” y “opositor” y sabemos que a los opositores se les permite apuntarse a solo una oposición. Si quisiera crear el modelo conceptual de base de datos, ¿qué relación crearía?",
+        "a": [
+          "Una relación N:M.",
+          "Una relación 1:N.",
+          "Una relación 1:1.",
+          "El modelo conceptual no admite relaciones, sólo el modelo relacional lo permite."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08-P1-54",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En un modelo Entidad-Relación extendido, en función de la cardinalidad una relación puede ser:",
+        "a": [
+          "Obligatorio u opcional.",
+          "Necesaria o suficiente.",
+          "Fuerte o débil.",
+          "Unaria o binaria."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08B-P1-R-02",
+        "t": "T3.01",
+        "o": "A",
+        "q": "Si disponemos de las entidades CIUDADANO y DIRECCIÓN, de tal forma que el funcionamiento implica que si se eliminan los datos de un ciudadano deben desaparecer los datos de sus direcciones de envío, entonces:",
+        "a": [
+          "Se diseñó incorrectamente, ya que DIRECCIÓN no es una entidad.",
+          "DIRECCIÓN debe estar contenida en CIUDADANO.",
+          "DIRECCIÓN es una entidad débil.",
+          "FAMILIAR es una entidad dependiente."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-34",
+        "t": "T3.01",
+        "o": "A",
+        "q": "Un diagrama Entidad/Relación extendido en el que un tipo de entidad se relaciona consigo mismo a través de una relación siendo su tipo de correspondencia N:M, se transformará al modelo relacional:",
+        "a": [
+          "En 1 relación.",
+          "En 2 relaciones.",
+          "En 3 relaciones.",
+          "No se puede transformar al modelo relacional."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-38",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En el modelo Entidad/Relación extendido, podemos definir entidad como:",
+        "a": [
+          "Cualquier objeto u elemento (real o abstracto) acerca del cual se pueda almacenar información en la base de datos.",
+          "Cualquier asociación entre elementos.",
+          "El número de relaciones en las que un elemento puede aparecer.",
+          "Una propiedad concreta de una relación."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-39",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En el modelo Entidad/Relación extendido, ¿a qué se denomina entidad débil?",
+        "a": [
+          "A aquellos tipos de entidad que pueden tener atributos con valor nulo.",
+          "A aquellos tipos de entidad que forman parte de una relación N:M.",
+          "A aquellos tipos de entidad que no tienen atributos clave propios.",
+          "A aquellos tipos de entidad que tienen atributos multivalor."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10B-P1-50",
+        "t": "T3.01",
+        "o": "A",
+        "q": "Según Métrica v3, en el diagrama Entidad/Relación extendido, para representar una jerarquía con subtipos que pueden solaparse, en el triángulo invertido hay que incluir el texto:",
+        "a": [
+          "d.",
+          "O.",
+          "U.",
+          "Es_un."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-37",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En los diagramas de Entidad/Relación extendido, ¿cuál de los siguientes NO es un elemento?",
+        "a": [
+          "Entidades.",
+          "Atributos.",
+          "Relaciones.",
+          "Grados."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-38",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En el modelo Entidad/Relación extendido, en una jerarquía con cobertura total, cada elemento de la superentidad:",
+        "a": [
+          "Tiene que estar obligatoriamente en todas las subentidades.",
+          "Tiene que estar en al menos una de las subentidades.",
+          "No es obligatorio que esté en una de las subentidades.",
+          "No puede estar en ninguna de las subentidades."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-39",
+        "t": "T3.01",
+        "o": "A",
+        "q": "¿Cuál de las siguientes NO es una característica de una entidad del diagrama Entidad/Relación?",
+        "a": [
+          "Es indistinguible del resto de las entidades.",
+          "Cada una de ellas puede identificarse de manera única.",
+          "Tiene nombre y posee atributos definidos en un dominio determinado.",
+          "Caracteriza a un tipo de objeto del problema a modelizar."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12B-P1-35",
+        "t": "T3.01",
+        "o": "A",
+        "q": "¿Cuál de los siguientes conceptos NO corresponde al modelo Entidad-Relación?",
+        "a": [
+          "Grado de una relación.",
+          "Dependencia funcional.",
+          "Dependencia de existencia.",
+          "Dependencia de identificación."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [
+          13
+        ],
+        "d": 2,
+        "n": "Dependencia funcional pertenece a normalización."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12B-P1-36",
+        "t": "T3.01",
+        "o": "A",
+        "q": "En el modelo Entidad/Relación extendido, en una jerarquía con cobertura parcial cada elemento de la superentidad:",
+        "a": [
+          "Tiene que estar obligatoriamente en todas las subentidades.",
+          "Tiene que estar en al menos una de las subentidades.",
+          "No es obligatorio que esté en una de las subentidades.",
+          "No puede estar en ninguna de las subentidades."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          12
+        ],
+        "d": 2,
+        "n": "Cobertura parcial: obligatoriedad cruzada."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    }
+  ],
+  "counts": {
+    "total": 221,
+    "alreadyHadCitation": 113,
+    "added": 11,
+    "pending": 97,
+    "withCitation": 124
+  }
+}

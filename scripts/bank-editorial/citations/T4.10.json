@@ -1,0 +1,1761 @@
+{
+  "schemaVersion": 1,
+  "topicId": "T4.10",
+  "baseCommit": "454a025ae26390dee0f057a4cfa9b6d5fc758fba",
+  "status": "CITATIONS_ACCEPTED_UNDER_USER_DELEGATION",
+  "scope": "Solo adición de citas para lectura; no concede nueva puntuabilidad ni altera pruebas editoriales previas.",
+  "file": {
+    "beforeSha256": "c2856b032d05e9e72fe2fd3702a527a8a61d6a4f25995bcebbd0b3fd4733b01f",
+    "afterSha256": "3ef23d866b381c6f696cf813c22c7b786119fd673533be7819ffb2152b00e058"
+  },
+  "sample": {
+    "beforeSha256": "5ce5bb7b972219639689c8b84503507dc3ffc721339e7ecef1ad63cc14f044f3",
+    "afterSha256": "5ce5bb7b972219639689c8b84503507dc3ffc721339e7ecef1ad63cc14f044f3"
+  },
+  "sourceRoot": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario",
+  "sources": {
+    "e-AT410-P1-11": {
+      "path": "T4.10 Redes Locales/T4.10 Redes Locales - Temario.pdf",
+      "sourceHash": "7a360f7f2f0279b47691155a5cdda67a5394114a70718a162878ac4414c8a710",
+      "physicalPage": 21,
+      "printedPage": 21,
+      "excerpt": "Existen distintos métodos de acceso al medio compartido que permiten arbitrar en el acceso ordenado al mismo: - Reserva. - Contienda. o ALOHA puro. o ALOHA ranurado. - Contienda con escucha. o CSMA (Carrier Sense1 Multiple Access2). ▪ CSMA no persistente. ▪ CSMA 1-Persistente. ▪ CSMA p-Persistente. o CSMA/CD (CSMA with collision detection).",
+      "label": "Pasaje del temario"
+    }
+  },
+  "questions": [
+    {
+      "id": "AT410-P1-11",
+      "before": {
+        "i": "AT410-P1-11",
+        "t": "T4.10",
+        "o": "A",
+        "q": "En redes de área local, ¿cuál de los siguientes es un método de acceso al medio compartido con escucha por contienda?",
+        "a": [
+          "Paso de testigo en anillo.",
+          "CSMA no persistente.",
+          "ALOHA ranurado.",
+          "Contención."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT410-P1-11",
+        "t": "T4.10",
+        "o": "A",
+        "q": "En redes de área local, ¿cuál de los siguientes es un método de acceso al medio compartido con escucha por contienda?",
+        "a": [
+          "Paso de testigo en anillo.",
+          "CSMA no persistente.",
+          "ALOHA ranurado.",
+          "Contención."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "T4.10 Redes Locales - Temario.pdf — Pasaje del temario\n\nTemario, p. 21 (PDF p. 21)\n\nExisten distintos métodos de acceso al medio compartido que permiten arbitrar en el acceso ordenado al mismo: - Reserva. - Contienda. o ALOHA puro. o ALOHA ranurado. - Contienda con escucha. o CSMA (Carrier Sense1 Multiple Access2). ▪ CSMA no persistente. ▪ CSMA 1-Persistente. ▪ CSMA p-Persistente. o CSMA/CD (CSMA with collision detection).\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "970c70fc0239f15fec5cbbf3194afb701b411eb4abb721656b51fc7b82a7e501",
+      "afterSha256": "682af2482cb96020fce86c4ca5d3ddbf92edfe498caa7e9cfe3cbd94001867b6",
+      "evidenceKeys": [
+        "e-AT410-P1-11"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    }
+  ],
+  "pending": [
+    {
+      "question": {
+        "i": "TAI2024B-P1-59",
+        "t": "T4.10",
+        "o": "O",
+        "q": "¿Cuánta carga útil puede almacenar un jumboframe?",
+        "a": [
+          "7.000 bytes.",
+          "1.500 bytes.",
+          "9.000 bytes.",
+          "10.000 bytes."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          2
+        ],
+        "d": 2,
+        "n": "1.500 es la MTU estándar: cifra real de otro concepto.",
+        "y": "Ingreso libre OEP 2023-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAI2024B-P1-65",
+        "t": "T4.10",
+        "o": "O",
+        "q": "La norma IEEE 802.11 se refiere a:",
+        "a": [
+          "Redes inalámbricas.",
+          "Redes de área metropolitana.",
+          "Redes integradas para voz y datos.",
+          "Seguridad de red."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7,
+          6
+        ],
+        "d": 1,
+        "n": "Familia IEEE 802.x.",
+        "y": "Ingreso libre OEP 2023-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAI2024B-P1-66",
+        "t": "T4.10",
+        "o": "O",
+        "q": "Indique la respuesta INCORRECTA respecto a PoE (Power over Ethernet):",
+        "a": [
+          "Power over Ethernet (PoE) es una tecnología que permite que los conmutadores de red transmitan energía y datos a través de un cable Ethernet simultáneamente.",
+          "Existen dos tipos: PoE activo y PoE pasivo.",
+          "PoE pasivo no se adhiere a ningún estándar IEEE.",
+          "El último estándar de PoE activo es el IEEE 802.3at."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [
+          6
+        ],
+        "d": 2,
+        "n": "\"802.3at\" por 802.3bt: numeración de norma (catálogo 6 aplicado a IEEE).",
+        "y": "Ingreso libre OEP 2023-2024 (2024)",
+        "w": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAI2024B-P1-R-03",
+        "t": "T4.10",
+        "o": "O",
+        "q": "El protocolo de IEEE para Rapid Spanning Tree Protocol es:",
+        "a": [
+          "802.1w.",
+          "802.1Q.",
+          "802.1D.",
+          "802.1aq."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          6,
+          7
+        ],
+        "d": 2,
+        "n": "Familia 802.1 (Q, D, aq).",
+        "y": "Ingreso libre OEP 2023-2024 (2024)",
+        "r": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAIL2022-P1-79",
+        "t": "T4.10",
+        "o": "O",
+        "q": "¿Qué significa CSMA/CD?",
+        "a": [
+          "Acceso múltiple por servicio de portadora y múltiples colisiones.",
+          "Acceso múltiple con detección de portadora y detección de colisiones.",
+          "Acceso único con múltiples colisiones y detección de portadora.",
+          "Acceso único de múltiples portadoras y detección de colisiones."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          9
+        ],
+        "d": 1,
+        "n": "Expansiones del acrónimo con palabras cambiadas.",
+        "y": "Ingreso libre OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAIL2022-P1-R-05",
+        "t": "T4.10",
+        "o": "O",
+        "q": "Indique cuáles son los diferentes tipos de configuración contemplados para WPS:",
+        "a": [
+          "PIN, PBC, USB",
+          "PIN, NFC, USB",
+          "PIN, USB",
+          "PIN, PBC, NFC, USB"
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          3
+        ],
+        "d": 3,
+        "n": "Listas acumulativas de métodos WPS: alcance incompleto.",
+        "y": "Ingreso libre OEP 2022 (2023)",
+        "r": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2019-P1-70",
+        "t": "T4.10",
+        "o": "O",
+        "q": "Sobre redes inalámbricas, indique cuál de las siguientes afirmaciones es INCORRECTA:",
+        "a": [
+          "La frecuencia de 2,4 GHz presenta interferencias con algunas versiones de Bluetooth.",
+          "La seguridad del protocolo WEP es superior a la del protocolo WPA2.",
+          "El protocolo WPA3 surge, entre otros, a raiz del ataque KRACK, mejorando la modalidad de cifrado WPA2-PSK (AES).",
+          "La frecuencia de 5 GHz tiene menor alcance que la de 2,4 GHz."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [
+          8
+        ],
+        "d": 1,
+        "n": "WEP superior a WPA2: orden invertido.",
+        "y": "Ingreso libre OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2019-P1-71",
+        "t": "T4.10",
+        "o": "O",
+        "q": "El estándar comercializado con el nombre de Wi-Fi 6 se corresponde con el estándar de IEEE:",
+        "a": [
+          "802.11ax",
+          "802.11ac",
+          "802.11ac wave 2",
+          "802.11az"
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          6
+        ],
+        "d": 2,
+        "n": "Familia 802.11.",
+        "y": "Ingreso libre OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2019-P1-79",
+        "t": "T4.10",
+        "o": "O",
+        "q": "¿Qué es una red Scatternet?",
+        "a": [
+          "Es un tipo de red MAN (Metropolitan area network).",
+          "Es una red de dispositivos WIFI en LAN (Local area network).",
+          "Es un grupo de Piconets.",
+          "Es la red utilizada para interconectar CubeSATs."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          13
+        ],
+        "d": 2,
+        "n": "Scatternet = grupo de piconets.",
+        "y": "Ingreso libre OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025A-P1-79",
+        "t": "T4.10",
+        "o": "O",
+        "q": "¿Cuál es una función de los terminadores en una topología física de bus?",
+        "a": [
+          "Amplificar la señal para que llegue a los nodos más lejanos.",
+          "Absorber la energía de la señal al final de la transmisión y evitar interferencias causadas por la reflexión de la señal.",
+          "Asignar automáticamente direcciones IP a los nodos.",
+          "Cifrar el tráfico para que no sea interceptado."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          13
+        ],
+        "d": 1,
+        "n": "Terminadores en topología de bus.",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025A-P1-80",
+        "t": "T4.10",
+        "o": "O",
+        "q": "El estándar IEEE 802.1Q es un estándar internacional para el etiquetado de VLANs (Virtual LANs) en redes Ethernet. ¿Qué campo de la cabecera 802.1Q (VLAN) permite definir 8 niveles de prioridad de tráfico (Class of Service)?",
+        "a": [
+          "VID (VLAN ID).",
+          "CFI (Canonical Format Indicator).",
+          "PCP (Priority Code Point).",
+          "TPID (Tag Protocol Identifier)."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 3,
+        "n": "Campos de la etiqueta 802.1Q.",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025A-P1-R-05",
+        "t": "T4.10",
+        "o": "O",
+        "q": "¿Cuántos canales Bluetooth Low Energy (LE) utiliza el mecanismo Extended Advertising introducido en Bluetooth Core 5.0?",
+        "a": [
+          "3 canales.",
+          "22 canales.",
+          "37 canales.",
+          "40 canales."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          2
+        ],
+        "d": 3,
+        "n": "Canales de Bluetooth LE.",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1,
+        "r": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025X-P1-78",
+        "t": "T4.10",
+        "o": "O",
+        "q": "¿Qué especifica el estándar IEEE 802.3 dentro de la familia de normas IEEE 802?",
+        "a": [
+          "El funcionamiento de redes inalámbricas Wi‑Fi.",
+          "Los métodos de acceso y transmisión para redes Ethernet.",
+          "Los protocolos de seguridad para redes móviles.",
+          "Las características de redes Bluetooth de largo alcance."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          6,
+          7
+        ],
+        "d": 1,
+        "n": "IEEE 802.3 frente a 802.11 y otras.",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025X-P1-80",
+        "t": "T4.10",
+        "o": "O",
+        "q": "En redes Ethernet, ¿qué velocidad agregada se asocia habitualmente al formato QSFP+?",
+        "a": [
+          "Admite velocidades de datos de hasta 5 Gbps.",
+          "Admite velocidades de datos de hasta 100 Gbps.",
+          "Admite velocidades de datos de hasta 16 Gbps.",
+          "Admite velocidades de datos de hasta 40 Gbps."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          2
+        ],
+        "d": 3,
+        "n": "QSFP+ = 40 Gbps.",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2019-P1-44",
+        "t": "T4.10",
+        "o": "O",
+        "q": "Sobre redes inalámbricas, indique cuál de las siguientes afirmaciones es INCORRECTA:",
+        "a": [
+          "La frecuencia de 2,4 GHz presenta interferencias con algunas versiones de Bluetooth.",
+          "La seguridad del protocolo WEP es superior a la del protocolo WPA2.",
+          "El protocolo WPA3 surge, entre otros, a raíz del ataque KRACK, mejorando la modalidad de cifrado WPA2-PSK (AES).",
+          "La frecuencia de 5 GHz tiene menor alcance que la de 2,4 GHz."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [
+          8
+        ],
+        "d": 1,
+        "n": "WEP superior a WPA2: orden invertido.",
+        "y": "Promoción interna OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2022-P1-44",
+        "t": "T4.10",
+        "o": "O",
+        "q": "¿Cuál de estos tipos de cable NO ofrece ningún tipo de apantallamiento?",
+        "a": [
+          "FTP",
+          "STP",
+          "UTP",
+          "Los tres ofrecen apantallamiento."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "UTP frente a FTP/STP.",
+        "y": "Promoción interna OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2022-P1-R-04",
+        "t": "T4.10",
+        "o": "O",
+        "q": "Indique la respuesta correcta respecto a correspondencia entre los grupos de trabajo de la familia IEEE 802 y su nomenclatura:",
+        "a": [
+          "802.1 – Ethernet",
+          "802.3 – Wireless Coexistence",
+          "802.25 – Higher Layer LAN Protocols",
+          "802.11 – Wireless LAN"
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          6
+        ],
+        "d": 2,
+        "n": "Familia IEEE 802 con números cruzados.",
+        "y": "Promoción interna OEP 2022 (2023)",
+        "r": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2024A-P1-36",
+        "t": "T4.10",
+        "o": "O",
+        "q": "El fenómeno que se produce cuando la señal eléctrica transmitida por un par induce corrientes en otros pares vecinos, se conoce como:",
+        "a": [
+          "Atenuación.",
+          "Jitter.",
+          "Diafonía.",
+          "Desajuste de impedancia."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Diafonía frente a atenuación/jitter.",
+        "y": "Promoción interna OEP 2021-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2025A-P1-39",
+        "t": "T4.10",
+        "o": "O",
+        "q": "Según el modelo de referencia para redes locales de la IEEE, la capa de enlace de datos se divide en dos subcapas. ¿Cuál de ellas se encarga de la sincronización de tramas, control de flujo y la detección de errores de transmisión independientemente del medio físico?",
+        "a": [
+          "Subcapa de Control de Acceso al Medio (MAC).",
+          "Subcapa de Convergencia de Datos (DCS).",
+          "Subcapa de Control de Enlace Lógico (LLC).",
+          "Subcapa de Interfaz de Dependencia del Medio (MDI)."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Subcapas LLC/MAC; DCS y MDI inventadas.",
+        "y": "Promoción interna convocatoria 2025"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2018-P1-89",
+        "t": "T4.10",
+        "o": "O",
+        "q": "Seleccione cuál de las siguientes tecnologías Ethernet está basada exclusivamente en fibra óptica multimodo con una velocidad de transmisión de 1000 Mbps:",
+        "a": [
+          "1000BASE-ZX.",
+          "1000BASE-LX.",
+          "1000BASE-SX.",
+          "1000BASE-T."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Variantes 1000BASE.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2018-P1-100",
+        "t": "T4.10",
+        "o": "O",
+        "q": "¿Cuál de las siguientes Opciones representa el nombre de los paquetes que utiliza el protocolo STP para determinar la topología de la red y evitar la aparición de bucles en redes de datos?",
+        "a": [
+          "BPDUs (Bridge Protocol Data Units)",
+          "SPDUs (Spanning Protocol Data Units)",
+          "TPDUs (Tree Protocol Data Units)",
+          "SPDUs (Switch Protocol Data Units)"
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          9
+        ],
+        "d": 1,
+        "n": "BPDU frente a siglas inventadas.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2018-P1-42",
+        "t": "T4.10",
+        "o": "O",
+        "q": "Indique qué longitudes de onda son las apropiadas para utilizar con fibra monomodo:",
+        "a": [
+          "1310 y 1550 nm.",
+          "850 y 1310 nm.",
+          "850 y 1300 nm.",
+          "650 y 850 nm."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          2
+        ],
+        "d": 2,
+        "n": "Longitudes de onda de la fibra monomodo.",
+        "y": "Promoción interna OEP 2018"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2018-P1-44",
+        "t": "T4.10",
+        "o": "O",
+        "q": "Señale la respuesta INCORRECTA en relación con la tecnología Bluetooth:",
+        "a": [
+          "Se engloba dentro de las tecnologías WPAN.",
+          "Varios equipos Bluetooth conectados entre sí pueden formar una red piconet.",
+          "La pila de protocolos Bluetooth incluye, entre otros, LMP y L2CAP.",
+          "Los sistemas Bluetooth operan en la banda ISM de los 5 GHz."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [
+          2
+        ],
+        "d": 2,
+        "n": "Bluetooth en 5 GHz (es 2,4 GHz).",
+        "y": "Promoción interna OEP 2018"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT410-P1-01",
+        "t": "T4.10",
+        "o": "A",
+        "q": "¿Cuál de las siguientes afirmaciones es INCORRECTA?",
+        "a": [
+          "Las VLANs son dominios de broadcast separados, por lo tanto, no se pueden comunicar directamente.",
+          "Normalmente, cada VLAN se corresponde con una subred.",
+          "La comunicación entre VLANs se hace a través de un router.",
+          "La conexión entre los switches VLAN y el router se hace normalmente mediante enlaces de baja capacidad."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT410-P1-02",
+        "t": "T4.10",
+        "o": "A",
+        "q": "¿Qué caracteriza una VLAN?",
+        "a": [
+          "Una VLAN es una LAN virtual con un único dominio de broadcast.",
+          "Una VLAN es una LAN virtual con un único dominio de colisión.",
+          "Una VLAN es una LAN virtual que permite establecer una RPV a través de Internet.",
+          "Una VLAN es una LAN virtual capaz de enrutar diferentes LANs."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT410-P1-03",
+        "t": "T4.10",
+        "o": "A",
+        "q": "¿Qué protocolo define las VLAN?",
+        "a": [
+          "RFC 1032.",
+          "IEEE 802.3u.",
+          "IEEE 802.1q.",
+          "IEEE 802.11."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT410-P1-04",
+        "t": "T4.10",
+        "o": "A",
+        "q": "¿Cuál de las siguientes afirmaciones sobre Ethernet Conmutada es cierta?",
+        "a": [
+          "Es una tecnología WAN.",
+          "Separa dominios de broadcast.",
+          "No soporta velocidades de transmisión superiores a 10 Mbps.",
+          "Cada segmento es un dominio de colisión independiente."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT410-P1-05",
+        "t": "T4.10",
+        "o": "A",
+        "q": "El tamaño de trama mínimo en Ethernet es:",
+        "a": [
+          "48 bytes.",
+          "24 bytes.",
+          "128 bytes.",
+          "64 bytes."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          2
+        ],
+        "d": 2,
+        "n": "Trama mínima Ethernet."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT410-P1-06",
+        "t": "T4.10",
+        "o": "A",
+        "q": "Sobre los algoritmos de encaminamiento utilizados por los routers, indique cuál de las siguientes afirmaciones es INCORRECTA:",
+        "a": [
+          "Mediante los algoritmos de estados de enlaces cada router” envía su tabla de encaminamiento completa a todos los demás “routers” en la red al producirse cualquier cambio en la tabla. Así actúa el protocolo OSPF.",
+          "Mediante los algoritmos de vector distancia (también conocidos como algoritmos Bellman-Ford) cada router envía su tabla de encaminado completa sólo a los routers vecinos a intervalos regulares. Así actúa el protocolo RIP.",
+          "Mediante los algoritmos de estados de enlaces cada router envía determinada información relativa al estado de sus enlaces a los demás routers lo que les permite construir una visión topológica de la red.",
+          "Los algoritmos de estados de enlaces son menos propensos a provocar un bucle de encaminamiento, ya que convergen (determinan el encaminamiento óptimo) más rápidamente."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [
+          4
+        ],
+        "d": 3,
+        "n": "Encaminamiento: estado de enlace vs vector distancia cruzados."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT410-P1-07",
+        "t": "T4.10",
+        "o": "A",
+        "q": "¿Cuántos bytes utiliza la trama de Ethernet (IEEE 802.3-2012) para el código de redundancia cíclica?",
+        "a": [
+          "4 bytes.",
+          "6 bytes.",
+          "12 bytes.",
+          "Ethernet no utiliza ningún código de redundancia cíclica."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT410-P1-08",
+        "t": "T4.10",
+        "o": "A",
+        "q": "En el encaminamiento por vector-distancia cada router:",
+        "a": [
+          "Envía una tabla a sus routers vecinos con la distancia de él a todos los destinos.",
+          "Envía una tabla a todos los routers con la distancia de él a todos los destinos.",
+          "Envía una tabla a sus routers vecinos con la distancia de él a todos sus vecinos.",
+          "Envía una tabla a todos los routers con la distancia de él a todos sus vecinos."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT410-P1-09",
+        "t": "T4.10",
+        "o": "A",
+        "q": "En el encaminamiento por estado de los enlaces cada router:",
+        "a": [
+          "Envía una tabla a sus routers vecinos con la distancia de él a todos los destinos.",
+          "Envía una tabla a todos los routers con la distancia de él a todos los destinos.",
+          "Envía una tabla a sus routers vecinos con la distancia de él a todos sus vecinos.",
+          "Envía una tabla a todos los routers con la distancia de él a todos sus vecinos."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT410-P1-10",
+        "t": "T4.10",
+        "o": "A",
+        "q": "Señale qué norma del IEEE normaliza la tecnología Power over Ethernet Plus (PoE +):",
+        "a": [
+          "IEEE 802.3ab.",
+          "IEEE 802.3at.",
+          "IEEE 802.3ap.",
+          "No es un estándar del IEEE sino que es una categoría de EIA/TIA 568b."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT410-P1-12",
+        "t": "T4.10",
+        "o": "A",
+        "q": "CSMA/CD significa:",
+        "a": [
+          "Carrier Sense Multiple Access with Collision Detection.",
+          "Carrier Sense Multiple Access with Common Data.",
+          "Carrier Sense Multiple Access without Collision Data.",
+          "Clear Sense Multiple Access with Collision Detection."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT410-P1-13",
+        "t": "T4.10",
+        "o": "A",
+        "q": "El protocolo CSMA/CD utilizado en el subnivel MAC de las LAN es propio de las redes:",
+        "a": [
+          "Ethernet.",
+          "Token ring.",
+          "Token bus.",
+          "Se puede emplear en cualquiera de las anteriores."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT410-P1-14",
+        "t": "T4.10",
+        "o": "A",
+        "q": "Una desventaja de la topología física de bus es que:",
+        "a": [
+          "Un fallo en el concentrador provoca el aislamiento de todos los nodos a él conectados.",
+          "Requiere más cable que la topología en estrella.",
+          "Es vulnerable a la atenuación, ya que pierde señal a través de la distancia del cable.",
+          "Es compleja y difícil de arreglar."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Desventaja del bus vs estrella."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT410-P1-15",
+        "t": "T4.10",
+        "o": "A",
+        "q": "En relación con la topología de una red, indique la respuesta INCORRECTA:",
+        "a": [
+          "Se distingue entre topología física y topología lógica.",
+          "En una configuración en estrella se pueden utilizar medios y velocidades de transmisión diferentes a lo largo de la red.",
+          "En una configuración en Bus, todas las estaciones están conectadas a un único canal de comunicaciones.",
+          "En una configuración en anillo, la avería de una estación no afecta al servicio."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT410-P1-16",
+        "t": "T4.10",
+        "o": "A",
+        "q": "¿Cuál de los siguientes es un protocolo de encaminamiento externo?",
+        "a": [
+          "RIP.",
+          "OSPF.",
+          "BGP.",
+          "IS-IS."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT410-P1-17",
+        "t": "T4.10",
+        "o": "A",
+        "q": "Indique cuál de las opciones siguientes es verdadera respecto al acceso al medio en redes LAN:",
+        "a": [
+          "Si la estación que utiliza el medio, cuando finaliza su uso lo cede a la siguiente que lo necesita, se denomina Token Passing.",
+          "Las redes que siguen un protocolo de acceso al medio consistente en que la estación que lo requiere observa hasta que no existe actividad en el mismo, en ese momento accede y observa que no colisiona con ninguna otra estación, utilizan CSMA.",
+          "En las redes con protocolo Token Passing se puede determinar el tiempo máximo en que una estación acceder al medio. En las redes con CSMA solo se puede estimar este tiempo.",
+          "Todas las respuestas anteriores son correctas."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT410-P1-18",
+        "t": "T4.10",
+        "o": "A",
+        "q": "En una LAN, el método token passing o paso de testigo consiste en:",
+        "a": [
+          "Escuchar el tráfico del testigo y transmitir si no se detecta nada.",
+          "Utilizar la posesión del testigo para garantizar el derecho a transmitir.",
+          "Añadir tramas de testigo a las tramas de datos para acceder a la red.",
+          "El testigo circula en un anillo hasta que alcanza su destino."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT410-P1-19",
+        "t": "T4.10",
+        "o": "A",
+        "q": "En la transmisión de una trama se incluye un campo denominado CRC. Señale la respuesta correcta:",
+        "a": [
+          "Es un campo que indica el final de la trama y prepara al equipo receptor para la siguiente trama.",
+          "Es un campo de control del número de bits incluidos en la trama, para conocer el final de la misma.",
+          "Es un campo de control de integridad de la trama, sirve para comprobar la ocurrencia de ciertos errores en la transmisión.",
+          "Es un campo de control de integridad de la trama, sirve para detectar cualquier error en la transmisión."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT410-P1-20",
+        "t": "T4.10",
+        "o": "A",
+        "q": "¿Cuál de las siguientes afirmaciones es incorrecta respecto a los dispositivos a usar en la interconexión de redes locales?",
+        "a": [
+          "Los conmutadores se utilizan para resolver problemas de rendimiento de la red debido a anchos de banda pequeños y embotellamientos.",
+          "Los encaminadores o routers son independientes del protocolo, ya que se sitúan en el nivel de red y eligen la ruta más eficiente de cada paquete que reciben.",
+          "El protocolo \"spanning tree\" tiene como misión evitar la formación de bucles en la interconexión de elementos de una red.",
+          "Los repetidores obligan a que los 2 segmentos que interconectan tengan el mismo acceso al medio, la misma dirección de red y trabaje con los mismos protocolos."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT410-P1-21",
+        "t": "T4.10",
+        "o": "A",
+        "q": "El estándar IEEE 802.3ae define una versión de Ethernet con una velocidad nominal de:",
+        "a": [
+          "1 Gbps.",
+          "100 Mbps.",
+          "10 Gbps.",
+          "1 Tbps."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT410-P1-22",
+        "t": "T4.10",
+        "o": "A",
+        "q": "En relación con los dispositivos de interconexión de redes, seleccione la respuesta correcta:",
+        "a": [
+          "Tanto los router como los switches definen dominios de colisión y difusión.",
+          "Los router definen dominios de colisión pero no de difusión.",
+          "Los router definen dominios de difusión y de colisión.",
+          "Los switches definen dominios de colisión y difusión."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT410-P1-23",
+        "t": "T4.10",
+        "o": "A",
+        "q": "¿Cuál es la dirección MAC de difusión de red o broadcast que se utiliza en Ethernet?",
+        "a": [
+          "255,255,255,255",
+          "FF::FF",
+          "FF:FF:FF:FF:FF:FF:FF:FF",
+          "FF:FF:FF:FF:FF:FF"
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT410-P1-24",
+        "t": "T4.10",
+        "o": "A",
+        "q": "Dentro de la topología de las redes de área local, aquella que se caracteriza por existir en ella un punto central, al cual se conectan todos los equipos, se denomina:",
+        "a": [
+          "Topología en bus.",
+          "Topología en anillo.",
+          "Topología en círculo.",
+          "Topología en estrella."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT410-P1-25",
+        "t": "T4.10",
+        "o": "A",
+        "q": "En una red de topología en anillo, si hay una rotura de un enlace entre dos dispositivos:",
+        "a": [
+          "La red funcionaria sin problema.",
+          "La red encontraría otro camino para llevar los datos a todos los dispositivos.",
+          "La red se reconfigura.",
+          "La red no funcionaría al estar roto el anillo."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Anillo roto."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT410-P1-26",
+        "t": "T4.10",
+        "o": "A",
+        "q": "¿Cuál de estas topologías de red de área local tiene la característica de que existe un enlace punto a punto directo entre los equipos vecinos que operan en un solo sentido?",
+        "a": [
+          "Topología de concentrador o árbol.",
+          "Topología de estrella.",
+          "Topología de bus.",
+          "Topología de anillo."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT410-P1-27",
+        "t": "T4.10",
+        "o": "A",
+        "q": "En las redes de área local, ¿cuál de estos métodos de control de acceso al medio solo se usa con redes de bus?",
+        "a": [
+          "Testigo de control o pase de testigo.",
+          "CSMA/CD.",
+          "Anillo ranurado o Polling.",
+          "Inserción de registro."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT410-P1-28",
+        "t": "T4.10",
+        "o": "A",
+        "q": "En las redes de área local inalámbricas, ¿cómo se denomina al conjunto de ordenadores portátiles que quieren comunicarse entre sí para formar una LAN autónoma?",
+        "a": [
+          "LAN inalámbrica de infraestructura.",
+          "LAN inalámbrica ad hoc.",
+          "LAN inalámbrica de acceso portátil.",
+          "LAN inalámbrica ad hoc de modulación y codificación."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT410-P1-29",
+        "t": "T4.10",
+        "o": "A",
+        "q": "Las direcciones MAC en Ethernet:",
+        "a": [
+          "Tenemos que configurarlas en todos los dispositivos.",
+          "Ya vienen asignadas de fábrica en el hardware.",
+          "Actualmente conviene configurarlas en IPv6.",
+          "Dependen del rango de nuestro proveedor de Internet."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "w": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT410-P1-30",
+        "t": "T4.10",
+        "o": "A",
+        "q": "Disponemos de una red de ordenadores en la que, si falla uno de ellos, todos los demás pueden seguir recibiendo la información a través de cualquier otro ordenador. ¿A qué tipo de red nos estamos refiriendo?",
+        "a": [
+          "Anillo.",
+          "Estrella.",
+          "Malla.",
+          "Árbol."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT410-P1-31",
+        "t": "T4.10",
+        "o": "A",
+        "q": "¿Cuál de las siguientes secuencias de estados se corresponde con la definida para el protocolo de Spanning Tree?",
+        "a": [
+          "Bloqueo-Escucha-Aprendizaje-Envío.",
+          "Escucha-Aprendizaje-Envío-Reseteo.",
+          "Aprendizaje-Reescritura-Enrutado-Envío.",
+          "Escucha-Aprendizaje-Enrutado-Envío."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT410-P1-33",
+        "t": "T4.10",
+        "o": "A",
+        "q": "Tamaño destinado en una trama básica Ethernet (IEEE 802.3-2012) para el payload:",
+        "a": [
+          "Tiene un mínimo de 64 Bytes hasta un máximo de 1500 Bytes.",
+          "Tiene un mínimo de 16 Bytes hasta un máximo de 1000 Bytes.",
+          "Tiene un mínimo de 46 Bytes hasta un máximo de 1500 Bytes.",
+          "Tiene un mínimo de 32 Bytes hasta un máximo de 1000 Bytes."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT410-P1-34",
+        "t": "T4.10",
+        "o": "A",
+        "q": "Señale la afirmación INCORRECTA en relación a los puentes:",
+        "a": [
+          "Operan en la capa 2 del modelo OSI.",
+          "Dividen la red de área local en varios segmentos.",
+          "Separan dominios de colisión.",
+          "No permite la unión de distintos tipos de medios de transmisión."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT410-P1-35",
+        "t": "T4.10",
+        "o": "A",
+        "q": "El protocolo STP está estandarizado por:",
+        "a": [
+          "IEEE 802.1a.",
+          "IEEE 802.1b.",
+          "IEEE 802.1c.",
+          "IEEE 802.1d."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT410-P1-36",
+        "t": "T4.10",
+        "o": "A",
+        "q": "El protocolo MSTP está estandarizado por:",
+        "a": [
+          "IEEE 802.1w.",
+          "IEEE 802.1s.",
+          "IEEE 802.1p.",
+          "IEEE 802.1q."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT410-P1-37",
+        "t": "T4.10",
+        "o": "A",
+        "q": "El protocolo SPB está estandarizado por:",
+        "a": [
+          "IEEE 802.1bz.",
+          "IEEE 802.1aq.",
+          "IEEE 802.1br.",
+          "IEEE 802.1aw."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT410-P1-39",
+        "t": "T4.10",
+        "o": "A",
+        "q": "Indique la afirmación INCORRECTA en relación con una VLAN:",
+        "a": [
+          "Se puede crear una VLAN entre distintos switches.",
+          "Un switch físico puede comportarse como varios switches lógicos.",
+          "Hace uso del protocolo STP para la creación del árbol.",
+          "Solo transmite una trama a los equipos que pertenezcan a dicha VLAN."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT410-P1-40",
+        "t": "T4.10",
+        "o": "A",
+        "q": "Sobre el formato de una trama VLAN señale la respuesta correcta:",
+        "a": [
+          "Respecto al formato de trama de Ethernet original se añade una etiqueta VLAN entre la dirección fuente y la dirección destino.",
+          "La etiqueta VLAN está compuesta, entre otros, por los campos EtherType y VLAN Identifier, ambos de 2 bytes de tamaño.",
+          "El campo TPID identifica el protocolo VLAN, estableciéndose el valor 0x8100.",
+          "El campo Información de control de etiqueta está formado por los campos Prioridad e Identificador de VLAN origen y VLAN destino."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT410-P1-43",
+        "t": "T4.10",
+        "o": "A",
+        "q": "En cuanto al protocolo de enrutamiento RIPv2, ¿cuál es el límite máximo de saltos para que una ruta a una red se considere alcanzable?",
+        "a": [
+          "15 saltos.",
+          "7 saltos.",
+          "16 saltos.",
+          "8 saltos."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT410-P1-44",
+        "t": "T4.10",
+        "o": "A",
+        "q": "En una red local en la que disponemos de múltiples switches, existen caminos redundantes entre los mismos que permiten enlazar los equipos con al menos dos caminos de tal forma que, ante el fallo de un enlace, no se produzca pérdida de servicio. A efecto de construir una topología lógica de nivel 2 que controle la presencia de bucles y con el requisito de independizar dicha topología por cada una de las VLAN configuradas, indique qué protocolo sería el indicado:",
+        "a": [
+          "802.1a.",
+          "802.1z.",
+          "802.1s.",
+          "802.1v."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT410-P1-45",
+        "t": "T4.10",
+        "o": "A",
+        "q": "En el estándar IEEE 802.1Q, indique cuál es el máximo número de identificadores de VLAN útiles que tenemos disponibles para ser usados en una red:",
+        "a": [
+          "16384.",
+          "4096.",
+          "4094.",
+          "2048."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT410-P1-46",
+        "t": "T4.10",
+        "o": "A",
+        "q": "¿Cuál de los siguientes protocolo de encaminamiento está basado en estado de enlace?",
+        "a": [
+          "RIP.",
+          "BGP.",
+          "IGPR.",
+          "OSPF."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT410-P1-47",
+        "t": "T4.10",
+        "o": "A",
+        "q": "¿Cuál de los siguientes protocolo de encaminamiento basado en path-vector?",
+        "a": [
+          "RIP.",
+          "BGP.",
+          "IGPR.",
+          "OSPF."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT410-P1-48",
+        "t": "T4.10",
+        "o": "A",
+        "q": "¿Qué dispositivo trabaja en la capa 1 del modelo OSI?",
+        "a": [
+          "Gateway.",
+          "Hub.",
+          "Switch.",
+          "Bridge."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT410-P1-49",
+        "t": "T4.10",
+        "o": "A",
+        "q": "¿Qué estándar del IEEE permite un ancho de banda de hasta 100 Gbps?",
+        "a": [
+          "802.3ba.",
+          "802.3be.",
+          "802.3bq.",
+          "802.3bz."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT410-P1-50",
+        "t": "T4.10",
+        "o": "A",
+        "q": "En una VLAN, ¿qué valor tiene el campo EtherType para IPv6?",
+        "a": [
+          "0x800.",
+          "0x.86DD.",
+          "0x806.",
+          "0x816D."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10-P1-77",
+        "t": "T4.10",
+        "o": "A",
+        "q": "¿Cuál de las siguientes no es una topología válida para una red de almacenamiento sobre la que se puede desplegar el estándar Fibre Channel?",
+        "a": [
+          "Conmutada (Switched Fabric).",
+          "Bucle arbitrado (Arbitrated Loop).",
+          "Punto a punto (Point-to-Point).",
+          "Constelación (Constellation)."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10B-P1-84",
+        "t": "T4.10",
+        "o": "A",
+        "q": "FCoE (Fiber Channel over Ethernet) funciona sobre:",
+        "a": [
+          "TCP.",
+          "UDP.",
+          "IP.",
+          "IEEE 802.3."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11B-P1-59",
+        "t": "T4.10",
+        "o": "A",
+        "q": "¿Cuál de las siguientes normas se relaciona con SQL?",
+        "a": [
+          "IEEE 1394.",
+          "ISO 9100.",
+          "ISO/IEC 9075.",
+          "IEEE 754."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-95",
+        "t": "T4.10",
+        "o": "A",
+        "q": "¿Qué es el Spanning tree?",
+        "a": [
+          "Es un puente para unir redes.",
+          "Es un protocolo que hablan los puentes entre sí.",
+          "Es un router para unir redes.",
+          "Es una pasarela para unir redes."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12B-P1-67",
+        "t": "T4.10",
+        "o": "A",
+        "q": "Indique cuál de las siguientes afirmaciones es FALSA respecto al estándar 802.11n:",
+        "a": [
+          "Utiliza las bandas de uso común.",
+          "La velocidad máxima de transmisión es 54 Mbps.",
+          "Permite utilizar múltiples antenas para transmitir y recibir simultáneamente.",
+          "Las redes con estándar 802.11n son susceptibles de ser interferidas por redes 802.11a/b/g."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [
+          2
+        ],
+        "d": 2,
+        "n": "802.11n con la velocidad de 802.11g."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12B-P1-77",
+        "t": "T4.10",
+        "o": "A",
+        "q": "¿Qué elimina los bucles de Switching?",
+        "a": [
+          "Protocol Spanning Tree.",
+          "TTL.",
+          "VTP.",
+          "Trunking."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "STP frente a TTL/VTP/trunking.",
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    }
+  ],
+  "counts": {
+    "total": 329,
+    "alreadyHadCitation": 254,
+    "added": 1,
+    "pending": 74,
+    "withCitation": 255
+  }
+}

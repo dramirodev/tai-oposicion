@@ -1,0 +1,3326 @@
+{
+  "schemaVersion": 1,
+  "topicId": "T4.02",
+  "baseCommit": "454a025ae26390dee0f057a4cfa9b6d5fc758fba",
+  "status": "CITATIONS_ACCEPTED_UNDER_USER_DELEGATION",
+  "scope": "Solo adición de citas para lectura; no concede nueva puntuabilidad ni altera pruebas editoriales previas.",
+  "file": {
+    "beforeSha256": "fff603a0585089ce8340188a8e376869e1b30c6d05b61e723b8b5800852be7fa",
+    "afterSha256": "ef16d37a356878867b949b61231a5a462ec5321c2bcb3a63dd5b2f9f97d2142e"
+  },
+  "sample": {
+    "beforeSha256": "3a8e8e18e2fe311691996c71865aaf039601ad1c0945b94c41dd3475260c1b1d",
+    "afterSha256": "3a8e8e18e2fe311691996c71865aaf039601ad1c0945b94c41dd3475260c1b1d"
+  },
+  "sourceRoot": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario",
+  "sources": {
+    "e-AT402-P1-25": {
+      "path": "T4.02 Administración de BD y Virtualización/T4.02 Administración de BD y Virtualización - Temario.pdf",
+      "sourceHash": "27e64d9f792c38d63afe91f3e887bebbd9c7c5ea85f0fdc06ee93a6a59fcf64f",
+      "physicalPage": 68,
+      "printedPage": 68,
+      "excerpt": "- VMware Workstation: es el estándar para la ejecución de varios sistemas operativos como máquinas virtuales en un único PC de Linux o Windows. Clasificado como de tipo 2.",
+      "label": "Hipervisores — VMware Workstation de tipo 2"
+    },
+    "e-AT402-P1-38": {
+      "path": "T4.02 Administración de BD y Virtualización/T4.02 Administración de BD y Virtualización - Temario.pdf",
+      "sourceHash": "27e64d9f792c38d63afe91f3e887bebbd9c7c5ea85f0fdc06ee93a6a59fcf64f",
+      "physicalPage": 85,
+      "printedPage": 85,
+      "excerpt": "docker commit Crea una imagen de un contenedor",
+      "label": "Pasaje del temario"
+    },
+    "e-AT402-P1-47": {
+      "path": "T4.02 Administración de BD y Virtualización/T4.02 Administración de BD y Virtualización - Temario.pdf",
+      "sourceHash": "27e64d9f792c38d63afe91f3e887bebbd9c7c5ea85f0fdc06ee93a6a59fcf64f",
+      "physicalPage": 95,
+      "printedPage": 95,
+      "excerpt": "Docker Compose Docker Compose es una herramienta oficial de Docker que está disponible para orquestar conjuntos de contenedores. El comando “Docker compose” se utiliza para crear aplicaciones MULTICONTENEDOR conocidas como “stacks” o pilas.",
+      "label": "Pasaje del temario"
+    },
+    "e-AT402-P1-60": {
+      "path": "T4.02 Administración de BD y Virtualización/T4.02 Administración de BD y Virtualización - Temario.pdf",
+      "sourceHash": "27e64d9f792c38d63afe91f3e887bebbd9c7c5ea85f0fdc06ee93a6a59fcf64f",
+      "physicalPage": 39,
+      "printedPage": 39,
+      "excerpt": "6. SAN (Storage Area Network) Una SAN es una red independiente dedicada exclusivamente al almacenamiento. Esta arquitectura implica disponer de una infraestructura de red de alta velocidad dedicada sólo para almacenamiento y backup, optimizada para mover grandes cantidades de datos. Opera a nivel de BLOQUES de datos.",
+      "label": "Pasaje del temario"
+    },
+    "e-AS09-P1-90": {
+      "path": "T4.02 Administración de BD y Virtualización/T4.02 Administración de BD y Virtualización - Temario.pdf",
+      "sourceHash": "27e64d9f792c38d63afe91f3e887bebbd9c7c5ea85f0fdc06ee93a6a59fcf64f",
+      "physicalPage": 39,
+      "printedPage": 39,
+      "excerpt": "6. SAN (Storage Area Network) Una SAN es una red independiente dedicada exclusivamente al almacenamiento. Esta arquitectura implica disponer de una infraestructura de red de alta velocidad dedicada sólo para almacenamiento y backup, optimizada para mover grandes cantidades de datos. Opera a nivel de BLOQUES de datos.",
+      "label": "Pasaje del temario"
+    },
+    "e-AS09B-P1-100": {
+      "path": "T4.02 Administración de BD y Virtualización/T4.02 Administración de BD y Virtualización - Temario.pdf",
+      "sourceHash": "27e64d9f792c38d63afe91f3e887bebbd9c7c5ea85f0fdc06ee93a6a59fcf64f",
+      "physicalPage": 85,
+      "printedPage": 85,
+      "excerpt": "docker build Crea una imagen a partir de un Dockerfile",
+      "label": "Pasaje del temario"
+    }
+  },
+  "questions": [
+    {
+      "id": "AT402-P1-25",
+      "before": {
+        "i": "AT402-P1-25",
+        "t": "T4.02",
+        "o": "A",
+        "q": "¿Cuál de las siguientes soluciones de virtualización es de tipo 2?",
+        "a": [
+          "Citrix XenServer.",
+          "VMware Workstation.",
+          "VMware ESXi.",
+          "VMware vSphere."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT402-P1-25",
+        "t": "T4.02",
+        "o": "A",
+        "q": "¿Cuál de las siguientes soluciones de virtualización es de tipo 2?",
+        "a": [
+          "Citrix XenServer.",
+          "VMware Workstation.",
+          "VMware ESXi.",
+          "VMware vSphere."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "T4.02 Administración de BD y Virtualización - Temario.pdf — Hipervisores — VMware Workstation de tipo 2\n\nTemario, p. 68 (PDF p. 68)\n\n- VMware Workstation: es el estándar para la ejecución de varios sistemas operativos como máquinas virtuales en un único PC de Linux o Windows. Clasificado como de tipo 2.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "0b1ef74e34a7514b31efe694b61e8ab1b21b63ca20b742e305df3773f209c1e4",
+      "afterSha256": "796e33faeccccfdb8e947b0661f98d75a490c2c0dac72b2ab22480dcdcbd0333",
+      "evidenceKeys": [
+        "e-AT402-P1-25"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT402-P1-38",
+      "before": {
+        "i": "AT402-P1-38",
+        "t": "T4.02",
+        "o": "A",
+        "q": "¿Con qué comando de Docker crearemos una imagen nueva a partir de un contenedor?",
+        "a": [
+          "docker create",
+          "docker build",
+          "docker checkpoint",
+          "docker commit"
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT402-P1-38",
+        "t": "T4.02",
+        "o": "A",
+        "q": "¿Con qué comando de Docker crearemos una imagen nueva a partir de un contenedor?",
+        "a": [
+          "docker create",
+          "docker build",
+          "docker checkpoint",
+          "docker commit"
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [],
+        "d": null,
+        "u": "T4.02 Administración de BD y Virtualización - Temario.pdf — Pasaje del temario\n\nTemario, p. 85 (PDF p. 85)\n\ndocker commit Crea una imagen de un contenedor\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "acbeec9546379457f92d755c1e3001bbd10c2768d006ff9b9d58af0fd14446ad",
+      "afterSha256": "c0e856675044bd212701cbbb609917e7199ee086e3d502e8f8207303cde42440",
+      "evidenceKeys": [
+        "e-AT402-P1-38"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT402-P1-47",
+      "before": {
+        "i": "AT402-P1-47",
+        "t": "T4.02",
+        "o": "A",
+        "q": "La herramienta de Docker que permite crear aplicaciones multicontenedor se denomina:",
+        "a": [
+          "Docker Swarm.",
+          "Docker CLI.",
+          "Docker Compose.",
+          "Docker Cloud."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT402-P1-47",
+        "t": "T4.02",
+        "o": "A",
+        "q": "La herramienta de Docker que permite crear aplicaciones multicontenedor se denomina:",
+        "a": [
+          "Docker Swarm.",
+          "Docker CLI.",
+          "Docker Compose.",
+          "Docker Cloud."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T4.02 Administración de BD y Virtualización - Temario.pdf — Pasaje del temario\n\nTemario, p. 95 (PDF p. 95)\n\nDocker Compose Docker Compose es una herramienta oficial de Docker que está disponible para orquestar conjuntos de contenedores. El comando “Docker compose” se utiliza para crear aplicaciones MULTICONTENEDOR conocidas como “stacks” o pilas.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "41fdd6cbce25e2f885d1c2eea0e92805f8ea8f4f4a058244c7e6c41ca35b02e6",
+      "afterSha256": "faaaf4518f89b6f0c786454d5939e36f23e2e9c3a80ab5bfcc59112bfd18b33c",
+      "evidenceKeys": [
+        "e-AT402-P1-47"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT402-P1-60",
+      "before": {
+        "i": "AT402-P1-60",
+        "t": "T4.02",
+        "o": "A",
+        "q": "¿Qué sistema de almacenamiento de entre los siguientes realiza el acceso a nivel de bloque de bits?",
+        "a": [
+          "CRS (Cloud Remote Storage).",
+          "NAS (Network Attached Storaged).",
+          "SAN (Storage Area Network).",
+          "MSN (Massive Storage Network)."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT402-P1-60",
+        "t": "T4.02",
+        "o": "A",
+        "q": "¿Qué sistema de almacenamiento de entre los siguientes realiza el acceso a nivel de bloque de bits?",
+        "a": [
+          "CRS (Cloud Remote Storage).",
+          "NAS (Network Attached Storaged).",
+          "SAN (Storage Area Network).",
+          "MSN (Massive Storage Network)."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "T4.02 Administración de BD y Virtualización - Temario.pdf — Pasaje del temario\n\nTemario, p. 39 (PDF p. 39)\n\n6. SAN (Storage Area Network) Una SAN es una red independiente dedicada exclusivamente al almacenamiento. Esta arquitectura implica disponer de una infraestructura de red de alta velocidad dedicada sólo para almacenamiento y backup, optimizada para mover grandes cantidades de datos. Opera a nivel de BLOQUES de datos.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "434646e83b3ca01cf99d96dbba2909ab49b9a3b625b86069f126aa0248f65a18",
+      "afterSha256": "99273aeeaaa12290cb6e62d5c770fbf7bb7e9a4b401c1261f876b2fd6f85bd7c",
+      "evidenceKeys": [
+        "e-AT402-P1-60"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AS09-P1-90",
+      "before": {
+        "i": "AS09-P1-90",
+        "t": "T4.02",
+        "o": "A",
+        "q": "De entre los siguientes, el sistema de almacenamiento que realiza el acceso a nivel de bloque de bits es:",
+        "a": [
+          "CRS (Cloud Remote Storage).",
+          "NAS (Network Attached Storage).",
+          "SAN (Storage Area Network).",
+          "MSN (Massive Storage Network)."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AS09-P1-90",
+        "t": "T4.02",
+        "o": "A",
+        "q": "De entre los siguientes, el sistema de almacenamiento que realiza el acceso a nivel de bloque de bits es:",
+        "a": [
+          "CRS (Cloud Remote Storage).",
+          "NAS (Network Attached Storage).",
+          "SAN (Storage Area Network).",
+          "MSN (Massive Storage Network)."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T4.02 Administración de BD y Virtualización - Temario.pdf — Pasaje del temario\n\nTemario, p. 39 (PDF p. 39)\n\n6. SAN (Storage Area Network) Una SAN es una red independiente dedicada exclusivamente al almacenamiento. Esta arquitectura implica disponer de una infraestructura de red de alta velocidad dedicada sólo para almacenamiento y backup, optimizada para mover grandes cantidades de datos. Opera a nivel de BLOQUES de datos.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "b39edb52153a6782fef00001f6d8f1fdf88372e51516e30f757c8b0e64c40d27",
+      "afterSha256": "ac551d9f9a58467c190c4ebf8469d0377e7a64ba752274b079516643ab4872f4",
+      "evidenceKeys": [
+        "e-AS09-P1-90"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AS09B-P1-100",
+      "before": {
+        "i": "AS09B-P1-100",
+        "t": "T4.02",
+        "o": "A",
+        "q": "Se desea construir una imagen Docker a partir de un fichero Dockerfile, ¿qué comando debe usarse para llevar a cabo esta acción?",
+        "a": [
+          "docker make",
+          "docker run",
+          "docker build",
+          "docker ps"
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AS09B-P1-100",
+        "t": "T4.02",
+        "o": "A",
+        "q": "Se desea construir una imagen Docker a partir de un fichero Dockerfile, ¿qué comando debe usarse para llevar a cabo esta acción?",
+        "a": [
+          "docker make",
+          "docker run",
+          "docker build",
+          "docker ps"
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null,
+        "u": "T4.02 Administración de BD y Virtualización - Temario.pdf — Pasaje del temario\n\nTemario, p. 85 (PDF p. 85)\n\ndocker build Crea una imagen a partir de un Dockerfile\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "cc90b6413e6e3f4471cc4c760953fa5f80bc7e7bb91f26410dbab04f2a5de0e5",
+      "afterSha256": "a4ba5d59c7535cc30bdd509ad846b2c79d54b90e6aa8be2989eb2237a6b1dbff",
+      "evidenceKeys": [
+        "e-AS09B-P1-100"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    }
+  ],
+  "pending": [
+    {
+      "question": {
+        "i": "TAI2024B-P1-60",
+        "t": "T4.02",
+        "o": "O",
+        "q": "Señale la respuesta correcta:",
+        "a": [
+          "Los backups utilizan poca capacidad de almacenamiento.",
+          "Los backups son manuales, los snapshots son programables.",
+          "Los backups pueden almacenarse en localizaciones y medios distintos.",
+          "Los backups son una representación instantánea del estado de un sistema en un momento específico."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          8,
+          7
+        ],
+        "d": 1,
+        "n": "b) y d) intercambian rasgos de backup y snapshot.",
+        "y": "Ingreso libre OEP 2023-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAI2024B-P1-61",
+        "t": "T4.02",
+        "o": "O",
+        "q": "Señale la respuesta correcta referente a los sistemas de almacenamiento SAN y NAS:",
+        "a": [
+          "SAN es más económico y fácil de configurar.",
+          "SAN es el acrónimo de Storage Attached Network.",
+          "NAS es un dispositivo de almacenamiento compartido basado en archivos.",
+          "NAS es el acrónimo de Network Area Storage."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          9,
+          8
+        ],
+        "d": 1,
+        "n": "Acrónimos alterados (Storage Attached, Network Area); a) atribuye a SAN lo de NAS.",
+        "y": "Ingreso libre OEP 2023-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAI2024B-P1-63",
+        "t": "T4.02",
+        "o": "O",
+        "q": "Señale cuáles de las siguientes son tecnologías relacionadas con la contenerización y la gestión de contenedores:",
+        "a": [
+          "Docker, Containerd y Podman.",
+          "Docker, CRI-O y nginx.",
+          "Podman, Kubernetes y Ubuntu.",
+          "Docker, Kubernetes y Debian."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          13
+        ],
+        "d": 1,
+        "n": "Intrusos reales de otra familia (nginx, Ubuntu, Debian).",
+        "y": "Ingreso libre OEP 2023-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAIL2022-P1-23",
+        "t": "T4.02",
+        "o": "O",
+        "q": "Cuál de los siguientes son los objetos básicos de Kubernetes:",
+        "a": [
+          "Pod, State, Volume, Namespace.",
+          "Pod, Service, Volume, Namespace.",
+          "Job, Service, Volume, Namespace.",
+          "Job, Pod, Volume, Deployment."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          9,
+          13
+        ],
+        "d": 2,
+        "n": "Cuartetos que cambian un elemento (State inventado, Job/Deployment de otra categoría).",
+        "y": "Ingreso libre OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAIL2022-P1-63",
+        "t": "T4.02",
+        "o": "O",
+        "q": "Respecto a la virtualización de máquinas, indique la opción FALSA:",
+        "a": [
+          "Facilita el despliegue de entornos.",
+          "Requiere aumentar la inversión en hardware específico para la virtualización.",
+          "Posibilita la ejecución de varios sistemas operativos en una única máquina física.",
+          "Permite un aprovechamiento mayor de la capacidad del hardware."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [
+          8
+        ],
+        "d": 1,
+        "n": "b) invierte una ventaja (ahorro en hardware).",
+        "y": "Ingreso libre OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAIL2022-P1-64",
+        "t": "T4.02",
+        "o": "O",
+        "q": "Una copia de seguridad (backup) diferencial:",
+        "a": [
+          "Realiza una copia fiel de los datos, lo que implica que un archivo eliminado en el origen, también se eliminará en la copia de seguridad.",
+          "Partiendo de una copia de backup completa, realiza una copia de todos los datos modificados desde que se hizo ese backup completo.",
+          "Realiza una copia sólo de los datos modificados desde el último backup (sea completo o incremental).",
+          "Realiza una copia integral de los datos, copiando todos los contenidos de los sistemas a mantener."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Definiciones de espejo, incremental y completa frente a diferencial.",
+        "y": "Ingreso libre OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAIL2022-P1-65",
+        "t": "T4.02",
+        "o": "O",
+        "q": "¿En qué campo del objeto de Kubernetes hay que incluir los valores que permiten identificar unívocamente al objeto?",
+        "a": [
+          "kind",
+          "spec",
+          "apiVersion",
+          "metadata"
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Campos hermanos de un objeto de Kubernetes.",
+        "y": "Ingreso libre OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2019-P1-60",
+        "t": "T4.02",
+        "o": "O",
+        "q": "En el contexto de la administración del almacenamiento, ¿qué es el “Thin Provisioning”?",
+        "a": [
+          "Es un mecanismo de despliegue de discos en red para clientes ligeros.",
+          "Es método de virtualización de almacenamiento que permite que el espacio se asigne de forma justa y puntual.",
+          "Es una tecnología que permite agregar discos físicos en caliente a las cabinas de la SAN de forma ligera.",
+          "Es un método por el que se asigna todo el espacio virtualizado disponible y se va a reduciendo (shrinking) a medida que el cliente lo descarta."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          8
+        ],
+        "d": 2,
+        "n": "Thin provisioning: se repite en 2022 S2-03.",
+        "y": "Ingreso libre OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2019-P1-61",
+        "t": "T4.02",
+        "o": "O",
+        "q": "En relación a los sistemas RAID, indique qué configuración permite acceso independiente con paridad distribuida:",
+        "a": [
+          "RAID 1",
+          "RAID 3",
+          "RAID 4",
+          "RAID 5"
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Niveles RAID hermanos.",
+        "y": "Ingreso libre OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025A-P1-62",
+        "t": "T4.02",
+        "o": "O",
+        "q": "En el ámbito de la virtualización de sistemas, un hipervisor de tipo 1 se caracteriza por:",
+        "a": [
+          "Ejecutarse como una aplicación sobre un sistema operativo anfitrión.",
+          "Ejecutarse directamente sobre el hardware físico sin necesidad de un sistema operativo anfitrión.",
+          "Requerir almacenamiento compartido para funcionar correctamente.",
+          "Limitar la ejecución a una única máquina virtual por host."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          8
+        ],
+        "d": 1,
+        "n": "Hipervisor tipo 1 frente a tipo 2.",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025A-P1-63",
+        "t": "T4.02",
+        "o": "O",
+        "q": "En sistemas de almacenamiento virtualizado, ¿cuál de las siguientes es una diferencia entre un snapshot y una copia de seguridad?",
+        "a": [
+          "El snapshot garantiza la conservación permanente de los datos de un sistema, mientras que la copia de seguridad es temporal.",
+          "El snapshot sustituye completamente a la copia de seguridad cuando existe redundancia en el almacenamiento.",
+          "El snapshot replica los datos en un sistema independiente, mientras que la copia de seguridad se mantiene en el mismo sistema.",
+          "Un snapshot es una captura del estado completo de un sistema o conjunto de datos en un momento específico, mientras que un backup consiste en crear una réplica exacta de los datos originales con el propósito de restaurarlos en caso de pérdida, daño o error."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          8,
+          12
+        ],
+        "d": 1,
+        "n": "Snapshot frente a copia de seguridad (se repite en 2024 P60).",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025A-P1-64",
+        "t": "T4.02",
+        "o": "O",
+        "q": "¿Qué comando de Docker permite crear e iniciar un nuevo contenedor, descargando la imagen si es necesario, y ejecutar en el contenedor un comando especificado?",
+        "a": [
+          "docker run",
+          "docker start",
+          "docker exec",
+          "docker play"
+        ],
+        "c": 0,
+        "k": "K",
+        "x": [
+          10
+        ],
+        "d": 1,
+        "n": "docker run frente a start/exec (se repite en 2019 S2-13).",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025A-P1-65",
+        "t": "T4.02",
+        "o": "O",
+        "q": "De los componentes de Kubernetes que forman el plano de control y que toman decisiones globales sobre el clúster, ¿cuál es responsable de decidir en qué nodo debe ejecutarse un Pod basándose en los recursos disponibles?",
+        "a": [
+          "kube-apiserver",
+          "etcd",
+          "kube-scheduler",
+          "kube-controller-manager"
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Componentes del plano de control de Kubernetes.",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025X-P1-59",
+        "t": "T4.02",
+        "o": "O",
+        "q": "En virtualización de sistemas, ¿qué caracteriza a un hipervisor de tipo 1?",
+        "a": [
+          "Se ejecuta directamente sobre el hardware físico y permite ejecutar sistemas operativos invitados.",
+          "Se ejecuta como una aplicación dentro de un sistema operativo anfitrión.",
+          "Se utiliza exclusivamente para virtualizar periféricos de impresión.",
+          "Es una herramienta destinada exclusivamente a realizar copias de seguridad."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          8,
+          12
+        ],
+        "d": 1,
+        "n": "Hipervisor tipo 1 (se repite en 2025 A P62).",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025X-P1-60",
+        "t": "T4.02",
+        "o": "O",
+        "q": "¿En qué arquitectura de almacenamiento se permite que varios usuarios y dispositivos en la red de área local accedan a los datos desde un área de almacenamiento centralizada en la red?",
+        "a": [
+          "Arquitectura NAS.",
+          "Arquitectura SAN.",
+          "Arquitectura DAS.",
+          "Arquitectura de Disco Interno."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "NAS frente a SAN/DAS (se repite en 2024 P61).",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025X-P1-61",
+        "t": "T4.02",
+        "o": "O",
+        "q": "¿Cuál de las siguientes opciones es un ejemplo de hipervisor de tipo 1?",
+        "a": [
+          "VirtualBox.",
+          "VMware Workstation.",
+          "VMware ESXi.",
+          "Parallels Desktop."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          13
+        ],
+        "d": 1,
+        "n": "ESXi frente a hipervisores de tipo 2.",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025X-P1-62",
+        "t": "T4.02",
+        "o": "O",
+        "q": "Señale la respuesta correcta en el ámbito de la infraestructura de escritorio virtual (VDI):",
+        "a": [
+          "VDI es el alojamiento de entornos de escritorio en un servidor central.",
+          "En VDI persistente el cliente final puede estar conectado al mismo escritorio cada vez o a uno aleatorio del grupo.",
+          "En VDI no persistente cada vez que un usuario accede al entorno VDI, se conecta al mismo escritorio con todos sus cambios retenidos en la imagen del sistema operativo virtual, incluso después de reiniciar la conexión.",
+          "No es necesario que los clientes finales estén constantemente conectados al servidor para que puedan mantener el acceso a los escritorios virtualizados."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          8
+        ],
+        "d": 2,
+        "n": "VDI persistente/no persistente invertidos.",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025X-P1-63",
+        "t": "T4.02",
+        "o": "O",
+        "q": "En Oracle 11g, ¿cuál es el comando de RMAN para listar los scripts globales y locales disponibles para ejecutar?",
+        "a": [
+          "RMAN> list script;",
+          "RMAN> list script names;",
+          "RMAN> list;",
+          "RMAN> list global script names;"
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [
+          10
+        ],
+        "d": 3,
+        "n": "RMAN list script names.",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025X-P1-64",
+        "t": "T4.02",
+        "o": "O",
+        "q": "¿Qué es Kubernetes?",
+        "a": [
+          "Un emulador para ejecutar aplicaciones sobre arquitecturas de procesador diferentes.",
+          "Una plataforma de orquestación de contenedores de código abierto.",
+          "Un simulador de carga de bases de datos no relacionales.",
+          "Un sistema de virtualización de contenedores a nivel de sistema operativo."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          13
+        ],
+        "d": 1,
+        "n": "Kubernetes frente a definiciones de emulador o virtualizador.",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2019-P1-36",
+        "t": "T4.02",
+        "o": "O",
+        "q": "¿Cuál de los siguientes NO es un tipo de backup?",
+        "a": [
+          "Compartimental",
+          "Diferencial",
+          "Incremental",
+          "Completa"
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [
+          9
+        ],
+        "d": 1,
+        "n": "\"Compartimental\" inventado.",
+        "y": "Promoción interna OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2022-P1-35",
+        "t": "T4.02",
+        "o": "O",
+        "q": "Señale la opción FALSA respecto a la virtualización del escritorio:",
+        "a": [
+          "Optimiza aspectos como la aceleración de los gráficos, mejorando la experiencia del usuario para que sea similar a la que puede ofrecer un equipo físico.",
+          "Existen distintos tipos de fabricantes que ofrecen soluciones VDI orientados a ofrecer una experiencia de trabajo completa a los usuarios.",
+          "El acceso a los escritorios virtuales se puede hacer desde múltiples plataformas y dispositivos, como estaciones de trabajo, clientes ligeros, tablets e incluso teléfonos móviles.",
+          "Ofrece a los usuarios acceso remoto a escritorios completos, por lo que requiere acceder desde de un hardware potente para poder ejecutarlo."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [
+          12
+        ],
+        "d": 2,
+        "n": "VDI: \"requiere acceso\" absolutizado.",
+        "y": "Promoción interna OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2022-P1-37",
+        "t": "T4.02",
+        "o": "O",
+        "q": "Señale la respuesta correcta acerca del concepto de Kubernetes:",
+        "a": [
+          "Hace deployment de código fuente y compila tu aplicación.",
+          "Dictamina las soluciones de registros, monitoreo o alerta que se deben usar.",
+          "No provee ni adopta un sistema exhaustivo de mantenimiento, administración o corrección automática de errores.",
+          "Limita el tipo de aplicaciones que soporta."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          12,
+          8
+        ],
+        "d": 3,
+        "n": "Lo que Kubernetes NO hace (documentación oficial).",
+        "y": "Promoción interna OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2022-P1-R-02",
+        "t": "T4.02",
+        "o": "O",
+        "q": "En Linux, ¿qué es LXC?",
+        "a": [
+          "Es una tecnología de virtualización en el nivel de sistema operativo para Linux.",
+          "Corresponde con las siglas Linux Exchange Container.",
+          "Es una de las últimas versiones de Linux Mint.",
+          "LXC es una tecnología basada en Docker for Linux."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          9
+        ],
+        "d": 1,
+        "n": "LXC frente a expansiones inventadas.",
+        "y": "Promoción interna OEP 2022 (2023)",
+        "r": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2024A-P1-48",
+        "t": "T4.02",
+        "o": "O",
+        "q": "Referente a la Infraestructura Convergente (CI), señale la respuesta correcta:",
+        "a": [
+          "Es una solución que requiere de una gestión compleja y poco optimizada de los recursos.",
+          "Es una solución definida por hardware que combina cómputo, redes, almacenamiento, administración de sistemas y software en un paquete preconfigurado que funciona como un sistema singular.",
+          "Es una solución difícil de escalar, requiere planificación previa.",
+          "Aumenta en gran medida los costos asociados con la energía, la refrigeración y el cableado en el centro de datos."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          8
+        ],
+        "d": 2,
+        "n": "Infraestructura convergente: rasgos invertidos.",
+        "y": "Promoción interna OEP 2021-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2018-P1-74",
+        "t": "T4.02",
+        "o": "O",
+        "q": "De las siguientes, ¿cuál es una solución de virtualización?",
+        "a": [
+          "RoundcubeVM",
+          "PowerVM",
+          "Mattermost",
+          "SlackVM"
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          9
+        ],
+        "d": 1,
+        "n": "PowerVM frente a nombres inventados.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2018-P1-75",
+        "t": "T4.02",
+        "o": "O",
+        "q": "Señale la respuesta INCORRECTA con respecto a los sistemas RAID:",
+        "a": [
+          "RAID 3 precisa al menos tres discos.",
+          "RAID 0 es tolerante a fallos.",
+          "RAID 1 duplica la información en discos espejo.",
+          "RAID 5 distribuye la información de paridad."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [
+          8
+        ],
+        "d": 1,
+        "n": "RAID 0 no es tolerante a fallos.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2018-P1-37",
+        "t": "T4.02",
+        "o": "O",
+        "q": "En el contexto de la virtualización de sistemas, indique cuál de los siguientes hipervisores se comportaría como un programa más ejecutándose sobre el sistema operativo instalado sobre la máquina real:",
+        "a": [
+          "Hipervisor tipo 2.",
+          "Hipervisor bare-metal.",
+          "Hipervisor unhosted.",
+          "Hipervisor nativo."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          8
+        ],
+        "d": 1,
+        "n": "Hipervisor tipo 2 frente a tipo 1 (bare-metal, nativo).",
+        "y": "Promoción interna OEP 2018"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT402-P1-01",
+        "t": "T4.02",
+        "o": "A",
+        "q": "Para conectarnos a la base datos FRAUDE con el usuario USER en MySQL ejecutaremos la sentencia:",
+        "a": [
+          "mysqld -u USER -p FRAUDE",
+          "mysql -u USER -p FRAUDE",
+          "mysqlp -u USER -p FRAUDE",
+          "mysqldd -u USER -p FRAUDE"
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT402-P1-02",
+        "t": "T4.02",
+        "o": "A",
+        "q": "En MySQL, ¿qué sentencia nos permite actualizar la información estadística de la tabla VENTAS?",
+        "a": [
+          "UPDATE TABLE VENTAS;",
+          "UPDATE VENTAS;",
+          "ANALYZE TABLE VENTAS;",
+          "ANALYZE VENTAS;"
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT402-P1-03",
+        "t": "T4.02",
+        "o": "A",
+        "q": "En PostgreSQL, ¿qué sentencia nos permite conectarnos a la base de datos PRUEBAS?",
+        "a": [
+          "ptsql -p PRUEBAS",
+          "psql -p PRUEBAS",
+          "ptsql -d PRUEBAS",
+          "psql -d PRUEBAS"
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT402-P1-04",
+        "t": "T4.02",
+        "o": "A",
+        "q": "De entre los siguientes, ¿qué nivel de RAID utiliza el denominado \"disk mirroring\" como mecanismo de tolerancia a fallos?",
+        "a": [
+          "RAID 0.",
+          "RAID 1.",
+          "RAID 5.",
+          "RAID 6."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT402-P1-05",
+        "t": "T4.02",
+        "o": "A",
+        "q": "De entre los siguientes, ¿qué nivel de RAID utiliza stripping a nivel de byte?",
+        "a": [
+          "RAID 0.",
+          "RAID 1.",
+          "RAID 2.",
+          "RAID 3."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT402-P1-06",
+        "t": "T4.02",
+        "o": "A",
+        "q": "¿En qué nivel RAID la información se fracciona por bloques y se almacena de forma alternativa en todos los discos del conjunto sin información de paridad?",
+        "a": [
+          "RAID 0.",
+          "RAID 2.",
+          "RAID 3.",
+          "RAID 5."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT402-P1-07",
+        "t": "T4.02",
+        "o": "A",
+        "q": "¿Qué nivel RAID fracciona la información en bytes y se almacena de forma alternativa en todos los discos del conjunto con información de paridad dedicada?",
+        "a": [
+          "RAID 2.",
+          "RAID 3.",
+          "RAID 4.",
+          "RAID 5."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT402-P1-08",
+        "t": "T4.02",
+        "o": "A",
+        "q": "En el nivel RAID 1+0, ¿cuántos discos se necesitan como mínimo?",
+        "a": [
+          "2.",
+          "3.",
+          "4.",
+          "6."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT402-P1-09",
+        "t": "T4.02",
+        "o": "A",
+        "q": "¿Cuál de los siguientes NO es un tipo de cinta magnética?",
+        "a": [
+          "DLT.",
+          "TLO.",
+          "DAT.",
+          "LTO."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [
+          7,
+          9
+        ],
+        "d": 2,
+        "n": "Formatos de cinta: TLO inventado (anagrama de LTO)."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT402-P1-10",
+        "t": "T4.02",
+        "o": "A",
+        "q": "Un DAS opera a nivel de:",
+        "a": [
+          "Bits.",
+          "Bytes.",
+          "Bloques.",
+          "Ficheros."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT402-P1-11",
+        "t": "T4.02",
+        "o": "A",
+        "q": "Indique la respuesta INCORRECTA en relación a un sistema NAS:",
+        "a": [
+          "Se implementan mediante un dispositivo software simple denominado NAS head.",
+          "Se conecta directamente a una red de datos.",
+          "CIFS es un protocolo relacionado con la compartición de archivos.",
+          "Opera a nivel de ficheros."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT402-P1-12",
+        "t": "T4.02",
+        "o": "A",
+        "q": "¿Qué protocolo SAN encapsula tramas Fibre Channel dentro de un trama de Ethernet?",
+        "a": [
+          "AoE.",
+          "FC-NVMe.",
+          "iSCSI.",
+          "FCoE."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT402-P1-13",
+        "t": "T4.02",
+        "o": "A",
+        "q": "¿Qué protocolo SAN permite la transmisión de tramas Fibre Channel sin modificar a través de túneles IP con el objetivo de facilitar la extensión geográfico de una red SAN?",
+        "a": [
+          "FCIP.",
+          "FC-NVMe.",
+          "iSCSI.",
+          "iFCP."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT402-P1-14",
+        "t": "T4.02",
+        "o": "A",
+        "q": "Una red LAN + SAN convergente se basa en el protocolo:",
+        "a": [
+          "FCoE.",
+          "iFCP.",
+          "iSCSI.",
+          "FCP."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT402-P1-15",
+        "t": "T4.02",
+        "o": "A",
+        "q": "¿Qué protocolo SAN transmite comandos SCSI sobre redes Fibre Channel?",
+        "a": [
+          "FCoE.",
+          "iFCP.",
+          "iSCSI.",
+          "FCP."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT402-P1-16",
+        "t": "T4.02",
+        "o": "A",
+        "q": "Una red LAN separada y dedicada exclusivamente al almacenamiento es una:",
+        "a": [
+          "FC SAN.",
+          "IP SAN.",
+          "LAN + SAN convergente.",
+          "Ninguna de las respuestas anteriores es correcta."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT402-P1-17",
+        "t": "T4.02",
+        "o": "A",
+        "q": "En una red SAN, ¿qué proporciona el concepto Zoning?",
+        "a": [
+          "Ampliar una red SAN.",
+          "Segmentar una red SAN.",
+          "Aumentar el número de elementos conectados a la red.",
+          "La comunicación con elementos designados de la red LAN."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT402-P1-18",
+        "t": "T4.02",
+        "o": "A",
+        "q": "Una red SAN se estructura en las siguientes capas:",
+        "a": [
+          "Capa física, capa de infraestructura y capa de almacenamiento.",
+          "Capa de hosts, capa de datos y capa física.",
+          "Capa de datos, capa de infraestructura y capa física.",
+          "Capa de hosts, capa de infraestructura y capa de almacenamiento."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT402-P1-19",
+        "t": "T4.02",
+        "o": "A",
+        "q": "En LVM, un Volume Group es:",
+        "a": [
+          "Un disco duro o una partición de un disco duro.",
+          "Un grupo de volúmenes lógicos que sirve de contenedor para volúmenes virtuales.",
+          "Una partición virtual.",
+          "Un grupo de volúmenes físicos que sirve de contenedor para volúmenes lógicos."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT402-P1-20",
+        "t": "T4.02",
+        "o": "A",
+        "q": "¿Qué comando en LVM permite crear un volumen físico?",
+        "a": [
+          "pvcreate",
+          "lvcreate",
+          "vgcreate",
+          "fvcreate"
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT402-P1-22",
+        "t": "T4.02",
+        "o": "A",
+        "q": "¿Qué solución de backup permite respaldar instancias cloud de Microsoft Azure y Amazon EC2?",
+        "a": [
+          "Acronis Backup.",
+          "AWS Backup.",
+          "Azure Backup.",
+          "Veeam Backup & Replication."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "El pasaje solo enumera productos de backup; no demuestra soporte de Azure y EC2 y otra alternativa comercial podría cumplirlo. Pendiente de revisar alcance y unicidad.",
+      "reviewStatus": "reviewed-pending",
+      "evidenceKeys": [
+        "e-AT402-P1-22"
+      ]
+    },
+    {
+      "question": {
+        "i": "AT402-P1-23",
+        "t": "T4.02",
+        "o": "A",
+        "q": "¿Cuál de las siguientes NO es una ventaja de la virtualización?",
+        "a": [
+          "Reducción de costes.",
+          "Escalabilidad flexible.",
+          "Mayor rendimiento.",
+          "Independencia del hardware."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT402-P1-24",
+        "t": "T4.02",
+        "o": "A",
+        "q": "Un VMM es un",
+        "a": [
+          "Máquina virtual.",
+          "Hipervisor.",
+          "Guest.",
+          "Capa de abstracción hardware."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT402-P1-26",
+        "t": "T4.02",
+        "o": "A",
+        "q": "NO es una tecnología de escritorio virtual:",
+        "a": [
+          "VDI.",
+          "RDS.",
+          "SDS.",
+          "DAAS."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT402-P1-27",
+        "t": "T4.02",
+        "o": "A",
+        "q": "En Docker, ¿cómo se denomina el registro para repositorios de software basado en la nube?",
+        "a": [
+          "Docker Lab.",
+          "Docker Cloud.",
+          "Docker Repo.",
+          "Docker Hub."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          7,
+          9
+        ],
+        "d": 1,
+        "n": "Docker Hub."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT402-P1-28",
+        "t": "T4.02",
+        "o": "A",
+        "q": "En K8s, un pod se ejecuta en:",
+        "a": [
+          "Cluster.",
+          "Nodo.",
+          "Kubelet.",
+          "Kube-proxy."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT402-P1-29",
+        "t": "T4.02",
+        "o": "A",
+        "q": "La distribución open source de OpenShift se denomina:",
+        "a": [
+          "OpenS.",
+          "OCP.",
+          "OKD.",
+          "OCK."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT402-P1-30",
+        "t": "T4.02",
+        "o": "A",
+        "q": "¿Cuál es una ventaja de la hiperconvergencia?",
+        "a": [
+          "Gestión centralizada.",
+          "Escalabilidad vertical.",
+          "Número amplio de productos.",
+          "Flexibilidad en la actualización del sistema."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT402-P1-33",
+        "t": "T4.02",
+        "o": "A",
+        "q": "Se está valorando el uso de RAID 100, ¿cuántos discos duros son necesarios para crearlo?",
+        "a": [
+          "4 discos duros.",
+          "8 discos duros.",
+          "Al menos 6 discos duros.",
+          "Es indiferente."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT402-P1-34",
+        "t": "T4.02",
+        "o": "A",
+        "q": "Si se dispone de 5 discos duros de 4 TB y se decide configurarlos en RAID 6, ¿qué capacidad neta de almacenamiento se obtendrá?",
+        "a": [
+          "8 TB.",
+          "12 TB.",
+          "16 TB.",
+          "20 TB."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT402-P1-36",
+        "t": "T4.02",
+        "o": "A",
+        "q": "¿Qué comando de Docker se debe usar para listar todos los contenedores, estén o no en marcha?",
+        "a": [
+          "docker ps",
+          "docker ps -a",
+          "docker list",
+          "docker list-container -all"
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT402-P1-37",
+        "t": "T4.02",
+        "o": "A",
+        "q": "En Docker, ¿con qué sentencia se crea y arrancar un contenedor a partir de una imagen llamada BASE?",
+        "a": [
+          "docker run BASE",
+          "docker start BASE",
+          "start docker BASE",
+          "docker start run BASE"
+        ],
+        "c": 0,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT402-P1-39",
+        "t": "T4.02",
+        "o": "A",
+        "q": "En Docker, ¿qué sentencia permite eliminar una imagen?",
+        "a": [
+          "docker rm",
+          "docker delete",
+          "docker rmi",
+          "docker erase"
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT402-P1-40",
+        "t": "T4.02",
+        "o": "A",
+        "q": "¿Cómo se busca una imagen en Docker Hub denominada “http”?",
+        "a": [
+          "docker search http",
+          "docker find http",
+          "docker list http",
+          "docker show http"
+        ],
+        "c": 0,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT402-P1-41",
+        "t": "T4.02",
+        "o": "A",
+        "q": "¿Cuál de las siguientes NO es una herramienta de registro de contenedores?",
+        "a": [
+          "Harbor.",
+          "Azure Container Registry.",
+          "Terraform.",
+          "Google Cloud Container Registry."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT402-P1-42",
+        "t": "T4.02",
+        "o": "A",
+        "q": "En Kubernetes, el almacén de datos persistente que contiene toda la información de configuración y del estado del cluster de K8s se denomina:",
+        "a": [
+          "kube.",
+          "etcd.",
+          "kube-config.",
+          "config-etc."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT402-P1-43",
+        "t": "T4.02",
+        "o": "A",
+        "q": "¿Cuáles son las opciones en Docker para almacenar archivos en la máquina anfitriona de forma persistente?",
+        "a": [
+          "Montajes tmpfs y montajes de enlace.",
+          "Volúmenes y montajes tmpfs.",
+          "Montajes efímeros y volúmenes permanentes.",
+          "Montajes de enlace y volúmenes."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Tipos de montaje Docker."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT402-P1-44",
+        "t": "T4.02",
+        "o": "A",
+        "q": "Una arquitectura hiperconvergente está compuesta como mínimo por:",
+        "a": [
+          "Una capa de hipervisor, una red definida por software y un almacenamiento definido por software.",
+          "Una capa de abstracción de hardware, una capa de gestión de contenedores y una red SAN.",
+          "Una capa de hipervisor, una red SAN y una capa de gestión de contenedores.",
+          "Una red definida por software, una serie de máquinas virtuales y un conjunto de aplicaciones virtualizadas."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT402-P1-45",
+        "t": "T4.02",
+        "o": "A",
+        "q": "Los elementos de un cluster de Kubernetes son:",
+        "a": [
+          "El plano de control, los nodos trabajadores y el almacenamiento persistente.",
+          "El plano de control, los nodos trabajadores y el registro de contenedores.",
+          "El plano de control, los nodos trabajadores, el almacenamiento persistente, el registro de contenedores y la infraestructura subyacente.",
+          "El plano de control, los nodos trabajadores y la infraestructura subyacente."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT402-P1-46",
+        "t": "T4.02",
+        "o": "A",
+        "q": "En Kubernetes, un namespace es:",
+        "a": [
+          "Es un objeto de almacenamiento persistente.",
+          "Es el nombre que recibe un clúster virtual.",
+          "Es el nombre de un nodo trabajador.",
+          "Es el nombre del plano de control."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT402-P1-48",
+        "t": "T4.02",
+        "o": "A",
+        "q": "NO es una solución de orquestación de contenedores:",
+        "a": [
+          "Kubernetes.",
+          "OKD.",
+          "OpenShift.",
+          "Docker."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT402-P1-49",
+        "t": "T4.02",
+        "o": "A",
+        "q": "¿Qué es Podman?",
+        "a": [
+          "Una herramienta para el desarrollo, gestión y ejecución de contenedores en sistemas Linux.",
+          "Una herramienta de orquestación de contenedores multiplataforma.",
+          "Un hipervisor de tipo 2.",
+          "Una solución para la definición de redes definidas por software."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT402-P1-50",
+        "t": "T4.02",
+        "o": "A",
+        "q": "En relación con el contenido del fichero Dockerfile, señale la respuesta INCORRECTA:",
+        "a": [
+          "Las instrucciones se ejecutan en orden de aparición.",
+          "El fichero Dockerfile debe comenzar siempre por la instrucción FROM.",
+          "La instrucción CMD ejecuta comandos en una nueva capa encima de la imagen actual.",
+          "La instrucción FROM especifica la imagen principal a partir de la cual se construirá el contenedor."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "w": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT402-P1-51",
+        "t": "T4.02",
+        "o": "A",
+        "q": "Sobre la virtualización, señale la respuesta correcta:",
+        "a": [
+          "La virtualización suele utilizar aunque no siempre un hipervisor para emular el hardware, de tal forma que permite que varios sistemas operativos se ejecuten de forma conjunta.",
+          "Los contenedores no son portables entre plataformas.",
+          "Los contenedores no ejecutan un sistema operativo completo.",
+          "Los contenedores son más seguros que una máquina virtual."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          12
+        ],
+        "d": 2,
+        "n": "Contenedores vs VM."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT402-P1-52",
+        "t": "T4.02",
+        "o": "A",
+        "q": "La tecnología VDI se puede clasificar en:",
+        "a": [
+          "Persistente y no persistente.",
+          "Ligera o pesada.",
+          "Portable o no portable.",
+          "Elástica o no elástica."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT402-P1-53",
+        "t": "T4.02",
+        "o": "A",
+        "q": "Los componentes principales de la arquitectura de la tecnología VDI son:",
+        "a": [
+          "Capa de acceso, capa de datos y capa de control.",
+          "Capa de recursos, capa de control y protocolo de presentación.",
+          "Capa de control, capa de datos y protocolo de comunicaciones.",
+          "Capa de acceso, capa de recursos y capa de control."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT402-P1-54",
+        "t": "T4.02",
+        "o": "A",
+        "q": "VMWare Horizon es:",
+        "a": [
+          "Una solución de VDI.",
+          "Un hipervisor bare metal.",
+          "Una aplicación de almacenamiento definido por software.",
+          "Una solución de orquestación de contenedores."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT402-P1-55",
+        "t": "T4.02",
+        "o": "A",
+        "q": "El máximo periodo tolerable desde que se produce el incidente hasta que los servicios se recuperan al 100% de rendimiento, se denomina:",
+        "a": [
+          "RTO.",
+          "RPO.",
+          "RTA.",
+          "MTO."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT402-P1-56",
+        "t": "T4.02",
+        "o": "A",
+        "q": "El tiempo que un proceso puede permanecer caído antes de que se produzcan consecuencias críticas para la organización, es decir, el tiempo de inactividad máximo se corresponde con:",
+        "a": [
+          "MTO.",
+          "RTA.",
+          "MTD.",
+          "WRT."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT402-P1-57",
+        "t": "T4.02",
+        "o": "A",
+        "q": "Cuando un backup se almacena en una nube pública, es requisito imprescindible que:",
+        "a": [
+          "Los datos vayan cifrados.",
+          "Los datos vayan comprimidos.",
+          "Los datos vayan deduplicados.",
+          "Los datos vayan completos."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT402-P1-58",
+        "t": "T4.02",
+        "o": "A",
+        "q": "¿Qué comando en LVM permite crear un volumen lógico?",
+        "a": [
+          "pvcreate",
+          "lvcreate",
+          "vgcreate",
+          "fvcreate"
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT402-P1-59",
+        "t": "T4.02",
+        "o": "A",
+        "q": "El término HBA hace referencia a:",
+        "a": [
+          "Un tipo de switch utilizando en la implementación de redes HVPLS.",
+          "Un tarjeta hardware utilizada para conectar sistemas de almacenamiento SAN.",
+          "Un multiplexor que permite la conversión de la transmisión de datos en paralelo a serie.",
+          "Una tarjeta de red que posibilita tecnología inalámbrica de ondas milimétricas."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS03-P1-84",
+        "t": "T4.02",
+        "o": "A",
+        "q": "En una base de datos MySQL, se solicita añadir la tabla X, que tendrá como atributos el nombre y los apellidos. Para ello, y tras acceder como root a MySQL, indique el comando a ejecutar:",
+        "a": [
+          "CREATE TABLE X (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, nombre VARCHAR(30), apellido1 VARCHAR(30), apellido2 VARCHAR(30));",
+          "CREATE TABLE X KEY id, nombre, apellidos;",
+          "CREAR TABLA X KEY apellidos, nombre;",
+          "CREATE TABLE X (nombre, apellido);"
+        ],
+        "c": 0,
+        "k": "K",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS04-P1-23",
+        "t": "T4.02",
+        "o": "A",
+        "q": "Indique qué capacidad de almacenamiento total dispone un ordenador si éste cuenta con dos discos duros, uno con capacidad de 2 TiB y otro de 3072 GiB:",
+        "a": [
+          "15.368.724.112 KiB.",
+          "4 TiB.",
+          "5.120 GiB.",
+          "5.242.884 MiB."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS04-P1-53",
+        "t": "T4.02",
+        "o": "A",
+        "q": "Indique cuál de los siguientes NO es un tipo de fichero del SGBD Oracle:",
+        "a": [
+          "Fichero redolog.",
+          "Fichero de control.",
+          "Fichero de backup.",
+          "Fichero de datos."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS05G-P1-64",
+        "t": "T4.02",
+        "o": "A",
+        "q": "En el gestor de base de datos MySQL, ¿cómo se denomina al programa servidor?",
+        "a": [
+          "mysql.",
+          "mysqladmin.",
+          "mysqld.",
+          "mysqlsh."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS07-P1-42",
+        "t": "T4.02",
+        "o": "A",
+        "q": "¿Qué significa NVMe?",
+        "a": [
+          "Not Virtual Memory Extra.",
+          "Non Volatile Memory Express.",
+          "Not Virtual Memory Express.",
+          "Non Volatile Memory Extra."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08-P1-96",
+        "t": "T4.02",
+        "o": "A",
+        "q": "NO es un cloud público:",
+        "a": [
+          "AWS.",
+          "Microsoft Azure.",
+          "Cloudify.",
+          "Google CE."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-35",
+        "t": "T4.02",
+        "o": "A",
+        "q": "En una infraestructura VDI, ¿cómo se denomina al elemento que se encarga de, entre otras cosas, asignar escritorios a usuarios o provisionar nuevas máquinas?",
+        "a": [
+          "Container.",
+          "Broker.",
+          "Deployer.",
+          "Director."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-78",
+        "t": "T4.02",
+        "o": "A",
+        "q": "Seleccione de entre las siguientes opciones cuál se corresponde con las características de las infraestructuras hiperconvergentes:",
+        "a": [
+          "Aumenta la escalabilidad de los centros de procesamiento de datos gracias al uso de soluciones de nube privada, como por ejemplo OpenStack.",
+          "Proporciona mejoras en rendimiento y eficiencia basadas en el uso de cabinas de almacenamiento de discos en RAID y de nodos de cómputo, ya sean de CPU o de GPU, conectados mediante redes de alta velocidad y baja latencia.",
+          "Proporciona seguridad y redundancia mediante el almacenamiento de volúmenes de datos en una sola cabina de almacenamiento, de forma que se asegure la convergencia de todos ellos.",
+          "Permite combinar almacenamiento, computación y redes en un único sistema, a fin de reducir la complejidad y aumentar la escalabilidad, haciendo uso de la virtualización y el almacenamiento y redes definidos por software."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-80",
+        "t": "T4.02",
+        "o": "A",
+        "q": "Indique la opción que NO está relacionada con Cloud Computing:",
+        "a": [
+          "Google Cloud.",
+          "Microsoft Azure.",
+          "AWS.",
+          "AJAX."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-81",
+        "t": "T4.02",
+        "o": "A",
+        "q": "¿Cuál de las siguientes características es la principal de un Cluster Hiperconvergente (HCI)?",
+        "a": [
+          "Es capaz de combinar el almacenamiento, los recursos informáticos y la red de servidores diferentes en un único sistema unificado, que permite la ejecución de máquinas virtuales.",
+          "Aglutina todos los recursos en grandes servidores dedicados que hacen converger el cómputo y el almacenamiento en servidores especializados en ello para así optimizar el rendimiento.",
+          "Dispone de GPU’s especiales optimizadas para cálculos hipercomplejos, como la secuenciación de ADN.",
+          "Es capaz de virtualizar el hardware de los servidores para ejecutar sobre él máquinas virtuales."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-91",
+        "t": "T4.02",
+        "o": "A",
+        "q": "El término HBA hace referencia a:",
+        "a": [
+          "Un tipo de conmutador utilizado en la implementación de redes HVPLS.",
+          "Una tarjeta hardware utilizada para conectar sistemas de almacenamiento SAN.",
+          "Un multiplexor que permite la conversión de la transmisión de datos de paralelo a serie.",
+          "Una tarjeta de red que posibilita tecnología inalámbrica de ondas milimétricas."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-92",
+        "t": "T4.02",
+        "o": "A",
+        "q": "Teniendo en cuenta la redundancia de datos en la configuración en RAID de 4 discos de un servidor, ¿cuál de estas configuraciones permitirá soportar más discos en fallo sin pérdida de datos?",
+        "a": [
+          "RAID 6.",
+          "RAID 5.",
+          "RAID 7.",
+          "RAID 0."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-93",
+        "t": "T4.02",
+        "o": "A",
+        "q": "¿Cuál es una plataforma de código abierto para automatizar la implementación, el escalado y la administración de aplicaciones en contenedores, diseñado para ejecutarse en un clúster y tiene como finalidad coordinar clústeres de nodos a escala en producción de manera eficiente?",
+        "a": [
+          "Kubernetes.",
+          "Swarm.",
+          "Containers_cloud.",
+          "Docker."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-96",
+        "t": "T4.02",
+        "o": "A",
+        "q": "En relación a las diferentes estrategias de backup, señale la correcta:",
+        "a": [
+          "La estrategia de backup incremental hace copia de lo que cambió desde el último backup, ya sea completo o incremental.",
+          "La estrategia de backup diferencial hace copia de lo que cambió desde el último backup, ya sea incremental o diferencial.",
+          "La estrategia de backup incremental hace copia de lo que cambió desde el último backup completo, pero no desde uno incremental.",
+          "La estrategia de backup diferencial hace copia de lo que cambió desde el último backup incremental."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-82",
+        "t": "T4.02",
+        "o": "A",
+        "q": "Se necesita aplicar parches de seguridad en todos los equipos Linux de una organización. ¿Cuál de las siguientes soluciones sería la apropiada para realizarlo?",
+        "a": [
+          "Red Hat OpenShift.",
+          "Red Hat Satellite.",
+          "Kubernetes.",
+          "Docker Swarm."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-85",
+        "t": "T4.02",
+        "o": "A",
+        "q": "En el contexto de VDI, ¿qué significa \"persistent desktop\"?",
+        "a": [
+          "Escritorios que mantienen cambios entre sesiones.",
+          "Escritorios que nunca pueden apagarse.",
+          "Escritorios que solo permiten aplicaciones específicas.",
+          "Escritorios que funcionan sin conexión a internet."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-86",
+        "t": "T4.02",
+        "o": "A",
+        "q": "Con respecto a la virtualización, podemos afirmar que un hipervisor de tipo 1:",
+        "a": [
+          "Siempre es open source por compatibilidad con el sistema operativo host.",
+          "También llamado “alojado”, permite múltiples lenguajes de programación sobre el sistema operativo host.",
+          "Ocupa el lugar de un sistema operativo host y programa los recursos de las máquinas virtuales directamente en el hardware.",
+          "Se ejecuta por encima del sistema operativo convencional como una capa de software o una aplicación."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-87",
+        "t": "T4.02",
+        "o": "A",
+        "q": "¿En qué consiste la técnica de almacenamiento de información denominada RAID 6?",
+        "a": [
+          "En que la información se distribuye entre seis o más discos, actuando dos de ellos como bit de paridad de modo que el sistema es tolerante al fallo.",
+          "En que la información se distribuye entre tres o más discos, actuando uno de ellos como bit de paridad de modo que el sistema es tolerante al fallo de cualquier disco.",
+          "En que la información se distribuye entre cuatro o más discos. La capacidad utilizable es aproximadamente la mitad de la capacidad total instalada, ya que se duplica la información para ofrecer redundancia.",
+          "En que la información se distribuye entre cuatro o más discos, actuando dos de ellos como bit de paridad de modo que el sistema es tolerante al fallo de cualesquiera dos discos."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-88",
+        "t": "T4.02",
+        "o": "A",
+        "q": "Para facilitar la reutilización y escalabilidad de componentes se necesita desplegar su sistema en la nube con escalabilidad automática. ¿Cuál de las siguientes opciones es una plataforma de contenedores administrada en la nube que permite escalado automático?",
+        "a": [
+          "Kubernetes (K8s).",
+          "AWS RDS (Amazon Relational Database Service).",
+          "Azure DevOps.",
+          "GitLab CI/CD."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-89",
+        "t": "T4.02",
+        "o": "A",
+        "q": "¿Cuál es una ventaja clave del almacenamiento en red (NAS) en comparación con el almacenamiento en red de área de almacenamiento (SAN)?",
+        "a": [
+          "El NAS permite una mayor flexibilidad en la gestión de datos dado que proporciona acceso a los datos a nivel de bloque.",
+          "El NAS ofrece acceso a nivel de archivo y es más fácil de configurar y administrar para compartir archivos en una red local, a diferencia del SAN que ofrece acceso a nivel de bloque y suele ser más complejo.",
+          "El SAN requiere menor coste que el NAS debido a su simplicidad y facilidad de administración.",
+          "El NAS proporciona un rendimiento de alta velocidad debido a su acceso a nivel de bloque, mientras que el SAN se limita a acceso a nivel de archivo."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-90",
+        "t": "T4.02",
+        "o": "A",
+        "q": "En el contexto de la virtualización del puesto de trabajo, ¿qué significa DaaS?",
+        "a": [
+          "Data as a Service.",
+          "Development as a Service.",
+          "Desktop as a Service.",
+          "Database as a Service."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-91",
+        "t": "T4.02",
+        "o": "A",
+        "q": "¿Cuál de los siguientes tipos de copia de seguridad NO existe?",
+        "a": [
+          "Copia de seguridad completa.",
+          "Copia de seguridad elástica diferencial.",
+          "Copia de seguridad incremental.",
+          "Copia de seguridad completa sintética."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-92",
+        "t": "T4.02",
+        "o": "A",
+        "q": "En relación a Docker, es FALSO que:",
+        "a": [
+          "Un contenedor Docker se puede desplegar en cualquier sistema que soporte esta tecnología.",
+          "El arranque de un contenedor Docker supone arrancar un proceso en el sistema.",
+          "Un contenedor Docker contiene las dependencias necesarias para la ejecución de la aplicación.",
+          "Docker es una solución propietaria de virtualización del sistema operativo."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-93",
+        "t": "T4.02",
+        "o": "A",
+        "q": "¿Qué tipo de copia de seguridad solo almacena los datos que han cambiado desde la última copia completa no borrando el bit de modificado?",
+        "a": [
+          "Copia de seguridad completa (full backup).",
+          "Copia de seguridad diferencial.",
+          "Copia de seguridad incremental.",
+          "Copia de seguridad en espejo (mirror backup)."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-94",
+        "t": "T4.02",
+        "o": "A",
+        "q": "Un Ministerio cuenta con un sistema de virtualización basado en hiperconvergencia. ¿qué significa dicha tecnología?",
+        "a": [
+          "Se dispone de una arquitectura tradicional en capas, con el almacenamiento, red y servidores de manera independiente.",
+          "Se unifica computación, almacenamiento, red y software en un único sistema para minimizar la complejidad de la arquitectura.",
+          "En realidad, la hiperconvergencia hace referencia a implantación de servidores físicos no virtualizados.",
+          "La hiperconvergencia solo utiliza virtualización por contenedores."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-99",
+        "t": "T4.02",
+        "o": "A",
+        "q": "En el contexto del Plan de continuidad del negocio, ¿qué significa RTO?",
+        "a": [
+          "Tiempo de recuperación.",
+          "Tiempo de restauración.",
+          "Objetivo mínimo de continuidad del negocio.",
+          "Objetivo máximo de continuidad del negocio."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10-P1-74",
+        "t": "T4.02",
+        "o": "A",
+        "q": "¿Qué afirmación sobre RAID 5 es correcta?",
+        "a": [
+          "Permite la tolerancia a fallos de un disco de forma simultánea.",
+          "Permite la tolerancia a fallos de dos discos de forma simultánea.",
+          "No permite la tolerancia a fallos.",
+          "Necesitas al menos 5 discos para montar este sistema."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10-P1-75",
+        "t": "T4.02",
+        "o": "A",
+        "q": "A la infraestructura que consiste en separar el escritorio que utiliza un usuario respecto del equipo sobre el que actúa físicamente se denomina:",
+        "a": [
+          "DVI.",
+          "VDI.",
+          "VNC.",
+          "VDD."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10-P1-76",
+        "t": "T4.02",
+        "o": "A",
+        "q": "Señale cuál de las siguientes afirmaciones sobre la virtualización de escritorios es INCORRECTA:",
+        "a": [
+          "Al tratarse de una infraestructura distribuida, la administración suele ser más compleja.",
+          "Es imposible el uso de periféricos conectados al ordenador desde el que se accede al escritorio virtual, de forma que sean accesibles desde dicho escritorio virtual.",
+          "Existen dos modelos de escritorios virtuales que pueden proveerse: persistentes y no persistentes.",
+          "La distribución masiva de nuevas aplicaciones es muy rápida, ya que sólo se requiere realizar el cambio en el servidor de escritorios."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10-P1-78",
+        "t": "T4.02",
+        "o": "A",
+        "q": "El hipervisor VMware ESXi:",
+        "a": [
+          "Es de tipo 1 o bare metal, esto es, se ejecuta directamente en el hardware sin necesidad de un sistema operativo anfitrión.",
+          "Es de tipo 2 o hosted, esto es, requiere de un sistema operativo anfitrión sobre el que ejecutarse.",
+          "Está orientado específicamente a la virtualización de almacenamiento.",
+          "Está basado en el proyecto Docker."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10-P1-80",
+        "t": "T4.02",
+        "o": "A",
+        "q": "Señale cuál de las siguientes herramientas es un orquestador de contenedores, esto es, permite gestionar los propios contenedores y el despliegue y gestión de las aplicaciones que alojan:",
+        "a": [
+          "Puppet.",
+          "Jenkins.",
+          "Docker.",
+          "Kubernetes."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10-P1-94",
+        "t": "T4.02",
+        "o": "A",
+        "q": "En el contexto de comunicaciones por Internet, una CDN es una:",
+        "a": [
+          "Red de Capacidad de Datos (Capacity Data Network). Red que ofrece grandes repositorios de datos con fines de archivado, almacenando en formatos estructurados la información.",
+          "Red Distribuida con la Nube (Cloud Distributed Network). WAN extendida en parte a la nube pública de forma transparente mediante encapsulación.",
+          "Red definida en la nube (Cloud Defined Network). El conjunto de VLANs definidas entre mis servidores en un servicio de nube privada virtual.",
+          "Red de Entrega de Contenido (Content Delivery Network). Servidores que entregan contenido al usuario en función de su ubicación geográfica."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10-P1-95",
+        "t": "T4.02",
+        "o": "A",
+        "q": "En el contexto de los planes de contingencia y continuidad del negocio, el parámetro RTO determina:",
+        "a": [
+          "El tiempo que un proceso puede permanecer caído antes de que se produzcan consecuencias desastrosas para nuestra empresa.",
+          "El nivel mínimo de recuperación que debe tener una actividad para que la consideremos como recuperada, aunque el nivel de servicio no sea el óptimo.",
+          "El tiempo que un proceso permanecerá detenido antes de que su funcionamiento sea restaurado.",
+          "El tiempo que hemos estado sin fallos en el sistema."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10-P1-97",
+        "t": "T4.02",
+        "o": "A",
+        "q": "En el contexto de los sistemas de almacenamiento y de copias de seguridad, la técnica que permite identificar bloques de datos duplicados y almacenarlos una única vez para evitar redundancia, se denomina:",
+        "a": [
+          "Entrelazamiento.",
+          "Normalización.",
+          "Indexación cruzada.",
+          "Deduplicación."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10-P1-99",
+        "t": "T4.02",
+        "o": "A",
+        "q": "En relación a la virtualización del puesto de trabajo, señale la opción correcta:",
+        "a": [
+          "Se reducen los costes de administración al tener los clientes centralizados en el servidor.",
+          "Se incrementa el coste económico, ya que un thin client consume más energía que un PC.",
+          "El despliegue de aplicaciones es más costoso, ya que es preciso instalarlas en todos los thin clients.",
+          "Los puestos de trabajo no pueden virtualizarse."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10B-P1-41",
+        "t": "T4.02",
+        "o": "A",
+        "q": "Indique la respuesta INCORRECTA con respecto al modelo IaaS (Infrastructure as a Service) en un sistema Cloud Computing:",
+        "a": [
+          "En el modelo IaaS es responsabilidad del cliente realizar actualizaciones del sistema operativo.",
+          "Office 365 no es un ejemplo de modelo IaaS.",
+          "En el modelo IaaS el cliente no puede tomar decisiones sobre el sistema operativo o las estrategias de virtualización.",
+          "En el modelo IaaS no estamos obligados a usar el servidor de aplicaciones indicado por el proveedor de Cloud Computing."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10B-P1-83",
+        "t": "T4.02",
+        "o": "A",
+        "q": "Queremos crear un nuevo sistema de ficheros en un nuevo volumen LVM en una máquina virtual Linux. Indique el orden correcto de ejecución de los comandos necesarios:",
+        "a": [
+          "lvcreate, pvcreate, vgcreate, mkfs.",
+          "lvcreate, vgcreate, pvcreate, mkfs.",
+          "vgcreate, pvcreate, lvcreate, mkfs.",
+          "pvcreate, vgcreate, lvcreate, mkfs."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10B-P1-85",
+        "t": "T4.02",
+        "o": "A",
+        "q": "¿Cuál de los siguientes NO es un gestor de volúmenes lógicos?",
+        "a": [
+          "CoreStorage.",
+          "VLM.",
+          "LVM.",
+          "LDM."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10B-P1-86",
+        "t": "T4.02",
+        "o": "A",
+        "q": "El tipo de backup que realiza una copia integral de los datos, copiando todo el contenido de los sistemas a mantener pero no borra el bit de modificado de cada archivo, se denomina:",
+        "a": [
+          "Backup completo.",
+          "Backup incremental.",
+          "Backup diferencial.",
+          "Backup intermedio."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10B-P1-94",
+        "t": "T4.02",
+        "o": "A",
+        "q": "En la construcción de una imagen Docker se quieren ignorar ciertos ficheros. Para ello ¿qué fichero almacenará esa información?",
+        "a": [
+          ".dockerignore.",
+          ".ignoredocker.",
+          ".ignorebuild.",
+          ".nobuild."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10B-P1-96",
+        "t": "T4.02",
+        "o": "A",
+        "q": "Para combinar varios motores Docker en un solo motor virtual se utilizará la herramienta:",
+        "a": [
+          "Docker Compose.",
+          "Docker Swarm.",
+          "Kubernetes.",
+          "LDM."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-34",
+        "t": "T4.02",
+        "o": "A",
+        "q": "En relación a los conceptos IaaS, PaaS y SaaS de los servicios en la nube, ¿cuál de las siguientes respuestas es correcta?",
+        "a": [
+          "SaaS consiste en un servicio de pago según el consumo, donde un tercero le presta servicios de almacenamiento y virtualización, cuando los necesita, a través de la nube.",
+          "PaaS consiste en un servicio de pago según el consumo, donde un tercero le presta servicios de almacenamiento y virtualización, cuando los necesita, a través de la nube.",
+          "IaaS consiste en un servicio de pago según el consumo, donde un tercero le presta servicios de almacenamiento y la virtualización, cuando los necesita, a través de la nube.",
+          "Ninguna de las respuestas anteriores es correcta."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-37",
+        "t": "T4.02",
+        "o": "A",
+        "q": "Señale la opción que sirve en Unix para crear enlaces duros:",
+        "a": [
+          "ln -s",
+          "ln",
+          "link -hard",
+          "hardlink"
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-74",
+        "t": "T4.02",
+        "o": "A",
+        "q": "Indique la afirmación correcta sobre la configuración de almacenamiento RAID 3:",
+        "a": [
+          "Consiste en hacer stripping a nivel de byte más un disco de paridad dedicado.",
+          "Es la configuración más utilizada en la práctica.",
+          "Distribuye los datos a nivel de bloque.",
+          "Implementa el mirroring o espejo de discos."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11B-P1-84",
+        "t": "T4.02",
+        "o": "A",
+        "q": "¿Qué protocolo permite la extensión geográfica de redes de almacenamiento SAN mediante la transmisión de tramas Fibre Channel a través de túneles IP?",
+        "a": [
+          "FCIP.",
+          "iFCP.",
+          "FCoE.",
+          "FCP."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11B-P1-85",
+        "t": "T4.02",
+        "o": "A",
+        "q": "¿A qué hace referencia el concepto Zoning?",
+        "a": [
+          "Es una variante de VLANs para infraestructuras críticas.",
+          "La zonificación hace referencia a la división lógica del espacio de almacenamiento en un sistema RAID.",
+          "En la segmentación una red SAN en zonas, de tal forma que un cliente solo se puede comunicar con dispositivos de su zona.",
+          "En la segmentación una red LAN en zona de tal forma que un cliente solo se puede comunicar con dispositivos de su zona."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-32",
+        "t": "T4.02",
+        "o": "A",
+        "q": "El modelo de virtualización que está basado en la arquitectura cliente/servidor, donde cada cliente funciona como una imagen virtual de la capa hardware y que permite que el sistema operativo cliente funcione sin modificaciones, permitiendo al administrador crear diferentes sistemas cliente con sistemas operativos independientes entre sí, se corresponde con:",
+        "a": [
+          "El modelo de máquina virtual.",
+          "El modelo paravirtual.",
+          "El modelo de virtualización a nivel de sistema operativo.",
+          "El modelo de virtualización parcial."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-69",
+        "t": "T4.02",
+        "o": "A",
+        "q": "Indique cuál de las siguientes afirmaciones sobre un volumen lógico es FALSA:",
+        "a": [
+          "El concepto de volumen lógico (logical volume) es muy similar al de drive lógico (logical drive).",
+          "Un volumen lógico (logical volume) se compone de uno o varios drives lógicos (logical drives).",
+          "Los miembros de un drive lógico (logical drive) tienen que ser del mismo nivel RAID.",
+          "Un host ve un volumen lógico (logical volume) no particionado o una partición de un volumen lógico particionado (logical volume) como un único drive físico (physical drive)."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-70",
+        "t": "T4.02",
+        "o": "A",
+        "q": "Indique cuál de las siguientes afirmaciones sobre sistemas SAN (Storage Area Network), NAS (Network Attached Storage), ISCSI (Internet SCSI) y DAS (Direct Attached Storage) es FALSA:",
+        "a": [
+          "Los sistemas DAS realizan accesos a nivel de fichero.",
+          "Los sistemas NAS realizan accesos a nivel de fichero.",
+          "Los sistemas SAN realizan accesos a nivel de bloques.",
+          "Los ISCSI realizan la transmisión a nivel de bloque."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-79",
+        "t": "T4.02",
+        "o": "A",
+        "q": "Respecto a Docker, se puede afirmar que:",
+        "a": [
+          "Es un sistema de virtualización parcial o paravirtualización.",
+          "Es un producto propietario que tiene gran aceptación por su bajo coste.",
+          "Permite portabilidad, flexibilidad y ahorro de espacio frente a una máquina virtual.",
+          "No dispone de mecanismos para mejora de la gestión o despliegue de contenedores, aunque están previstos en el futuro."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-R-01",
+        "t": "T4.02",
+        "o": "A",
+        "q": "En el entorno de máquinas virtuales, ¿cuál de las siguientes afirmaciones es correcta?",
+        "a": [
+          "Cada máquina virtual es completamente independiente.",
+          "Se asignan los recursos estáticamente a cada sistema o equipo.",
+          "Las máquinas virtuales son contenedores software interrelacionados con el resto del sistema.",
+          "Una capa hardware permite ejecutar simultáneamente varias máquinas virtuales en un solo ordenador."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12B-P1-32",
+        "t": "T4.02",
+        "o": "A",
+        "q": "El modelo de servicio en la nube en el que el consumidor no tiene control sobre la red, los servidores, sistemas operativos o almacenamiento, pero sí sobre las aplicaciones desplegadas y sobre los ajustes de configuración de dichas aplicaciones, es:",
+        "a": [
+          "IaaS.",
+          "SaaS.",
+          "FaaS",
+          "PaaS."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Modelos de nube (PaaS)."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12B-P1-64",
+        "t": "T4.02",
+        "o": "A",
+        "q": "De los siguientes sistemas RAID, ¿cuál NO se considera redundante?",
+        "a": [
+          "RAID 0.",
+          "RAID 1.",
+          "RAID 2.",
+          "RAID 1+0."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [
+          8
+        ],
+        "d": 1,
+        "n": "RAID 0 no redundante."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12B-P1-80",
+        "t": "T4.02",
+        "o": "A",
+        "q": "Amazon S3, según su propia definición, es un sistema de almacenamiento de:",
+        "a": [
+          "Bloques.",
+          "Objetos.",
+          "Directorios.",
+          "Tuplas."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "S3 = objetos.",
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12B-P1-R-02",
+        "t": "T4.02",
+        "o": "A",
+        "q": "¿Cuál de las siguientes soluciones es un software de virtualización basado en hipervisor de tipo bare metal o unhosted?",
+        "a": [
+          "Oracle VirtualBox.",
+          "VMWare ESXi.",
+          "VMWare Workstation.",
+          "Windows VirtualPC."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          8
+        ],
+        "d": 1,
+        "n": "Hipervisor tipo 1."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    }
+  ],
+  "counts": {
+    "total": 675,
+    "alreadyHadCitation": 535,
+    "added": 6,
+    "pending": 134,
+    "withCitation": 541
+  }
+}

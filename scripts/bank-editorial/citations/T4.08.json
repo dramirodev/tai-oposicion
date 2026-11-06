@@ -1,0 +1,1962 @@
+{
+  "schemaVersion": 1,
+  "topicId": "T4.08",
+  "baseCommit": "454a025ae26390dee0f057a4cfa9b6d5fc758fba",
+  "status": "CITATIONS_ACCEPTED_UNDER_USER_DELEGATION",
+  "scope": "Solo adición de citas para lectura; no concede nueva puntuabilidad ni altera pruebas editoriales previas.",
+  "file": {
+    "beforeSha256": "3c3b5ed2dd9335688caa86677dd3286eda9fd8d2c4be1d02366321214e709946",
+    "afterSha256": "2b0965b762734c4033978749b084e2d4356bace2a035e3ca33f9e7cf70d30772"
+  },
+  "sample": {
+    "beforeSha256": "7bced8ef7a3390991b3b38efbb540f8080eb18844782ea81ba076813b365bfb8",
+    "afterSha256": "7bced8ef7a3390991b3b38efbb540f8080eb18844782ea81ba076813b365bfb8"
+  },
+  "sourceRoot": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario",
+  "sources": {
+    "e-AT408-P1-15": {
+      "path": "T4.08 Internet/T4.08 Internet - Temario.pdf",
+      "sourceHash": "2a460897d6652d005ebb5160190b24a80d3bdfa9b16cd61bca16bba5b7688060",
+      "physicalPage": 15,
+      "printedPage": 15,
+      "excerpt": "A continuación del TLD, cada etiqueta a la izquierda representa una subdivisión o subdominio. Como se ha indicado, cada etiqueta puede ser de hasta 63 caracteres y puede a su vez subdividirse en otros subdominios, siempre que el FQDN final no exceda el máximo de 255 caracteres. Esta normativa proporciona cierta flexibilidad a la hora de diseñar la jerarquía de subdominios dependientes de un dominio particular. Por último, la parte más a la izquierda del dominio FQDN suele expresar un nombre de máquina o recurso final, genéricamente conocido como host.",
+      "label": "Pasaje del temario"
+    },
+    "e-AT408-P1-33": {
+      "path": "T4.08 Internet/T4.08 Internet - Temario.pdf",
+      "sourceHash": "2a460897d6652d005ebb5160190b24a80d3bdfa9b16cd61bca16bba5b7688060",
+      "physicalPage": 25,
+      "printedPage": 25,
+      "excerpt": "Transferencias de zona La transferencia de zona es una transacción por la cual un servidor DNS secundario (esclavo) actualiza los contenidos de zona desde un servidor primario (master) y de este modo, mantener una copia sincronizada con la base de datos maestra.",
+      "label": "DNS — transferencia de zona"
+    },
+    "e-AT408-P1-34": {
+      "path": "T4.08 Internet/T4.08 Internet - Temario.pdf",
+      "sourceHash": "2a460897d6652d005ebb5160190b24a80d3bdfa9b16cd61bca16bba5b7688060",
+      "physicalPage": 27,
+      "printedPage": 27,
+      "excerpt": "En DNSSEC se valida la clave pública de una fuente con una cadena de verificaciones que empieza en un servidor de confianza (como un root server) y bajando por la jerarquía del espacio de nombres DNS verificando sucesivamente la firma de la clave publica de un nodo hijo por su nodo padre. La clave pública de servidores de confianza se denomina \"trust anchor\".",
+      "label": "Pasaje del temario"
+    },
+    "e-AS11-P1-93": {
+      "path": "T4.08 Internet/T4.08 Internet - Temario.pdf",
+      "sourceHash": "2a460897d6652d005ebb5160190b24a80d3bdfa9b16cd61bca16bba5b7688060",
+      "physicalPage": 33,
+      "printedPage": 33,
+      "excerpt": "Las aplicaciones multimedia utilizan un esquema de funcionamiento como el siguiente: - SIP (Session Initiation Protocol): es un protocolo del nivel de aplicación desarrollado por el IETF en el RFC 3261 para la iniciación, modificación y finalización de sesiones interactivas de usuario donde intervienen elementos multimedia y cuya sintaxis es similar a las transacciones del protocolo HTTP. SIP es uno de los protocolos de señalización más conocidos de VoIP.",
+      "label": "Pasaje del temario"
+    }
+  },
+  "questions": [
+    {
+      "id": "AT408-P1-15",
+      "before": {
+        "i": "AT408-P1-15",
+        "t": "T4.08",
+        "o": "A",
+        "q": "Al componer un nombre de dominio, la longitud máxima de una etiqueta es de:",
+        "a": [
+          "32 caracteres.",
+          "64 caracteres.",
+          "31 caracteres.",
+          "63 caracteres."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT408-P1-15",
+        "t": "T4.08",
+        "o": "A",
+        "q": "Al componer un nombre de dominio, la longitud máxima de una etiqueta es de:",
+        "a": [
+          "32 caracteres.",
+          "64 caracteres.",
+          "31 caracteres.",
+          "63 caracteres."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T4.08 Internet - Temario.pdf — Pasaje del temario\n\nTemario, p. 15 (PDF p. 15)\n\nA continuación del TLD, cada etiqueta a la izquierda representa una subdivisión o subdominio. Como se ha indicado, cada etiqueta puede ser de hasta 63 caracteres y puede a su vez subdividirse en otros subdominios, siempre que el FQDN final no exceda el máximo de 255 caracteres. Esta normativa proporciona cierta flexibilidad a la hora de diseñar la jerarquía de subdominios dependientes de un dominio particular. Por último, la parte más a la izquierda del dominio FQDN suele expresar un nombre de máquina o recurso final, genéricamente conocido como host.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "96445f6927631f9ac063b731dfed86eb7d0b20dc0730ac1513bcb0f24091accf",
+      "afterSha256": "6abcc2e1ede9683d0758020a8be033cbfdf0d2008620e38c3618e9ccb7923a50",
+      "evidenceKeys": [
+        "e-AT408-P1-15"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT408-P1-33",
+      "before": {
+        "i": "AT408-P1-33",
+        "t": "T4.08",
+        "o": "A",
+        "q": "La transacción por la cual un servidor DNS secundario actualiza los contenidos de zona desde un servidor primario se denomina:",
+        "a": [
+          "Delegación cacheable.",
+          "Query DNS.",
+          "Actualización dinámica.",
+          "Transferencia de zona."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT408-P1-33",
+        "t": "T4.08",
+        "o": "A",
+        "q": "La transacción por la cual un servidor DNS secundario actualiza los contenidos de zona desde un servidor primario se denomina:",
+        "a": [
+          "Delegación cacheable.",
+          "Query DNS.",
+          "Actualización dinámica.",
+          "Transferencia de zona."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T4.08 Internet - Temario.pdf — DNS — transferencia de zona\n\nTemario, p. 25 (PDF p. 25)\n\nTransferencias de zona La transferencia de zona es una transacción por la cual un servidor DNS secundario (esclavo) actualiza los contenidos de zona desde un servidor primario (master) y de este modo, mantener una copia sincronizada con la base de datos maestra.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "b47089869ae5f4556ee8db011e8169261e57946657ac58d03919966c6e9293f1",
+      "afterSha256": "6d0db1d7eff12f6b38927a504253061d00484212eb0b0175f331972f87cb9dd7",
+      "evidenceKeys": [
+        "e-AT408-P1-33"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT408-P1-34",
+      "before": {
+        "i": "AT408-P1-34",
+        "t": "T4.08",
+        "o": "A",
+        "q": "En DNSSEC, a la clave pública de servidores de confianza se le denomina:",
+        "a": [
+          "Public key.",
+          "Trust anchor.",
+          "CertP.",
+          "SECCert."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT408-P1-34",
+        "t": "T4.08",
+        "o": "A",
+        "q": "En DNSSEC, a la clave pública de servidores de confianza se le denomina:",
+        "a": [
+          "Public key.",
+          "Trust anchor.",
+          "CertP.",
+          "SECCert."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T4.08 Internet - Temario.pdf — Pasaje del temario\n\nTemario, p. 27 (PDF p. 27)\n\nEn DNSSEC se valida la clave pública de una fuente con una cadena de verificaciones que empieza en un servidor de confianza (como un root server) y bajando por la jerarquía del espacio de nombres DNS verificando sucesivamente la firma de la clave publica de un nodo hijo por su nodo padre. La clave pública de servidores de confianza se denomina \"trust anchor\".\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "6acc462805826ddc9c9740a1895e2149619d046cf264a8498c4df33e82c42aec",
+      "afterSha256": "526d74790919434135be661049010e81eddb03222073960115c81f4963e4ef76",
+      "evidenceKeys": [
+        "e-AT408-P1-34"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AS11-P1-93",
+      "before": {
+        "i": "AS11-P1-93",
+        "t": "T4.08",
+        "o": "A",
+        "q": "Indique la opción que se corresponde con un protocolo de señalización utilizado en VoIP (Voice over IP) para la creación, modificación y terminación de sesiones con uno o más participantes:",
+        "a": [
+          "RTCP (Real Time Control Protocol).",
+          "STUN (Session Traversal Utilities for NAT).",
+          "SIP (Session Initiation Protocol).",
+          "MetroLAN."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "after": {
+        "i": "AS11-P1-93",
+        "t": "T4.08",
+        "o": "A",
+        "q": "Indique la opción que se corresponde con un protocolo de señalización utilizado en VoIP (Voice over IP) para la creación, modificación y terminación de sesiones con uno o más participantes:",
+        "a": [
+          "RTCP (Real Time Control Protocol).",
+          "STUN (Session Traversal Utilities for NAT).",
+          "SIP (Session Initiation Protocol).",
+          "MetroLAN."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1,
+        "u": "T4.08 Internet - Temario.pdf — Pasaje del temario\n\nTemario, p. 33 (PDF p. 33)\n\nLas aplicaciones multimedia utilizan un esquema de funcionamiento como el siguiente: - SIP (Session Initiation Protocol): es un protocolo del nivel de aplicación desarrollado por el IETF en el RFC 3261 para la iniciación, modificación y finalización de sesiones interactivas de usuario donde intervienen elementos multimedia y cuya sintaxis es similar a las transacciones del protocolo HTTP. SIP es uno de los protocolos de señalización más conocidos de VoIP.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "54498adf4dd8bdb763603a979b231bced4abb6bd1403e99db513d2f614236987",
+      "afterSha256": "0ce3d61b7fa4f9f8026d7c1a20b578fee86c0392cfa7ac04fd16726940f187b5",
+      "evidenceKeys": [
+        "e-AS11-P1-93"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    }
+  ],
+  "pending": [
+    {
+      "question": {
+        "i": "TAI2024B-P1-75",
+        "t": "T4.08",
+        "o": "O",
+        "q": "Sobre tipos de transferencia de archivos en el servicio FTP (File Transfer Protocol), es CORRECTO decir que:",
+        "a": [
+          "El tipo ASCII es adecuado para transferir archivos de texto plano.",
+          "El tipo Multimedia es adecuado para transferir imágenes y archivos de audio.",
+          "El tipo Binario solo es adecuado para transferir ficheros ejecutables para PC.",
+          "El tipo ASCII es adecuado para transferir páginas HTML y las imágenes que puedan contener."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          9,
+          12,
+          7
+        ],
+        "d": 1,
+        "n": "El tipo \"Multimedia\" no existe; \"solo ejecutables\".",
+        "y": "Ingreso libre OEP 2023-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAI2024B-P1-76",
+        "t": "T4.08",
+        "o": "O",
+        "q": "Indique la respuesta correcta sobre el IETF (Internet Engineering Task Force):",
+        "a": [
+          "Es un organismo creador de estándares en Internet.",
+          "Es responsable de las funciones administrativas relacionadas con la raíz del sistema de nombres de dominio (DNS), el direccionamiento del protocolo de Internet y otros recursos del protocolo de Internet.",
+          "Es responsable de administrar y supervisar la coordinación del sistema de nombres de dominio (DNS) de Internet y sus identificadores únicos, como las direcciones de protocolo de Internet (IP).",
+          "Es el Foro de Gobernanza de Internet."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          1,
+          7
+        ],
+        "d": 2,
+        "n": "Definiciones de IANA, ICANN e IGF: cambio de órgano en versión técnica.",
+        "y": "Ingreso libre OEP 2023-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAI2024B-P1-77",
+        "t": "T4.08",
+        "o": "O",
+        "q": "¿Qué código de respuesta HTTP se devuelve si el usuario que hace la petición NO tiene autorización para obtener la información?",
+        "a": [
+          "401",
+          "403",
+          "405",
+          "407"
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 3,
+        "n": "\"Autorización\" hace de cebo hacia 401 Unauthorized; la respuesta es 403.",
+        "y": "Ingreso libre OEP 2023-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAIL2022-P1-75",
+        "t": "T4.08",
+        "o": "O",
+        "q": "¿Cuál de los siguientes organismos está especializado en telecomunicaciones de la Organización de las Naciones Unidas (ONU), encargado de regular las telecomunicaciones a nivel internacional entre las distintas administraciones y empresas operadoras?",
+        "a": [
+          "ICANN",
+          "ITU",
+          "IEEE",
+          "TIA"
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          1
+        ],
+        "d": 1,
+        "n": "Organismos hermanos (ICANN, IEEE, TIA): cambio de órgano técnico.",
+        "y": "Ingreso libre OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2019-P1-74",
+        "t": "T4.08",
+        "o": "O",
+        "q": "En el protocolo HTTP, el código de error que indica que el servicio no está disponible es el:",
+        "a": [
+          "500",
+          "501",
+          "502",
+          "503"
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Códigos HTTP 5xx hermanos.",
+        "y": "Ingreso libre OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2019-P1-75",
+        "t": "T4.08",
+        "o": "O",
+        "q": "¿Cuál de los siguientes registros DNS proporciona información sobre las características básicas del dominio y de la zona en la que se encuentra?",
+        "a": [
+          "AAAA",
+          "PTR",
+          "MX",
+          "SOA"
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Registros DNS hermanos.",
+        "y": "Ingreso libre OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025A-P1-76",
+        "t": "T4.08",
+        "o": "O",
+        "q": "En una interacción cliente-servidor mediante HTTP, ¿qué clase de códigos de estado indican que se ha producido un error por parte del cliente?",
+        "a": [
+          "Códigos 2xx",
+          "Códigos 3xx",
+          "Códigos 4xx",
+          "Códigos 5xx"
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Familias de códigos HTTP.",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025X-P1-72",
+        "t": "T4.08",
+        "o": "O",
+        "q": "El protocolo SIP (Session Initiation Protocol) utiliza por defecto el puerto:",
+        "a": [
+          "Solo 5060 UDP.",
+          "Solo 6050 UDP.",
+          "5060 tanto en TCP como en UDP.",
+          "6050 tanto en TCP como en UDP."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          2,
+          12
+        ],
+        "d": 2,
+        "n": "Puerto SIP 5060 TCP y UDP frente a \"solo UDP\" y 6050.",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025X-P1-75",
+        "t": "T4.08",
+        "o": "O",
+        "q": "¿Qué protocolo usa por defecto el puerto TCP/23?",
+        "a": [
+          "FTP.",
+          "SMTP.",
+          "SSH.",
+          "TELNET."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          2
+        ],
+        "d": 1,
+        "n": "Puerto 23: Telnet.",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2024A-P1-35",
+        "t": "T4.08",
+        "o": "O",
+        "q": "¿Qué puerto utiliza Telnet?",
+        "a": [
+          "23",
+          "25",
+          "21",
+          "20"
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          2
+        ],
+        "d": 1,
+        "n": "Puerto 23.",
+        "y": "Promoción interna OEP 2021-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2024A-P1-43",
+        "t": "T4.08",
+        "o": "O",
+        "q": "Indique la respuesta correcta sobre el significado del conjunto de códigos de respuesta 3xx del protocolo HTTP:",
+        "a": [
+          "Peticiones correctas: esta clase de código indica que la petición fue recibida correctamente, entendida y aceptada.",
+          "Errores del cliente: la solicitud contiene sintaxis incorrecta o no puede procesarse.",
+          "Errores de servidor: el servidor falló al completar una solicitud aparentemente válida.",
+          "Redirecciones: el cliente tiene que tomar una acción adicional para completar la petición."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Familias de códigos HTTP.",
+        "y": "Promoción interna OEP 2021-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2024A-P1-50",
+        "t": "T4.08",
+        "o": "O",
+        "q": "Sobre el protocolo RSVP, es correcto decir:",
+        "a": [
+          "Desarrollado en la RFC 4566, está destinado a describir sesiones multimedia con el propósito de anunciar sesiones, invitar a sesiones y otras formas de iniciar sesiones multimedia.",
+          "Desarrollado en la RFC 7826, es un protocolo de nivel de aplicación para controlar la entrega de datos con propiedades en tiempo real.",
+          "Desarrollado en la RFC 2205, es un protocolo de configuración de reserva de recursos diseñado para servicios integrados de Internet.",
+          "Desarrollado en la RFC 2974, posibilita el anuncio de sesiones multimedia en la modalidad multicast."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          6
+        ],
+        "d": 3,
+        "n": "RSVP: números de RFC hermanos.",
+        "y": "Promoción interna OEP 2021-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2025A-P1-47",
+        "t": "T4.08",
+        "o": "O",
+        "q": "Dentro de la arquitectura de servicios de Internet, ¿cuál es la función técnica destacada del servicio DNS?",
+        "a": [
+          "Garantizar que los paquetes de datos sigan la ruta más corta entre el origen y el destino.",
+          "Encriptar el contenido de los correos electrónicos antes de ser enviados por SMTP.",
+          "Traducir direcciones lógicas (IP) a direcciones físicas (MAC).",
+          "Traducir nombres de dominio legibles para humanos en direcciones IP numéricas que las máquinas pueden procesar."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          7,
+          13
+        ],
+        "d": 1,
+        "n": "DNS frente a funciones de ARP, enrutamiento y cifrado.",
+        "y": "Promoción interna convocatoria 2025"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2018-P1-93",
+        "t": "T4.08",
+        "o": "O",
+        "q": "¿Cuál de las siguientes afirmaciones sobre HTTP/2 es correcta?",
+        "a": [
+          "Es un protocolo binario, a diferencia de HTTP 1.1",
+          "El identificador h2 se refiere a HTTP/2 sobre TCP en texto plano.",
+          "El identificador h2c se refiere a HTTP/2 sobre TLS.",
+          "Está definido en RFC 7543."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          8,
+          6
+        ],
+        "d": 3,
+        "n": "HTTP/2: h2/h2c invertidos; RFC cambiado.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2018-P1-95",
+        "t": "T4.08",
+        "o": "O",
+        "q": "¿Cuál de los siguientes protocolos NO tiene relación directa con la telefonía IP?",
+        "a": [
+          "H.323",
+          "SIP",
+          "NETCDF",
+          "RTP"
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [
+          13
+        ],
+        "d": 1,
+        "n": "NetCDF entre protocolos de VoIP.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2018-P1-48",
+        "t": "T4.08",
+        "o": "O",
+        "q": "¿Qué puerto utiliza por defecto HTTPS?",
+        "a": [
+          "25",
+          "80",
+          "143",
+          "443"
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          2
+        ],
+        "d": 1,
+        "n": "Puerto 443.",
+        "y": "Promoción interna OEP 2018"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT408-P1-01",
+        "t": "T4.08",
+        "o": "A",
+        "q": "¿Qué organismo se encarga de desarrollar protocolos y directrices que aseguren el crecimiento de la web a largo plazo?",
+        "a": [
+          "ISOC.",
+          "W3C.",
+          "IETF.",
+          "IANA."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "W3C vs IETF/ISOC."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT408-P1-02",
+        "t": "T4.08",
+        "o": "A",
+        "q": "¿Cuál es el puerto por defecto usado por una conexión Telnet?",
+        "a": [
+          "15.",
+          "21.",
+          "23.",
+          "24."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT408-P1-03",
+        "t": "T4.08",
+        "o": "A",
+        "q": "Si hablamos del Protocolo de Transferencia de Archivos (FTP), ¿cuál de las siguientes afirmaciones es cierta?",
+        "a": [
+          "Está pensado para ofrecer la máxima velocidad en la conexión.",
+          "Está pensado para ofrecer la máxima seguridad en la conexión.",
+          "Realiza el intercambio de información con el texto cifrado.",
+          "Depende del sistema operativo utilizado en cada equipo."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT408-P1-04",
+        "t": "T4.08",
+        "o": "A",
+        "q": "El Protocolo de Transferencia de Hipertexto (HTTP):",
+        "a": [
+          "Carece de sintaxis, sólo indica la semántica que utilizan los elementos software de la arquitectura Web para comunicarse.",
+          "Está orientado a transacciones con entidades bancarias.",
+          "Es un protocolo sin estado, que no guarda ninguna información sobre conexiones anteriores.",
+          "Es un protocolo que consume muchos «recursos», que se denominan Uniformed Resource Location (URL)."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT408-P1-05",
+        "t": "T4.08",
+        "o": "A",
+        "q": "En el Protocolo de Transferencia de Hipertexto Seguro (HTTPS), la seguridad se garantiza por medio de:",
+        "a": [
+          "La criptografía asimétrica que usa certificados de claves públicas y privadas para cifrar la información transmitida.",
+          "Una capa de conexión segura cifrada \"Secure Sockets Layer\" (SSL) o una conexión con seguridad de la capa de transporte \"Transport Layer Security\" (TLS).",
+          "El uso de firma electrónica avanzada XML \"XML Advanced Electronic Signatures\" (XAdES).",
+          "Usando el protocolo S-HTTP con el método de cifrado PGP."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT408-P1-06",
+        "t": "T4.08",
+        "o": "A",
+        "q": "El puerto del protocolo FTP sobre TLS/SSL (FTPS) es:",
+        "a": [
+          "2121.",
+          "2020.",
+          "980.",
+          "990."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT408-P1-07",
+        "t": "T4.08",
+        "o": "A",
+        "q": "En relación a los puertos utilizados por el protocolo FTP, señale la afirmación correcta:",
+        "a": [
+          "Utiliza el 21 para datos y el 20 para control.",
+          "Utiliza el 20 para datos y el 21 para control.",
+          "Utiliza el 23 para datos y el 25 para control.",
+          "Utiliza el 25 para datos y el 23 para control."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT408-P1-08",
+        "t": "T4.08",
+        "o": "A",
+        "q": "¿Quién elaboró la especificación Transport Layer Security (TLS)?",
+        "a": [
+          "UIT (Unión Internacional de Telecomunicaciones).",
+          "IETF (Internet Engineering Task Force).",
+          "Netscape Communications.",
+          "ETSI (European Telecommunications Standards Institute)."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT408-P1-09",
+        "t": "T4.08",
+        "o": "A",
+        "q": "El comando para iniciar una sesión con un servidor FTP es:",
+        "a": [
+          "START.",
+          "INIT.",
+          "OPEN.",
+          "PUT."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT408-P1-10",
+        "t": "T4.08",
+        "o": "A",
+        "q": "¿Cuál de estas afirmaciones sobre el protocolo HTTPS de Internet es cierta?",
+        "a": [
+          "Cuando se conecta a un sitio Web con un certificado no confiable, el navegador ofrece un aviso al usuario y se permite la comunicación.",
+          "Cuando se conecta a un sitio Web con un certificado no confiable, el navegador impide completamente la comunicación.",
+          "El puerto estándar que se utiliza es el 441.",
+          "Está sujeto a ataques man-in-the-middle."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT408-P1-11",
+        "t": "T4.08",
+        "o": "A",
+        "q": "De entre los siguientes nombres de dominio, indique cuál NO cumple las normas de sintaxis:",
+        "a": [
+          "pingüino.es.",
+          "-ministerio.es.",
+          "min-justicia.es.",
+          "è-expte.es."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT408-P1-12",
+        "t": "T4.08",
+        "o": "A",
+        "q": "¿Qué dominio se utiliza para la resolución inversa de direcciones IPv6?",
+        "a": [
+          "in-ip6-arpa.",
+          "ipv6.arpa.",
+          "in-addr-arpa.",
+          "ip6.arpa."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT408-P1-13",
+        "t": "T4.08",
+        "o": "A",
+        "q": "¿Qué tipo de dominio de primer nivel es usado por un país?",
+        "a": [
+          ".arpa.",
+          "ccTLD.",
+          "gTLD.",
+          "generic-stricted."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT408-P1-14",
+        "t": "T4.08",
+        "o": "A",
+        "q": "Según la estructura jerárquica del espacio de nombres de dominio indique la respuesta correcta:",
+        "a": [
+          "TLD es el dominio raíz.",
+          "www.inap.es es un FQDN.",
+          ".cat es un dominio del tipo ccTLD.",
+          ".int es un dominio patrocinado."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT408-P1-16",
+        "t": "T4.08",
+        "o": "A",
+        "q": "¿Cuál de los siguientes nombres de dominio NO está reservado?",
+        "a": [
+          "example.biz",
+          "example.net",
+          ".example",
+          ".localhost"
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT408-P1-17",
+        "t": "T4.08",
+        "o": "A",
+        "q": "DNS escucha en el puerto:",
+        "a": [
+          "50/TCP.",
+          "51/UDP.",
+          "52/TCP.",
+          "53/UDP."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          2
+        ],
+        "d": 1,
+        "n": "Puerto DNS."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT408-P1-18",
+        "t": "T4.08",
+        "o": "A",
+        "q": "En relación con DNS, ¿qué es una zona?",
+        "a": [
+          "Es un conjunto de servidores que administran nombres de dominio.",
+          "Es un espacio de dominio de nombres de dominio.",
+          "Es un conjunto de direcciones que referencian a nombres de dominio.",
+          "El concepto zona no está relación con DNS."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT408-P1-19",
+        "t": "T4.08",
+        "o": "A",
+        "q": "NO es un tipo de servidor de nombres:",
+        "a": [
+          "Local.",
+          "Primario.",
+          "Delegado.",
+          "Esclavo."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT408-P1-20",
+        "t": "T4.08",
+        "o": "A",
+        "q": "Cuando recibimos una respuesta de un servidor de nombres, si el flag AA está activado, significa que:",
+        "a": [
+          "Que la respuesta es cacheada.",
+          "Que la respuesta es obtenida de un servidor autoritativo.",
+          "Que la respuesta es incompleta.",
+          "Que la respuesta no ha podido resolver la petición realizada."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT408-P1-21",
+        "t": "T4.08",
+        "o": "A",
+        "q": "DNS se compone de varios elementos, indique cuál NO es:",
+        "a": [
+          "Resolvers.",
+          "Espacio de nombres.",
+          "Zonas.",
+          "Servidores de nombres."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT408-P1-22",
+        "t": "T4.08",
+        "o": "A",
+        "q": "El tipo de registro DNS LOC hace referencia:",
+        "a": [
+          "A la información del recurso.",
+          "A la ubicación geográfica del dominio.",
+          "A la autoridad de la zona.",
+          "A la dirección IP."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT408-P1-23",
+        "t": "T4.08",
+        "o": "A",
+        "q": "¿Qué tipo de registro en DNS se utiliza para especificar una dirección IPv6?",
+        "a": [
+          "A.",
+          "AA.",
+          "AAA.",
+          "AAAA."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT408-P1-24",
+        "t": "T4.08",
+        "o": "A",
+        "q": "¿Qué tipo de registro en DNS permite la resolución inversa?",
+        "a": [
+          "AA.",
+          "INV.",
+          "PTR.",
+          "CAA."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT408-P1-25",
+        "t": "T4.08",
+        "o": "A",
+        "q": "¿Qué tipo de registro en DNS contiene una firma digital para DNSSEC?",
+        "a": [
+          "RRSIG.",
+          "SIGSEC.",
+          "DNSKEY.",
+          "CAA."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT408-P1-26",
+        "t": "T4.08",
+        "o": "A",
+        "q": "¿Qué tipo de registro en DNS es necesario para configurar la recepción de correos electrónicos?",
+        "a": [
+          "A.",
+          "MX.",
+          "CNAME.",
+          "TXT."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT408-P1-27",
+        "t": "T4.08",
+        "o": "A",
+        "q": "El campo TYPE de un registro DNS, tiene una longitud de:",
+        "a": [
+          "4 bits.",
+          "8 bits.",
+          "16 bits.",
+          "32 bits."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT408-P1-28",
+        "t": "T4.08",
+        "o": "A",
+        "q": "El campo TTL de un registro DNS, tiene una longitud de:",
+        "a": [
+          "4 bits.",
+          "8 bits.",
+          "16 bits.",
+          "32 bits."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT408-P1-29",
+        "t": "T4.08",
+        "o": "A",
+        "q": "¿Qué tipo de registro en DNS permite especificar la autoridad de certificación autorizada para emitir certificados para un dominio?",
+        "a": [
+          "CCA.",
+          "CAA.",
+          "CERT.",
+          "CER."
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [
+          7,
+          9
+        ],
+        "d": 2,
+        "n": "Registro CAA vs anagramas."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT408-P1-31",
+        "t": "T4.08",
+        "o": "A",
+        "q": "La cabecera de un mensaje DNS contiene un conjunto de campos. Señale la respuesta correcta:",
+        "a": [
+          "TC es un flag que especifica una consulta recursiva.",
+          "El campo RCODE tiene una longitud 8 bits.",
+          "El campo QR indica si se trata de una consulta o respuesta.",
+          "El campo X está reservado para usos futuros."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT408-P1-32",
+        "t": "T4.08",
+        "o": "A",
+        "q": "¿Qué NO permite comprobar DNSSEC?",
+        "a": [
+          "Autenticidad en origen.",
+          "No repudio.",
+          "Integridad.",
+          "No existencia."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT408-P1-35",
+        "t": "T4.08",
+        "o": "A",
+        "q": "¿Cuál de las siguientes afirmaciones NO se corresponde con un objetivo de DNSSEC?",
+        "a": [
+          "Evitar el spoofing.",
+          "Protección frente a ataques de caché poisoning.",
+          "Protección frente a ataques DDoS.",
+          "Evitar la manipulación de mensajes DNS."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT408-P1-36",
+        "t": "T4.08",
+        "o": "A",
+        "q": "En DNSSEC, señale la respuesta correcta:",
+        "a": [
+          "Un proceso principal es firmar y servir.",
+          "Están basados en criptografía asimétrica.",
+          "NSEC contiene una clave pública.",
+          "DNSKEY interconecta zonas de firma."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT408-P1-37",
+        "t": "T4.08",
+        "o": "A",
+        "q": "En el modo de conexión pasivo en FTP, indique la respuesta correcta:",
+        "a": [
+          "La conexión de datos es iniciada por el cliente.",
+          "El servidor para la transferencia de datos utiliza el puerto TCP/20.",
+          "El comando PASV es enviado por el servidor al cliente.",
+          "El cliente utiliza para la transferencia un puerto aleatorio, hasta el 1023."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT408-P1-38",
+        "t": "T4.08",
+        "o": "A",
+        "q": "¿Qué código de respuesta FTP indica una respuesta incompleta?",
+        "a": [
+          "110.",
+          "210.",
+          "405.",
+          "506."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT408-P1-39",
+        "t": "T4.08",
+        "o": "A",
+        "q": "El código de respuesta FTP x2z, nos ofrece información sobre:",
+        "a": [
+          "Sintaxis.",
+          "Conexiones.",
+          "Sistema de ficheros.",
+          "Información."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT408-P1-41",
+        "t": "T4.08",
+        "o": "A",
+        "q": "La política o mecanismo de seguridad estandarizado que sirve para indicar a los navegadores que una web, y todos sus enlaces, deben ser accedidos exclusivamente utilizando HTTPS se denomina:",
+        "a": [
+          "SHTS.",
+          "AHTS.",
+          "HSTS.",
+          "SHTP."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT408-P1-42",
+        "t": "T4.08",
+        "o": "A",
+        "q": "El puerto en el que escucha un servidor TFTP es:",
+        "a": [
+          "TCP/69.",
+          "UDP/69.",
+          "TCP/68.",
+          "UDP/68."
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT408-P1-43",
+        "t": "T4.08",
+        "o": "A",
+        "q": "El puerto en el que escucha un servidor WHOIS es:",
+        "a": [
+          "TCP/42.",
+          "TCP/43.",
+          "UDP/44.",
+          "UDP/45."
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT408-P1-45",
+        "t": "T4.08",
+        "o": "A",
+        "q": "El puerto en el que escucha un servidor Telnet es:",
+        "a": [
+          "TCP/22.",
+          "UDP/23.",
+          "TCP/23.",
+          "UDP/24."
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT408-P1-46",
+        "t": "T4.08",
+        "o": "A",
+        "q": "El puerto en el que escucha un servidor NTP es:",
+        "a": [
+          "TCP/120.",
+          "UDP/121.",
+          "TCP/122.",
+          "UDP/123."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT408-P1-47",
+        "t": "T4.08",
+        "o": "A",
+        "q": "NO es una de las características principales del protocolo HTTP:",
+        "a": [
+          "Mantiene el estado entre peticiones de un mismo cliente.",
+          "Se definen ocho verbos básicos para el diálogo entre cliente y servidor.",
+          "Permite la transferencia de objetos multimedia.",
+          "El texto está codificado en ASCII."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT408-P1-48",
+        "t": "T4.08",
+        "o": "A",
+        "q": "Señale la respuesta INCORRECTA, respecto a los métodos HTTP:",
+        "a": [
+          "PATCH es similar a PUT, posibilitando la modificación parcial de recursos.",
+          "HEAD solicita una respuesta al servidor, pero sin incluirse el cuerpo de la respuesta.",
+          "PROPATCH es un método no básico.",
+          "CONNECT se usa para que los servidores proxy pueden establecer un túnel."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT408-P1-49",
+        "t": "T4.08",
+        "o": "A",
+        "q": "De los siguientes códigos de respuesta HTTP, identifique el correcto:",
+        "a": [
+          "305 Temporary redirect.",
+          "202 Accepted.",
+          "403 Unauthorized.",
+          "510 Loop detected."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT408-P1-50",
+        "t": "T4.08",
+        "o": "A",
+        "q": "De los siguientes códigos de respuesta HTTP, identifique el correcto:",
+        "a": [
+          "102 Continue.",
+          "207 Reset content.",
+          "302 Not found.",
+          "409 Conflict."
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Códigos HTTP con textos cambiados."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT408-P1-52",
+        "t": "T4.08",
+        "o": "A",
+        "q": "La respuesta Multi-Status del protocolo HTTP se corresponde con el código:",
+        "a": [
+          "204.",
+          "205.",
+          "206.",
+          "207."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT408-P1-53",
+        "t": "T4.08",
+        "o": "A",
+        "q": "La característica del protocolo HTTP que permite mantener una conexión una vez recibida la respuesta se denomina:",
+        "a": [
+          "Pipelining.",
+          "Permanent link.",
+          "Keepalive.",
+          "Connection fixed."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT408-P1-54",
+        "t": "T4.08",
+        "o": "A",
+        "q": "QUIC es utilizado en:",
+        "a": [
+          "HTTP/1.1.",
+          "HTTP/1.2.",
+          "HTTP/2.",
+          "HTTP/3."
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT408-P1-55",
+        "t": "T4.08",
+        "o": "A",
+        "q": "La característica Server push es utilizada en:",
+        "a": [
+          "HTTP/1.1.",
+          "HTTP/1.2.",
+          "HTTP/2.",
+          "HTTP/3."
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT408-P1-57",
+        "t": "T4.08",
+        "o": "A",
+        "q": "De entre los cambios que desarrolla TLS 1.3, respecto a versiones anteriores, señale la respuesta INCORRECTA:",
+        "a": [
+          "Se elimina el mensaje ChangeCipherSpec.",
+          "Se utilizan solo algoritmos de cifrado AEAD.",
+          "Se admite la compresión.",
+          "Se añade el modo 0-RTT."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT408-P1-58",
+        "t": "T4.08",
+        "o": "A",
+        "q": "¿En qué estándar se define TLS 1.3?",
+        "a": [
+          "RFC 8445.",
+          "RFC 8446.",
+          "RFC 8447.",
+          "RFC 8448."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT408-P1-59",
+        "t": "T4.08",
+        "o": "A",
+        "q": "El protocolo TLS Handshake NO se encarga de:",
+        "a": [
+          "Negociar los parámetros de seguridad a utilizar en la conexión.",
+          "Encapsular los datos a emitir.",
+          "Autenticar a ambos extremos.",
+          "Intercambiar la PreMasterSecret."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT408-P1-60",
+        "t": "T4.08",
+        "o": "A",
+        "q": "En TLS 1.3, el mecanismo de protección que permite a un servidor seleccionar una versión de TLS inferior a la versión 1.3 incorporando un valor fijo en el mensaje de respuesta y comunicándolo al cliente para que pueda chequear ese valor, se utiliza frente a ataques:",
+        "a": [
+          "Downgrade.",
+          "DDoS.",
+          "Contra la integridad.",
+          "Contra la confidencialidad."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08-P1-73",
+        "t": "T4.08",
+        "o": "A",
+        "q": "En JSP, una directiva tiene la forma de:",
+        "a": [
+          "<%@nombre %>.",
+          "<%!nombre %>.",
+          "<?@nombre ?>.",
+          "<?!nombre ?>."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08-P1-78",
+        "t": "T4.08",
+        "o": "A",
+        "q": "¿Qué código de estado HTTP devuelve \"Unauthorized\"?",
+        "a": [
+          "300.",
+          "301.",
+          "400.",
+          "401."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10B-P1-67",
+        "t": "T4.08",
+        "o": "A",
+        "q": "En relación con el protocolo HTTP, ¿cuál es el código STATUS asociado al error \"Service unavailable\"?",
+        "a": [
+          "501.",
+          "502.",
+          "503.",
+          "504."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-85",
+        "t": "T4.08",
+        "o": "A",
+        "q": "¿Cuál de los siguientes elementos de red actúa en el nivel 2 (enlace de datos) del modelo de referencia OSI (Open Systems Interconnection)?",
+        "a": [
+          "Router o enrutador.",
+          "Hub o concentrador.",
+          "Switch o conmutador.",
+          "DNS o servidor de nombres de dominio."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-92",
+        "t": "T4.08",
+        "o": "A",
+        "q": "¿Para qué sirve el tipo de registro PTR en el servicio DNS (Domain Name System)?",
+        "a": [
+          "Traduce direcciones IP en nombres de dominio.",
+          "Se usa para crear nombres de servidores de alojamiento adicionales.",
+          "Proporciona información sobre el servidor DNS primario de la zona.",
+          "Asocia un nombre de dominio a una lista de servidores de intercambio de correo para ese dominio."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-94",
+        "t": "T4.08",
+        "o": "A",
+        "q": "¿Cuál de los siguientes registros NO es un tipo de registro DNS válido?",
+        "a": [
+          "MX.",
+          "SOA.",
+          "NS.",
+          "AAA."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-95",
+        "t": "T4.08",
+        "o": "A",
+        "q": "¿Qué tipo de registro DNS se usa para traducir un nombre de host a una dirección IPv4?",
+        "a": [
+          "A.",
+          "I.",
+          "AAAA.",
+          "CNAME."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-96",
+        "t": "T4.08",
+        "o": "A",
+        "q": "El protocolo que permite a los clientes de una red obtener de forma automática los parámetros para su configuración, se denomina:",
+        "a": [
+          "DNS.",
+          "DHCP.",
+          "TELNET.",
+          "ARP."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-98",
+        "t": "T4.08",
+        "o": "A",
+        "q": "La organización que opera a nivel multinacional/internacional y es la responsable de asignar las direcciones del protocolo IP, de los identificadores de protocolo, de las funciones de gestión del sistema de dominio y de la administración del sistema de servidores raíz, es:",
+        "a": [
+          "IEEE.",
+          "ICANN.",
+          "W3C.",
+          "IITN."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-91",
+        "t": "T4.08",
+        "o": "A",
+        "q": "¿Cuál de los siguientes NO es un método integrado en el protocolo HTTP?",
+        "a": [
+          "OPTIONS.",
+          "DEBUG.",
+          "DELETE.",
+          "CONNECT."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    }
+  ],
+  "counts": {
+    "total": 244,
+    "alreadyHadCitation": 162,
+    "added": 4,
+    "pending": 78,
+    "withCitation": 166
+  }
+}

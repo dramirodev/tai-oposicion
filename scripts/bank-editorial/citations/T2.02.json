@@ -1,0 +1,2535 @@
+{
+  "schemaVersion": 1,
+  "topicId": "T2.02",
+  "baseCommit": "454a025ae26390dee0f057a4cfa9b6d5fc758fba",
+  "status": "CITATIONS_ACCEPTED_UNDER_USER_DELEGATION",
+  "scope": "Solo adición de citas para lectura; no concede nueva puntuabilidad ni altera pruebas editoriales previas.",
+  "file": {
+    "beforeSha256": "0829a05fcb5090f40ac610f871f26dd623a5797bddecc1acf0c7c7fa5719bdfc",
+    "afterSha256": "29837e70d360c9dc4670c3e11672918e4eb0e612dae0e27676facb1c6cf25b64"
+  },
+  "sample": {
+    "beforeSha256": "3d390cde196876e8f5d245f9f480cd057577093f345b9b4acba655e6b97e6c64",
+    "afterSha256": "3d390cde196876e8f5d245f9f480cd057577093f345b9b4acba655e6b97e6c64"
+  },
+  "sourceRoot": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario",
+  "sources": {
+    "e-AT202-P1-27": {
+      "path": "T2.02 Periféricos/T2.02 Periféricos - Temario.pdf",
+      "sourceHash": "963ced123c0fe2900b51d666f04e1dd593c9d9f65add543b87ee6af27af953af",
+      "physicalPage": 15,
+      "printedPage": 15,
+      "excerpt": "Deposición de material fundido (FDM): también conocida por FFF (Fused Filament Fabrication). La técnica aditiva del modelado por deposición fundida es una tecnología que consiste en depositar polímero fundido sobre una base plana, capa a capa. El material, que inicialmente se encuentra en estado sólido almacenado en rollos, se funde y es expulsado por la boquilla en minúsculos hilos que se van solidificando conforme van tomando la forma de cada capa. Se trata de la típica bobina de filamento PLA, ABS, etc. Es la técnica más común en cuanto a impresoras 3D de escritorio y usuarios domésticos se refiere. Actualmente se utilizan una gran variedad de materiales, entre los que predominan ABS (acrilonitrilo butadieno estireno) y PLA (ácido poliláctico). Pregunta de examen Señale cuál de las siguientes es una tecnología para la impresión en 3 dimensiones: a) Tubos fotomultiplicadores (Photomultiplier Tubes PMT). b) Sensor de imagen por contacto (Contact Image Sensor CIS). c) Estereolitografía (Stereo Litography SLA). d) Dispositivo de carga acoplada (Charge-Coupled Device CCD).",
+      "label": "Impresión 3D — FDM"
+    },
+    "e-AT202-P1-40": {
+      "path": "T2.02 Periféricos/T2.02 Periféricos - Temario.pdf",
+      "sourceHash": "963ced123c0fe2900b51d666f04e1dd593c9d9f65add543b87ee6af27af953af",
+      "physicalPage": 29,
+      "printedPage": 29,
+      "excerpt": "Resolución interpolada: consiste en superar los límites que impone la resolución óptica mediante la estimación matemática (interpolación) de cuales podrían ser los valores intermedios de la imagen, es decir, es una resolución calculada que genera nuevos puntos a partir de otros reales más próximos.",
+      "label": "Escáner — resolución interpolada"
+    }
+  },
+  "questions": [
+    {
+      "id": "AT202-P1-27",
+      "before": {
+        "i": "AT202-P1-27",
+        "t": "T2.02",
+        "o": "A",
+        "q": "¿En qué consiste la tecnología de impresión 3D FDM?",
+        "a": [
+          "En el uso de un láser para imprimir objetos.",
+          "En depositar polímero fundido sobre una base plana, capa a capa.",
+          "En la aplicación de un haz de luz ultravioleta a una resina líquida sensible a la luz.",
+          "En inyectar capas de fotopolímero líquido."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT202-P1-27",
+        "t": "T2.02",
+        "o": "A",
+        "q": "¿En qué consiste la tecnología de impresión 3D FDM?",
+        "a": [
+          "En el uso de un láser para imprimir objetos.",
+          "En depositar polímero fundido sobre una base plana, capa a capa.",
+          "En la aplicación de un haz de luz ultravioleta a una resina líquida sensible a la luz.",
+          "En inyectar capas de fotopolímero líquido."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "T2.02 Periféricos - Temario.pdf — Impresión 3D — FDM\n\nTemario, p. 15 (PDF p. 15)\n\nDeposición de material fundido (FDM): también conocida por FFF (Fused Filament Fabrication). La técnica aditiva del modelado por deposición fundida es una tecnología que consiste en depositar polímero fundido sobre una base plana, capa a capa. El material, que inicialmente se encuentra en estado sólido almacenado en rollos, se funde y es expulsado por la boquilla en minúsculos hilos que se van solidificando conforme van tomando la forma de cada capa. Se trata de la típica bobina de filamento PLA, ABS, etc. Es la técnica más común en cuanto a impresoras 3D de escritorio y usuarios domésticos se refiere. Actualmente se utilizan una gran variedad de materiales, entre los que predominan ABS (acrilonitrilo butadieno estireno) y PLA (ácido poliláctico). Pregunta de examen Señale cuál de las siguientes es una tecnología para la impresión en 3 dimensiones: a) Tubos fotomultiplicadores (Photomultiplier Tubes PMT). b) Sensor de imagen por contacto (Contact Image Sensor CIS). c) Estereolitografía (Stereo Litography SLA). d) Dispositivo de carga acoplada (Charge-Coupled Device CCD).\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "9c2056d1305290a1e15e236f7d3d39f0ef6c95563f296b75c473d16983969a4a",
+      "afterSha256": "061ae8aa9adb356c451687a502aefa0986e870147bd27c52125603e73b6a3354",
+      "evidenceKeys": [
+        "e-AT202-P1-27"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT202-P1-40",
+      "before": {
+        "i": "AT202-P1-40",
+        "t": "T2.02",
+        "o": "A",
+        "q": "En relación con un escáner, la resolución interpolada es:",
+        "a": [
+          "Una resolución calculada que genera nuevos puntos a partir de otros reales más próximos.",
+          "La cantidad de puntos individuales de una imagen captada mediante el sensor.",
+          "La empleada por los programas OCR para identificar el texto.",
+          "La que determina la profundidad del color."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT202-P1-40",
+        "t": "T2.02",
+        "o": "A",
+        "q": "En relación con un escáner, la resolución interpolada es:",
+        "a": [
+          "Una resolución calculada que genera nuevos puntos a partir de otros reales más próximos.",
+          "La cantidad de puntos individuales de una imagen captada mediante el sensor.",
+          "La empleada por los programas OCR para identificar el texto.",
+          "La que determina la profundidad del color."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T2.02 Periféricos - Temario.pdf — Escáner — resolución interpolada\n\nTemario, p. 29 (PDF p. 29)\n\nResolución interpolada: consiste en superar los límites que impone la resolución óptica mediante la estimación matemática (interpolación) de cuales podrían ser los valores intermedios de la imagen, es decir, es una resolución calculada que genera nuevos puntos a partir de otros reales más próximos.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "f9887df1562adf73dacaef61b0690f658266c7267b5bc50d2af2367abf647dfd",
+      "afterSha256": "25a435427e350bd5efb1dc0ea52434f2484ada34759b9997772294e7503a31f0",
+      "evidenceKeys": [
+        "e-AT202-P1-40"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    }
+  ],
+  "pending": [
+    {
+      "question": {
+        "i": "TAI2024B-P1-22",
+        "t": "T2.02",
+        "o": "O",
+        "q": "Señale cuál de las siguientes es un formato de interfaz SSD:",
+        "a": [
+          "HHP",
+          "MMVe",
+          "MMD",
+          "M.2"
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          9
+        ],
+        "d": 1,
+        "n": "\"MMVe\" deforma NVMe; HHP y MMD inventados.",
+        "y": "Ingreso libre OEP 2023-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAI2024B-P1-R-01",
+        "t": "T2.02",
+        "o": "O",
+        "q": "Señale cuál es una resolución válida para una pantalla:",
+        "a": [
+          "8K UHD - 7680 x 3840 píxeles.",
+          "Ultra HD - 4320 x 1280 píxeles.",
+          "WQHD - 2560 x 1440 píxeles.",
+          "HD - 1920 × 1080 píxeles."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          2,
+          7
+        ],
+        "d": 2,
+        "n": "Cifras de resolución alteradas; d) \"HD\" con cifras de Full HD.",
+        "y": "Ingreso libre OEP 2023-2024 (2024)",
+        "r": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAI2024B-P1-R-02",
+        "t": "T2.02",
+        "o": "O",
+        "q": "¿Cuál es un tipo de panel de una pantalla LCD?",
+        "a": [
+          "IPS (In-Plane Switching).",
+          "VN (Vertical Nematic).",
+          "TA (Twisted Alignment).",
+          "PSI (Plane Switching Input)."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          9
+        ],
+        "d": 1,
+        "n": "VN, TA, PSI = deformaciones de VA, TN, IPS.",
+        "y": "Ingreso libre OEP 2023-2024 (2024)",
+        "r": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAIL2022-P1-21",
+        "t": "T2.02",
+        "o": "O",
+        "q": "¿Cuál de los siguientes es el nombre de un conector usado para carga y datos creado por el fabricante Apple?",
+        "a": [
+          "USB-Tipo C",
+          "iUSB",
+          "iFirewire",
+          "Lightning"
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          9
+        ],
+        "d": 1,
+        "n": "iUSB, iFirewire inventados con prefijo de Apple.",
+        "y": "Ingreso libre OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAIL2022-P1-26",
+        "t": "T2.02",
+        "o": "O",
+        "q": "En relación con los sistemas RAID señale la respuesta INCORRECTA:",
+        "a": [
+          "El RAID 1+0 exige un mínimo de 4 discos.",
+          "RAID 6 amplía el RAID 5 agregando un bloque de paridad.",
+          "RAID 5 necesitará un mínimo de 3 discos para ser implementado.",
+          "Un RAID 4 distribuye la información a nivel de bloques con dos discos de paridad dedicados."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [
+          2
+        ],
+        "d": 2,
+        "n": "RAID 4 con \"dos discos de paridad\" (es uno): cifra cambiada.",
+        "y": "Ingreso libre OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAIL2022-P1-27",
+        "t": "T2.02",
+        "o": "O",
+        "q": "¿Cuál de las siguientes es una tecnología de almacenamiento en disco mediante bus serie?",
+        "a": [
+          "SATA",
+          "ATA",
+          "SCSI",
+          "DLT"
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "SATA frente a ATA/SCSI paralelos y DLT (cinta).",
+        "y": "Ingreso libre OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAIL2022-P1-28",
+        "t": "T2.02",
+        "o": "O",
+        "q": "Respecto a la norma USB indique la respuesta INCORRECTA:",
+        "a": [
+          "USB Type-C es lo mismo que USB 3.1",
+          "La diferencia entre USB 3.1 Gen 1 y USB 3.1 Gen 2 se reduce solamente a la velocidad.",
+          "USB 3.2 permite velocidades de hasta 20 Gbps.",
+          "Los dispositivos USB 2.0 pueden lograr una velocidad de transferencia máxima hasta de 480 Mbps."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "\"Type-C es lo mismo que USB 3.1\": confunde conector con versión.",
+        "y": "Ingreso libre OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2019-P1-26",
+        "t": "T2.02",
+        "o": "O",
+        "q": "Indique la velocidad máxima de transferencia del USB 4.0:",
+        "a": [
+          "Hasta 20 Gbps.",
+          "Hasta 30 Gbps.",
+          "Hasta 40 Gbps.",
+          "Hasta 50 Gbps."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          2
+        ],
+        "d": 1,
+        "n": "Escalera 20-30-40-50 Gbps.",
+        "y": "Ingreso libre OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2019-P1-27",
+        "t": "T2.02",
+        "o": "O",
+        "q": "Indique cuál de las siguientes es una tecnología de interfaz hardware:",
+        "a": [
+          "Thunderbird",
+          "HIT",
+          "Thunderbolt",
+          "RISC"
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          9,
+          13
+        ],
+        "d": 1,
+        "n": "Thunderbird (cliente de correo) frente a Thunderbolt.",
+        "y": "Ingreso libre OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2019-P1-28",
+        "t": "T2.02",
+        "o": "O",
+        "q": "En relación con el almacenamiento, ¿qué es un SSD?",
+        "a": [
+          "Secure System Disk. Es un sistema de almacenamiento de datos cifrado AES 128.",
+          "Solid State Disk. Es un dispositivo de almacenamiento de datos que utiliza discos magnéticos.",
+          "Solid State Drive. Es un dispositivo de almacenamiento de datos que utiliza memoria no volátil.",
+          "Solid State Device. Es un dispositivo de almacenamiento de datos que utiliza memoria volátil."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          9
+        ],
+        "d": 1,
+        "n": "Expansiones de SSD cambiadas.",
+        "y": "Ingreso libre OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025A-P1-25",
+        "t": "T2.02",
+        "o": "O",
+        "q": "¿Cuál de las siguientes características describe correctamente una unidad de estado sólido (SSD)?",
+        "a": [
+          "Almacena datos en discos magnéticos giratorios de alta densidad.",
+          "Utiliza memoria RAM volátil para el almacenamiento persistente de datos.",
+          "Es un dispositivo para almacenar datos en memoria no volátil sin partes móviles.",
+          "Requiere cabezales de lectura mecánicos para acceder a los datos almacenados."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          8
+        ],
+        "d": 1,
+        "n": "SSD frente a rasgos de disco magnético.",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025A-P1-26",
+        "t": "T2.02",
+        "o": "O",
+        "q": "¿Cuál es el ancho de banda máximo de la especificación HDMI 2.1?",
+        "a": [
+          "10 Gbps.",
+          "18 Gbps.",
+          "32 Gbps.",
+          "48 Gbps."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          2
+        ],
+        "d": 2,
+        "n": "Escalera de anchos de banda HDMI.",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025A-P1-27",
+        "t": "T2.02",
+        "o": "O",
+        "q": "¿Cuántos fallos de dispositivo puede tolerar un conjunto RAID 5 sin pérdida de datos?",
+        "a": [
+          "Ningún fallo de dispositivo.",
+          "Un fallo de dispositivo.",
+          "Dos fallos de dispositivo.",
+          "Tres fallos de dispositivo."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          2
+        ],
+        "d": 1,
+        "n": "Fallos tolerados por RAID 5.",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025A-P1-28",
+        "t": "T2.02",
+        "o": "O",
+        "q": "¿Qué es el Internet Printing Protocol (IPP)?",
+        "a": [
+          "Una colección de estándares abiertos que define un protocolo de impresión en red de alto nivel.",
+          "Un protocolo de compresión de datos orientado a la transmisión de documentos a impresoras.",
+          "Un formato de archivo para documentos imprimibles de tipo vectorial.",
+          "Un estándar de conexión física para impresoras mediante cable USB."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          13
+        ],
+        "d": 2,
+        "n": "IPP frente a definiciones de otras tecnologías.",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025X-P1-23",
+        "t": "T2.02",
+        "o": "O",
+        "q": "¿Qué es la latencia rotacional en los discos duros HDD?",
+        "a": [
+          "El tiempo medio que tarda el disco en leer o escribir nueva información.",
+          "El tiempo medio que tarda la aguja en situarse en el sector físico deseado.",
+          "El tiempo medio necesario para mover la cabeza desde el cilindro actual al cilindro sobre el que se quiere operar.",
+          "El tiempo medio que tarda la aguja en situarse en la pista deseada."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 3,
+        "n": "Latencia rotacional frente a tiempo de búsqueda.",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1,
+        "w": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025X-P1-24",
+        "t": "T2.02",
+        "o": "O",
+        "q": "Respecto a los sistemas RAID, señale la respuesta INCORRECTA:",
+        "a": [
+          "RAID 1 está configurado como espejo, los datos son duplicados en otra unidad (mínimo dos) de forma sincronizada.",
+          "RAID 5 es una implementación del striping de discos en la que se incluye información de paridad con cada escritura en disco.",
+          "RAID 10 conocido como RAID 1+0, mantiene configuración de espejo con striping.",
+          "RAID 6 es una variante de RAID 5 que implementa un doble sistema de paridad distribuida, lo que le permite funcionar con un mínimo de tres discos y tolerar el fallo simultáneo de hasta un solo disco."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [
+          2,
+          7
+        ],
+        "d": 2,
+        "n": "RAID: rasgos con un número cambiado.",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2019-P1-R-04",
+        "t": "T2.02",
+        "o": "O",
+        "q": "En tecnologías de almacenamiento, el término SAS se corresponde con:",
+        "a": [
+          "Serial Attached State.",
+          "Solid Attached SCSI.",
+          "Serial Attached SCSI.",
+          "Solid Advanced SCSI."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          9
+        ],
+        "d": 1,
+        "n": "Expansión de SAS cambiada.",
+        "y": "Promoción interna OEP 2019",
+        "r": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2018-P1-27",
+        "t": "T2.02",
+        "o": "O",
+        "q": "¿Cuál de las siguientes respuestas NO es una interfaz de conexión válida para discos SSD?",
+        "a": [
+          "SAS",
+          "SATA",
+          "DVI",
+          "PCIe"
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [
+          13
+        ],
+        "d": 1,
+        "n": "DVI (vídeo) entre interfaces de disco.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2018-P1-28",
+        "t": "T2.02",
+        "o": "O",
+        "q": "La tecnología Thunderbolt 3 permite transferencias de datos de hasta:",
+        "a": [
+          "20 Gbps.",
+          "30 Gbps.",
+          "40 Gbps.",
+          "60 Gbps."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          2
+        ],
+        "d": 1,
+        "n": "Thunderbolt 3: 40 Gbps (escalera).",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2018-P1-11",
+        "t": "T2.02",
+        "o": "O",
+        "q": "La especificación USB 3.2:",
+        "a": [
+          "Deja de usar los cables USB Tipo C.",
+          "No existe, la última es la 3.1",
+          "Aumenta la velocidad de transferencia de datos sobre la versión anterior.",
+          "Ofrece velocidades de hasta 40 Gbps."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          12,
+          2
+        ],
+        "d": 1,
+        "n": "USB 3.2: negaciones y cifra falsa.",
+        "y": "Promoción interna OEP 2018"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2018-P1-R-02",
+        "t": "T2.02",
+        "o": "O",
+        "q": "Seleccione, de entre los siguientes niveles de array de discos RAID, aquel que emplee códigos Hamming para la corrección de errores en disco:",
+        "a": [
+          "RAID1",
+          "RAID2",
+          "RAID 4",
+          "RAID5"
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "RAID 2 (Hamming).",
+        "y": "Promoción interna OEP 2018",
+        "r": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT202-P1-01",
+        "t": "T2.02",
+        "o": "A",
+        "q": "Las unidades SSD:",
+        "a": [
+          "Son unidades de almacenamiento que realizan la misma función que el disco duro del ordenador.",
+          "Son unidades de almacenamiento que realizan la misma función que la memoria RAM del ordenador.",
+          "Contienen el hardware para las comunicaciones Ethernet.",
+          "Contienen el hardware para la dotación de conexiones USB del ordenador."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT202-P1-02",
+        "t": "T2.02",
+        "o": "A",
+        "q": "En relación a la estructura física de un disco, ¿qué es un sector?",
+        "a": [
+          "Conjunto de varias pistas.",
+          "Cada una de las divisiones de una pista.",
+          "Cada uno de los círculos concéntricos del disco.",
+          "Cada una de las caras del disco."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT202-P1-03",
+        "t": "T2.02",
+        "o": "A",
+        "q": "Respecto a la estructura lógica de un disco duro y sus características, ¿qué se entiende por latencia media?",
+        "a": [
+          "Revoluciones por minuto de los platos.",
+          "Tiempo medio que tarda la aguja en situarse en la pista y el sector deseado.",
+          "Velocidad a la que puede transferir la información a la computadora una vez la aguja está situada en la pista y sector correctos.",
+          "Tiempo medio que tarda la aguja en situarse en el sector deseado."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT202-P1-04",
+        "t": "T2.02",
+        "o": "A",
+        "q": "El tipo de escáner que se utiliza para hacer copias digitales de libros o documentos que, por ser antiguos o muy valiosos, no se les quiere deteriorar durante el proceso, se le conoce con el nombre de:",
+        "a": [
+          "Plano.",
+          "Tambor.",
+          "Rodillo.",
+          "Cenital."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT202-P1-05",
+        "t": "T2.02",
+        "o": "A",
+        "q": "La velocidad del USB 3.0 es:",
+        "a": [
+          "15 veces superior a la del USB 2.0.",
+          "Similar a la del USB 2.0.",
+          "10 veces superior a la del USB 2.0",
+          "480 Mbps."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT202-P1-06",
+        "t": "T2.02",
+        "o": "A",
+        "q": "¿Con qué dispositivo se relaciona la tecnología de reconocimiento de pulso acústico?",
+        "a": [
+          "Memoria RAM.",
+          "Pantalla táctil.",
+          "Tarjeta de sonido.",
+          "Disco duro."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          13
+        ],
+        "d": 2,
+        "n": "Tecnología de pantalla táctil."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT202-P1-07",
+        "t": "T2.02",
+        "o": "A",
+        "q": "¿Cuál de los siguientes estándares se basa en una comunicación en serie?",
+        "a": [
+          "PATA.",
+          "SCSI 1.",
+          "SATA.",
+          "SCSI 3.1."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT202-P1-08",
+        "t": "T2.02",
+        "o": "A",
+        "q": "¿Cuál de las siguientes opciones describe la impresión con tecnología de sublimación de tinta?",
+        "a": [
+          "Utilizan el calor para la transferencia de la tinta al soporte de impresión.",
+          "Un conjunto de agujas con temperatura alta, recorren el papel sensible a la temperatura, volviéndose en esos puntos de color negro.",
+          "Se proyectan pequeñas cantidades de tinta hacia el soporte.",
+          "Se golpea el soporte y con la fuerza del impacto se transfiere la tinta."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT202-P1-09",
+        "t": "T2.02",
+        "o": "A",
+        "q": "¿Cuál de las siguientes afirmaciones sobre los discos SSD es INCORRECTA?",
+        "a": [
+          "El origen de las siglas SSD es Solid State Drive.",
+          "El acceso a la información almacenada en un disco SSD es más rápido que en un disco duro HDD.",
+          "La copia y duplicación de archivos en un disco SSD es más lenta que en un disco HDD.",
+          "El coste de un disco SSD, a igualdad de tamaño, es superior al de un disco HDD."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT202-P1-10",
+        "t": "T2.02",
+        "o": "A",
+        "q": "En cuanto a impresoras de impacto, hay varios tipos principales, señale cuál de las siguientes NO es un tipo:",
+        "a": [
+          "De margarita.",
+          "Matricial.",
+          "De inyección.",
+          "De bola."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT202-P1-11",
+        "t": "T2.02",
+        "o": "A",
+        "q": "Es una tecnología de impresión 3D:",
+        "a": [
+          "Inyección de aglutinante.",
+          "Impresión de chorro continuo.",
+          "Inyección de tinta térmica.",
+          "Inyección por gota a la demanda."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT202-P1-12",
+        "t": "T2.02",
+        "o": "A",
+        "q": "Hablando de las zonas de un disco duro, señale la respuesta FALSA:",
+        "a": [
+          "Cilindro es un conjunto de varias pistas.",
+          "Clúster es un conjunto continuo de sectores.",
+          "Sector es cada uno de los lados de un plato.",
+          "Pista es una circunferencia dentro de una cara."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT202-P1-13",
+        "t": "T2.02",
+        "o": "A",
+        "q": "Indique cuál de las siguientes siglas NO corresponde a un tipo de monitor, según la tecnología empleada para formas las imágenes:",
+        "a": [
+          "CRT.",
+          "LCD.",
+          "ARP.",
+          "TFT."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT202-P1-14",
+        "t": "T2.02",
+        "o": "A",
+        "q": "¿Cuántos pines tiene un conector USB Tipo C?",
+        "a": [
+          "12.",
+          "18.",
+          "22.",
+          "24."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT202-P1-16",
+        "t": "T2.02",
+        "o": "A",
+        "q": "En relación al puerto DVI, señale la respuesta INCORRECTA:",
+        "a": [
+          "DVI-I admite señales digital y analógica.",
+          "DVI-B admite señal digital.",
+          "DVI-A admite señal analógica.",
+          "DVI-D admite señal digital."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT202-P1-17",
+        "t": "T2.02",
+        "o": "A",
+        "q": "La velocidad de SAS-3 es:",
+        "a": [
+          "6 Gbps.",
+          "12 Gbps.",
+          "16 Gbps.",
+          "8 Gbps."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          2
+        ],
+        "d": 2,
+        "n": "Velocidades SAS."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT202-P1-18",
+        "t": "T2.02",
+        "o": "A",
+        "q": "Tiene que grabar en una memoria externa un fichero de vídeo de una hora con una calidad de 1,2 Mbits/seg. Le piden hacerlo en el dispositivo más barato con capacidad para almacenarlo. ¿Cuál de los siguientes elegiría?",
+        "a": [
+          "Memoria USB. 64 MBytes. 1 euro",
+          "Memoria USB. 128 MBytes. 3 euros",
+          "CD. 650 MBytes. 5 euros",
+          "DVD. 4,7 GBytes. 10 euros"
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT202-P1-19",
+        "t": "T2.02",
+        "o": "A",
+        "q": "Una resolución 1080p, representa:",
+        "a": [
+          "1080 líneas de resolución horizontal progressive scan y entrelazada.",
+          "1080 líneas de resolución vertical progressive scan y no entrelazada.",
+          "1080 líneas de resolución vertical progressive scan y entrelazada.",
+          "1080 líneas de resolución horizontal progressive scan y no entrelazada."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT202-P1-20",
+        "t": "T2.02",
+        "o": "A",
+        "q": "En relación con las imágenes electrónicas definidas en la NTI Digitalización de documentos, señale la respuesta INCORRECTA:",
+        "a": [
+          "Será fiel al documento origen.",
+          "No contendrá caracteres o gráficos que no figurasen en el documento origen, salvo la incorporación de un membrete conforme a la imagen institucional del organismo en cuestión.",
+          "Respetará la geometría del documento origen en tamaños y proporciones.",
+          "El nivel de resolución mínimo será de 200ppp."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT202-P1-22",
+        "t": "T2.02",
+        "o": "A",
+        "q": "¿Cuál de los siguientes tipos de USB utiliza conectores completamente simétricos?",
+        "a": [
+          "USB-A.",
+          "USB-B.",
+          "USB-C.",
+          "USB-S."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT202-P1-23",
+        "t": "T2.02",
+        "o": "A",
+        "q": "La velocidad de USB 4.0 o USB 4 es:",
+        "a": [
+          "10 Gbps.",
+          "20 Gbps.",
+          "30 Gbps.",
+          "40 Gbps."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT202-P1-24",
+        "t": "T2.02",
+        "o": "A",
+        "q": "USB 3.2 Gen 2x1 se corresponde con la versión:",
+        "a": [
+          "USB 2.0.",
+          "USB 3.0.",
+          "USB 3.1 Gen 1.",
+          "USB 3.1 Gen 2."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT202-P1-25",
+        "t": "T2.02",
+        "o": "A",
+        "q": "En relación con DisplayPort señale la respuesta INCORRECTA:",
+        "a": [
+          "Interfaz analógica que transmite video y audio.",
+          "DisplayPort 2.0 ofrece una velocidad de 77,37 Gbps de manera efectiva.",
+          "DisplayPort Alt Mode 2.0 soporta resoluciones de 16K a 60 Hz.",
+          "El puerto MiniDP ha sido desarrollado por Apple."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT202-P1-28",
+        "t": "T2.02",
+        "o": "A",
+        "q": "La interfaz de conexión SATA 3.0 utiliza un cable de datos que conecta que conecta el puerto SATA y el disco duro. Señale la respuesta correcta:",
+        "a": [
+          "Es un cable de 7 pines exclusivo.",
+          "Es un cable de 7 pines compartido.",
+          "Es un cable de 5 pines exclusivo.",
+          "Es un cable de 5 pines compartido."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT202-P1-29",
+        "t": "T2.02",
+        "o": "A",
+        "q": "¿Cuál de los siguientes interfaces permite trabajar a una velocidad de 16 Gbps?",
+        "a": [
+          "SATA 3.0.",
+          "SATAe.",
+          "SAS-4.",
+          "Ultra 2 SCSI 3."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT202-P1-30",
+        "t": "T2.02",
+        "o": "A",
+        "q": "¿Qué respuesta es INCORRECTA en relación con NVMe?",
+        "a": [
+          "Es una interfaz para acceder a medios de almacenamiento no volátiles conectados a PCIe.",
+          "NVMe significa Non Volatile Memory Express.",
+          "Se utiliza de forma intensiva para acceder a discos duros.",
+          "Es una alternativa a SATA."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT202-P1-31",
+        "t": "T2.02",
+        "o": "A",
+        "q": "¿Qué medio de almacenamiento tiene mayor velocidad de lectura?",
+        "a": [
+          "SSD SATA II.",
+          "SSD NVMe.",
+          "SSD SATA 2,5.",
+          "SSD SATA M.2."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT202-P1-32",
+        "t": "T2.02",
+        "o": "A",
+        "q": "¿Qué tecnología de monitor NO existe?",
+        "a": [
+          "CRT.",
+          "TLED.",
+          "LCD.",
+          "IPS."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT202-P1-33",
+        "t": "T2.02",
+        "o": "A",
+        "q": "Para conectar un disco duro SATA a la placa base utilizaremos:",
+        "a": [
+          "Un conector IDE.",
+          "Un conector SATA y un cable de alimentación SATA.",
+          "Un conector SATA que proporcione además alimentación eléctrica.",
+          "Ninguna de las respuestas es correcta."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT202-P1-34",
+        "t": "T2.02",
+        "o": "A",
+        "q": "SATA es una interfaz que permite la transferencia de datos entre placa base y un dispositivo de almacenamiento. ¿Qué velocidad de transferencia máxima ofrece SATA 3.0?",
+        "a": [
+          "1,5 Gbps.",
+          "3 Gbps.",
+          "6 Gbps.",
+          "12 Gbps."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT202-P1-35",
+        "t": "T2.02",
+        "o": "A",
+        "q": "¿A partir de qué versión de USB la velocidad de transferencia de datos supera 1 Gbps?",
+        "a": [
+          "USB 1.1.",
+          "USB 2.0.",
+          "USB 3.0.",
+          "USB 3.1."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT202-P1-36",
+        "t": "T2.02",
+        "o": "A",
+        "q": "Señale la tecnología empleada para la impresión 3D:",
+        "a": [
+          "CCD (Charged Coupled Device).",
+          "SLS (Sinterización Selectiva por Láser).",
+          "Chroma subsampling.",
+          "WIA (Windows Image Acquisition)."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT202-P1-37",
+        "t": "T2.02",
+        "o": "A",
+        "q": "NO es un espacio de color:",
+        "a": [
+          "RGB.",
+          "CMYK.",
+          "HSM.",
+          "HSB."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT202-P1-38",
+        "t": "T2.02",
+        "o": "A",
+        "q": "La medida del número de bits utilizados para definir cada píxel es:",
+        "a": [
+          "Resolución.",
+          "Área de imagen.",
+          "Profundidad de bit o de color.",
+          "Ninguna es verdadera."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT202-P1-39",
+        "t": "T2.02",
+        "o": "A",
+        "q": "Un monitor cuya resolución es de 640 x 480 tiene:",
+        "a": [
+          "480 líneas de exploración (resolución vertical).",
+          "640 líneas de exploración (resolución vertical).",
+          "480 pixeles (resolución horizontal).",
+          "Ninguna de las respuestas anteriores es cierta."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT202-P1-43",
+        "t": "T2.02",
+        "o": "A",
+        "q": "¿Cuál de los siguientes componentes de almacenamiento ofrece el acceso más rápido a los datos en reposo?",
+        "a": [
+          "Disco duro.",
+          "Memoria RAM.",
+          "Disco SSD.",
+          "Pendrive USB."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT202-P1-44",
+        "t": "T2.02",
+        "o": "A",
+        "q": "La impresión más económica, una vez teniendo el dispositivo es:",
+        "a": [
+          "La de gel.",
+          "La láser.",
+          "La de inyección.",
+          "Las tres por igual."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT202-P1-45",
+        "t": "T2.02",
+        "o": "A",
+        "q": "Indique la principal diferencia entre discos mecánicos, SSD’s y NVMe por tamaño, velocidad y duración:",
+        "a": [
+          "Los más rápidos son los SSD’s y los más reducidos en tamaño (no en capacidad) los NVMe.",
+          "Los discos mecánicos más grandes son más baratos que los SSD’s más grandes.",
+          "Los discos con mayor capacidad son los discos mecánicos y los más rápidos son los NVMe.",
+          "Los discos SSD’s y los NVMe son ópticos y por tanto con mayor durabilidad."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT202-P1-46",
+        "t": "T2.02",
+        "o": "A",
+        "q": "Cuando utilizamos el término QWERTY, nos estamos refiriendo:",
+        "a": [
+          "A un tipo de impresora.",
+          "A un tipo de teclado.",
+          "A un tipo de ratón.",
+          "A un tipo de pantalla."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT202-P1-47",
+        "t": "T2.02",
+        "o": "A",
+        "q": "¿Qué significa HDD?",
+        "a": [
+          "Hard Definition Disk.",
+          "Hard Disk Drive.",
+          "Heavy Disk Device.",
+          "Height Definition Dictionary."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT202-P1-48",
+        "t": "T2.02",
+        "o": "A",
+        "q": "Para conectar una tarjeta gráfica a la placa base, de los siguientes puertos o bus de expansión, ¿cuál se usa?",
+        "a": [
+          "SATA.",
+          "PCI-Express.",
+          "IDE.",
+          "COM."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Bus de la gráfica."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT202-P1-49",
+        "t": "T2.02",
+        "o": "A",
+        "q": "Se consideran periféricos de entrada:",
+        "a": [
+          "Micrófono e impresora.",
+          "Altavoces, auriculares e impresora.",
+          "Teclado, ratón y escáner.",
+          "Impresora, cámara, teclado y ratón."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT202-P1-50",
+        "t": "T2.02",
+        "o": "A",
+        "q": "Señale la respuesta correcta:",
+        "a": [
+          "PCIe 5.0 trabaja a 64 Gbps.",
+          "HDMI 2.1 trabaja a 40 Gbps.",
+          "Thunderbolt 5.0 ofrece una velocidad por defecto a 80 Gbps.",
+          "USB 4 2.0 ofrece una velocidad por defecto de 120 Gbps."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS04-P1-28",
+        "t": "T2.02",
+        "o": "A",
+        "q": "Respecto a los distintos tipos de memoria ROM, señale la respuesta correcta:",
+        "a": [
+          "PROM: se suministran vírgenes y el usuario puede programarla cuantas veces quiera, mediante un dispositivo especial.",
+          "EPROM: puede ser borrada y grabada repetidas veces, para borrarla se aplican rayos infrarrojos.",
+          "EEPROM: puede ser borrada y grabada repetidas veces eléctricamente.",
+          "EPPROM: puede ser borrada y grabada repetidas veces, para borrar y grabar se utiliza un dispositivo especial de ancho espectro."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS04-P1-30",
+        "t": "T2.02",
+        "o": "A",
+        "q": "La revisión 3.2 de la interfaz de bus SATA, eleva el ancho de banda disponible hasta los:",
+        "a": [
+          "6 Gbps.",
+          "10 Gbps.",
+          "12 Gbps.",
+          "16 Gbps."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS04-P1-33",
+        "t": "T2.02",
+        "o": "A",
+        "q": "¿Cómo se denomina a los escáneres que son de gran tamaño y permiten escaneos por modelos de color CMYK o RGB, y que debido principalmente a su gran resolución óptica son muy utilizados en estudios de diseño gráfico o artístico?",
+        "a": [
+          "De cama plana.",
+          "De mano.",
+          "De impacto.",
+          "De tambor."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS04-P1-34",
+        "t": "T2.02",
+        "o": "A",
+        "q": "Indique cuál es la velocidad máxima de transmisión de datos del estándar de interconexión de dispositivos USB 3.2:",
+        "a": [
+          "480 Mbps.",
+          "20 Gbps.",
+          "10 Gbps.",
+          "4,8 Gbps."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS04-P1-35",
+        "t": "T2.02",
+        "o": "A",
+        "q": "¿Cuál es la velocidad de transmisión de datos de PCI Express versión 4.0 para cuatro carriles?",
+        "a": [
+          "20 Gbps.",
+          "40 Gbps.",
+          "64 Gbps.",
+          "128 Gbps."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS04-P1-36",
+        "t": "T2.02",
+        "o": "A",
+        "q": "Los dispositivos de almacenamiento SSD:",
+        "a": [
+          "Tienen mejor rendimiento (mayor ancho de banda y menor latencia) que los tradicionales HDD.",
+          "Son más caros que los HDD.",
+          "Están basados en memorias no volátiles.",
+          "Todas las respuestas anteriores son correctas."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS04-P1-80",
+        "t": "T2.02",
+        "o": "A",
+        "q": "Cuál NO es un estándar/driver de escáner para tecnologías de escaneo de imágenes:",
+        "a": [
+          "ISIS.",
+          "OASIS.",
+          "TWAIN.",
+          "Windows Image Acquisition (WIA)."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS05G-P1-40",
+        "t": "T2.02",
+        "o": "A",
+        "q": "¿Cuál de las siguientes NO es una tecnología usada en impresoras 3D?",
+        "a": [
+          "SLA.",
+          "FDM.",
+          "SLS.",
+          "FDA."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS05G-P1-41",
+        "t": "T2.02",
+        "o": "A",
+        "q": "¿Cuál de las siguientes interfaces de disco duro permite una velocidad de transferencia superior?",
+        "a": [
+          "mSATA.",
+          "SATA Express (PCI Express 3.0).",
+          "SATA 3.0.",
+          "SAS-2."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS05G-P1-43",
+        "t": "T2.02",
+        "o": "A",
+        "q": "¿Qué periférico hace uso de sensores CIS?",
+        "a": [
+          "Impresora láser.",
+          "Escáner.",
+          "Pantalla táctil.",
+          "Monitor AMOLED."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS05G-P1-44",
+        "t": "T2.02",
+        "o": "A",
+        "q": "¿Qué velocidad de transferencia permite alcanzar la interfaz Serial Attached SCSI 4?",
+        "a": [
+          "6 Gbps.",
+          "24 Gbps.",
+          "32 Gbps.",
+          "40 Gbps."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS05G-P1-45",
+        "t": "T2.02",
+        "o": "A",
+        "q": "En relación con los teclados, señale la distribución de teclado que se utiliza principalmente en regiones francófonas:",
+        "a": [
+          "QWERTY.",
+          "QWERTZ.",
+          "AZERTY.",
+          "Dvorak."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS06-P1-92",
+        "t": "T2.02",
+        "o": "A",
+        "q": "Sobre los discos duros SATA, ¿cuál de las siguientes afirmaciones es FALSA?",
+        "a": [
+          "Se tiene que configurar como MASTER o SLAVE mediante un jumper.",
+          "La velocidad de transferencia es mayor que la de los discos IDE.",
+          "Cada disco necesita un cable de datos.",
+          "El conector SATA es más estrecho y pequeño que el conector IDE."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS06-P1-94",
+        "t": "T2.02",
+        "o": "A",
+        "q": "Al conjunto de conexiones eléctricas en forma de pistas metálicas, que llevan información de un dispositivo a otro del ordenador se le denomina:",
+        "a": [
+          "Bus.",
+          "Chipset.",
+          "USB.",
+          "BIOS."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS06-P1-96",
+        "t": "T2.02",
+        "o": "A",
+        "q": "¿Qué es NVMe?",
+        "a": [
+          "Es un tipo de interfaz para conectar discos SATA.",
+          "Es un tipo de disco SSD.",
+          "Es un protocolo de transporte y de acceso al almacenamiento para discos SSD a través de la interfaz PCIe.",
+          "Es un protocolo de comunicación para discos RAID."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS06-P1-97",
+        "t": "T2.02",
+        "o": "A",
+        "q": "¿Cuál es la velocidad máxima de transferencia que ofrece HDMI 2.0?",
+        "a": [
+          "18 Gbps.",
+          "20 Gbps.",
+          "40 Gbps.",
+          "48 Gbps."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS07-P1-41",
+        "t": "T2.02",
+        "o": "A",
+        "q": "El nombre comercial USB 3.2 Gen 1x1 se corresponde con:",
+        "a": [
+          "USB 2.0.",
+          "USB 3.0.",
+          "USB 3.1.",
+          "USB 3.2."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS07-P1-44",
+        "t": "T2.02",
+        "o": "A",
+        "q": "Las impresoras se pueden clasificar por su mecanismo de impresión, ¿cuál de las siguientes NO es uno de ellos?",
+        "a": [
+          "Láser.",
+          "De inyección.",
+          "Térmica.",
+          "Ink powered."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08-P1-35",
+        "t": "T2.02",
+        "o": "A",
+        "q": "¿Cuál de las siguientes NO es una ranura de expansión?",
+        "a": [
+          "ISA.",
+          "PCI.",
+          "AGP.",
+          "PCP."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08-P1-37",
+        "t": "T2.02",
+        "o": "A",
+        "q": "¿Qué tipo de escáner está dirigido a la industria gráfica?",
+        "a": [
+          "Cama plana.",
+          "Mano.",
+          "Con alimentador de documentos.",
+          "Tambor."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08-P1-38",
+        "t": "T2.02",
+        "o": "A",
+        "q": "En la evolución de los tipos de monitor, el siguiente a OLED es:",
+        "a": [
+          "OLED2.",
+          "MOLED.",
+          "AMOLED.",
+          "XOLED."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08-P1-R-05",
+        "t": "T2.02",
+        "o": "A",
+        "q": "¿A qué velocidad opera SAS-3?",
+        "a": [
+          "6 Gb/s.",
+          "12 Gb/s.",
+          "24 Gb/s.",
+          "36 Gb/s."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08B-P1-34",
+        "t": "T2.02",
+        "o": "A",
+        "q": "De entre las siguientes opciones en el ámbito del almacenamiento en los sistemas de información, señale la respuesta verdadera:",
+        "a": [
+          "SAS es una interfaz de transferencia de datos en serie.",
+          "SATA es una Interfaz de transferencia de datos en paralelo.",
+          "Los dispositivos SAS se identifican por el World Wide Web Name (WWWN).",
+          "El conector SATA posee 68 pines."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08B-P1-35",
+        "t": "T2.02",
+        "o": "A",
+        "q": "¿Cuál de las siguientes características NO corresponde a una unidad de estado sólido (SSD)?",
+        "a": [
+          "No contiene partes móviles.",
+          "Son discos menos ruidosos que los magnéticos.",
+          "El precio por GB es menor que en los discos magnéticos.",
+          "Existen para varias interfaces (SATA, PATA, etc.)."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-19",
+        "t": "T2.02",
+        "o": "A",
+        "q": "¿Cuál de las siguientes interfaces de unidades de disco tiene el mejor rendimiento y la latencia más baja?",
+        "a": [
+          "SATA.",
+          "SAS.",
+          "NVMe.",
+          "SSD SATA3."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-20",
+        "t": "T2.02",
+        "o": "A",
+        "q": "Con relación a la tecnología Thunderbolt 4, determine la respuesta INCORRECTA:",
+        "a": [
+          "Tiene un ancho de banda bidireccional de 30 Gbps.",
+          "Permite la conexión de hasta 5 dispositivos Thunderbolt en un solo puerto.",
+          "Es compatible con las tecnologías DisplayPort y PCIe.",
+          "Puede ofrecer alimentación a otros dispositivos que sean compatibles."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-21",
+        "t": "T2.02",
+        "o": "A",
+        "q": "Indique la lista correcta de puertos serie:",
+        "a": [
+          "IDE, USB, SATA, Firewire.",
+          "USB, Firewire, SATA, SAS.",
+          "USB, SCSI 1, SATA, Firewire.",
+          "IDE, SCSI 1, USB, Firewire."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-82",
+        "t": "T2.02",
+        "o": "A",
+        "q": "En un sistema de discos RAID 5, la información a guardar en un volumen de discos se enriquece con datos de redundancia y se distribuye entre varios discos de forma que puedan evitarse pérdidas de datos en caso de fallos hardware del sistema. ¿Cuál de las siguientes respuestas es cierta para esta tecnología?",
+        "a": [
+          "La extracción involuntaria de un disco, siempre y cuando no se haga “en caliente”, sólo nos afectará si el disco extraído es el de los datos de redundancia.",
+          "La escritura en disco en los sistemas RAID 5 se ve penalizada en exceso al tener que estar escribiendo siempre en el disco donde se guardan los datos de redundancia.",
+          "El fallo de uno de los discos que componen el volumen no hará que perdamos los datos guardados en él, aunque sí afectará a la velocidad en las operaciones de lectura del mismo.",
+          "Todas las afirmaciones anteriores son ciertas."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-27",
+        "t": "T2.02",
+        "o": "A",
+        "q": "¿Cuál es una tecnología de impresión en papel?",
+        "a": [
+          "SLA (Estereolitografía).",
+          "SLS (Sinterización Selectiva por Láser).",
+          "FDM (Deposición de Material Fundido).",
+          "Inkjet (Inyección de tinta)."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-28",
+        "t": "T2.02",
+        "o": "A",
+        "q": "Si hablamos de TWAIN, ¿a qué periférico se está haciendo referencia?",
+        "a": [
+          "Tarjeta de red.",
+          "Impresora 3D.",
+          "Escáner.",
+          "Unidad SSD."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-29",
+        "t": "T2.02",
+        "o": "A",
+        "q": "¿Cuál es la velocidad máxima teórica de transmisión del estándar USB 3.2 Gen 2x2?",
+        "a": [
+          "10 Gbps.",
+          "15 Gbps.",
+          "20 Gbps.",
+          "25 Gbps."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10-P1-33",
+        "t": "T2.02",
+        "o": "A",
+        "q": "En el ámbito de los dispositivos de almacenamiento gestionados por un sistema operativo, ¿a qué se refiere el término throughput?",
+        "a": [
+          "Es la medida del número de operaciones de entrada y salida por segundo.",
+          "Es la medida de la ratio de volumen de transferencia de entrada/salida por segundo.",
+          "Es el término que se refiere al tamaño físico de los discos.",
+          "Es el término que se refiere al tamaño lógico de los discos."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10B-P1-35",
+        "t": "T2.02",
+        "o": "A",
+        "q": "Es una tecnología de impresión 3D:",
+        "a": [
+          "Inyección por gota a la demanda.",
+          "Sisterización selectiva por láser.",
+          "Impresión de chorro continuo.",
+          "Procesamiento analógico de la luz."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-30",
+        "t": "T2.02",
+        "o": "A",
+        "q": "¿Cuál es la velocidad de transmisión de datos de PCI Express versión 4.0 para un carril?",
+        "a": [
+          "5 Gbps.",
+          "8 Gbps.",
+          "16 Gbps.",
+          "32 Gbps."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-32",
+        "t": "T2.02",
+        "o": "A",
+        "q": "¿Cuál de las siguientes opciones es correcta sobre la latencia de un disco de tecnología SSD?",
+        "a": [
+          "La latencia es provocada principalmente por el desplazamiento de la cabeza lectora, ya que el giro del disco típicamente de 15000 revoluciones por minuto, hace que el acceso a datos secuenciales sea casi inmediato.",
+          "La latencia es provocada principalmente por el giro del disco para localizar el dato, ya que el desplazamiento horizontal de la cabeza al posicionarse es mínimo en comparación con el radio de giro.",
+          "La latencia es provocada principalmente por la velocidad de acceso de los circuitos digitales que almacenan la información.",
+          "Un disco SSD no tiene latencia en operaciones de lectura."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-100",
+        "t": "T2.02",
+        "o": "A",
+        "q": "En un sistema de discos RAID 5, la información a guardar en un volumen de discos se enriquece con datos de redundancia y se distribuye entre varios discos de forma que puedan evitarse pérdidas de datos en caso de fallos hardware del sistema. ¿Cuál de estas respuestas es cierta para esta tecnología?",
+        "a": [
+          "La extracción involuntaria de un disco, siempre y cuando no se haga “en caliente”, sólo nos afectará si el disco extraído es el de los datos de redundancia.",
+          "La escritura en disco en los sistemas RAID 5 se ve penalizada en exceso al tener que estar escribiendo siempre en el disco donde se guardan los datos de redundancia.",
+          "El fallo de uno de los discos que componen el volumen no hará que perdamos los datos guardados en él, aunque sí afectará a la velocidad en las operaciones de lectura del mismo.",
+          "Todas las afirmaciones anteriores son ciertas."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11B-P1-35",
+        "t": "T2.02",
+        "o": "A",
+        "q": "En relación a la estructura física de un disco duro, ¿qué es un sector?",
+        "a": [
+          "Conjunto de varias pistas.",
+          "Cada una de las divisiones de una pista.",
+          "Cada uno de los círculos concéntricos del disco.",
+          "Cada una de las caras del disco."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11B-P1-37",
+        "t": "T2.02",
+        "o": "A",
+        "q": "¿Qué versión del bus PCIe trabaja para un carril a una velocidad máxima de 128 GT (Giga Transfer)?",
+        "a": [
+          "4.0.",
+          "6.0.",
+          "5.0.",
+          "7.0."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11B-P1-83",
+        "t": "T2.02",
+        "o": "A",
+        "q": "La métrica de fiabilidad que mide el tiempo medio entre fallos de un disco duro es:",
+        "a": [
+          "UBER.",
+          "MTBF.",
+          "MTTR.",
+          "MTTDL."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-22",
+        "t": "T2.02",
+        "o": "A",
+        "q": "En relación con los dispositivos de estado sólido, señale la respuesta CORRECTA:",
+        "a": [
+          "En general, poseen mayor capacidad de almacenamiento que los discos duros mecánicos.",
+          "Poseen mayor vida útil que los discos duros mecánicos.",
+          "Poseen menor capacidad de recuperación que los discos duros mecánicos.",
+          "El tiempo de búsqueda es aleatorio."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-68",
+        "t": "T2.02",
+        "o": "A",
+        "q": "En un sistema RAID tenemos un disco marcado como spare. ¿Para qué sirve este disco?",
+        "a": [
+          "Es el disco principal del RAID.",
+          "Es el disco secundario del RAID.",
+          "Es un disco de repuesto.",
+          "No contiene disco, es una zona vacía donde colocar un nuevo disco."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12B-P1-25",
+        "t": "T2.02",
+        "o": "A",
+        "q": "La velocidad del estándar USB 3.0 es:",
+        "a": [
+          "Similar a la del USB 2.0.",
+          "10 veces superior a la del USB 2.0.",
+          "480 Mbps.",
+          "15 veces superior a la del USB 2.0."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          2
+        ],
+        "d": 1,
+        "n": "Velocidad USB 3.0 frente a 2.0."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12B-P1-26",
+        "t": "T2.02",
+        "o": "A",
+        "q": "¿Cuál de las siguientes opciones hace referencia a una API relacionada para el escaneado de imágenes?",
+        "a": [
+          "TWING.",
+          "T-WIN.",
+          "TWAIN.",
+          "TWIN."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          9
+        ],
+        "d": 1,
+        "n": "TWAIN frente a deformaciones."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12B-P1-31",
+        "t": "T2.02",
+        "o": "A",
+        "q": "Sobre los discos duros, ¿a qué hace referencia el concepto de latencia?",
+        "a": [
+          "Al tiempo medio que tarda la aguja en situarse en el sector deseado.",
+          "Al tiempo medio que tarda la aguja en situarse en la pista y el sector deseado.",
+          "A la velocidad a la que puede transferir la información al ordenador una vez la guja está situada en la pista y sector correctos.",
+          "A las revoluciones por minutos de los platos."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Latencia frente a tiempo de búsqueda (= 2025 ext. P23)."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    }
+  ],
+  "counts": {
+    "total": 248,
+    "alreadyHadCitation": 138,
+    "added": 2,
+    "pending": 108,
+    "withCitation": 140
+  }
+}

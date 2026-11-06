@@ -1,0 +1,2973 @@
+{
+  "schemaVersion": 1,
+  "topicId": "T2.01",
+  "baseCommit": "454a025ae26390dee0f057a4cfa9b6d5fc758fba",
+  "status": "CITATIONS_ACCEPTED_UNDER_USER_DELEGATION",
+  "scope": "Solo adición de citas para lectura; no concede nueva puntuabilidad ni altera pruebas editoriales previas.",
+  "file": {
+    "beforeSha256": "882e83da1cd50cf97c45bf7a4d2ad003e968c55546f6fbfae48623a739f98007",
+    "afterSha256": "bb0c01f8e9f9cd4d3daf00b36d451efb0818b7cf2a4d56de1adeac92bcb3d4fb"
+  },
+  "sample": {
+    "beforeSha256": "d187e3e58e64d477c3e524bf827ba69c3ec8ad6d7658eabb707a332996f4f0c8",
+    "afterSha256": "d187e3e58e64d477c3e524bf827ba69c3ec8ad6d7658eabb707a332996f4f0c8"
+  },
+  "sourceRoot": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario",
+  "sources": {
+    "e-AT201-P1-08": {
+      "path": "T2.01 Informática Básica/T2.01 Informática Básica - Temario.pdf",
+      "sourceHash": "f569674274fbe378727b5cc4073872ef5273b2e93e94d51912dd322852e9b437",
+      "physicalPage": 44,
+      "printedPage": 44,
+      "excerpt": "La memoria interna es una memoria de acceso aleatorio, pudiendo acceder a cualquier palabra de memoria especificando una dirección de memoria.",
+      "label": "Pasaje del temario"
+    },
+    "e-AT201-P1-11": {
+      "path": "T2.01 Informática Básica/T2.01 Informática Básica - Temario.pdf",
+      "sourceHash": "f569674274fbe378727b5cc4073872ef5273b2e93e94d51912dd322852e9b437",
+      "physicalPage": 28,
+      "printedPage": 28,
+      "excerpt": "ALU (UNIDAD ARITMÉTICO LÓGICA) Ejecuta las operaciones aritméticas (suma, resta, multiplicación, división) y lógicas (comparación, complementación, suma y producto lógico) que le señala la instrucción residente en la unidad de control.",
+      "label": "Pasaje del temario"
+    },
+    "context-AT201-P1-11": {
+      "path": "T2.01 Informática Básica/T2.01 Informática Básica - Temario.pdf",
+      "sourceHash": "f569674274fbe378727b5cc4073872ef5273b2e93e94d51912dd322852e9b437",
+      "physicalPage": 25,
+      "printedPage": 25,
+      "excerpt": "UC (UNIDAD DE CONTROL) Contiene la instrucción que se está ejecutando en ese momento. Se encarga de generar las señales de control para la ejecución de la instrucción. Entre las partes de una instrucción destaca el código de operación y las direcciones de memoria donde se encuentran los operandos que pueda necesitar la instrucción. La unidad de control se puede considerar el cerebro del computador. Como el cerebro, está conectada al resto de los componentes del computador mediante las señales de control (el sistema nervioso del computador). Con este símil no se pretende humanizar los computadores, sino ilustrar que la UC es imprescindible para coordinar los diferentes elementos que tiene el computador y hacer un buen uso de ellos.",
+      "label": "Arquitectura Von Neumann — unidad de control"
+    },
+    "e-AT201-P1-20": {
+      "path": "T2.01 Informática Básica/T2.01 Informática Básica - Temario.pdf",
+      "sourceHash": "f569674274fbe378727b5cc4073872ef5273b2e93e94d51912dd322852e9b437",
+      "physicalPage": 23,
+      "printedPage": 23,
+      "excerpt": "(2) Registros de instrucción Los 2 registros principales relacionados con el acceso a las instrucciones son: - Program counter (PC): registro contador del programa, contiene la dirección de la instrucción siguiente que hay que leer de la memoria. - Instruction register (IR): registro de instrucción, contiene la instrucción que hay que ejecutar.",
+      "label": "Pasaje del temario"
+    },
+    "e-AT201-P1-45": {
+      "path": "T2.01 Informática Básica/T2.01 Informática Básica - Temario.pdf",
+      "sourceHash": "f569674274fbe378727b5cc4073872ef5273b2e93e94d51912dd322852e9b437",
+      "physicalPage": 32,
+      "printedPage": 32,
+      "excerpt": "Con estas consideraciones, Flynn clasifica los sistemas en 4 categorías: - SISD (Single Instruction stream, Single Data stream): los sistemas de este tipo se caracterizan por tener un único flujo de instrucciones sobre un único flujo de datos, es decir, se ejecuta una instrucción detrás de otra. Este es el concepto de arquitectura serie de Von Neumann donde, en cualquier momento, sólo se ejecuta una única instrucción. Esta arquitectura tanto el bus de direcciones como el bus de datos son simples. Las soluciones SISD NO presentan capacidades de concurrencia ni paralelización. En todo caso, podemos llegar a una simulación de estas capacidades, por medio de la segmentación.",
+      "label": "Pasaje del temario"
+    },
+    "e-AS04-P1-22": {
+      "path": "T2.01 Informática Básica/T2.01 Informática Básica - Temario.pdf",
+      "sourceHash": "f569674274fbe378727b5cc4073872ef5273b2e93e94d51912dd322852e9b437",
+      "physicalPage": 30,
+      "printedPage": 30,
+      "excerpt": "Registro de instrucción (IR): contiene la instrucción que se está ejecutando en ese momento. Entre las partes de una instrucción destaca el código de operación y las direcciones de memoria donde se encuentran los operandos que pueda necesitar la instrucción.",
+      "label": "CPU — registro de instrucción IR"
+    },
+    "e-AS09B-P1-25": {
+      "path": "T2.01 Informática Básica/T2.01 Informática Básica - Temario.pdf",
+      "sourceHash": "f569674274fbe378727b5cc4073872ef5273b2e93e94d51912dd322852e9b437",
+      "physicalPage": 30,
+      "printedPage": 30,
+      "excerpt": "Registro de instrucción (IR): contiene la instrucción que se está ejecutando en ese momento. Entre las partes de una instrucción destaca el código de operación y las direcciones de memoria donde se encuentran los operandos que pueda necesitar la instrucción.",
+      "label": "Registros — IR"
+    }
+  },
+  "questions": [
+    {
+      "id": "AT201-P1-08",
+      "before": {
+        "i": "AT201-P1-08",
+        "t": "T2.01",
+        "o": "A",
+        "q": "La forma de acceso a la memoria principal de un ordenador es:",
+        "a": [
+          "Acceso secuencial.",
+          "Acceso aleatorio.",
+          "Acceso predefinido.",
+          "Acceso programado."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT201-P1-08",
+        "t": "T2.01",
+        "o": "A",
+        "q": "La forma de acceso a la memoria principal de un ordenador es:",
+        "a": [
+          "Acceso secuencial.",
+          "Acceso aleatorio.",
+          "Acceso predefinido.",
+          "Acceso programado."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T2.01 Informática Básica - Temario.pdf — Pasaje del temario\n\nTemario, p. 44 (PDF p. 44)\n\nLa memoria interna es una memoria de acceso aleatorio, pudiendo acceder a cualquier palabra de memoria especificando una dirección de memoria.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "bb6ed93149700de8543cdb80662e39b824b37c107aedc4b20bbc6ff9cea9f4e9",
+      "afterSha256": "7d9fd3a9cbf0c5cdd6a759359e111b78e34d437a3750fd2417f0f817d912ffb2",
+      "evidenceKeys": [
+        "e-AT201-P1-08"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT201-P1-11",
+      "before": {
+        "i": "AT201-P1-11",
+        "t": "T2.01",
+        "o": "A",
+        "q": "Según la arquitectura Von Neumann, la unidad del ordenador que se encarga de supervisar la transferencia de información e indica a la unidad aritmético-lógica qué operación debe ejecutar es:",
+        "a": [
+          "Unidad aritmético-lógica.",
+          "Unidad de Control.",
+          "Unidad de Entrada/Salida.",
+          "Unidad de arranque."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT201-P1-11",
+        "t": "T2.01",
+        "o": "A",
+        "q": "Según la arquitectura Von Neumann, la unidad del ordenador que se encarga de supervisar la transferencia de información e indica a la unidad aritmético-lógica qué operación debe ejecutar es:",
+        "a": [
+          "Unidad aritmético-lógica.",
+          "Unidad de Control.",
+          "Unidad de Entrada/Salida.",
+          "Unidad de arranque."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T2.01 Informática Básica - Temario.pdf — Pasaje del temario\n\nTemario, p. 28 (PDF p. 28)\n\nALU (UNIDAD ARITMÉTICO LÓGICA) Ejecuta las operaciones aritméticas (suma, resta, multiplicación, división) y lógicas (comparación, complementación, suma y producto lógico) que le señala la instrucción residente en la unidad de control.\n\nT2.01 Informática Básica - Temario.pdf — Arquitectura Von Neumann — unidad de control\n\nTemario, p. 25 (PDF p. 25)\n\nUC (UNIDAD DE CONTROL) Contiene la instrucción que se está ejecutando en ese momento. Se encarga de generar las señales de control para la ejecución de la instrucción. Entre las partes de una instrucción destaca el código de operación y las direcciones de memoria donde se encuentran los operandos que pueda necesitar la instrucción. La unidad de control se puede considerar el cerebro del computador. Como el cerebro, está conectada al resto de los componentes del computador mediante las señales de control (el sistema nervioso del computador). Con este símil no se pretende humanizar los computadores, sino ilustrar que la UC es imprescindible para coordinar los diferentes elementos que tiene el computador y hacer un buen uso de ellos.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "7b85b58a17804ef229125ee4caeb6c2b33d79199ad34bea472253fb4758db354",
+      "afterSha256": "439005e5ff3709336df5ddd5a3162f7d85a138f3b6c2223ce737f49c082a494b",
+      "evidenceKeys": [
+        "e-AT201-P1-11",
+        "context-AT201-P1-11"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT201-P1-20",
+      "before": {
+        "i": "AT201-P1-20",
+        "t": "T2.01",
+        "o": "A",
+        "q": "¿Qué contiene el registro IR?",
+        "a": [
+          "La dirección de la siguiente instrucción a ejecutar.",
+          "Es un registro de estado.",
+          "La instrucción que hay que ejecutar.",
+          "El procesador no dispone de este registro."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT201-P1-20",
+        "t": "T2.01",
+        "o": "A",
+        "q": "¿Qué contiene el registro IR?",
+        "a": [
+          "La dirección de la siguiente instrucción a ejecutar.",
+          "Es un registro de estado.",
+          "La instrucción que hay que ejecutar.",
+          "El procesador no dispone de este registro."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "T2.01 Informática Básica - Temario.pdf — Pasaje del temario\n\nTemario, p. 23 (PDF p. 23)\n\n(2) Registros de instrucción Los 2 registros principales relacionados con el acceso a las instrucciones son: - Program counter (PC): registro contador del programa, contiene la dirección de la instrucción siguiente que hay que leer de la memoria. - Instruction register (IR): registro de instrucción, contiene la instrucción que hay que ejecutar.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "d4490ce872a0289065cda3345a322d6650c001f9b789a2a16dbe3e8639ccd535",
+      "afterSha256": "02b8f99263610c30d2cbdbeabdcdf9fa205b0c2bf7c78174b43fcfbe633a7b8d",
+      "evidenceKeys": [
+        "e-AT201-P1-20"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT201-P1-45",
+      "before": {
+        "i": "AT201-P1-45",
+        "t": "T2.01",
+        "o": "A",
+        "q": "Según la taxonomía de Flynn para multiprocesadores, la categoría SISD se caracteriza por:",
+        "a": [
+          "Tener un único flujo de instrucciones sobre un único flujo de datos.",
+          "Tener varias instrucciones que se ejecutan simultáneamente.",
+          "Responder al concepto de arquitectura simultánea de Von Neumann.",
+          "Presentar capacidades de concurrencia y paralelización."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT201-P1-45",
+        "t": "T2.01",
+        "o": "A",
+        "q": "Según la taxonomía de Flynn para multiprocesadores, la categoría SISD se caracteriza por:",
+        "a": [
+          "Tener un único flujo de instrucciones sobre un único flujo de datos.",
+          "Tener varias instrucciones que se ejecutan simultáneamente.",
+          "Responder al concepto de arquitectura simultánea de Von Neumann.",
+          "Presentar capacidades de concurrencia y paralelización."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T2.01 Informática Básica - Temario.pdf — Pasaje del temario\n\nTemario, p. 32 (PDF p. 32)\n\nCon estas consideraciones, Flynn clasifica los sistemas en 4 categorías: - SISD (Single Instruction stream, Single Data stream): los sistemas de este tipo se caracterizan por tener un único flujo de instrucciones sobre un único flujo de datos, es decir, se ejecuta una instrucción detrás de otra. Este es el concepto de arquitectura serie de Von Neumann donde, en cualquier momento, sólo se ejecuta una única instrucción. Esta arquitectura tanto el bus de direcciones como el bus de datos son simples. Las soluciones SISD NO presentan capacidades de concurrencia ni paralelización. En todo caso, podemos llegar a una simulación de estas capacidades, por medio de la segmentación.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "52993dbaced9ae671d62f13d395890dc5ac94ea9c67881a6927b653d6cf23f75",
+      "afterSha256": "61cb4a0e0aa2faf36cf7176c6f0e981be5fb098b206c5cf1c46d89239151889b",
+      "evidenceKeys": [
+        "e-AT201-P1-45"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AS04-P1-22",
+      "before": {
+        "i": "AS04-P1-22",
+        "t": "T2.01",
+        "o": "A",
+        "q": "En el registro de instrucción de la unidad central de proceso, se guarda la información referente a:",
+        "a": [
+          "Las instrucciones que se ejecutan en lenguaje C.",
+          "Las instrucciones necesarias para la carga inicial del sistema operativo.",
+          "El código de las microinstrucciones generadas por el kernel.",
+          "La instrucción que se está ejecutando."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AS04-P1-22",
+        "t": "T2.01",
+        "o": "A",
+        "q": "En el registro de instrucción de la unidad central de proceso, se guarda la información referente a:",
+        "a": [
+          "Las instrucciones que se ejecutan en lenguaje C.",
+          "Las instrucciones necesarias para la carga inicial del sistema operativo.",
+          "El código de las microinstrucciones generadas por el kernel.",
+          "La instrucción que se está ejecutando."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T2.01 Informática Básica - Temario.pdf — CPU — registro de instrucción IR\n\nTemario, p. 30 (PDF p. 30)\n\nRegistro de instrucción (IR): contiene la instrucción que se está ejecutando en ese momento. Entre las partes de una instrucción destaca el código de operación y las direcciones de memoria donde se encuentran los operandos que pueda necesitar la instrucción.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "acc5f513f2d99b230c541207098c01cc01734417eeb36d1f75896ee157b9d794",
+      "afterSha256": "0b97e7c528871023a147dce7f194428cd9fed96faf2bbe9a25649f5cb399582e",
+      "evidenceKeys": [
+        "e-AS04-P1-22"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AS09B-P1-25",
+      "before": {
+        "i": "AS09B-P1-25",
+        "t": "T2.01",
+        "o": "A",
+        "q": "El registro IR de la CPU, ¿qué contiene?",
+        "a": [
+          "La dirección de memoria de la instrucción a ejecutar.",
+          "La dirección de memoria de la siguiente instrucción a ejecutar.",
+          "El resultado de la operación realizada por la ALU.",
+          "La instrucción que se está ejecutando en ese momento."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AS09B-P1-25",
+        "t": "T2.01",
+        "o": "A",
+        "q": "El registro IR de la CPU, ¿qué contiene?",
+        "a": [
+          "La dirección de memoria de la instrucción a ejecutar.",
+          "La dirección de memoria de la siguiente instrucción a ejecutar.",
+          "El resultado de la operación realizada por la ALU.",
+          "La instrucción que se está ejecutando en ese momento."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "T2.01 Informática Básica - Temario.pdf — Registros — IR\n\nTemario, p. 30 (PDF p. 30)\n\nRegistro de instrucción (IR): contiene la instrucción que se está ejecutando en ese momento. Entre las partes de una instrucción destaca el código de operación y las direcciones de memoria donde se encuentran los operandos que pueda necesitar la instrucción.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "0c39b106ac0ecdd9b42fe5a9a56c4ca7ce510bccb831877cf855ca844b88819c",
+      "afterSha256": "4b5245b1d0b9e87dc2540e3f225cf42f37583c2ac7c107b5e8dbf907f68aedd5",
+      "evidenceKeys": [
+        "e-AS09B-P1-25"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    }
+  ],
+  "pending": [
+    {
+      "question": {
+        "i": "TAI2024B-P1-19",
+        "t": "T2.01",
+        "o": "O",
+        "q": "Indique, de las siguientes palabras, cuál indica además un número hexadecimal válido:",
+        "a": [
+          "EBOCA",
+          "BECADAS",
+          "ACCEDA",
+          "CEGADA"
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          9
+        ],
+        "d": 1,
+        "n": "Palabras con una letra fuera de A-F (O, S, G).",
+        "y": "Ingreso libre OEP 2023-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAI2024B-P1-20",
+        "t": "T2.01",
+        "o": "O",
+        "q": "¿Qué es la taxonomía de Flynn?",
+        "a": [
+          "Una clasificación de patrones de diseño para objetos de software, centrados en su creación, relación e interacción.",
+          "Una clasificación para las computadoras con arquitectura paralela atendiendo al flujo de datos e instrucciones en un sistema.",
+          "Una clasificación que pretende clarificar los diferentes tipos de tecnologías, técnicas y mecanismos que abarca el concepto abstracto de “Inteligencia Artificial”.",
+          "Una clasificación de los tipos de controladores (drivers) JDBC."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          13
+        ],
+        "d": 1,
+        "n": "Distractores = definiciones de otras clasificaciones reales (GoF, IA, drivers JDBC).",
+        "y": "Ingreso libre OEP 2023-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAIL2022-P1-24",
+        "t": "T2.01",
+        "o": "O",
+        "q": "La ALU es una parte de:",
+        "a": [
+          "La memoria.",
+          "La CPU.",
+          "El bus de operaciones.",
+          "El multiplexor de entrada."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          13
+        ],
+        "d": 1,
+        "n": "La ALU pertenece a la CPU.",
+        "y": "Ingreso libre OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAIL2022-P1-25",
+        "t": "T2.01",
+        "o": "O",
+        "q": "Señale la respuesta correcta sobre el modelo CISC:",
+        "a": [
+          "La microprogramación es una característica esencial.",
+          "Plantea un conjunto reducido de instrucciones para reducir el número de ciclos de reloj de ejecución de cada una de ellas.",
+          "Implementa las instrucciones directamente en hardware.",
+          "Está muy extendido en el mercado de procesadores para smartphone y tablets por su bajo consumo y buen rendimiento."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          8
+        ],
+        "d": 2,
+        "n": "b), c), d) describen RISC: atribución cruzada CISC/RISC.",
+        "y": "Ingreso libre OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2019-P1-25",
+        "t": "T2.01",
+        "o": "O",
+        "q": "¿Qué es la arquitectura ARM?",
+        "a": [
+          "Una arquitectura avanzada para microprocesadores RISC.",
+          "Una arquitectura para computación en la nube, basada en el intercambio asíncrono de información entre nodos usando agentes autónomos.",
+          "Una arquitectura de almacenamiento de información basada en redes de comunicaciones de fibra óptica.",
+          "Una arquitectura de computación cuántica."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          13
+        ],
+        "d": 1,
+        "n": "ARM frente a definiciones de otras arquitecturas.",
+        "y": "Ingreso libre OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2019-P1-R-01",
+        "t": "T2.01",
+        "o": "O",
+        "q": "La arquitectura de ordenadores Harvard:",
+        "a": [
+          "Tiene un único espacio de memoria para datos e instrucciones.",
+          "Tiene dos espacios de memoria separados, uno para datos y otro para instrucciones.",
+          "Es un tipo de arquitectura Von Neumann.",
+          "Tiene tres espacios de memoria separados, uno para datos, otro para instrucciones y otro para la memoria no volátil."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Harvard frente a Von Neumann.",
+        "y": "Ingreso libre OEP 2019",
+        "r": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025A-P1-23",
+        "t": "T2.01",
+        "o": "O",
+        "q": "¿Qué nivel de caché está integrado físicamente dentro del núcleo del procesador, es el más rápido y tiene la menor capacidad de almacenamiento?",
+        "a": [
+          "Caché L1.",
+          "Caché L2.",
+          "Caché L3.",
+          "Caché L4."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          8
+        ],
+        "d": 1,
+        "n": "Niveles de caché.",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025A-P1-24",
+        "t": "T2.01",
+        "o": "O",
+        "q": "En relación con los componentes de un ordenador, ¿cuál es la función principal del bus del sistema?",
+        "a": [
+          "Ejecutar las instrucciones del sistema almacenadas en memoria.",
+          "Suministrar energía eléctrica del sistema a todos los componentes del ordenador.",
+          "Almacenar de forma permanente el sistema operativo y los datos del usuario.",
+          "Transferir datos, direcciones y señales de control entre la CPU, la memoria y los periféricos."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          13
+        ],
+        "d": 1,
+        "n": "Bus del sistema frente a funciones de otros componentes.",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025X-P1-21",
+        "t": "T2.01",
+        "o": "O",
+        "q": "¿Cuál es la función del registro de instrucción dentro de la unidad de control?",
+        "a": [
+          "Almacenar la dirección de memoria de la siguiente instrucción a ejecutar.",
+          "Obtener la dirección de memoria de la instrucción actual.",
+          "Almacenar la instrucción que está siendo ejecutada.",
+          "Obtener la dirección de memoria de la instrucción previamente leída."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Registro de instrucción frente a contador de programa.",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1,
+        "w": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2019-P1-11",
+        "t": "T2.01",
+        "o": "O",
+        "q": "¿Cuál de los siguientes es un tipo de almacenamiento de datos volátil?",
+        "a": [
+          "Memoria de acceso aleatorio dinámico.",
+          "Memoria USB.",
+          "Memoria flash.",
+          "Discos ópticos."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          13
+        ],
+        "d": 1,
+        "n": "Memoria volátil frente a no volátiles.",
+        "y": "Promoción interna OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2022-P1-11",
+        "t": "T2.01",
+        "o": "O",
+        "q": "La unidad de medida de la potencia de un microprocesador, FLOPS, indica:",
+        "a": [
+          "El número de instrucciones por segundo que puede procesar.",
+          "El número de accesos a memoria por segundo que es capaz de realizar.",
+          "La frecuencia de reloj (número de pulsos por segundo).",
+          "El número de operaciones de coma flotante por segundo que puede realizar."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "FLOPS frente a MIPS/frecuencia.",
+        "y": "Promoción interna OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2022-P1-12",
+        "t": "T2.01",
+        "o": "O",
+        "q": "¿Cómo se denomina a la agrupación de 4 bits?",
+        "a": [
+          "Byte",
+          "Nibble",
+          "Half-byte",
+          "Quartet"
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          9
+        ],
+        "d": 1,
+        "n": "Nibble frente a nombres inventados.",
+        "y": "Promoción interna OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2024A-P1-25",
+        "t": "T2.01",
+        "o": "O",
+        "q": "Según el estándar IEEE 754-2008, un número en coma flotante de doble precisión es:",
+        "a": [
+          "Una aproximación de 64 bits de un número real.",
+          "Una aproximación de 32 bits de un número real.",
+          "Un número decimal empaquetado con una coma decimal implícita.",
+          "Un entero de cuatro bytes con una precisión de 10 dígitos."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          2
+        ],
+        "d": 2,
+        "n": "Doble precisión: 64 bits.",
+        "y": "Promoción interna OEP 2021-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2024A-P1-38",
+        "t": "T2.01",
+        "o": "O",
+        "q": "En sistemas operativos, cuando hablamos de Registro de Instrucción, ¿a qué nos estamos refiriendo?",
+        "a": [
+          "Al registro que contiene la última instrucción leída.",
+          "Al registro que contiene el identificador único asociado al proceso de la instrucción.",
+          "Al registro que contiene la dirección de la siguiente instrucción del programa que se ejecutará.",
+          "Al registro que contiene el número de procesos que están corriendo en paralelo."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Registro de instrucción frente a contador de programa.",
+        "y": "Promoción interna OEP 2021-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2024A-P1-R-02",
+        "t": "T2.01",
+        "o": "O",
+        "q": "¿Cuál de las siguientes respuestas se corresponden con el número 450 estando este representado en base decimal?",
+        "a": [
+          "111000010 en binario.",
+          "764 en octal.",
+          "1F4 en hexadecimal.",
+          "407 en octal."
+        ],
+        "c": 0,
+        "k": "K",
+        "x": [],
+        "d": 2,
+        "n": "Conversión de bases.",
+        "y": "Promoción interna OEP 2021-2024 (2024)",
+        "r": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2018-P1-21",
+        "t": "T2.01",
+        "o": "O",
+        "q": "En relación con las funciones lógicas básicas. Suponiendo que a=0 y b=1, ¿cuál de las siguientes sentencias es INCORRECTA?",
+        "a": [
+          "a XOR b = 1",
+          "a XNOR b = 0",
+          "a NOR b = 1",
+          "a NAND b = 1"
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": 2,
+        "n": "Con a=0 y b=1: XOR=1, XNOR=0, NOR=0 y NAND=1; la opción c) es incorrecta. Verificación por tabla de verdad.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2018-P1-23",
+        "t": "T2.01",
+        "o": "O",
+        "q": "Indique cuál de las siguientes unidades de medida de almacenamiento tiene mayor capacidad:",
+        "a": [
+          "Exabyte.",
+          "Zettabyte.",
+          "Petabyte.",
+          "Yottabyte."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          2
+        ],
+        "d": 1,
+        "n": "Escalera de unidades (Yottabyte).",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2018-P1-24",
+        "t": "T2.01",
+        "o": "O",
+        "q": "De entre los siguientes, ¿cuál NO es un componentes de la placa base de un ordenador?",
+        "a": [
+          "Zócalo del procesador.",
+          "Chipset.",
+          "Reloj.",
+          "Chip EAC."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [
+          9
+        ],
+        "d": 1,
+        "n": "\"Chip EAC\" inventado.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2018-P1-12",
+        "t": "T2.01",
+        "o": "O",
+        "q": "En relación con las funciones lógicas básicas. Suponiendo que a=1 y b=1, ¿cuál de las siguientes sentencias es correcta?",
+        "a": [
+          "a XNOR b = 1",
+          "a XOR b = 1",
+          "a NOR b = 1",
+          "a NAND b = 1"
+        ],
+        "c": 0,
+        "k": "K",
+        "x": [],
+        "d": 2,
+        "n": "Con a=1 y b=1: XNOR=1, XOR=0, NOR=0 y NAND=0; solo a) es verdadera. Verificación por tabla de verdad; cotejo PDF INAP 2018, pág. 2.",
+        "y": "Promoción interna OEP 2018"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT201-P1-01",
+        "t": "T2.01",
+        "o": "A",
+        "q": "La potencia de un microprocesador se mide en FLOPS, unidad que indica:",
+        "a": [
+          "El número de accesos a memoria que es capaz de realizar en un segundo.",
+          "La frecuencia de la señal de reloj del microprocesador.",
+          "El número de operaciones de coma flotante por segundo que puede realizar.",
+          "El número de millones de instrucciones por segundo que puede procesar."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT201-P1-02",
+        "t": "T2.01",
+        "o": "A",
+        "q": "Señale el valor decimal del número hexadecimal 3B:",
+        "a": [
+          "58.",
+          "59.",
+          "48.",
+          "63."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT201-P1-03",
+        "t": "T2.01",
+        "o": "A",
+        "q": "¿Cuál es la capacidad de una memoria de 2048 palabras si tenemos en cuenta que el ancho de palabra es de 16 bits?",
+        "a": [
+          "16 KB.",
+          "4 KB.",
+          "16 Kb.",
+          "8 KB."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT201-P1-04",
+        "t": "T2.01",
+        "o": "A",
+        "q": "Respecto a las memorias RAM de tipo SRAM señale cuál de las siguientes respuestas es INCORRECTA:",
+        "a": [
+          "Es más costosa que la memoria DRAM.",
+          "Son las siglas en inglés de Synchronous Random-Access Memory.",
+          "Su uso más común está en la memoria caché de los ordenadores.",
+          "Capaz de mantener los datos, mientras siga alimentada, sin necesidad de circuito de refresco."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT201-P1-05",
+        "t": "T2.01",
+        "o": "A",
+        "q": "En relación a UTF-8, señale la afirmación correcta:",
+        "a": [
+          "Siempre utiliza un solo byte (8 bits) para cada carácter UNICODE.",
+          "Solo puede representar los caracteres del idioma inglés.",
+          "Una cadena de texto en UTF-8 siempre ocupa más que en ASCII.",
+          "Un carácter puede estar representado por entre uno y cuatro bytes."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT201-P1-06",
+        "t": "T2.01",
+        "o": "A",
+        "q": "¿Qué número en sistema octal corresponde al decimal 53?",
+        "a": [
+          "65.",
+          "54.",
+          "55.",
+          "64."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT201-P1-07",
+        "t": "T2.01",
+        "o": "A",
+        "q": "¿Cuál de las siguientes capacidades puede contener una mayor cantidad de información?",
+        "a": [
+          "100.000.000 bits.",
+          "1 Gigabyte.",
+          "1042 Megabytes.",
+          "200.000 Kbytes."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT201-P1-09",
+        "t": "T2.01",
+        "o": "A",
+        "q": "Un procesador (CPU) puede interpretar y ejecutar directamente las instrucciones de:",
+        "a": [
+          "Un programa escrito en su lenguaje máquina o en pseudocódigo.",
+          "Un programa escrito en su lenguaje máquina o en un lenguaje interpretado.",
+          "Un programa escrito en su lenguaje máquina.",
+          "Un programa escrito en su lenguaje máquina, en pseudocódigo o en un lenguaje interpretado."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT201-P1-10",
+        "t": "T2.01",
+        "o": "A",
+        "q": "¿A qué categoría de la taxonomía de Flynn pertenecen los microprocesadores multinúcleo?",
+        "a": [
+          "SISD.",
+          "SIMD.",
+          "MISD.",
+          "MIMD."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT201-P1-12",
+        "t": "T2.01",
+        "o": "A",
+        "q": "Indique, de entre los siguientes números, cuál es el menor:",
+        "a": [
+          "2A0 en sistema hexadecimal.",
+          "1226 en sistema octal.",
+          "690 en sistema decimal.",
+          "1010110100 en sistema binario."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT201-P1-14",
+        "t": "T2.01",
+        "o": "A",
+        "q": "Una puerta lógica de tipo XOR con dos entradas devuelve un valor de 1:",
+        "a": [
+          "Cuando sus dos entradas tienen valor 1.",
+          "Cuando alguna de sus entradas vale 1.",
+          "Cuando ninguna de sus entradas vale 1.",
+          "Cuando solo una de sus entradas vale 1."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT201-P1-15",
+        "t": "T2.01",
+        "o": "A",
+        "q": "¿Cuanta memoria RAM es capaz de direccionar como máximo un sistema operativo Windows 32 bits?",
+        "a": [
+          "2 GB.",
+          "4 GB.",
+          "8 GB.",
+          "No tiene límite."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT201-P1-16",
+        "t": "T2.01",
+        "o": "A",
+        "q": "En relación a las arquitecturas CISC y RISC señale la respuesta INCORRECTA:",
+        "a": [
+          "En CISC la unidad de control es microprogramada y en RISC cableada.",
+          "RISC dispone de un gran número de registros de propósito general.",
+          "CISC dispone de un número escaso de modos de direccionamiento.",
+          "El formato de instrucción en RISC es de tamaño fijo."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT201-P1-17",
+        "t": "T2.01",
+        "o": "A",
+        "q": "En relación con los sistemas de información, el nivel donde se toman decisiones a medio y largo plazo es el:",
+        "a": [
+          "Operacional.",
+          "Táctico.",
+          "Operativo.",
+          "Estratégico."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT201-P1-18",
+        "t": "T2.01",
+        "o": "A",
+        "q": "Una puerta lógica de tipo XNOR con dos entradas devuelve un valor de 1:",
+        "a": [
+          "Cuando sus dos entradas tienen igual valor.",
+          "Cuando alguna de sus entradas vale 1.",
+          "Cuando ninguna de sus entradas vale 1.",
+          "Cuando solo una de sus entradas vale 0."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "XNOR vs OR/NOR/XOR."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT201-P1-19",
+        "t": "T2.01",
+        "o": "A",
+        "q": "De entre los modos de direccionamiento señale la respuesta INCORRECTA:",
+        "a": [
+          "Direccionamiento implícito.",
+          "Direccionamiento asociativo.",
+          "Direccionamiento indirecto.",
+          "Direccionamiento inmediato."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT201-P1-21",
+        "t": "T2.01",
+        "o": "A",
+        "q": "A cada una de las operaciones que se realizan durante la ejecución de una instrucción se le denomina:",
+        "a": [
+          "Microoperación.",
+          "Microinstrucción.",
+          "Segmentación.",
+          "Etapa."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT201-P1-22",
+        "t": "T2.01",
+        "o": "A",
+        "q": "¿En qué registro almacena la ALU el resultado de una operación?",
+        "a": [
+          "En la pila.",
+          "En el registro MBR.",
+          "En el registro acumulador.",
+          "En el registro de instrucción."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT201-P1-23",
+        "t": "T2.01",
+        "o": "A",
+        "q": "En sistemas operativos, cuando hablamos de Registro de Instrucción, ¿a qué nos estamos refiriendo?",
+        "a": [
+          "Al registro que contiene el identificador único asociado al proceso de la instrucción.",
+          "Al registro que contiene la última instrucción leída y que se está ejecutando.",
+          "Al registro que contiene la dirección de la siguiente instrucción que se leerá de la memoria.",
+          "Al registro que contiene el número de instrucciones que deben ejecutarse."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT201-P1-24",
+        "t": "T2.01",
+        "o": "A",
+        "q": "En relación a las arquitecturas de ordenadores RISC y CISC, señale la respuesta correcta:",
+        "a": [
+          "Las operaciones en CISC son complejas, tipos Registro a Registro (load-store), mientras que en RISC son operaciones simples Memoria a Registro.",
+          "En CISC la unidad de control está cableada mientras que en RISC se traducen las instrucciones máquina a microcódigo (control microprogramado).",
+          "CISC dispone de muchas instrucciones complejas y de longitud variable, mientras que RISC dispone de un número limitado de instrucciones simples y de longitud fija.",
+          "CISC dispone de un alto número de registros de propósito general mientras RISC dispone de un número muy bajo de registros generales o implícitos."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT201-P1-25",
+        "t": "T2.01",
+        "o": "A",
+        "q": "La estrategia de organización de memoria caché en la que no existe el campo índice y la etiqueta coincide con el número de bloque de la memoria principal es correspondencia de:",
+        "a": [
+          "Directa.",
+          "Asociativa por conjuntos.",
+          "(Totalmente) asociativa.",
+          "Diferida."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT201-P1-26",
+        "t": "T2.01",
+        "o": "A",
+        "q": "¿Cuál es la unidad de capacidad de información que se corresponde con 10 elevado a 24 Bytes?",
+        "a": [
+          "1 ExaByte.",
+          "1 ZettaByte.",
+          "1 PetaByte.",
+          "1 YottaByte."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT201-P1-27",
+        "t": "T2.01",
+        "o": "A",
+        "q": "¿En qué consiste el 'refresco' de una memoria dinámica?",
+        "a": [
+          "En el proceso de optimización de la temperatura de trabajo de este tipo de memorias.",
+          "En la operación de reescritura periódica que hay que realizar en ellas para que no pierdan la información almacenada.",
+          "En la operación de acceso periódico que hay que realizar a este tipo de memorias, para repetir la última operación realizada.",
+          "El refresco no es propio de las memorias dinámicas."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT201-P1-28",
+        "t": "T2.01",
+        "o": "A",
+        "q": "Los diseños lógicos de los chipsets se estructuraban en dos bloques funcionales: el Northbridge y el Southbridge. Indique cuál de los siguientes subsistemas son competencia del Northbridge:",
+        "a": [
+          "Acceso a la RAM y controlador AGP.",
+          "Controladores IDE y SATA.",
+          "Controladores USB y FIREWIRE.",
+          "Super I/O (Puerto serie, paralelo), audio y LAN."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Northbridge vs Southbridge."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT201-P1-29",
+        "t": "T2.01",
+        "o": "A",
+        "q": "En el ámbito de la arquitectura de computadores, la técnica de segmentación:",
+        "a": [
+          "Disminuye el tiempo de ejecución de cada instrucción.",
+          "Aumenta la frecuencia de reloj.",
+          "Disminuye la frecuencia de reloj.",
+          "No disminuye el tiempo de ejecución de cada instrucción."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT201-P1-30",
+        "t": "T2.01",
+        "o": "A",
+        "q": "Señale cuál de los siguientes es una característica de diseño la arquitectura RISC:",
+        "a": [
+          "Un amplio juego de instrucciones facilita el diseño de compiladores.",
+          "El modelo de ejecución de pila es superior al de registros.",
+          "Los juegos de instrucciones amplios reducen el tamaño de los programas.",
+          "No debe emplearse la microprogramación."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT201-P1-31",
+        "t": "T2.01",
+        "o": "A",
+        "q": "Ejecución continua y en parte solapada de instrucciones por parte del procesador:",
+        "a": [
+          "Flujo de datos.",
+          "Multiplexado.",
+          "Clustering.",
+          "Pipelining."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT201-P1-32",
+        "t": "T2.01",
+        "o": "A",
+        "q": "¿Cuál de las siguientes corresponde a una de las categorías de ordenadores contempladas en la taxonomía de Flynn?",
+        "a": [
+          "SIDI.",
+          "SDSP.",
+          "SIMD.",
+          "MIMP."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT201-P1-33",
+        "t": "T2.01",
+        "o": "A",
+        "q": "¿Cuál es la unidad de capacidad de información que se corresponde con 10 elevado a 21 Bytes?",
+        "a": [
+          "1 ExaByte.",
+          "1 ZettaByte.",
+          "1 PetaByte.",
+          "1 YottaByte."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT201-P1-34",
+        "t": "T2.01",
+        "o": "A",
+        "q": "¿Cuál es la unidad de capacidad de información que se corresponde con 2 elevado a 90 Bytes?",
+        "a": [
+          "1 Robibyte.",
+          "1 Yobibyte.",
+          "1 Exbibyte.",
+          "1 Zebibyte."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT201-P1-35",
+        "t": "T2.01",
+        "o": "A",
+        "q": "¿Cuál es la unidad de capacidad de información que se corresponde con 2 elevado a 70 Bytes?",
+        "a": [
+          "1 Robibyte.",
+          "1 Yobibyte.",
+          "1 Quebibyte.",
+          "1 Zebibyte."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT201-P1-36",
+        "t": "T2.01",
+        "o": "A",
+        "q": "Una puerta lógica de tipo NOR con dos entradas devuelve un valor de 1:",
+        "a": [
+          "Cuando sus dos entradas tienen valor 1.",
+          "Cuando alguna de sus entradas vale 1.",
+          "Cuando ninguna de sus entradas vale 1.",
+          "Cuando solo una de sus entradas vale 1."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT201-P1-37",
+        "t": "T2.01",
+        "o": "A",
+        "q": "¿Qué arquitectura de computadores dispone de dos memorias, una para instrucciones y otra para datos?",
+        "a": [
+          "Von Neumann.",
+          "Harvard.",
+          "RISC.",
+          "ARM."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Harvard vs Von Neumann."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT201-P1-38",
+        "t": "T2.01",
+        "o": "A",
+        "q": "En la arquitectura Von Neumann, la CPU está compuesta por:",
+        "a": [
+          "Unidad de control y registros.",
+          "ALU y unidad de control.",
+          "Memoria principal, ALU y unidad de control.",
+          "Registros, ALU y unidad de control."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT201-P1-39",
+        "t": "T2.01",
+        "o": "A",
+        "q": "La ejecución simultánea de diferentes etapas de distintas instrucciones se conoce como:",
+        "a": [
+          "Segmentación.",
+          "Paralelismo.",
+          "Convoys.",
+          "Multicomputación."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT201-P1-40",
+        "t": "T2.01",
+        "o": "A",
+        "q": "El modo de direccionamiento que hace referencia al contenido del registro PC se denomina:",
+        "a": [
+          "Direccionamiento implícito.",
+          "Direccionamiento relativo.",
+          "Direccionamiento directo.",
+          "Direccionamiento inmediato."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT201-P1-46",
+        "t": "T2.01",
+        "o": "A",
+        "q": "En la jerarquía de memoria, el orden correcto de velocidad de acceso del procesador a la memoria y al cache, es en orden ascendente (del más lento al más rápido):",
+        "a": [
+          "RAM, L1, L2, L3.",
+          "RAM, L3, L2, L1.",
+          "L1, L2, L3, RAM.",
+          "L3, L2, L1, RAM."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT201-P1-47",
+        "t": "T2.01",
+        "o": "A",
+        "q": "¿Qué significa la sigla GPU en términos de computación?",
+        "a": [
+          "General Purpose Unit (Unidad de Propósito General).",
+          "Graphics Processing Unit (Unidad de Procesamiento Gráfico).",
+          "General Processing Unit (Unidad de Procesamiento General).",
+          "Graphical Performance Unit (Unidad de Rendimiento Gráfico)."
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [
+          7,
+          9
+        ],
+        "d": 1,
+        "n": "Sigla GPU con desarrollos inventados."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT201-P1-48",
+        "t": "T2.01",
+        "o": "A",
+        "q": "La arquitectura de Von Neumman es un modelo de diseño para computadores digitales que se basa en los siguientes componentes:",
+        "a": [
+          "Una unidad de procesamiento, una unidad de control, memoria, almacenamiento masivo externo y mecanismos de entrada y salida",
+          "Una unidad de procesamiento, una unidad de virtualización, memoria, almacenamiento masivo externo y mecanismos de entrada y salida",
+          "Una unidad de procesamiento, una unidad de control, memoria, almacenamiento masivo externo y mecanismos de subida y bajada",
+          "Una unidad de control, una unidad aritmético lógica, una memoria de instrucciones, una memoria de datos (estando éstas separadas) y una unidad de entrada y salida."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT201-P1-49",
+        "t": "T2.01",
+        "o": "A",
+        "q": "¿Cuál es la función principal de la unidad de procesamiento central (CPU)?",
+        "a": [
+          "Realizar cálculos matemáticos.",
+          "Ejecutar instrucciones del sistema operativo.",
+          "Controlar las operaciones de entrada y salida.",
+          "Procesar y ejecutar instrucciones de programas."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT201-P1-50",
+        "t": "T2.01",
+        "o": "A",
+        "q": "Haciendo uso de la taxonomía de Flynn indique qué tipo de computadora es un clúster de servidores interconectados utilizado en aplicaciones científicas:",
+        "a": [
+          "SISD.",
+          "MISD.",
+          "SIMD.",
+          "MIMD."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT201-P1-51",
+        "t": "T2.01",
+        "o": "A",
+        "q": "El tipo de socket que se caracteriza porque los pines de contacto están incorporados al procesador y no en la estructura del propio socket, se denomina:",
+        "a": [
+          "LGA.",
+          "PGA.",
+          "BGA.",
+          "VGA."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT201-P1-52",
+        "t": "T2.01",
+        "o": "A",
+        "q": "La CPU del chip M4 está compuesta por:",
+        "a": [
+          "4 núcleos de rendimiento y 6 núcleos de eficiencia.",
+          "6 núcleos de rendimiento y 4 núcleos de eficiencia.",
+          "4 núcleos de rendimiento y 8 núcleos de eficiencia.",
+          "8 núcleos de rendimiento y 4 núcleos de eficiencia."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT201-P1-53",
+        "t": "T2.01",
+        "o": "A",
+        "q": "¿Cuál es el nombre en clave de 14ª generación de procesadores Intel Core?",
+        "a": [
+          "Tiger Lake.",
+          "Raptor Lake S.",
+          "Alder Lake S.",
+          "Comet Lake."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT201-P1-54",
+        "t": "T2.01",
+        "o": "A",
+        "q": "Seleccione la lista de tipos de procesadores Intel ordenados de menor a mayor prestaciones:",
+        "a": [
+          "Atom, Celeron, Core, Xeon.",
+          "Celeron, Core Ultra, Core, Xeon escalable.",
+          "Atom, Xeon, Core Ultra.",
+          "Celeron, Atom, Core Ultra, Xeon escalable."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT201-P1-55",
+        "t": "T2.01",
+        "o": "A",
+        "q": "En relación con los microprocesadores, señale la respuesta correcta:",
+        "a": [
+          "Los núcleos permiten la concurrencia.",
+          "Los hilos permiten el paralelismo.",
+          "La litografía hace referencia a la fabricación de circuitos integrados, los cuales se componen de transistores.",
+          "Los microprocesadores N son usados en Mac."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT201-P1-57",
+        "t": "T2.01",
+        "o": "A",
+        "q": "Indique, de las siguientes palabras, cuál es un número hexadecimal válido:",
+        "a": [
+          "GEISER.",
+          "EGEA.",
+          "HABILITA.",
+          "DECAFE."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT201-P1-58",
+        "t": "T2.01",
+        "o": "A",
+        "q": "En relación con los multiprocesadores, según la taxonomía de Flynn, los sistemas vectoriales y matriciales se encuadran dentro de la clasificación:",
+        "a": [
+          "SSID (Single Instruction, Single Data).",
+          "SIMD (Single Instruction, Multiple Data).",
+          "MISD (Multiple Instruction, Single Data).",
+          "MIMD (Multiple Instruction, Multiple Data)."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "El pasaje solo relaciona instrucciones SIMD y estructuras vectoriales; falta la clasificación de Flynn que pruebe la inclusión de los sistemas vectoriales y matriciales.",
+      "reviewStatus": "reviewed-pending",
+      "evidenceKeys": [
+        "e-AT201-P1-58"
+      ]
+    },
+    {
+      "question": {
+        "i": "AT201-P1-59",
+        "t": "T2.01",
+        "o": "A",
+        "q": "Dada la expresión lógica NOT(A) AND (B XOR (NOT(C <= D))) y sabiendo que A=0, B=0 y C=1, ¿qué valor habría que asignarle a D para que el resultado de la expresión lógica se evalúe a VERDADERO?",
+        "a": [
+          "0.",
+          "1.",
+          "2.",
+          "3."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT201-P1-60",
+        "t": "T2.01",
+        "o": "A",
+        "q": "En relación con las funciones lógicas básicas. Suponiendo que a=1 y b=1, ¿cuál de las siguientes sentencias es correcta?",
+        "a": [
+          "a XNOR b = 1.",
+          "a XOR b = 1.",
+          "a NOR b = 1.",
+          "a NAND b = 1."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-82",
+        "t": "T2.01",
+        "o": "A",
+        "q": "Dadas las siguientes relaciones: A={ax,ay,az,by,bz,cx,cy} y B={x,z}, ¿cuál sería el resultado de la operación A dividido entre B?",
+        "a": [
+          "{a,b,c}.",
+          "{ax,az,bz,cx}.",
+          "{ay,by,cy}.",
+          "{a}."
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-94",
+        "t": "T2.01",
+        "o": "A",
+        "q": "Dada la relación R1={ad, ae, af, bd, cd} y la relación R2={ae, cd}, ¿cuál será el resultado de la operación R1- R2?",
+        "a": [
+          "{ae, cd}.",
+          "{ad, af, bd}.",
+          "{}.",
+          "{ad, ae, cd}."
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS04-P1-20",
+        "t": "T2.01",
+        "o": "A",
+        "q": "El tipo de datos de entrada de una ALU (Unidad Aritmético Lógica) son:",
+        "a": [
+          "Acumuladores.",
+          "Operandos.",
+          "Interrupciones.",
+          "Registros."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS04-P1-21",
+        "t": "T2.01",
+        "o": "A",
+        "q": "Ocho nibbles, como unidad de información en un ordenador, equivalen a:",
+        "a": [
+          "8 bits.",
+          "24 bits.",
+          "4 bytes.",
+          "32 bytes."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS04-P1-24",
+        "t": "T2.01",
+        "o": "A",
+        "q": "Indique cuál de las siguientes unidades de medida de almacenamiento tiene mayor capacidad:",
+        "a": [
+          "Yobibyte.",
+          "Zettabyte.",
+          "Pebibyte.",
+          "Robibyte."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS04-P1-25",
+        "t": "T2.01",
+        "o": "A",
+        "q": "El valor decimal del número hexadecimal BA1 es:",
+        "a": [
+          "2721.",
+          "2993.",
+          "2977.",
+          "3009."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS04-P1-26",
+        "t": "T2.01",
+        "o": "A",
+        "q": "La técnica que permite solapar instrucciones mediante la división de su ejecución en etapas se denomina:",
+        "a": [
+          "Parametrización.",
+          "Segmentación.",
+          "Multiplexación.",
+          "Paginación."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS04-P1-29",
+        "t": "T2.01",
+        "o": "A",
+        "q": "La unidad de información que se corresponde con 128 bytes es:",
+        "a": [
+          "1 Gigabit.",
+          "1 Kibibit (Kibit).",
+          "1 Mebibit (Mibit).",
+          "1 Megabit."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS04-P1-50",
+        "t": "T2.01",
+        "o": "A",
+        "q": "El acceso directo a memoria (DMA) consiste en:",
+        "a": [
+          "Un mecanismo por el que se transmiten datos entre un sistema de entrada/salida y el sistema de memoria sin la intervención de la CPU.",
+          "Un mecanismo de software que permite minimizar el tiempo de latencia de acceso a los discos duros, al no utilizar los buses de datos y direcciones.",
+          "Un módulo que agrupa y controla todos los drivers de los dispositivos de entrada/salida, permitiendo acceder a memoria sin el uso de interrupciones.",
+          "Un mecanismo por el cuál cada dispositivo de entrada/salida está mapeado a una dirección concreta de memoria, minimizando el tiempo de acceso."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS04-P1-58",
+        "t": "T2.01",
+        "o": "A",
+        "q": "En el ámbito de la gestión de memoria de un sistema operativo, se define la memoria virtual como:",
+        "a": [
+          "El porcentaje de memoria principal que el sistema operativo utiliza para sus funciones.",
+          "Una técnica de gestión de memoria para que el sistema operativo disponga de un espacio mayor de memoria que la disponible físicamente.",
+          "La cantidad de espacio en disco que el sistema operativo usa para intercambiar datos con la memoria principal.",
+          "Ninguna de las respuestas anteriores es correcta."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS04-P1-60",
+        "t": "T2.01",
+        "o": "A",
+        "q": "¿En qué consiste el refresco de una memoria dinámica?",
+        "a": [
+          "En el proceso de optimización de la temperatura de trabajo de este tipo de memorias.",
+          "En la operación de reescritura periódica que hay que realizar en ellas para que no pierdan la información almacenada.",
+          "En la operación de acceso periódico que hay que realizar a este tipo de memorias, para repetir la última operación realizada.",
+          "En el proceso de refrigeración de la temperatura de trabajo de este tipo de memorias."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS04-P1-93",
+        "t": "T2.01",
+        "o": "A",
+        "q": "Indique de entre los siguientes números el menor:",
+        "a": [
+          "1100001011 en binario.",
+          "1411 en representación octal.",
+          "317 en representación hexadecimal.",
+          "762 en representación decimal."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS04-P1-R-03",
+        "t": "T2.01",
+        "o": "A",
+        "q": "Señale el valor hexadecimal del número binario 10100101:",
+        "a": [
+          "A5.",
+          "FR.",
+          "A3.",
+          "C4."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS05G-P1-33",
+        "t": "T2.01",
+        "o": "A",
+        "q": "Indique de entre los siguientes números cuál es mayor:",
+        "a": [
+          "101001101 en sistema binario.",
+          "334 en sistema decimal.",
+          "513 en sistema octal.",
+          "157 en sistema hexadecimal."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS05G-P1-34",
+        "t": "T2.01",
+        "o": "A",
+        "q": "¿Qué número en sistema hexadecimal corresponde al decimal 942?",
+        "a": [
+          "3AE.",
+          "4DA.",
+          "3BC.",
+          "4FC."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS05G-P1-35",
+        "t": "T2.01",
+        "o": "A",
+        "q": "En relación con las funciones lógicas básicas. Suponiendo que a=0, b=1 y c=1, ¿cuál de las siguientes sentencias es INCORRECTA?",
+        "a": [
+          "(a XOR b) AND c = 1.",
+          "(b NAND c) OR a = 0.",
+          "(a NOR c) XNOR b = 1.",
+          "a XOR b XOR c = 0."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS05G-P1-36",
+        "t": "T2.01",
+        "o": "A",
+        "q": "¿Cuál es la capacidad de una memoria de 8192 palabras si tenemos en cuenta que el ancho de palabra es de 64 bits?",
+        "a": [
+          "64 Kb.",
+          "128 Kibibit.",
+          "64 KiB.",
+          "32 Kibibyte."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS05G-P1-37",
+        "t": "T2.01",
+        "o": "A",
+        "q": "Respecto a la memoria caché, ¿cuál de las siguientes respuestas es INCORRECTA?",
+        "a": [
+          "La memoria caché se sitúa entre la memoria principal y el procesador, puede estar formada por uno o varios niveles.",
+          "Son memorias de capacidad reducida, pero más rápidas que la memoria principal, que utilizan un método de acceso asociativo.",
+          "No es accesible por parte del programador, es gestionada por el hardware y el sistema operativo y se implementa utilizando tecnología DRAM.",
+          "En la memoria caché se almacenan los datos que se prevé que se utilizarán más habitualmente, de manera que sea posible reducir el número de accesos que debe hacer el procesador a la memoria principal."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS05G-P1-38",
+        "t": "T2.01",
+        "o": "A",
+        "q": "Respecto a la memoria principal, ¿cuál de las siguientes respuestas es INCORRECTA?",
+        "a": [
+          "FPM es un tipo de memoria DRAM.",
+          "Las memorias SRAM implementan cada celda mediante un flip-flop o biestable.",
+          "Las memorias DRAM implementan cada celda mediante un condensador.",
+          "La memoria EPROM es una memoria programable y borrable eléctricamente de solo lectura."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS05G-P1-39",
+        "t": "T2.01",
+        "o": "A",
+        "q": "Indique la respuesta correcta en relación con la arquitectura de un computador:",
+        "a": [
+          "El registro PC contiene la dirección de la instrucción que hay que leer de la memoria.",
+          "El registro de instrucción IR contiene la siguiente instrucción que haya que ejecutar.",
+          "La CPU está formada por la Unidad de Control y la ALU.",
+          "Para comunicar los elementos del computador se utilizan el bus de datos y el bus de control."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS06-P1-42",
+        "t": "T2.01",
+        "o": "A",
+        "q": "En sistemas operativos, cuando hablamos de Registro de Instrucción, ¿a qué nos estamos refiriendo?",
+        "a": [
+          "Al registro que contiene el identificador único asociado al proceso de la instrucción.",
+          "Al registro que contiene la última instrucción leída y que se está ejecutando.",
+          "Al registro que contiene la dirección de la siguiente instrucción que se leerá de la memoria.",
+          "Al registro que contiene que contiene el número de instrucciones que deben ejecutarse."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS06-P1-91",
+        "t": "T2.01",
+        "o": "A",
+        "q": "Los slots o ranuras donde se colocan las pastillas de memoria RAM son:",
+        "a": [
+          "SIMM, DIMM, SODIMM y RIMM.",
+          "DRAM, EDO, DDR.",
+          "DDR, DDR2, DDR3, DDR4.",
+          "SIMM, DIMM y DDR."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS06-P1-95",
+        "t": "T2.01",
+        "o": "A",
+        "q": "El encargado de controlar la forma que interacciona el microprocesador con la RAM, la memoria caché o el control de puertos y con los slots USB, PCI, etc. para recibir y entregar datos es el:",
+        "a": [
+          "Placa base.",
+          "Chipset.",
+          "Bus.",
+          "Registro."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS06-P1-99",
+        "t": "T2.01",
+        "o": "A",
+        "q": "A qué función lógica corresponda la siguiente tabla: A B Salida 0 0 1 0 1 0 1 0 0 1 1 1",
+        "a": [
+          "NOR.",
+          "AND.",
+          "XOR.",
+          "XNOR."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS07-P1-37",
+        "t": "T2.01",
+        "o": "A",
+        "q": "¿Cuál de estos números es mayor?",
+        "a": [
+          "1110100101 en binario.",
+          "3A6 en hexadecimal.",
+          "932.",
+          "1647 en octal."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS07-P1-38",
+        "t": "T2.01",
+        "o": "A",
+        "q": "La función lógica NAND:",
+        "a": [
+          "La salida es 1 solo si las entradas son 1.",
+          "La salida es 0 solo si las entradas son 0.",
+          "La salida es 1 siempre que alguna de las entradas sea 1, independientemente del valor de la otra entrada.",
+          "La salida es 1 si las dos entradas son 0."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS07-P1-39",
+        "t": "T2.01",
+        "o": "A",
+        "q": "Según la arquitectura Von Neumann:",
+        "a": [
+          "La CPU está compuesta por la Unidad de Control.",
+          "La CPU por la Unidad Aritmético Lógica.",
+          "La CPU está compuesta por la Unidad de Control y por la Unidad Aritmético Lógica.",
+          "La CPU está compuesta por la Unidad de Control, por la Unidad Aritmético Lógica y por la Memoria Principal."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS07-P1-40",
+        "t": "T2.01",
+        "o": "A",
+        "q": "¿Qué tecnología utiliza la memoria principal?",
+        "a": [
+          "DRAM.",
+          "SRAM.",
+          "ROM.",
+          "Flash."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08-P1-33",
+        "t": "T2.01",
+        "o": "A",
+        "q": "En relación con las funciones lógicas básicas. Suponiendo que a=0 y b=0, ¿cuál de las siguientes sentencias es INCORRECTA?",
+        "a": [
+          "a XOR b = 1.",
+          "a XNOR b = 1.",
+          "a NOR b = 1.",
+          "a NAND b = 1."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08-P1-34",
+        "t": "T2.01",
+        "o": "A",
+        "q": "¿Cuál de los siguientes NO es un tipo de bus?",
+        "a": [
+          "Control.",
+          "Instrucciones.",
+          "Dirección.",
+          "Datos."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08-P1-36",
+        "t": "T2.01",
+        "o": "A",
+        "q": "¿Qué memoria utiliza condensadores para almacenar la información?",
+        "a": [
+          "SRAM.",
+          "DRAM.",
+          "ROM.",
+          "PROM."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08B-P1-29",
+        "t": "T2.01",
+        "o": "A",
+        "q": "En relación con los microprocesadores señale la respuesta correcta:",
+        "a": [
+          "Un microprocesador con cuatro núcleos fomenta la concurrencia al permitir que varios hilos se puedan ejecutar simultáneamente en cada núcleo.",
+          "Un microprocesador con cuatro núcleos fomenta la concurrencia al permitir que un hilo se pueda ejecutar simultáneamente en cada núcleo.",
+          "Un microprocesador con cuatro núcleos fomenta el paralelismo al permitir que varios procesos se puedan ejecutar simultáneamente, cada proceso en un núcleo.",
+          "Un microprocesador con cuatro núcleos fomenta el paralelismo al permitir que varios procesos se puedan ejecutar simultáneamente en cada núcleo."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08B-P1-30",
+        "t": "T2.01",
+        "o": "A",
+        "q": "¿Cuál es la representación correcta en hexadecimal del número binario 101010101110101001?",
+        "a": [
+          "2ABA9.",
+          "AB922.",
+          "9A2BA.",
+          "229AB."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08B-P1-31",
+        "t": "T2.01",
+        "o": "A",
+        "q": "Señale la respuesta INCORRECTA sobre la arquitectura Von Neumann:",
+        "a": [
+          "La CPU está formada por la unidad de control y por la unidad aritmético-lógica.",
+          "El ordenador se compone de la CPU y la memoria principal.",
+          "La unidad de control es la responsable de la lectura y ejecución de las instrucciones almacenadas en memoria principal, realizando las operaciones sobre los datos almacenados en la memoria principal.",
+          "La unida de control contiene la instrucción que se está ejecutando. Se encarga de generar las señales de control para la ejecución de la instrucción."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08B-P1-32",
+        "t": "T2.01",
+        "o": "A",
+        "q": "¿Qué memoria de acceso aleatorio dinámica síncrona utiliza módulos DIMM de 288 pines?",
+        "a": [
+          "DDR2 SDRAM.",
+          "DDR3 SDRAM.",
+          "DDR SDRAM.",
+          "DDR5 SDRAM."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-18",
+        "t": "T2.01",
+        "o": "A",
+        "q": "Indique la opción ordenada correctamente de menor a mayor:",
+        "a": [
+          "Byte, kilobyte, megabyte, gigabyte, terabyte, petabyte, zettabyte, exabyte, yottabyte, quebibibyte.",
+          "Byte, kilobyte, megabyte, gigabyte, terabyte, exabyte, petabyte, zettabyte, yottabyte, robibyte.",
+          "Byte, kilobyte, megabyte, gigabyte, terabyte, petabyte, exabyte, zettabyte, yottabyte, robibyte.",
+          "Byte, kilobyte, megabyte, gigabyte, terabyte, petabyte, exabyte, yottabyte, zettabyte, quebibibyte."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-49",
+        "t": "T2.01",
+        "o": "A",
+        "q": "Señale cuál de los siguientes clasificadores en UML se define como un elemento físico que existe en tiempo de ejecución y representa un recurso computacional, generalmente con alguna memoria y a menudo con capacidad de procesamiento:",
+        "a": [
+          "Señal.",
+          "Subsistema.",
+          "Componente.",
+          "Nodo."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-24",
+        "t": "T2.01",
+        "o": "A",
+        "q": "Cuatro nibble, como unidad de información en un ordenador, equivalen a:",
+        "a": [
+          "4 bits.",
+          "12 bits.",
+          "2 bytes.",
+          "16 bytes."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-26",
+        "t": "T2.01",
+        "o": "A",
+        "q": "Indique qué capacidad de almacenamiento total dispone un ordenador si éste cuenta con dos discos duros, uno con capacidad de 1 GiB y otro de 1024 KiB:",
+        "a": [
+          "10.241.024.102 bit.",
+          "1025 MiB.",
+          "0,5 TiB.",
+          "2048 MiB."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-R-02",
+        "t": "T2.01",
+        "o": "A",
+        "q": "¿Cuál es la última generación comercializada e implantada en el mercado de procesadores Intel de ordenadores personales?",
+        "a": [
+          "14ª generación.",
+          "11ª generación.",
+          "10ª generación.",
+          "13ª generación."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10-P1-27",
+        "t": "T2.01",
+        "o": "A",
+        "q": "En el ámbito de la arquitectura de computadores, señale la respecta correcta respecto a la técnica de segmentación:",
+        "a": [
+          "Aumenta la frecuencia de reloj.",
+          "Disminuye la frecuencia de reloj.",
+          "Disminuye el tiempo de ejecución de cada instrucción.",
+          "No disminuye el tiempo de ejecución de cada instrucción."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10-P1-29",
+        "t": "T2.01",
+        "o": "A",
+        "q": "Según la taxonomía de Flynn, ¿qué arquitectura es capaz de ejecutar múltiples instrucciones concurrentes con un solo flujo de datos?",
+        "a": [
+          "SISD.",
+          "SIMD.",
+          "MISD.",
+          "MIMD."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10B-P1-31",
+        "t": "T2.01",
+        "o": "A",
+        "q": "¿Cuál de las siguientes capacidades puede contener una mayor cantidad de información?",
+        "a": [
+          "100.000.000 bits.",
+          "1 Gibibyte.",
+          "1042 Mebibytes.",
+          "200.000 Kibibytes."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10B-P1-33",
+        "t": "T2.01",
+        "o": "A",
+        "q": "La Unidad Central de Proceso está formada por:",
+        "a": [
+          "La unidad de control, memoria principal y unidad de entrada-salida.",
+          "La memoria, unidad de control y unidad de entrada-salida.",
+          "La unidad de control, unidad aritmético-lógica y registros.",
+          "La unidad aritmético-lógica, memoria y registros."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10B-P1-34",
+        "t": "T2.01",
+        "o": "A",
+        "q": "Señale cuál de las siguientes afirmaciones sobre la memoria caché es correcta:",
+        "a": [
+          "La caché L1 está integrada en el núcleo del procesador, trabajando a velocidades diferentes que el procesador.",
+          "La caché L2 está integrada en el procesador, pero fuera del núcleo, trabaja a diferente velocidad que el procesador y es más rápida que la caché L1.",
+          "La caché L1 está integrada en el núcleo del procesador, trabajando a la misma velocidad que el procesador y es más rápida que la caché L2.",
+          "La caché L1 está integrada en el núcleo del procesador, trabajando a la misma velocidad que el procesador y es más lenta que la caché L2."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10B-P1-R-03",
+        "t": "T2.01",
+        "o": "A",
+        "q": "NO es una característica del chip M1 de Apple:",
+        "a": [
+          "CPU de 8 núcleos.",
+          "16 billones de transistores.",
+          "Proceso de fabricación de 1nm.",
+          "GPU de 8 núcleos."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-31",
+        "t": "T2.01",
+        "o": "A",
+        "q": "En relación a UTF-8, señale la afirmación correcta:",
+        "a": [
+          "Siempre utiliza un solo byte (8 bits) para cada carácter UNICODE.",
+          "Sólo puede representar los caracteres del idioma inglés.",
+          "Una cadena de texto en UTF-8 siempre ocupa más que en ASCII.",
+          "Un carácter puede estar representado por entre uno y cuatro bytes."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11B-P1-32",
+        "t": "T2.01",
+        "o": "A",
+        "q": "Indique cuál es la capacidad de almacenamiento total si se cuenta con un disco duro con una capacidad de 1 Gibibyte (GiB) y el otro disco con 1024 Kibibyte (KiB):",
+        "a": [
+          "0,5 TB.",
+          "1025 Mebibyte.",
+          "2048 Mebibyte.",
+          "10.241.024.102 bit."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-21",
+        "t": "T2.01",
+        "o": "A",
+        "q": "Ordenar de mayor a menor rapidez de velocidad de acceso, los siguientes elementos que se encuentran en un ordenador personal:",
+        "a": [
+          "Memoria caché, memoria principal, bancos de registros, discos duros.",
+          "Bancos de registros, memoria caché, memoria principal, discos duros.",
+          "Bancos de registros, memoria caché, discos duros, memoria principal.",
+          "Memoria caché, bancos de registros, memoria principal, discos duros."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-31",
+        "t": "T2.01",
+        "o": "A",
+        "q": "Respecto a la gestión de memoria de un sistema operativo, se define la memoria virtual como:",
+        "a": [
+          "El porcentaje de memoria principal que el sistema operativo utiliza para sus funciones.",
+          "Una técnica de gestión de memoria para que el sistema operativo disponga de un espacio mayor de memoria que la disponible físicamente.",
+          "La cantidad de espacio en disco que el sistema operativo usa para intercambiar datos con la memoria principal.",
+          "Ninguna de las respuestas anteriores es correcta."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12B-P1-29",
+        "t": "T2.01",
+        "o": "A",
+        "q": "La arquitectura de procesador más frecuente en los dispositivos móviles (smartphones y tablets) es:",
+        "a": [
+          "Zen.",
+          "EVO.",
+          "RISC V.",
+          "ARM."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          9
+        ],
+        "d": 1,
+        "n": "ARM frente a nombres de otras arquitecturas.",
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    }
+  ],
+  "counts": {
+    "total": 496,
+    "alreadyHadCitation": 370,
+    "added": 6,
+    "pending": 120,
+    "withCitation": 376
+  }
+}
