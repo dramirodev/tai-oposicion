@@ -712,3 +712,39 @@ El primer intento de deploy42237352967 del merge PR116/f6aa79f falló en `tests/
 - **Solución / archivos:** `study-text.ts` reconoce únicamente bloques completos, escapa el contenido y reutiliza `StudyCode`/Shiki y los estilos `cd blk` existentes. Mantiene el formateador previo fuera del bloque y conserva delimitadores incompletos sin pérdida. Sin parser Markdown ni dependencia nueva: reconocimiento acotado, sin algoritmo general nuevo.
 - **Estado de implementación:** CORREGIDO SIN VERIFICAR.
 - **Pruebas / resultado provisional:** `study-code-fences.test.js` verifica texto exacto del banco, primer token, prosa, dos lenguajes, HTML escapado y bloque incompleto. Matriz visual real en cinco temas, dos modos y dos motores pendiente de repetir.
+
+
+### MET-001 — La revisión textual no prueba igualdad de clave, contexto y fuente
+
+- **Categoría / funcionalidad:** Integridad de métricas por apartado.
+- **Descripción / evidencia:** `questionContentRevision(statement, options)` omitía la clave correcta, contexto y referencia. Un vínculo textual podía seguir vigente tras cambiar solo la clave; reproducido con fixture sintético en `tests/domain/academy-section-performance.test.js`.
+- **Severidad / prioridad:** P1; posible atribución semántica falsa de resultados históricos.
+- **Causa / solución:** Huella diseñada para anclas de texto reutilizada como identidad semántica. Se conserva y se añade `semanticRevision` versionada en intentos nuevos y vínculos revisados; lecturas v1/v2/v3 compatibles. Datos sin evidencia semántica se conservan pero no se atribuyen a apartados vigentes. No se reescribe historial ni publicación.
+- **Archivos:** `question-semantic-revision.ts`, DTO/esquema/mapper de intentos, tracker/motor, `academy-section-evidence.ts`, agregador por apartado, editor y reglas locales.
+- **Estado:** CORREGIDO Y VERIFICADO.
+- **Pruebas / resultado:** Focalizadas de clave/contexto/fuente, v3 sin test ficticio, revisiones antiguas y propuestas pasan; global 989 pasadas/27 omitidas. Pendiente verificar reglas ampliadas en Emulator antes de cerrar este hallazgo.
+
+
+- **Cierre 2026-11-06:** reglas y sincronización real de campos nuevos verificadas en `demo-tai-auth` (2/2); dos repositorios aislados conservan revisión/contexto/actividad y no resucitan copias borradas. Pruebas UI/puras y `npm run check` pasan. Publicación editorial real vacía; no hubo despliegue.
+
+### MET-002 — Metadatos de reanudación podían reutilizarse tras una pausa en cola
+
+- **Categoría / funcionalidad:** Tiempo observado / idempotencia de intentos.
+- **Descripción / evidencia:** La prueba nueva 120 s visibles + 600 s ocultos + 180 s visibles devolvió 120 s: la segunda reanudación reutilizaba el ID/fecha de la primera aún en cola. Reproducción sin red en `tests/attempts/question-observation.test.js`.
+- **Severidad / prioridad:** P2; infracómputo de tiempo y rechazo de evento válido.
+- **Causa / solución:** Caché de reintento por intención sin considerar una intención intermedia. Ahora cambiar de intención invalida ese reuso; los reintentos de escrituras fallidas conservan su identidad. Los eventos duplicados ya guardados se aceptan como idempotentes. Se añade contexto de reloj para no restar marcas de recargas distintas.
+- **Archivos:** `create-attempt-tracker.ts`, `active-time.ts`, metadatos de eventos y pruebas de observación.
+- **Estado:** CORREGIDO Y VERIFICADO.
+- **Pruebas / resultado:** Regresión 300 s exactos, guardado idempotente y tracker previos pasan. `npm run check` pasa 989 pruebas/27 omitidas; no se ha desplegado.
+
+### MET-003 — Resumen temporal nuevo desbordaba la pantalla de 320 px
+
+- **Categoría / funcionalidad:** Responsive / Progreso.
+- **Descripción / evidencia:** E2E Chromium/WebKit detectaron 519 px y, tras contener tablas/selectores, 353 px de ancho en un viewport de 320. Las etiquetas «Sin respuestas» en tarjetas de dos columnas causaban el desbordamiento restante.
+- **Severidad / prioridad:** P2.
+- **Causa / solución:** Ancho intrínseco de controles y texto de estados vacíos en tarjetas estrechas. Selectores acotados, tablas desplazables accesibles y una columna de indicadores en móvil; sin cambiar CSS global ni ocultar resultados.
+- **Archivos:** `PeriodMetricsPanel.tsx`; recorridos `stats-charts.spec.ts` y `progress-metrics.spec.ts`.
+- **Estado:** CORREGIDO Y VERIFICADO.
+- **Pruebas / resultado:** Pendiente nueva ejecución responsive tras el ajuste de tarjetas. Evidencia de esta tarea en `evidence/progress-metrics-2026-11-06/`, sin sobrescribir las capturas previas de accesibilidad.
+
+- **Cierre MET-003, 2026-11-06:** 18/18 recorridos de estadísticas en Chromium/WebKit, incluyendo 320/768/1440 px, claro/oscuro, foco de teclado y zoom de diseño CSS al 200 %. Cuatro recorridos móviles adicionales pasan. Tablas equivalentes desplazables; no desbordamiento horizontal del documento. No certifica un lector de pantalla ni un dispositivo físico. Capturas en `evidence/progress-metrics-2026-11-06/`.

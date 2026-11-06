@@ -1,0 +1,1842 @@
+{
+  "schemaVersion": 1,
+  "topicId": "T4.04",
+  "baseCommit": "454a025ae26390dee0f057a4cfa9b6d5fc758fba",
+  "status": "CITATIONS_ACCEPTED_UNDER_USER_DELEGATION",
+  "scope": "Solo adición de citas para lectura; no concede nueva puntuabilidad ni altera pruebas editoriales previas.",
+  "file": {
+    "beforeSha256": "05b9236b2ce61bd3ce2221d8de8efeaf6b46b2e9635a97c68f2d254854bbb279",
+    "afterSha256": "c1bd7d662e35f008345baa84be307bb11d5ab7b560637fa6fde763874561913b"
+  },
+  "sample": {
+    "beforeSha256": "a96ead0ca65250ab1ef24cd4a25f2678d9fea41e800c179d8878346a8bab2001",
+    "afterSha256": "c5939788509e7900ecae83c3266e81e426c123a00610742d3134b934b1c33dfd"
+  },
+  "sourceRoot": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario",
+  "sources": {
+    "e-AT404-P1-31": {
+      "path": "T4.04 Administración de LAN/T4.04 Administración de LAN - Temario.pdf",
+      "sourceHash": "062ceb78c62611a4fc191ef019d6b923c902de774f9f0a29ee933c808c8944c0",
+      "physicalPage": 24,
+      "printedPage": 24,
+      "excerpt": "GESTIÓN DE GRUPOS LÍNEA DE COMANDOS net localgroup [grupo] [grupo usuario /ADD grupo usuario [/DELETE] Por defecto, muestra los grupos del sistema",
+      "label": "Pasaje del temario"
+    },
+    "e-AT404-P1-38": {
+      "path": "T4.04 Administración de LAN/T4.04 Administración de LAN - Temario.pdf",
+      "sourceHash": "062ceb78c62611a4fc191ef019d6b923c902de774f9f0a29ee933c808c8944c0",
+      "physicalPage": 37,
+      "printedPage": 37,
+      "excerpt": "El Protocolo Simple de Administración de Red o SNMP (Simple Network Management Protocol) es un protocolo de nivel de aplicación (capa 7 del modelo OSI) y sobre UDP (capa de transporte) que ha llegado a ser un estándar de facto en la industria de comunicación de datos para la administración de redes, ya que ha sido instalado por múltiples fabricantes de bridges, repetidores, routers, servidores y otros componentes de red es un protocolo de la capa de aplicación que facilita el intercambio de información de administración entre dispositivos de red. Los dispositivos que normalmente soportan SNMP incluyen routers, switches, servidores, estaciones de trabajo, impresoras... Permite a los administradores supervisar el funcionamiento de la red, buscar y resolver sus problemas, y planear su crecimiento.",
+      "label": "Pasaje del temario"
+    },
+    "e-AT404-P1-45": {
+      "path": "T4.04 Administración de LAN/T4.04 Administración de LAN - Temario.pdf",
+      "sourceHash": "062ceb78c62611a4fc191ef019d6b923c902de774f9f0a29ee933c808c8944c0",
+      "physicalPage": 43,
+      "printedPage": 43,
+      "excerpt": "SNMP v3 Especificado en RFCs 3410-3415, elimina el concepto de comunidad y se enfoca principalmente en la seguridad, proporcionando tres servicios importantes: autenticación, privacidad y control de acceso, los cuales trabajan en una arquitectura modular.",
+      "label": "SNMPv3 — seguridad"
+    },
+    "e-AT404-P1-60": {
+      "path": "T4.04 Administración de LAN/T4.04 Administración de LAN - Temario.pdf",
+      "sourceHash": "062ceb78c62611a4fc191ef019d6b923c902de774f9f0a29ee933c808c8944c0",
+      "physicalPage": 30,
+      "printedPage": 30,
+      "excerpt": "Conceptos clave: - MDM (Mobile Device Management): gestión de dispositivos móviles. Permiten gestionar de forma eficiente la diversidad y el despliegue masivo, dinámico y a gran escala de dispositivos móviles en una organización, con un enfoque principalmente orientado a incrementar su seguridad, y mejorando colateralmente la productividad del usuario final. - MAM (Mobile Application Management): gestión de las aplicaciones móviles. Gestiona una o varias aplicaciones específicas dentro de cada dispositivo móvil. - MCM (Mobile Content Management): gestión del contenido móvil. - EMM (Enterprise Mobility Management): gestión de la movilidad de la empresa. Pone el foco en la seguridad de la información corporativa y las aplicaciones, en lugar de la protección del dispositivo en sí mismo. - MTD (Mobile Threat Defense): defensa contra las amenazas móviles. Solución de seguridad para proteger tanto los dispositivos como el acceso a las redes corporativas. - UEM (Unified Endpoint Management): gestión unificada de terminales. Solución tecnológica que permite el control y gestión remota de todos los dispositivos (móviles, portátiles, equipos de escritorio, IoT, wearables…) de diferentes plataformas, los contenidos y las aplicaciones en una organización de una forma integrada.",
+      "label": "Pasaje del temario"
+    }
+  },
+  "questions": [
+    {
+      "id": "AT404-P1-31",
+      "before": {
+        "i": "AT404-P1-31",
+        "t": "T4.04",
+        "o": "A",
+        "q": "En Windows, ¿qué opción permite obtener los grupos del sistema?",
+        "a": [
+          "net groups",
+          "net group",
+          "net localgroups",
+          "net localgroup"
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT404-P1-31",
+        "t": "T4.04",
+        "o": "A",
+        "q": "En Windows, ¿qué opción permite obtener los grupos del sistema?",
+        "a": [
+          "net groups",
+          "net group",
+          "net localgroups",
+          "net localgroup"
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "T4.04 Administración de LAN - Temario.pdf — Pasaje del temario\n\nTemario, p. 24 (PDF p. 24)\n\nGESTIÓN DE GRUPOS LÍNEA DE COMANDOS net localgroup [grupo] [grupo usuario /ADD grupo usuario [/DELETE] Por defecto, muestra los grupos del sistema\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "bac491447aab1ce89943bf7d92e490849a65973b6be5f56e69f055bb65ece9ea",
+      "afterSha256": "f7485578786a90ba8eb1a2b954ccf08fbe910c49c40821d7af94920b7e9e559b",
+      "evidenceKeys": [
+        "e-AT404-P1-31"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT404-P1-38",
+      "before": {
+        "i": "AT404-P1-38",
+        "t": "T4.04",
+        "o": "A",
+        "q": "Según el modelo OSI, el protocolo SNMP es un protocolo:",
+        "a": [
+          "De la capa de red.",
+          "De la capa de transporte.",
+          "De la capa de sesión.",
+          "De la capa de aplicación."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT404-P1-38",
+        "t": "T4.04",
+        "o": "A",
+        "q": "Según el modelo OSI, el protocolo SNMP es un protocolo:",
+        "a": [
+          "De la capa de red.",
+          "De la capa de transporte.",
+          "De la capa de sesión.",
+          "De la capa de aplicación."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T4.04 Administración de LAN - Temario.pdf — Pasaje del temario\n\nTemario, p. 37 (PDF p. 37)\n\nEl Protocolo Simple de Administración de Red o SNMP (Simple Network Management Protocol) es un protocolo de nivel de aplicación (capa 7 del modelo OSI) y sobre UDP (capa de transporte) que ha llegado a ser un estándar de facto en la industria de comunicación de datos para la administración de redes, ya que ha sido instalado por múltiples fabricantes de bridges, repetidores, routers, servidores y otros componentes de red es un protocolo de la capa de aplicación que facilita el intercambio de información de administración entre dispositivos de red. Los dispositivos que normalmente soportan SNMP incluyen routers, switches, servidores, estaciones de trabajo, impresoras... Permite a los administradores supervisar el funcionamiento de la red, buscar y resolver sus problemas, y planear su crecimiento.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "663ba12be99800ce3d5f9ace05d3e12eb505b459cfd5d78dd0bb6a845d9267e6",
+      "afterSha256": "ae223090043f8c349ba55363c45ee77803f3db53370f26b2006c2f17f39110a4",
+      "evidenceKeys": [
+        "e-AT404-P1-38"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT404-P1-45",
+      "before": {
+        "i": "AT404-P1-45",
+        "t": "T4.04",
+        "o": "A",
+        "q": "¿Cuál es la mejora principal que introduce SNMPv3?",
+        "a": [
+          "Nuevas operaciones para comunicar gestores.",
+          "La gestión distribuida.",
+          "La seguridad.",
+          "Permitir la recuperación de grandes bloques de información."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT404-P1-45",
+        "t": "T4.04",
+        "o": "A",
+        "q": "¿Cuál es la mejora principal que introduce SNMPv3?",
+        "a": [
+          "Nuevas operaciones para comunicar gestores.",
+          "La gestión distribuida.",
+          "La seguridad.",
+          "Permitir la recuperación de grandes bloques de información."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "T4.04 Administración de LAN - Temario.pdf — SNMPv3 — seguridad\n\nTemario, p. 43 (PDF p. 43)\n\nSNMP v3 Especificado en RFCs 3410-3415, elimina el concepto de comunidad y se enfoca principalmente en la seguridad, proporcionando tres servicios importantes: autenticación, privacidad y control de acceso, los cuales trabajan en una arquitectura modular.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "d5e70dd41fe45febca981eb68c54d8f35bac8dc4dcb16ea93c86926f823395fc",
+      "afterSha256": "b1f34c6136ddc7cdcd8b231fe16b73feb2aeba37ad628eff675750e5438422b2",
+      "evidenceKeys": [
+        "e-AT404-P1-45"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT404-P1-60",
+      "before": {
+        "i": "AT404-P1-60",
+        "t": "T4.04",
+        "o": "A",
+        "q": "En el marco de la gestión de dispositivos corporativos, las siglas MAM corresponden a:",
+        "a": [
+          "Mobile Access Management.",
+          "Main Application Management.",
+          "Mobile Application Management.",
+          "Mobile Application Migration."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT404-P1-60",
+        "t": "T4.04",
+        "o": "A",
+        "q": "En el marco de la gestión de dispositivos corporativos, las siglas MAM corresponden a:",
+        "a": [
+          "Mobile Access Management.",
+          "Main Application Management.",
+          "Mobile Application Management.",
+          "Mobile Application Migration."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T4.04 Administración de LAN - Temario.pdf — Pasaje del temario\n\nTemario, p. 30 (PDF p. 30)\n\nConceptos clave: - MDM (Mobile Device Management): gestión de dispositivos móviles. Permiten gestionar de forma eficiente la diversidad y el despliegue masivo, dinámico y a gran escala de dispositivos móviles en una organización, con un enfoque principalmente orientado a incrementar su seguridad, y mejorando colateralmente la productividad del usuario final. - MAM (Mobile Application Management): gestión de las aplicaciones móviles. Gestiona una o varias aplicaciones específicas dentro de cada dispositivo móvil. - MCM (Mobile Content Management): gestión del contenido móvil. - EMM (Enterprise Mobility Management): gestión de la movilidad de la empresa. Pone el foco en la seguridad de la información corporativa y las aplicaciones, en lugar de la protección del dispositivo en sí mismo. - MTD (Mobile Threat Defense): defensa contra las amenazas móviles. Solución de seguridad para proteger tanto los dispositivos como el acceso a las redes corporativas. - UEM (Unified Endpoint Management): gestión unificada de terminales. Solución tecnológica que permite el control y gestión remota de todos los dispositivos (móviles, portátiles, equipos de escritorio, IoT, wearables…) de diferentes plataformas, los contenidos y las aplicaciones en una organización de una forma integrada.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "840dcfb79e64a7122253c280639ee8c5b397679def4a8b792c0640a4547e9d55",
+      "afterSha256": "b157cc97e064ad6ea2add4da9ff40408db0cfb91a5483e947e0d0e33ca82fa75",
+      "evidenceKeys": [
+        "e-AT404-P1-60"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    }
+  ],
+  "pending": [
+    {
+      "question": {
+        "i": "TAIL2022-P1-67",
+        "t": "T4.04",
+        "o": "O",
+        "q": "De los siguientes protocolos, ¿cuál se utiliza para administrar dispositivos de una red?",
+        "a": [
+          "SMTP",
+          "DNS",
+          "FTP",
+          "CMIP"
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          13
+        ],
+        "d": 2,
+        "n": "CMIP frente a protocolos de otra función.",
+        "y": "Ingreso libre OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAIL2022-P1-68",
+        "t": "T4.04",
+        "o": "O",
+        "q": "¿Cuál es el comando usado por el administrador SNMP que se utiliza para recuperar datos voluminosos de una tabla MIB grande?",
+        "a": [
+          "GET",
+          "GET BULK",
+          "GET NEXT",
+          "GET RESPONSE"
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Familia de comandos GET de SNMP.",
+        "y": "Ingreso libre OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2019-P1-65",
+        "t": "T4.04",
+        "o": "O",
+        "q": "¿Cuál es la última versión del protocolo de administración de red SNMP?",
+        "a": [
+          "SNMP v2",
+          "SNMP v3",
+          "SNMP v4",
+          "SNMP v5"
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          2
+        ],
+        "d": 1,
+        "n": "Versiones de SNMP (v4/v5 no existen).",
+        "y": "Ingreso libre OEP 2019",
+        "w": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025A-P1-67",
+        "t": "T4.04",
+        "o": "O",
+        "q": "Dentro de la administración de seguridad en switches, ¿en qué consiste una dirección MAC de tipo \"sticky\"?",
+        "a": [
+          "Es una dirección aprendida dinámicamente que se convierte en parte de la configuración en ejecución y puede guardarse de forma permanente.",
+          "Es una dirección que se borra automáticamente de la tabla de direcciones tras un reinicio del dispositivo.",
+          "Es una dirección a través de la cual, si se recibe una BPDU cualquiera, el puerto se apaga automáticamente.",
+          "Es una dirección que permite al puerto del switch entrar en modo \"forwarding\" ignorando el protocolo Spanning Tree."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 3,
+        "n": "MAC sticky frente a definiciones de otras funciones del switch.",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025X-P1-71",
+        "t": "T4.04",
+        "o": "O",
+        "q": "La gestión de una red de comunicaciones, según el modelo OSI, puede descomponerse en cinco áreas funcionales conocidas por el acrónimo FCAPS. Señale cuál NO es una de ellas:",
+        "a": [
+          "Gestión de Fallos (Fault).",
+          "Gestión del Almacenamiento (Storage).",
+          "Gestión de la Configuración (Configuration).",
+          "Gestión del Rendimiento (Performance)."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [
+          9
+        ],
+        "d": 2,
+        "n": "FCAPS: \"Storage\" sustituye a Accounting.",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2019-P1-40",
+        "t": "T4.04",
+        "o": "O",
+        "q": "Indique cuál de los siguientes es un protocolo orientado a la gestión de los dispositivos de una red:",
+        "a": [
+          "SMTP",
+          "SNMP",
+          "HTTP",
+          "IGMPv3"
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "SNMP frente a SMTP/HTTP/IGMP.",
+        "y": "Promoción interna OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2018-P1-81",
+        "t": "T4.04",
+        "o": "O",
+        "q": "Dentro del protocolo SNMP v3, ¿cómo se denomina a los mensajes no solicitados por el administrador SNMP que remiten los agentes cuando ocurre algún evento inesperado?",
+        "a": [
+          "SetNextRequest",
+          "InformationMessage",
+          "Trap",
+          "SetResponse"
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          9
+        ],
+        "d": 2,
+        "n": "Trap frente a mensajes inventados.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT404-P1-02",
+        "t": "T4.04",
+        "o": "A",
+        "q": "SNMP es el protocolo de gestión de redes más usado actualmente, principalmente en Internet. ¿Qué relación tiene con el protocolo UDP?",
+        "a": [
+          "SNMP trabaja sobre UDP, SNMP en la capa de aplicación y UDP en la de transporte, ambas en la pila TCP/IP.",
+          "SNMP es un protocolo en desuso, UDP aparece como el nuevo protocolo de gestión de redes del conjunto TCP/IP.",
+          "UDP necesita de SNMP para poder realizar su trabajo. UDP está en la pila TCP/IP por encima de SNMP.",
+          "Nada. UDP y SNMP son ambos del conjunto de protocolos TCP/IP pero tiene propósitos distintos y no interrelacionan entre sí en ningún momento."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "w": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT404-P1-03",
+        "t": "T4.04",
+        "o": "A",
+        "q": "Las siglas SNMP identifican el denominado:",
+        "a": [
+          "Protocolo de información común de gestión.",
+          "Interfaz de gestión de escritorio.",
+          "Protocolo simple de gestión de red.",
+          "Software de representación gráfica."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT404-P1-04",
+        "t": "T4.04",
+        "o": "A",
+        "q": "¿Qué comando muestra las conexiones y estadísticas de red?",
+        "a": [
+          "mtr",
+          "nslookup",
+          "dig",
+          "netstat"
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT404-P1-05",
+        "t": "T4.04",
+        "o": "A",
+        "q": "Indique la instrucción que permite conectarnos a la máquina remota server con el usuario user al puerto 26 y ejecutar el comando ls -l:",
+        "a": [
+          "ssh user:26@servidor 'ls -l'",
+          "ssh -p 26 user@servidor 'ls -l'",
+          "ssh user@servidor:26 'ls -l'",
+          "ssh user:servidor -p 26 'ls -l'"
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT404-P1-06",
+        "t": "T4.04",
+        "o": "A",
+        "q": "¿Qué comando nos permite obtener la fecha y hora del último reinicio del sistema?",
+        "a": [
+          "who -a",
+          "who -b",
+          "who -c",
+          "who -d"
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT404-P1-07",
+        "t": "T4.04",
+        "o": "A",
+        "q": "¿Qué comando nos permite obtener los nombres de los usuarios conectados?",
+        "a": [
+          "who -x",
+          "who -t",
+          "who -u",
+          "who -v"
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT404-P1-08",
+        "t": "T4.04",
+        "o": "A",
+        "q": "¿Qué comando nos permite obtener información de usuarios conectados y sus procesos en ejecución?",
+        "a": [
+          "who",
+          "xystat",
+          "w",
+          "x"
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT404-P1-09",
+        "t": "T4.04",
+        "o": "A",
+        "q": "¿Qué comando nos permite obtener el nombre de dominio a partir de la dirección IP?",
+        "a": [
+          "dig -r",
+          "dig -d",
+          "dig -n",
+          "dig -x"
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT404-P1-10",
+        "t": "T4.04",
+        "o": "A",
+        "q": "En un sistema Windows, en cmd, si queremos renovar las direcciones IP ejecutaremos el comando:",
+        "a": [
+          "ipconfig /new",
+          "ipconfig /refresh",
+          "ipconfig /renew",
+          "ipconfig /update"
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT404-P1-11",
+        "t": "T4.04",
+        "o": "A",
+        "q": "En un sistema Windows, en cmd, si queremos liberar las direcciones IP ejecutaremos el comando:",
+        "a": [
+          "ipconfig /release",
+          "ipconfig /delete",
+          "ipconfig /free",
+          "ipconfig /purge"
+        ],
+        "c": 0,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT404-P1-12",
+        "t": "T4.04",
+        "o": "A",
+        "q": "En un sistema Windows, en cmd, si queremos vaciar la caché DNS ejecutaremos el comando:",
+        "a": [
+          "ipconfig /purgedns",
+          "ipconfig /deldns",
+          "ipconfig /flushdns",
+          "ipconfig /resetdns"
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT404-P1-13",
+        "t": "T4.04",
+        "o": "A",
+        "q": "En un sistema Windows, en cmd, si queremos terminar con un proceso que corre en una máquina remota ejecutaremos el comando:",
+        "a": [
+          "remotekill",
+          "tskill",
+          "pskill",
+          "prockill"
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT404-P1-14",
+        "t": "T4.04",
+        "o": "A",
+        "q": "En un sistema Windows, en cmd, si queremos mostrar las direcciones MAC de un equipo remoto ejecutaremos el comando:",
+        "a": [
+          "getmac /S",
+          "getmac /R",
+          "getmac /E",
+          "getmac /X"
+        ],
+        "c": 0,
+        "k": "K",
+        "x": [
+          7,
+          9
+        ],
+        "d": 2,
+        "n": "Parámetros de getmac."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT404-P1-15",
+        "t": "T4.04",
+        "o": "A",
+        "q": "En un sistema Linux, si deseamos enviar con el comando ping 7 paquetes a la máquina DESTINO, ¿cuál es la sentencia correcta?",
+        "a": [
+          "ping -t 7 DESTINO",
+          "ping -n 7 DESTINO",
+          "ping -p 7 DESTINO",
+          "ping -c 7 DESTINO"
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT404-P1-16",
+        "t": "T4.04",
+        "o": "A",
+        "q": "En Windows 11, ¿qué comando nos permite obtener estadísticas y conexiones en máquinas remotas?",
+        "a": [
+          "netstat",
+          "nbtstat",
+          "remstat",
+          "restat"
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT404-P1-17",
+        "t": "T4.04",
+        "o": "A",
+        "q": "En Windows 11, si queremos conectar la sesión actual del usuario local con una sesión en una máquina remota, utilizaremos el comando:",
+        "a": [
+          "uscon",
+          "rscon",
+          "tscon",
+          "urcon"
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "w": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT404-P1-18",
+        "t": "T4.04",
+        "o": "A",
+        "q": "En un sistema Linux, ¿qué fichero contiene las contraseñas encriptadas de los usuarios?",
+        "a": [
+          "/etc/passwd",
+          "/etc/shadow",
+          "/etc/cipher",
+          "/etc/password"
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "/etc/shadow."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT404-P1-19",
+        "t": "T4.04",
+        "o": "A",
+        "q": "En un sistema Linux, ¿cuál de los siguientes campos NO está presente en el fichero /etc/passwd?",
+        "a": [
+          "uid",
+          "password",
+          "gids",
+          "shell"
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT404-P1-20",
+        "t": "T4.04",
+        "o": "A",
+        "q": "El campo inactive del fichero /etc/passwd de un sistema Linux indica:",
+        "a": [
+          "El número de días de validez de la contraseña a partir del cual se inactivará la cuenta de usuario.",
+          "El número de días en que se deshabilitará la contraseña una vez caduque la contraseña.",
+          "Número de días consecutivos de inactividad del usuario que implicará la inactivación de su cuenta.",
+          "El campo inactive no está presente en ese fichero."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT404-P1-21",
+        "t": "T4.04",
+        "o": "A",
+        "q": "Dada la siguiente línea del fichero /etc/shadow señale la respuesta correcta: prueba:$7$.5E$SWlF.:12825:0:90:5:30:13096:",
+        "a": [
+          "El valor 30 indica el número de días en que se deshabilitará la cuenta prueba una vez caduque la contraseña.",
+          "El valor 5 hace referencia al número mínimo de días que tiene que transcurrir para poder cambiar la contraseña.",
+          "El valor 12825 especifica el número de días que la cuenta prueba estará activada, contados desde el 01/01/1970",
+          "El valor 90 establece el número de días antes de que caduque la contraseña para avisarle al usuario de la caducidad de la misma."
+        ],
+        "c": 0,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT404-P1-22",
+        "t": "T4.04",
+        "o": "A",
+        "q": "En Linux queremos añadir el usuario S, teniendo en cuenta que va a pertenecer al grupo primario TIC, a los grupos secundarios DESAR y SISTEMAS y queremos forzar para que se cree el directorio de usuario si previamente no existe. Entonces, ejecutaremos el comando:",
+        "a": [
+          "useradd -c -g DESAR,SISTEMAS -G TIC S",
+          "useradd -t -g DESAR,SISTEMAS -G TIC S",
+          "useradd -m -G DESAR,SISTEMAS -g TIC S",
+          "useradd -d -G DESAR,SISTEMAS -g TIC S"
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT404-P1-24",
+        "t": "T4.04",
+        "o": "A",
+        "q": "En Linux, dado el usuario USER, queremos bloquearle la cuenta. Para ello, ejecutaremos:",
+        "a": [
+          "usermod -l USER",
+          "usermod -L USER",
+          "moduser -b USER",
+          "moduser -B USER"
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT404-P1-25",
+        "t": "T4.04",
+        "o": "A",
+        "q": "¿Qué comando en Linux permite modificar la caducidad de la contraseña de un usuario?",
+        "a": [
+          "chpaswd",
+          "chage",
+          "chmaxpass",
+          "chfn"
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT404-P1-26",
+        "t": "T4.04",
+        "o": "A",
+        "q": "¿Qué comando en Linux permite verificar la integridad de la información almacenada en /etc/shadow?",
+        "a": [
+          "chsh",
+          "shck",
+          "pwck",
+          "ckpa"
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT404-P1-27",
+        "t": "T4.04",
+        "o": "A",
+        "q": "En Linux dado el grupo TIC, se desea modificarlo de tal forma que su nuevo gid sea 2048 y el nuevo nombre personalTIC, ¿qué sentencia realiza la acción deseada?",
+        "a": [
+          "modgroup -G 2048 -n TIC personalTIC",
+          "groupmod -G 2048 -n TIC personalTIC",
+          "modgroup -g 2048 -n personalTIC TIC",
+          "groupmod -g 2048 -n personalTIC TIC"
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT404-P1-28",
+        "t": "T4.04",
+        "o": "A",
+        "q": "En Linux, ¿cómo se puede saber los grupos a los que pertenece un usuario?",
+        "a": [
+          "Exclusivamente accediendo al fichero /etc/groups.",
+          "Con el comando groups pasándole como argumento el nombre del usuario.",
+          "Exclusivamente accediendo al fichero /etc/group.",
+          "Con el comando group pasándole como argumento el nombre del usuario."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT404-P1-29",
+        "t": "T4.04",
+        "o": "A",
+        "q": "¿Qué comando en Linux permite verificar la integridad de la información almacenada en /etc/gshadow?",
+        "a": [
+          "grpck",
+          "grck",
+          "grch",
+          "grpi"
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT404-P1-30",
+        "t": "T4.04",
+        "o": "A",
+        "q": "En Windows, ¿qué opción nos permite cambiar la contraseña del usuario GENERICO?",
+        "a": [
+          "net user GENERICO passw",
+          "net /user GENERICO /password",
+          "net user GENERICO *",
+          "net -user GENERICO pass *"
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT404-P1-32",
+        "t": "T4.04",
+        "o": "A",
+        "q": "En PowerShell, es necesario listar los miembros del grupo SISTEMAS. Para ello, ejecutaremos:",
+        "a": [
+          "Get-LocalGroup -name SISTEMAS",
+          "Get-GroupMember -name SISTEMAS",
+          "Get-LocalGroupMembers SISTEMAS",
+          "Get-LocalGroupMember SISTEMAS"
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT404-P1-33",
+        "t": "T4.04",
+        "o": "A",
+        "q": "En PowerShell, es necesario añadir el usuario Java al grupo PRE, ¿qué opción es correcta?",
+        "a": [
+          "Add-LocalGroupMember -group PRE -member Java",
+          "LocalGroupMember -add -group PRE -user Java",
+          "AddLocalGroupMembers -group PRE -member Java",
+          "LocalGroupMembers -add -group PRE -name Java"
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT404-P1-34",
+        "t": "T4.04",
+        "o": "A",
+        "q": "¿Cuál de las siguientes NO es una solución MDM?",
+        "a": [
+          "Excitor.",
+          "LANDesk.",
+          "RhoGallery.",
+          "Cacti."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT404-P1-35",
+        "t": "T4.04",
+        "o": "A",
+        "q": "Indique la respuesta INCORRECTA sobre soluciones MDM:",
+        "a": [
+          "Mantiene una base de datos centralizada que contiene el estado de situación de cada uno de los dispositivos móviles del ámbito de dicha solución MDM.",
+          "Permite monitorizar dispositivos móviles y no móviles.",
+          "OTA es el modelo de comunicación entre el servidor centralizado y cada dispositivo móvil.",
+          "Permite la gestión de las aplicaciones instaladas en los dispositivos móviles."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT404-P1-36",
+        "t": "T4.04",
+        "o": "A",
+        "q": "En relación con la gestión de dispositivos móviles, ¿qué es MAM?",
+        "a": [
+          "Permite gestionar y controlar los dispositivos móviles.",
+          "Permite gestionar un conjunto de aplicaciones específicas dentro de cada dispositivo móvil.",
+          "Permite la monitorización y geolocalización de los dispositivos móviles.",
+          "Ninguna de las respuestas anteriores es correcta."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT404-P1-37",
+        "t": "T4.04",
+        "o": "A",
+        "q": "Según el modelo de gestión de red OSI, ¿cuáles son las áreas que define?",
+        "a": [
+          "Fallos, Configuración, Contabilidad, Rendimiento y Seguridad.",
+          "Monitorización, Configuración, Inventario y Seguridad.",
+          "Fallos, Inventario, Rendimiento y Seguridad.",
+          "Monitorización, Contabilidad, Rendimiento y Seguridad."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT404-P1-39",
+        "t": "T4.04",
+        "o": "A",
+        "q": "Indique cuál de los siguientes números de puerto TCP es utilizado habitualmente por el protocolo SSH:",
+        "a": [
+          "22.",
+          "23.",
+          "24.",
+          "25."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT404-P1-40",
+        "t": "T4.04",
+        "o": "A",
+        "q": "Indique cuál de los siguientes términos NO se refiere a una herramienta que permite la monitorización o gestión de servicios e infraestructuras TIC:",
+        "a": [
+          "Zabbix.",
+          "Coimbra.",
+          "Nagios.",
+          "Pandora FMS."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT404-P1-41",
+        "t": "T4.04",
+        "o": "A",
+        "q": "¿Qué puerto se utiliza en SNMP para una comunicación síncrona?",
+        "a": [
+          "160.",
+          "161.",
+          "162.",
+          "163."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT404-P1-42",
+        "t": "T4.04",
+        "o": "A",
+        "q": "Indique la respuesta INCORRECTA sobre la estructura de la información de gestión en la gestión de redes según el modelo TCP/IP:",
+        "a": [
+          "Define la estructura de la MIB.",
+          "Utiliza como notación un subconjunto de ASN.1.",
+          "Sus características son sencillez y flexibilidad.",
+          "Para obtener la información de gestión se usa el método OIDs."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT404-P1-43",
+        "t": "T4.04",
+        "o": "A",
+        "q": "¿Qué rama de la MIB contiene el grupo icmp?",
+        "a": [
+          "experimental.",
+          "private.",
+          "enterprises.",
+          "MIB-II."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT404-P1-44",
+        "t": "T4.04",
+        "o": "A",
+        "q": "¿Qué operación pertenece a SNMPv2?",
+        "a": [
+          "GetNextRequest.",
+          "GetResponse.",
+          "InformRequest.",
+          "Trap."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT404-P1-46",
+        "t": "T4.04",
+        "o": "A",
+        "q": "¿Qué operación de SNMP permite al agente notificar un evento importante no solicitado?",
+        "a": [
+          "GetNextRequest.",
+          "GetResponse.",
+          "InformRequest.",
+          "Trap."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT404-P1-47",
+        "t": "T4.04",
+        "o": "A",
+        "q": "¿Qué protocolo NO está relacionado con la gestión de redes?",
+        "a": [
+          "CMOU.",
+          "CMIP.",
+          "CMOT.",
+          "SNMP."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT404-P1-48",
+        "t": "T4.04",
+        "o": "A",
+        "q": "Para gestionar diferentes segmentos de red utilizamos:",
+        "a": [
+          "RMAN.",
+          "RMON.",
+          "TMAN.",
+          "TMON."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT404-P1-49",
+        "t": "T4.04",
+        "o": "A",
+        "q": "¿Qué variante de SNMPv2 utiliza el concepto de usuario como mejora en la seguridad?",
+        "a": [
+          "SNMPsec.",
+          "SNMPv2u.",
+          "SNMPv2c.",
+          "SNMPv2*."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT404-P1-50",
+        "t": "T4.04",
+        "o": "A",
+        "q": "¿Qué mecanismo de seguridad incorpora SNMPv3?",
+        "a": [
+          "ASM.",
+          "UAM.",
+          "USM.",
+          "UCM."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT404-P1-52",
+        "t": "T4.04",
+        "o": "A",
+        "q": "En los PCs de usuario con Windows 11, existe un usuario local llamado LOCAL utilizado para labores de mantenimiento, ¿qué comando debe ejecutar para obtener información detallada sobre este usuario?",
+        "a": [
+          "net user LOCAL",
+          "netuser LOCAL",
+          "info user LOCAL",
+          "infouser LOCAL"
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT404-P1-53",
+        "t": "T4.04",
+        "o": "A",
+        "q": "De los siguientes protocolos, ¿cuál se utiliza para administrar dispositivos de una red?",
+        "a": [
+          "SMNP.",
+          "DNS.",
+          "NTP.",
+          "CMIP."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT404-P1-55",
+        "t": "T4.04",
+        "o": "A",
+        "q": "¿Qué comando muestra información del conjunto de directivas de grupo?",
+        "a": [
+          "gpshow.",
+          "gpprint.",
+          "gpresult.",
+          "gplist."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT404-P1-57",
+        "t": "T4.04",
+        "o": "A",
+        "q": "En un sistema con Windows 11, ¿qué comando permite terminar un proceso en una máquina remota?",
+        "a": [
+          "killps.",
+          "remoteps.",
+          "tsps.",
+          "tskill."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT404-P1-58",
+        "t": "T4.04",
+        "o": "A",
+        "q": "¿Cuál de las siguientes herramientas NO está pensada para la monitorización de infraestructuras IT?",
+        "a": [
+          "Checkmk.",
+          "Zabbix.",
+          "Tez.",
+          "Nagios."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [
+          13
+        ],
+        "d": 2,
+        "n": "Herramientas de monitorización: Tez (Hadoop)."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT404-P1-59",
+        "t": "T4.04",
+        "o": "A",
+        "q": "Identifique cuál de las siguientes NO es una herramienta de monitorización de redes:",
+        "a": [
+          "Nagios.",
+          "MRTG.",
+          "Sflow.",
+          "GnuPG."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS05G-P1-59",
+        "t": "T4.04",
+        "o": "A",
+        "q": "En un sistema Linux queremos asignar el grupo tic al fichero oposiciones, ¿qué sentencia utilizaremos?",
+        "a": [
+          "chown tic oposiciones",
+          "chgrp tic oposiciones",
+          "chown oposiciones tic",
+          "chgrp oposiciones tic"
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-26",
+        "t": "T4.04",
+        "o": "A",
+        "q": "Sobre el sistema operativo LINUX, en la mayoría de las distribuciones, señale el resultado de ejecutar con el usuario root el siguiente comando: # cat /etc/passwd /etc/group > users-and-groups.txt",
+        "a": [
+          "Concatena /etc/passwd con /etc/group y envía el resultado al archivo users- and-groups.txt eliminando su contenido anterior.",
+          "Concatena /etc/passwd con /etc/group y envía el resultado al archivo users-and-groups.txt concatenándolo con su contenido anterior.",
+          "Compara /etc/passwd con /etc/group y almacena las diferencias en users-and-groups.txt.",
+          "Compara /etc/passwd con /etc/group y elimina las diferencias, almacenando el resultado en users-and-groups.txt."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10-P1-89",
+        "t": "T4.04",
+        "o": "A",
+        "q": "En relación al protocolo SNMP (Simple Network Management Protocol), señale la respuesta INCORRECTA:",
+        "a": [
+          "Los puertos estándar utilizados son el 161 y 162.",
+          "La información de gestión comunicada se representa mediante un subconjunto del lenguaje ASN.1.",
+          "Las especificaciones del protocolo fueron definidas por la ISO (estándar ISO 9325).",
+          "Es un protocolo de la capa de aplicación de la pila de protocolos TCP/IP."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10-P1-91",
+        "t": "T4.04",
+        "o": "A",
+        "q": "¿Qué funcionalidad dentro de un sistema empresarial de gestión de movilidad permite habilitar contenedores lógicos cifrados y aislados del entorno de usuario dentro de su dispositivo móvil, de manera que un usuario pueda acceder de forma segura, controlada y auditada a datos y aplicaciones corporativas?",
+        "a": [
+          "Gestión de navegación móvil (MNM).",
+          "Gestión de aplicaciones móviles (MAM).",
+          "Gestión de contenido móvil (MCM).",
+          "Prevención de amenazas en movilidad (MTP)."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10-P1-100",
+        "t": "T4.04",
+        "o": "A",
+        "q": "¿Cuál es el mensaje del protocolo SNMP usado para enviar alertas de forma asíncrona desde un dispositivo o agente?",
+        "a": [
+          "ERROR.",
+          "GET REQUEST.",
+          "GET BULK.",
+          "TRAP."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10B-P1-91",
+        "t": "T4.04",
+        "o": "A",
+        "q": "Sobre SNMP, indique la respuesta INCORRECTA:",
+        "a": [
+          "Todo sistema gestionado por SNMP debe contar con al menos un sistema administrador de red.",
+          "El software de administración que reside en cada dispositivo administrado recibe el nombre de agente.",
+          "La MIB contiene información jerárquica, estructura en forma de árbol, de los parámetros gestionables en cada dispositivo.",
+          "SNMPv2 mejora SNMP al incorporar servicios de autenticación y privacidad basados en usuario, y servicios de control de acceso basado en vistas."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10B-P1-92",
+        "t": "T4.04",
+        "o": "A",
+        "q": "El protocolo de gestión de red SNMP:",
+        "a": [
+          "Sólo permite monitorizar dispositivos (leer estado), pero no gestionarlos (modificar su estado).",
+          "Un TRAP SNMP es una comunicación asíncrona por la que un agente SNMP notifica a la estación de gestión de un evento significativo.",
+          "Incorpora en su versión 1 el encriptado de la información, para proteger la información de gestión que es crítica.",
+          "Utiliza únicamente como protocolo de transporte TCP."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10B-P1-99",
+        "t": "T4.04",
+        "o": "A",
+        "q": "¿Qué funcionalidad dentro de un sistema empresarial de gestión de movilidad permite gestionar una o varias aplicaciones específicas dentro de cada dispositivo móvil?",
+        "a": [
+          "Gestión de información móvil (MIM).",
+          "Gestión de aplicaciones móviles (MAM).",
+          "Gestión de contenido móvil (MCM).",
+          "Prevención de amenazas en movilidad (MTP)."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10B-P1-100",
+        "t": "T4.04",
+        "o": "A",
+        "q": "En relación con la gestión de dispositivos móviles de una organización, un modelo de comunicación entre el servidor centralizado y cada uno de los dispositivos móviles que permite la configuración remota de los mismos se denomina:",
+        "a": [
+          "AOT.",
+          "TOA.",
+          "OTA.",
+          "ATO."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-71",
+        "t": "T4.04",
+        "o": "A",
+        "q": "El comando Unix “passwd –f” aplicado sobre el nombre de una cuenta de usuario preexistente “usuario”:",
+        "a": [
+          "Elimina del sistema la cuenta “usuario” y los logs asociados a ella.",
+          "Fuerza al usuario a cambiar la contraseña en el próximo acceso mediante la expiración de la contraseña.",
+          "Bloquea la cuenta “usuario”.",
+          "Modifica la cuenta “usuario” retirando la información de la misma en el fichero /etc/shadow."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-72",
+        "t": "T4.04",
+        "o": "A",
+        "q": "¿Qué fichero en Linux guarda las contraseñas de los usuarios cifradas?",
+        "a": [
+          "/etc/passwords.",
+          "/etc/shadow.",
+          "/etc/shadows.",
+          "/etc/passwd."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11B-P1-89",
+        "t": "T4.04",
+        "o": "A",
+        "q": "La operación del protocolo SNMP que permite enviar mensajes trap entre gestores se denomina:",
+        "a": [
+          "Report.",
+          "Response.",
+          "Ack.",
+          "InformRequest."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-72",
+        "t": "T4.04",
+        "o": "A",
+        "q": "Indique cuál de las siguientes afirmaciones es FALSA sobre un gestor de dispositivos móviles (MDM):",
+        "a": [
+          "El MDM permite el bloqueo y borrado de los dispositivos gestionados de manera remota.",
+          "El gestor posibilita la geolocalización de un dispositivo gestionado en el MDM.",
+          "Un gestor de dispositivos MDM permite configurar en la inscripción de los dispositivos la configuración del correo corporativo y la WiFi empresarial, entre otras cosas.",
+          "El MDM no es capaz de restringir el uso de datos en itinerancia."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-86",
+        "t": "T4.04",
+        "o": "A",
+        "q": "Respecto a SNMP (Simple Network Management Protocol), ¿cuál de las siguientes respuestas es correcta?",
+        "a": [
+          "Su última versión es SNMPv2.",
+          "Los “routers” soportan ese protocolo pero los “switches” no.",
+          "Los “traps” son notificaciones asíncronas de “agents” a “managers”.",
+          "Es un protocolo de capa de red según la pila OSI."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1,
+        "w": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12B-P1-66",
+        "t": "T4.04",
+        "o": "A",
+        "q": "Señale en qué versión del protocolo de gestión de redes SNMP se añade por primera vez la instrucción GetBulk:",
+        "a": [
+          "SNMP v0.",
+          "SNMP v1.",
+          "SNMP v2.",
+          "SNMP v3."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          2
+        ],
+        "d": 2,
+        "n": "Versión de SNMP que introduce GetBulk."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12B-P1-R-05",
+        "t": "T4.04",
+        "o": "A",
+        "q": "¿Cuál de las siguientes es una herramienta de monitorización de red?",
+        "a": [
+          "Xen.",
+          "OpenView.",
+          "OpenVZ.",
+          "VirtualBox."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          13
+        ],
+        "d": 1,
+        "n": "OpenView frente a virtualizadores."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    }
+  ],
+  "counts": {
+    "total": 250,
+    "alreadyHadCitation": 172,
+    "added": 4,
+    "pending": 74,
+    "withCitation": 176
+  }
+}

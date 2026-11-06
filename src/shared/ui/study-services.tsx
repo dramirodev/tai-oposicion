@@ -178,6 +178,8 @@ export interface ReadingWordResult { hit: number; missed: number; extra: number;
 export interface ReadingOutcome { correct: boolean; meaningCorrect: boolean; marked: [number, number] }
 export interface ReadingProgress { items: readonly ReadingPrompt[]; index: number; step: 0 | 1 | 2; meaningChoice: 0 | 1 | null; meaningCorrect: boolean | null; selectedWords: readonly number[]; wordResult: ReadingWordResult | null; selectedAnswer: number | null; answerCorrect: boolean | null; startedAt: number; outcomes: readonly ReadingOutcome[]; complete: boolean }
 export interface ReadingServices {
+  setObservedVisible?(visible: boolean): void;
+  checkpointObservation?(): void;
   getProgress(): ReadingProgress | null;
   subscribe(listener: () => void): () => void;
   start(): Promise<ReadingProgress | null>;
@@ -236,15 +238,23 @@ export interface ResultServices {
 }
 export type StatsTopic = TopicProgress;
 export interface StatsServices {
+  getSyncSummary?(): { configured: boolean; state: string; error: boolean };
+  onSyncChange?(listener: () => void): () => void;
+  accountId?(): string | null;
+  onAccountChange?(listener: () => void): () => void;
+  onMetricsChange?(listener: () => void): () => void;
+  loadCatalogueCoverage?(query: import('../../core/application/stats/metrics-query.js').MetricsQuery, practicedIds: readonly string[]): Promise<{ eligible: number; practiced: number; percent: number | null; revision: string; approvedLinks?: number; approvedPercent?: number | null; staleLinks?: number; manifestRevision?: string }>;
+  loadMetrics?(query: import('../../core/application/stats/metrics-query.js').MetricsQuery): Promise<import('../../core/application/stats/detailed-metrics.js').DetailedMetrics>;
   load(): Promise<StatsSnapshot>; getPreference(key: 'domainOrder' | 'evolution'): Record<string, string | number | boolean>; savePreference(key: 'domainOrder' | 'evolution', value: Record<string, string | number | boolean>): void;
   compareSimulations(firstId: string, secondId: string): StatsComparison | null;
   loadWeekly(filter: { topic?: string; type?: string; weeks: number }): Promise<readonly StatsWeek[]>;
-  loadQuestionStatements(questionIds: readonly string[]): Promise<readonly { id: string; statement: string }[]>;
+  loadQuestionStatements(questionIds: readonly string[], expectedSemanticRevisions?: Readonly<Record<string, string>>): Promise<readonly { id: string; statement: string; currentCompatible?: boolean }[]>;
   getApprovedSectionLinkCount(): number;
-  loadAcademySectionPerformance(): Promise<import('../../core/application/stats/academy-section-performance.js').AcademySectionPerformanceResult>;
+  loadAcademySectionPerformance(query?: import('../../core/application/stats/metrics-query.js').MetricsQuery): Promise<import('../../core/application/stats/academy-section-performance.js').AcademySectionPerformanceResult>;
   loadStudyActivity(weeks: number): Promise<{ questionEvolution: readonly { start: number; seen: number; correct: number; wrong: number; unknown: number }[]; observedStudyTime: ObservedStudyTime }>;
   loadStrategy(days: number): Promise<string>;
-  practiceTopics(ids?: readonly string[]): void; reviewDue(): void; practiceFailures(): void; practiceTrap(id: string): Promise<'started' | 'empty'>; practiceSlow(onlyCorrect: boolean): Promise<'started' | 'empty'>;
+  practiceSectionErrors?(sectionId: string, query: import('../../core/application/stats/metrics-query.js').MetricsQuery): Promise<'started' | 'empty' | 'active-session'>;
+  practiceTopics(ids?: readonly string[], origin?: 'O' | 'A' | 'G'): void; reviewDue(): void; practiceFailures(): void; practiceTrap(id: string): Promise<'started' | 'empty'>; practiceSlow(onlyCorrect: boolean): Promise<'started' | 'empty'>;
 }
 export interface QuizPrompt { nonScoring?: boolean; id: string; topicId: string; topicName: string; origin: 'O' | 'A' | 'G'; year?: string; statement: string; options: readonly string[]; correctIndex: number; context?: string; assumptionText?: string; hasAssumption: boolean; notice: string; citation?: string; source: string; traps: readonly string[]; provisional: boolean; mayExpire: boolean; variant: boolean; contentRevision: string }
 export interface QuizSnapshot { fixedDeadline?: boolean; title: string; index: number; count: number; questionIds: readonly string[]; seconds: number; timeLimitSeconds: number | null; remainingSeconds: number | null; readingWaitSeconds: number; readingGateUntil: number; feedback: boolean; timed: boolean; paused: boolean; readingMode: number; prompt: QuizPrompt; answer?: number; studyState: 'unseen' | 'pending' | 'answered' | 'revealed'; review: readonly number[]; answers: readonly (number | undefined)[]; studyStates: readonly ('unseen' | 'pending' | 'answered' | 'revealed')[]; confidence?: 'sure' | 'betweenTwo' | 'guess'; selfAssessment?: SelfAssessment; discarded: readonly number[]; highlights: readonly ResultHighlight[]; scoreByLuck: number | null; recentAnswer: readonly [number, number] | null; flagged: boolean; failureReason: number | null; report?: ResultReport; cardExists: boolean }

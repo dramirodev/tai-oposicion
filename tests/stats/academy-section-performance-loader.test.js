@@ -1,3 +1,4 @@
+import { questionSemanticRevision } from '../../src/core/domain/attempts/question-semantic-revision.js';
 import { describe, expect, it, vi } from 'vitest';
 import { loadAcademySectionPerformance } from '../../src/core/application/stats/load-academy-section-performance.ts';
 import { questionContentRevision } from '../../src/core/domain/attempts/highlights.ts';
@@ -9,14 +10,14 @@ const section = {
   sourceOrdinal: 1, sourceHash: hash('a'), materialKind: 'syllabus', outlineFingerprint: hash('b'), outlineStructureFingerprint: hash('c'), verification: 'pending',
 };
 const link = {
-  status: 'approved', questionId: question.id, contentRevision: questionContentRevision(question.statement, question.options),
+  status: 'approved', questionId: question.id, semanticRevision: questionSemanticRevision(question), contentRevision: questionContentRevision(question.statement, question.options),
   questionTopicId: question.topicId, testMaterialTopicId: 'T1.04', sectionTopicId: section.topicId, sectionId: section.id,
   testEvidence: { path: 'T1.04/test.pdf', sourceHash: hash('d'), page: 3 },
   sectionEvidence: { path: section.materialPath, sourceHash: section.sourceHash, outlineFingerprint: section.outlineFingerprint, page: section.printedPage },
   rationale: 'El test contiene evidencia precisa del concepto.', reviewedAt: 100, reviewer: 'editor-1',
 };
 const manifest = { schemaVersion: 2, revision: 'published-1', links: [link] };
-const attempt = (id, outcome, completedAt) => ({ id, sessionId: `session-${id}`, questionId: question.id, contentRevision: link.contentRevision,
+const attempt = (id, outcome, completedAt) => ({ id, sessionId: `session-${id}`, questionId: question.id, contentRevision: link.contentRevision, semanticRevision: link.semanticRevision,
   mode: 'practice', position: 0, exposure: 1, state: 'answered', response: outcome === 'correct' ? 0 : 1, outcome, confidence: null,
   discardedOptions: [], highlights: [], createdAt: completedAt - 10, completedAt, lastSequence: 2, appliedEventIds: [], terminalEventId: `answer-${id}` });
 const topic = (id) => id === 'T1.04'

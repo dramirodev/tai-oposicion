@@ -1,0 +1,3010 @@
+{
+  "schemaVersion": 1,
+  "topicId": "T2.03",
+  "baseCommit": "454a025ae26390dee0f057a4cfa9b6d5fc758fba",
+  "status": "CITATIONS_ACCEPTED_UNDER_USER_DELEGATION",
+  "scope": "Solo adición de citas para lectura; no concede nueva puntuabilidad ni altera pruebas editoriales previas.",
+  "file": {
+    "beforeSha256": "07a9fd18c0f74184dade938131fe9ee5e3cea6f232ac6c5b3a28adfe60598c67",
+    "afterSha256": "b2a48393cc58c182d26e728f1fcfcc4f7f464b238ddfea8c78cbf60fe8a86e8f"
+  },
+  "sample": {
+    "beforeSha256": "e075566fd71558daeb5ae31b799c7a6e6d1b8d0b7d516f1b95768a54a0869aee",
+    "afterSha256": "e075566fd71558daeb5ae31b799c7a6e6d1b8d0b7d516f1b95768a54a0869aee"
+  },
+  "sourceRoot": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario",
+  "sources": {
+    "e-AT203-P1-16": {
+      "path": "T2.03 Estructuras de Datos/T2.03 Estructuras de Datos - Temario.pdf",
+      "sourceHash": "84f1ed094c810f65fb7e5f9ddd93a98003fe9d707d6f3c90d92b6de720cb902a",
+      "physicalPage": 38,
+      "printedPage": 38,
+      "excerpt": "Clasificación por intercambio o BURBUJA (bubblesort) La idea básica de éste es imaginar que los registros a ordenar están almacenados en un vector vertical. Se recorre varias veces el vector de abajo hacia arriba, y al hacer esto si hay dos elementos adyacentes que no están en orden se invierten. El efecto producido por esta operación es que en el primer recorrido el elemento con menor valor sube al primer elemento del vector. En el segundo recorrido, el siguiente elemento con menor valor, pasa a la segunda posición del vector, y así, sucesivamente.",
+      "label": "Ordenación — burbuja, comparación de adyacentes"
+    },
+    "e-AT203-P1-38": {
+      "path": "T2.03 Estructuras de Datos/T2.03 Estructuras de Datos - Temario.pdf",
+      "sourceHash": "84f1ed094c810f65fb7e5f9ddd93a98003fe9d707d6f3c90d92b6de720cb902a",
+      "physicalPage": 25,
+      "printedPage": 25,
+      "excerpt": "- Un grafo no dirigido es conexo si existe un camino entre cualquier par de nodos que forman el grafo.",
+      "label": "Grafos — conectividad"
+    },
+    "e-AS05G-P1-46": {
+      "path": "T2.03 Estructuras de Datos/T2.03 Estructuras de Datos - Temario.pdf",
+      "sourceHash": "84f1ed094c810f65fb7e5f9ddd93a98003fe9d707d6f3c90d92b6de720cb902a",
+      "physicalPage": 10,
+      "printedPage": 10,
+      "excerpt": "o Skip list o lista por saltos: es una estructura de datos, basada en listas enlazadas paralelas con eficiencia comparable a la de un árbol binario. Es una lista ordenada (y en principio sin claves repetidas) en la que cada nodo puede tener uno o varios enlaces al nodo siguiente y a diversos nodos a distancias variables, bien establecidas de forma aleatoria o siguiendo un patrón establecido de saltos a longitudes fijas.",
+      "label": "Pasaje del temario"
+    },
+    "e-AS12-P1-25": {
+      "path": "T2.03 Estructuras de Datos/T2.03 Estructuras de Datos - Temario.pdf",
+      "sourceHash": "84f1ed094c810f65fb7e5f9ddd93a98003fe9d707d6f3c90d92b6de720cb902a",
+      "physicalPage": 21,
+      "printedPage": 21,
+      "excerpt": "Una de las ventajas de utilizar un ABB es que si se realiza un recorrido en Inorden por un ABB accederemos a los valores en orden ascendente. El proceso de búsqueda en un árbol binario de búsqueda se realiza recursivamente, desde la raíz hasta las hojas.",
+      "label": "Pasaje del temario"
+    }
+  },
+  "questions": [
+    {
+      "id": "AT203-P1-16",
+      "before": {
+        "i": "AT203-P1-16",
+        "t": "T2.03",
+        "o": "A",
+        "q": "¿Cuál de los siguientes algoritmos de ordenación consiste en recorrer la lista comparando y ordenando los elementos adyacentes de dos en dos?",
+        "a": [
+          "Burbuja (BubbleSort).",
+          "Selección.",
+          "Inserción.",
+          "Rápido (QuickSort)."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT203-P1-16",
+        "t": "T2.03",
+        "o": "A",
+        "q": "¿Cuál de los siguientes algoritmos de ordenación consiste en recorrer la lista comparando y ordenando los elementos adyacentes de dos en dos?",
+        "a": [
+          "Burbuja (BubbleSort).",
+          "Selección.",
+          "Inserción.",
+          "Rápido (QuickSort)."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "T2.03 Estructuras de Datos - Temario.pdf — Ordenación — burbuja, comparación de adyacentes\n\nTemario, p. 38 (PDF p. 38)\n\nClasificación por intercambio o BURBUJA (bubblesort) La idea básica de éste es imaginar que los registros a ordenar están almacenados en un vector vertical. Se recorre varias veces el vector de abajo hacia arriba, y al hacer esto si hay dos elementos adyacentes que no están en orden se invierten. El efecto producido por esta operación es que en el primer recorrido el elemento con menor valor sube al primer elemento del vector. En el segundo recorrido, el siguiente elemento con menor valor, pasa a la segunda posición del vector, y así, sucesivamente.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "fbdf5eaa82e84374493c9335ef5f07aac764e6716c8a7d0f4040c90a12a45edb",
+      "afterSha256": "7cd370e45bea0e55c94b0d22c8e739cbff38c092f2aa6a4de3b9ca2d1ab52c58",
+      "evidenceKeys": [
+        "e-AT203-P1-16"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AT203-P1-38",
+      "before": {
+        "i": "AT203-P1-38",
+        "t": "T2.03",
+        "o": "A",
+        "q": "Un grafo en el que cada par de vértices está conectado por un camino que los une se denomina:",
+        "a": [
+          "Grafo simple.",
+          "Grafo orientado.",
+          "Grafo completo.",
+          "Grafo conexo."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT203-P1-38",
+        "t": "T2.03",
+        "o": "A",
+        "q": "Un grafo en el que cada par de vértices está conectado por un camino que los une se denomina:",
+        "a": [
+          "Grafo simple.",
+          "Grafo orientado.",
+          "Grafo completo.",
+          "Grafo conexo."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T2.03 Estructuras de Datos - Temario.pdf — Grafos — conectividad\n\nTemario, p. 25 (PDF p. 25)\n\n- Un grafo no dirigido es conexo si existe un camino entre cualquier par de nodos que forman el grafo.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "4ce2962c329e6cec4dea6d1f76fcc0fba879a8d0f42faacbd46d245bd15d3a99",
+      "afterSha256": "e73b169ddf196000f14f423042926eccfccdb95a2d09b7b0bb0d679cf9c8c45c",
+      "evidenceKeys": [
+        "e-AT203-P1-38"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AS05G-P1-46",
+      "before": {
+        "i": "AS05G-P1-46",
+        "t": "T2.03",
+        "o": "A",
+        "q": "La estructura de datos que se define como “una lista ordenada (y en principio sin claves repetidas) en la que cada nodo puede tener uno o varios enlaces al nodo siguiente y a diversos nodos a distancias variables, bien establecidas de forma aleatoria o siguiendo un patrón establecido de saltos a longitudes fijas” es:",
+        "a": [
+          "Lista con enlaces múltiples.",
+          "Lista circular.",
+          "Lista ordenada.",
+          "Lista por saltos."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "after": {
+        "i": "AS05G-P1-46",
+        "t": "T2.03",
+        "o": "A",
+        "q": "La estructura de datos que se define como “una lista ordenada (y en principio sin claves repetidas) en la que cada nodo puede tener uno o varios enlaces al nodo siguiente y a diversos nodos a distancias variables, bien establecidas de forma aleatoria o siguiendo un patrón establecido de saltos a longitudes fijas” es:",
+        "a": [
+          "Lista con enlaces múltiples.",
+          "Lista circular.",
+          "Lista ordenada.",
+          "Lista por saltos."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1,
+        "u": "T2.03 Estructuras de Datos - Temario.pdf — Pasaje del temario\n\nTemario, p. 10 (PDF p. 10)\n\no Skip list o lista por saltos: es una estructura de datos, basada en listas enlazadas paralelas con eficiencia comparable a la de un árbol binario. Es una lista ordenada (y en principio sin claves repetidas) en la que cada nodo puede tener uno o varios enlaces al nodo siguiente y a diversos nodos a distancias variables, bien establecidas de forma aleatoria o siguiendo un patrón establecido de saltos a longitudes fijas.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "520753a6075b57a1ea7ff20f03f80dcdec5711e4301df8b0ccb6698c6b53bae4",
+      "afterSha256": "f1db14255be4d1caf5233c7a823e8abd6d17a5bff65fe8621e6dbb5adcc103df",
+      "evidenceKeys": [
+        "e-AS05G-P1-46"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AS12-P1-25",
+      "before": {
+        "i": "AS12-P1-25",
+        "t": "T2.03",
+        "o": "A",
+        "q": "Considere una estructura de datos en árbol binaria con nodos que representan valores, y cada nodo de nivel superior es de mayor valor que los nodos de la izquierda y de inferior valor que los nodos de la derecha. ¿Qué tipo de recorrido debe hacerse por el árbol para mostrar los valores en valor ascendente?",
+        "a": [
+          "Recorrido en preorden.",
+          "Recorrido en inorden.",
+          "Recorrido en postorden.",
+          "Recorrido en amplitud."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AS12-P1-25",
+        "t": "T2.03",
+        "o": "A",
+        "q": "Considere una estructura de datos en árbol binaria con nodos que representan valores, y cada nodo de nivel superior es de mayor valor que los nodos de la izquierda y de inferior valor que los nodos de la derecha. ¿Qué tipo de recorrido debe hacerse por el árbol para mostrar los valores en valor ascendente?",
+        "a": [
+          "Recorrido en preorden.",
+          "Recorrido en inorden.",
+          "Recorrido en postorden.",
+          "Recorrido en amplitud."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "T2.03 Estructuras de Datos - Temario.pdf — Pasaje del temario\n\nTemario, p. 21 (PDF p. 21)\n\nUna de las ventajas de utilizar un ABB es que si se realiza un recorrido en Inorden por un ABB accederemos a los valores en orden ascendente. El proceso de búsqueda en un árbol binario de búsqueda se realiza recursivamente, desde la raíz hasta las hojas.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "c92c071686370343c8afadb2b3eb1eac3c89d436aeb028cceb7553cf2dcebc35",
+      "afterSha256": "dc3ca79033c3ed13b7d03f801f37933aa99bddeaf89e7aad9c04023883d1d0f7",
+      "evidenceKeys": [
+        "e-AS12-P1-25"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    }
+  ],
+  "pending": [
+    {
+      "question": {
+        "i": "TAI2024B-P1-23",
+        "t": "T2.03",
+        "o": "O",
+        "q": "Señale la respuesta INCORRECTA acerca de los tipos abstractos de datos (TAD):",
+        "a": [
+          "Es una colección de propiedades y operaciones que se definen mediante una especificación que es independiente de cualquier representación.",
+          "Nos permiten diseñar nuestros propios tipos para encapsular lógica algorítmica y proveer abstracción a las capas de software de más alto nivel.",
+          "Se pueden escribir usando lenguaje natural, usando pseudo-código o incluso algún lenguaje de programación.",
+          "En JAVA, una estructura de datos (interface) debe implementar todas las operaciones definidas en su TAD (class)."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [
+          8
+        ],
+        "d": 2,
+        "n": "\"Una interface implementa una class\": relación invertida.",
+        "y": "Ingreso libre OEP 2023-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAI2024B-P1-24",
+        "t": "T2.03",
+        "o": "O",
+        "q": "Señale la respuesta correcta referente al tipo abstracto de datos (TAD) Cola:",
+        "a": [
+          "Basada en el principio LIFO (last-in, first-out).",
+          "Es un tipo especial de lista en la que se pueden insertar y eliminar por cualquier extremo.",
+          "Cada nodo tiene dos enlaces, uno al nodo siguiente, y otro al anterior.",
+          "Se pude implementar usando una estructura dinámica."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          8,
+          7
+        ],
+        "d": 1,
+        "n": "a) LIFO por FIFO (catálogo); b) bicola; c) lista doble. La correcta es la afirmación más genérica.",
+        "y": "Ingreso libre OEP 2023-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAI2024B-P1-25",
+        "t": "T2.03",
+        "o": "O",
+        "q": "Con respecto a los árboles 2-3-4, señale la respuesta correcta:",
+        "a": [
+          "Cumple las propiedades del árbol binario de búsqueda.",
+          "Las hojas pueden estar a distinto nivel.",
+          "Los nodos pueden tener 2, 3 o 4 hijos (2-nodo, 3-nodo o 4-nodo).",
+          "Las reestructuraciones se realizan desde las hojas hacia la raíz."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          7,
+          12,
+          8
+        ],
+        "d": 2,
+        "n": "a) \"binario\"; b) niega que todas las hojas estén al mismo nivel; d) dirección de la reestructuración.",
+        "y": "Ingreso libre OEP 2023-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAIL2022-P1-29",
+        "t": "T2.03",
+        "o": "O",
+        "q": "En teoría de grafos, el algoritmo para la determinación del camino más corto, dado un vértice origen, hacia el resto de los vértices en un grafo que tiene pesos en cada arista se denomina:",
+        "a": [
+          "Algoritmo de Kruskal.",
+          "Algoritmo de Prim.",
+          "Algoritmo de Dijkstra.",
+          "Algoritmo de Floyd-Warshall."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Algoritmos de grafos hermanos (Kruskal, Prim, Floyd-Warshall).",
+        "y": "Ingreso libre OEP 2022 (2023)"
+      },
+      "reason": "El enunciado no limita los pesos a no negativos. El temario distingue Bellman-Ford con aristas negativas; se requiere revisar el alcance y la premisa antes de aceptar Dijkstra de forma general.",
+      "reviewStatus": "reviewed-pending",
+      "evidenceKeys": [
+        "e-TAIL2022-P1-29"
+      ]
+    },
+    {
+      "question": {
+        "i": "TAIL2022-P1-30",
+        "t": "T2.03",
+        "o": "O",
+        "q": "Con respecto a los estándares PDF, señale que afirmación NO es correcta:",
+        "a": [
+          "PDF/UA Es el estándar global para la accesibilidad de PDF.",
+          "PDF/A proporciona las especificaciones para crear, ver e imprimir documentos digitales para conservarlos a largo plazo.",
+          "PDF/E proporciona especificaciones para crear, ver e imprimir documentos utilizados en flujos de trabajo de ingeniería.",
+          "PDF/I proporciona especificaciones para crear, ver e imprimir páginas finales listas para imprimir o listas para la prensa."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [
+          9
+        ],
+        "d": 2,
+        "n": "\"PDF/I\" no existe; usa la definición de PDF/X.",
+        "y": "Ingreso libre OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2019-P1-29",
+        "t": "T2.03",
+        "o": "O",
+        "q": "AV1 es un:",
+        "a": [
+          "Nuevo sistema de realidad aumentada.",
+          "Nuevo sistema operativo para la IoT.",
+          "Nuevo códec de vídeo.",
+          "Nuevo estándar de seguridad para WiFi 6."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          13
+        ],
+        "d": 1,
+        "n": "AV1 frente a otras tecnologías.",
+        "y": "Ingreso libre OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2019-P1-30",
+        "t": "T2.03",
+        "o": "O",
+        "q": "Si un árbol binario lo recorremos siguiendo el orden siguiente: raíz, subárbol izquierdo, subárbol derecho, ¿cuál de los siguientes tipos de recorrido estamos utilizando?",
+        "a": [
+          "Preorden",
+          "Inorden",
+          "Postorden",
+          "Reorden"
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          8
+        ],
+        "d": 1,
+        "n": "Recorridos de árbol (catálogo 8); \"Reorden\" inventado.",
+        "y": "Ingreso libre OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025A-P1-29",
+        "t": "T2.03",
+        "o": "O",
+        "q": "En el formato de ficheros CSV, descrito en RFC 4180, ¿qué regla es correcta?",
+        "a": [
+          "Las comillas dobles están prohibidas, solo se permiten comillas simples.",
+          "Cada registro va en una línea separada por CRLF; y los campos que contengan caracteres coma, comillas o saltos de línea deben ir con comillas dobles.",
+          "Los campos nunca pueden contener comas, aunque estén delimitados por comillas dobles.",
+          "El tipo MIME registrado para CSV es “application/csv”."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          12
+        ],
+        "d": 3,
+        "n": "RFC 4180 (CSV): \"prohibidas\", \"nunca\"; tipo MIME cambiado.",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025A-P1-30",
+        "t": "T2.03",
+        "o": "O",
+        "q": "Según la definición estándar de JSON, RFC 8259, un valor JSON debe pertenecer a uno de estos tipos o literales. ¿Cuál es el conjunto correcto?",
+        "a": [
+          "object, array, number, string, date y undefined.",
+          "object, array, number, string, boolean y function.",
+          "object, array, number, string, true, false y null.",
+          "object, array, number, string, boolean y NaN."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          9
+        ],
+        "d": 2,
+        "n": "Tipos JSON (RFC 8259) con un intruso de JavaScript (date, undefined, function, NaN).",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025A-P1-41",
+        "t": "T2.03",
+        "o": "O",
+        "q": "Señale la opción correcta en relación a los árboles rojo-negro:",
+        "a": [
+          "Un nodo negro puede tener más de 2 subárboles.",
+          "Si un nodo es rojo, sus hijos son nodos rojos.",
+          "Para cada nodo, el camino de ese nodo a las hojas descendientes contiene la misma cantidad de nodos rojos.",
+          "La raíz es un nodo negro."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          8,
+          12
+        ],
+        "d": 3,
+        "n": "Árbol rojo-negro: propiedades invertidas.",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025A-P1-R-04",
+        "t": "T2.03",
+        "o": "O",
+        "q": "¿Cuál de los siguientes algoritmos de ordenación se ejecuta en tiempo lineal?",
+        "a": [
+          "Heapsort.",
+          "Mergesort.",
+          "Radix.",
+          "Quicksort."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Algoritmos de ordenación: Radix lineal.",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1,
+        "r": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025X-P1-22",
+        "t": "T2.03",
+        "o": "O",
+        "q": "Para recorrer un árbol binario no vacío en preorden se deben realizar las siguientes operaciones recursivamente en cada nodo:",
+        "a": [
+          "Visitar el nodo raíz, recorrer el subárbol derecho y recorrer el subárbol izquierdo.",
+          "Recorrer el subárbol izquierdo, visitar el nodo raíz y recorrer el subárbol derecho.",
+          "Recorrer el subárbol izquierdo, recorrer el subárbol derecho y visitar el nodo raíz.",
+          "Visitar el nodo raíz, recorrer el subárbol izquierdo y recorrer el subárbol derecho."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          8
+        ],
+        "d": 1,
+        "n": "Recorrido en preorden (catálogo 8).",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025X-P1-26",
+        "t": "T2.03",
+        "o": "O",
+        "q": "Considerando el nodo raíz como nivel 1, ¿cuál es el número máximo de nodos en un árbol binario que tiene 4 niveles?",
+        "a": [
+          "15",
+          "9",
+          "16",
+          "10"
+        ],
+        "c": 0,
+        "k": "K",
+        "x": [],
+        "d": 2,
+        "n": "Nodos máximos de un árbol binario de 4 niveles = 15.",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025X-P1-28",
+        "t": "T2.03",
+        "o": "O",
+        "q": "Según el estándar JSON (RFC 8259), ¿cuál de las siguientes afirmaciones es correcta?",
+        "a": [
+          "Un objeto JSON mantiene el orden de inserción de sus elementos por definición.",
+          "JSON permite definir tipos de datos personalizados.",
+          "Un objeto JSON es una colección no ordenada de pares nombre/valor.",
+          "JSON admite comentarios dentro de su sintaxis estándar."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          12
+        ],
+        "d": 2,
+        "n": "JSON (RFC 8259): orden, tipos, comentarios.",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2019-P1-14",
+        "t": "T2.03",
+        "o": "O",
+        "q": "El algoritmo de ordenación que consiste en comparar pares de elementos adyacentes e intercambiarlos entre sí, si no están en orden, hasta que todo el conjunto de elementos se encuentre ordenado, es conocido como:",
+        "a": [
+          "Selección",
+          "Burbuja",
+          "Inserción",
+          "Quicksort"
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Algoritmos de ordenación hermanos.",
+        "y": "Promoción interna OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2022-P1-13",
+        "t": "T2.03",
+        "o": "O",
+        "q": "Cuál es la respuesta correcta con respecto al formato de imagen JPG:",
+        "a": [
+          "Es un estándar internacional.",
+          "Es editable, cada vez que guardamos un JPEG nuevo, la imagen va ganando calidad.",
+          "Los archivos almacenados en este formato tienden a ser archivos pesados de gran tamaño.",
+          "Se trata de un formato de imagen que permite transparencias."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          8,
+          12
+        ],
+        "d": 1,
+        "n": "JPG: rasgos invertidos (gana calidad, transparencias).",
+        "y": "Promoción interna OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2022-P1-14",
+        "t": "T2.03",
+        "o": "O",
+        "q": "Cuál de las siguientes afirmaciones NO es correcta:",
+        "a": [
+          "El primer y el último nodo de una lista doblemente enlazada son accesibles inmediatamente.",
+          "En una lista doblemente enlazada el doble enlace de los nodos permite recorrer la lista en cualquier dirección.",
+          "En una lista simple enlazada cada nodo tiene un único campo de enlace.",
+          "En una lista simple enlazada el primer y el último nodo están unidos juntos."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Lista simple frente a circular.",
+        "y": "Promoción interna OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2022-P1-15",
+        "t": "T2.03",
+        "o": "O",
+        "q": "OpenDocument V.1.0 (ODF) fue aprobado por las organizaciones ISO e IEC como estándar internacional:",
+        "a": [
+          "ISO/IEC 14977:1996",
+          "ISO/IEC 40210:2011",
+          "ISO/IEC 26300:2006",
+          "ISO/IEC 18372:2004"
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          6
+        ],
+        "d": 3,
+        "n": "Número de norma ISO de ODF.",
+        "y": "Promoción interna OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2022-P1-16",
+        "t": "T2.03",
+        "o": "O",
+        "q": "Con respecto a los estándares PDF, señale qué afirmación NO es correcta:",
+        "a": [
+          "PDF/UA Es el estándar global para la accesibilidad de PDF.",
+          "PDF/A proporciona las especificaciones para crear, ver e imprimir documentos digitales para conservarlos a largo plazo.",
+          "PDF/E proporciona especificaciones para crear, ver e imprimir documentos utilizados en flujos de trabajo de ingeniería.",
+          "PDF/I proporciona especificaciones para crear, ver e imprimir páginas finales listas para imprimir o listas para la prensa."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [
+          9
+        ],
+        "d": 2,
+        "n": "\"PDF/I\" no existe (= 2022 L P30).",
+        "y": "Promoción interna OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2024A-P1-12",
+        "t": "T2.03",
+        "o": "O",
+        "q": "Señale la respuesta correcta en relación con la digitalización de imágenes:",
+        "a": [
+          "La resolución del escáner se mide en puntos por pulgada (ppp) o píxeles por pulgada (ppi).",
+          "A mayor número de píxeles tendremos mayor resolución y menor tamaño de los ficheros donde se almacenan las imágenes.",
+          "La profundidad del bit es la capacidad de reproducir los píxeles en tonos grises.",
+          "Sólo los formatos TIFF y JPEG sirven para guardar una imagen digitalizada. El formato PDF se emplea para guardar imágenes de textos únicamente."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          8,
+          12
+        ],
+        "d": 2,
+        "n": "Digitalización: \"mayor resolución y menor tamaño\", \"sólo TIFF y JPEG\".",
+        "y": "Promoción interna OEP 2021-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2024A-P1-13",
+        "t": "T2.03",
+        "o": "O",
+        "q": "Señale la respuesta correcta referente al tipo abstracto de datos (TAD) Pila:",
+        "a": [
+          "Basada en el principio FIFO (first-in, first-out).",
+          "Se puede implementar usando arrays.",
+          "No se puede implementar usando una estructura dinámica.",
+          "Las operaciones de apilar (push) y desapilar (pop) se realizan en cualquier posición."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          8,
+          12
+        ],
+        "d": 1,
+        "n": "Pila: FIFO por LIFO; \"no se puede\"; \"en cualquier posición\".",
+        "y": "Promoción interna OEP 2021-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2025A-P1-20",
+        "t": "T2.03",
+        "o": "O",
+        "q": "El slice de un array es:",
+        "a": [
+          "Su longitud.",
+          "Una subestructura del array.",
+          "Su primer elemento.",
+          "Su último elemento."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Slice frente a longitud/elementos.",
+        "y": "Promoción interna convocatoria 2025"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2025A-P1-21",
+        "t": "T2.03",
+        "o": "O",
+        "q": "Una cola se caracteriza por:",
+        "a": [
+          "Tener cabecera y cola.",
+          "Seguir una política LIFO.",
+          "Permitir sacar un elemento independientemente de su posición en ella.",
+          "Permitir insertar un elemento en cualquier posición."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          8
+        ],
+        "d": 1,
+        "n": "Cola: LIFO (catálogo 8).",
+        "y": "Promoción interna convocatoria 2025"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2018-P1-22",
+        "t": "T2.03",
+        "o": "O",
+        "q": "En cuanto a las características del formato de imagen JPEG original, señale la opción correcta:",
+        "a": [
+          "Realiza una compresión sin pérdidas.",
+          "Ofrece flexibilidad para ajustar el grado de compresión de la imagen.",
+          "No soporta millones de colores.",
+          "Soporta fondos transparentes."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          8
+        ],
+        "d": 1,
+        "n": "JPEG: rasgos invertidos (se repite en 2022 PI P13).",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2018-P1-32",
+        "t": "T2.03",
+        "o": "O",
+        "q": "Con respecto a JSON, señale la correcta:",
+        "a": [
+          "Es un tipo de gramática XML.",
+          "Es una API de Java.",
+          "Es un conjunto de librerías de Javascript.",
+          "Es un formato de intercambio de datos."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          13
+        ],
+        "d": 1,
+        "n": "JSON: formato de intercambio.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2018-P1-13",
+        "t": "T2.03",
+        "o": "O",
+        "q": "En relación a la teoría de grafos, indique la afirmación correcta:",
+        "a": [
+          "El grado de un nodo es el número de aristas que inciden a ese nodo.",
+          "Un grafo es conectado si cada nodo del grafo es adyacente a todos los demás.",
+          "Un grafo es completo si no tiene bucles ni aristas múltiples.",
+          "Un grafo es dirigido si la arista está definida por un par no ordenado."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Definiciones de grafos cruzadas.",
+        "y": "Promoción interna OEP 2018"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2018-P1-14",
+        "t": "T2.03",
+        "o": "O",
+        "q": "Un algoritmo de ordenación cuyo funcionamiento se basa en la elección de un elemento llamado pivote es:",
+        "a": [
+          "Selección directa.",
+          "Bubble sort.",
+          "Quicksort.",
+          "Backtracking."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Quicksort (pivote).",
+        "y": "Promoción interna OEP 2018"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT203-P1-01",
+        "t": "T2.03",
+        "o": "A",
+        "q": "Es un algoritmo de la teoría de grafos para encontrar un árbol recubridor mínimo en un grafo conexo y ponderado:",
+        "a": [
+          "Quicksort.",
+          "Kruskal.",
+          "QR.",
+          "Rijndael."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT203-P1-02",
+        "t": "T2.03",
+        "o": "A",
+        "q": "Entre los métodos para la compresión de imágenes con pérdidas se encuentra:",
+        "a": [
+          "Codificación en planos de bits (como RLE).",
+          "Codificación de longitud variable (como Huffman).",
+          "Algoritmos de diccionario adaptables (como LZW).",
+          "Codificación por transformación (como TDC)."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT203-P1-03",
+        "t": "T2.03",
+        "o": "A",
+        "q": "¿Qué formato de fichero es de gráficos vectoriales?",
+        "a": [
+          "SVG.",
+          "EXIF.",
+          "HEIF.",
+          "JPEG."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT203-P1-04",
+        "t": "T2.03",
+        "o": "A",
+        "q": "El método del intercambio directo o algoritmo de la burbuja es un algoritmo clásico de:",
+        "a": [
+          "Ordenación que recorre un vector de elementos e intercambia en cada recorrido un elemento con su sucesor si no está en orden.",
+          "Ordenación que recorre un vector de elementos hasta encontrar el menor de todos e intercambiarlo con el que está en la primera posición. Luego el segundo más pequeño, y así sucesivamente hasta ordenar todo.",
+          "Búsqueda que compara secuencialmente el elemento deseado con los valores contenidos en las posiciones 1..n del vector de elementos hasta que lo encuentre.",
+          "Búsqueda que compara secuencialmente el elemento deseado con los valores contenidos en las posiciones 1..n del vector de elementos hasta que lo encuentre, requisito indispensable es que el vector esté previamente ordenado."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT203-P1-05",
+        "t": "T2.03",
+        "o": "A",
+        "q": "Indique cuál de las siguientes afirmaciones acerca de los algoritmos es correcta:",
+        "a": [
+          "Todo algoritmo tiene asociada una única implementación del mismo.",
+          "La complejidad algorítmica representa la cantidad de recursos que necesita un algoritmo para resolver un problema.",
+          "La complejidad de un algoritmo solamente se puede medir en el caso medio.",
+          "La complejidad de un algoritmo solamente se puede medir en el mejor caso."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT203-P1-06",
+        "t": "T2.03",
+        "o": "A",
+        "q": "En el contexto de las estructuras de datos, seleccione la respuesta correcta, un árbol es una estructura:",
+        "a": [
+          "Dinámica cuyo recorrido sólo se puede realizar en profundidad.",
+          "Estática cuyo recorrido se puede realizar en amplitud y en profundidad.",
+          "Estática cuyo recorrido sólo se puede realizar en amplitud.",
+          "Dinámica cuyo recorrido se puede realizar en amplitud y en profundidad."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT203-P1-07",
+        "t": "T2.03",
+        "o": "A",
+        "q": "¿Cuántas pasadas como máximo hay que realizar a un array para ordenarlo mediante el método de la burbuja (siendo N el número de elementos del array)?",
+        "a": [
+          "N-1.",
+          "N.",
+          "N/2.",
+          "N+1."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT203-P1-08",
+        "t": "T2.03",
+        "o": "A",
+        "q": "Si el resultado al recorrer un árbol binario en preorden es {7, 8, 2, 1, 5, 6, 9, 0}, indique cuál es la raíz del árbol:",
+        "a": [
+          "7.",
+          "1.",
+          "0.",
+          "5."
+        ],
+        "c": 0,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT203-P1-09",
+        "t": "T2.03",
+        "o": "A",
+        "q": "Si el resultado al recorrer un árbol binario en postorden es {7, 8, 2, 1, 5, 6, 9, 0}, indique cuál es la raíz del árbol:",
+        "a": [
+          "7.",
+          "1.",
+          "0.",
+          "5."
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT203-P1-10",
+        "t": "T2.03",
+        "o": "A",
+        "q": "¿Cuál de las siguientes extensiones de ficheros pertenece a un fichero de tipo hoja de cálculo?",
+        "a": [
+          "Odt.",
+          "Doc.",
+          "Ods.",
+          "Rtf."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT203-P1-11",
+        "t": "T2.03",
+        "o": "A",
+        "q": "Con respecto a la resolución de colisiones que se pueden producir cuando se utilizan tablas de dispersión (tablas hash):",
+        "a": [
+          "Hay dos métodos principales para la resolución de colisiones: hashing lineal y hashing cuadrático.",
+          "Un criterio para decidir qué método de resolución utilizar es el factor de carga, que se define como el cociente del número de índices y el tamaño de la tabla.",
+          "Los métodos principales para la resolución de colisiones: hashing abierto y hashing cerrado.",
+          "El método de hashing lineal permite resolver la colisión mediante la búsqueda en ubicaciones alternativas en la misma tabla."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT203-P1-12",
+        "t": "T2.03",
+        "o": "A",
+        "q": "El grado de un árbol es:",
+        "a": [
+          "El número total de nodos del mismo.",
+          "El número de hijos de un nodo.",
+          "El número más alto de nodos finales de un arco.",
+          "Máximo grado de los nodos del árbol."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT203-P1-13",
+        "t": "T2.03",
+        "o": "A",
+        "q": "Señale el formato de compresión con pérdida:",
+        "a": [
+          "PNG.",
+          "LZW.",
+          "JPEG.",
+          "FLAC."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT203-P1-14",
+        "t": "T2.03",
+        "o": "A",
+        "q": "Indicar qué característica se puede asociar al algoritmo de la burbuja:",
+        "a": [
+          "Algoritmo de búsqueda de complejidad cuadrática.",
+          "Algoritmo de ordenación de complejidad lineal.",
+          "Algoritmo de ordenación de complejidad cuadrática.",
+          "Algoritmo de búsqueda de complejidad logarítmica."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT203-P1-15",
+        "t": "T2.03",
+        "o": "A",
+        "q": "Señale la afirmación INCORRECTA en relación a los árboles de búsqueda AVL:",
+        "a": [
+          "Son un tipo de árbol de búsqueda binario.",
+          "Para cada uno de los nodos, la diferencia de altura entre sus dos subárboles no puede ser superior a uno.",
+          "Los árboles AVL son árboles multicamino de grado 3.",
+          "Un árbol AVL es un árbol binario de búsqueda con ciertas características adicionales."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "AVL: \"multicamino de grado 3\"."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT203-P1-17",
+        "t": "T2.03",
+        "o": "A",
+        "q": "Empleando el algoritmo más simple de la burbuja (Bubble Sort), en caso de querer ordenar un array de 10 elementos, ¿cuántas pasadas sería necesario realizar?",
+        "a": [
+          "10.",
+          "5.",
+          "11.",
+          "9."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT203-P1-18",
+        "t": "T2.03",
+        "o": "A",
+        "q": "Si tenemos el grafo definido por los siguientes conjuntos de vértices y aristas: V:={a,b,c,d,e} E:={{a,b},{a,c},{c,d},{c,e}}. ¿Cuál de las siguientes afirmaciones es correcta?",
+        "a": [
+          "Es un grafo completo.",
+          "Es un grafo no conexo.",
+          "Es un grafo trivial.",
+          "Es un árbol."
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT203-P1-19",
+        "t": "T2.03",
+        "o": "A",
+        "q": "En el peor de los casos, el algoritmo de ordenación rápida (quicksort) posee una complejidad:",
+        "a": [
+          "O(n3).",
+          "O(n).",
+          "O(n)n.",
+          "O(n2)."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Complejidad del quicksort en el peor caso."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT203-P1-20",
+        "t": "T2.03",
+        "o": "A",
+        "q": "Sea el array [10, 3, 15, 2, 1, 18]. ¿Cuántas iteraciones deberá ejecutarse el algoritmo de ordenación por selección para que quede totalmente ordenado en sentido ascendente?",
+        "a": [
+          "2.",
+          "4.",
+          "6.",
+          "8."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT203-P1-21",
+        "t": "T2.03",
+        "o": "A",
+        "q": "En relación con los grafos, indique la respuesta FALSA:",
+        "a": [
+          "Orden de un grafo: Es el número de nodos (vértices del grafo).",
+          "Grado de un nodo: Es el número de ejes (arcos) que inciden sobre el nodo.",
+          "Tamaño de un grafo: Es el número de aristas.",
+          "Ciclo de un grafo: Es un camino simple cerrado compuesto por dos nodos."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT203-P1-22",
+        "t": "T2.03",
+        "o": "A",
+        "q": "Indique el orden en el que se recorrería un árbol en postorden:",
+        "a": [
+          "Rama izquierda, rama derecha y raíz.",
+          "Rama izquierda, raíz y rama derecha.",
+          "Rama derecha, rama izquierda y raíz.",
+          "Rama derecha, raíz y rama derecha."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT203-P1-23",
+        "t": "T2.03",
+        "o": "A",
+        "q": "Indica la afirmación INCORRECTA:",
+        "a": [
+          "Una pila representa una estructura de datos de tipo LIFO.",
+          "Una matriz dispersa representa una estructura de datos tipo FIFO.",
+          "Una lista por saltos está basada en listas enlazadas paralelas.",
+          "Una forma de resolver las colisiones en las tablas hash es el encadenamiento separado."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT203-P1-24",
+        "t": "T2.03",
+        "o": "A",
+        "q": "En relación con el concepto de tipo de datos, indique la respuesta correcta:",
+        "a": [
+          "Un tipo de datos determina el conjunto de valores al que pertenece una constante.",
+          "Un tipo de datos determina el conjunto de valores que puede tomar una variable.",
+          "Un tipo de datos determina el conjunto de valores al que pertenece una variable.",
+          "Un tipo de datos determina el conjunto de valores que pueden ser generados por un operador o función."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT203-P1-25",
+        "t": "T2.03",
+        "o": "A",
+        "q": "El máximo de los niveles de todos los elementos de un árbol menos uno, se dice que es su:",
+        "a": [
+          "Longitud de camino externo.",
+          "Grado.",
+          "Altura.",
+          "Longitud de camino interno."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT203-P1-26",
+        "t": "T2.03",
+        "o": "A",
+        "q": "Un árbol está equilibrado:",
+        "a": [
+          "Si, y sólo si, para cada uno de sus nodos ocurre que las alturas de sus dos subárboles difieren como mucho en 1.",
+          "Si, para cada nodo, el número de nodos en el subárbol izquierdo, y el número de nodos en el subárbol derecho, difieren como mucho en una unidad.",
+          "Si, para cada nodo, el número de nodos en el subárbol izquierdo, y el número de nodos en el subárbol derecho, es el mismo.",
+          "Si, y solo si, para algunos de sus nodos ocurre que las alturas de sus dos subárboles difieren como mucho en 1."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT203-P1-27",
+        "t": "T2.03",
+        "o": "A",
+        "q": "El máximo número de nodos en un nivel i de un árbol binario para i≥1 es:",
+        "a": [
+          "2^(i-1)",
+          "2^i",
+          "2*i - 1",
+          "2^i - 1"
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "n": "Exponentes restituidos visualmente del Test T2.03, p. 6. Nivel raíz i=1; máximo 2^(i-1). Plantilla p. 10: A; c=0 conservado."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT203-P1-28",
+        "t": "T2.03",
+        "o": "A",
+        "q": "¿Cómo se denomina la estructura de datos en la que los elementos se añaden y quitan por el mismo extremo?",
+        "a": [
+          "Cola.",
+          "Registro.",
+          "Pila.",
+          "Vector."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT203-P1-29",
+        "t": "T2.03",
+        "o": "A",
+        "q": "¿Cuál es el número de comparaciones que necesitamos para ordenar un array de N elementos, por el método de selección?",
+        "a": [
+          "N(N-1)/2",
+          "N2-1/2",
+          "N2",
+          "N/2"
+        ],
+        "c": 0,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT203-P1-30",
+        "t": "T2.03",
+        "o": "A",
+        "q": "¿Cómo se denomina el tipo de datos estructurado formado por una colección finita de elementos, no necesariamente homogéneos?",
+        "a": [
+          "Campo.",
+          "Registro.",
+          "Conjunto.",
+          "Lista."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT203-P1-31",
+        "t": "T2.03",
+        "o": "A",
+        "q": "Un registro es una estructura de datos:",
+        "a": [
+          "Formada por un conjunto ordenado de elementos que pueden ser de cualquier tipo simple.",
+          "Formada por un conjunto ordenado de elementos que pueden ser de cualquier tipo, incluso estructurados.",
+          "Formada por un conjunto ordenado de elementos alfanuméricos.",
+          "Formada por un conjunto ordenado de cadenas de caracteres."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT203-P1-32",
+        "t": "T2.03",
+        "o": "A",
+        "q": "De las siguientes afirmaciones, relativas al tipo abstracto de datos lista, indique cuál es INCORRECTA:",
+        "a": [
+          "Las listas solo pueden ser implementadas con tipos de datos dinámicos y los elementos que la componen son del mismo tipo.",
+          "Las listas pueden clasificarse, en función del modo de acceso al siguiente elemento, en densas y enlazadas.",
+          "Las listas pueden clasificarse, en función del modo de almacenar y recuperar sus elementos, en colas y pilas.",
+          "Las pilas son un tipo de listas que tienen un funcionamiento LIFO."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT203-P1-33",
+        "t": "T2.03",
+        "o": "A",
+        "q": "Cuando hablamos de un conjunto de elementos del mismo tipo referenciados con un mismo nombre y a través de una posición, nos referimos a:",
+        "a": [
+          "Un registro.",
+          "Una lista.",
+          "Un vector.",
+          "Un bucle."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Vector vs registro/lista."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT203-P1-34",
+        "t": "T2.03",
+        "o": "A",
+        "q": "El algoritmo de ordenación que hace uso de un elemento pivote es:",
+        "a": [
+          "Bubblesort.",
+          "Heapsort.",
+          "Quicksort.",
+          "ShellSort."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT203-P1-35",
+        "t": "T2.03",
+        "o": "A",
+        "q": "¿Cuál de los siguientes es un algoritmo de ordenación?",
+        "a": [
+          "Algoritmo dicotómico (Binary).",
+          "Algoritmo por montículos (Heapsort).",
+          "Algoritmo de búsqueda atrás (Backtracking).",
+          "Algoritmo devorador (Greedy)."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT203-P1-36",
+        "t": "T2.03",
+        "o": "A",
+        "q": "En relación con las estructuras de datos conocidas como listas, señale la afirmación correcta:",
+        "a": [
+          "La pila es una lista en la que solo se pueden hacer inserts y updates en su final, llamado \"top\".",
+          "La pila puede ser interpretado como una lista FIFO.",
+          "Se pueden usar pilas para trabajar con operaciones aritméticas en notación postfix.",
+          "Las pilas con las operaciones \"push\" y \"pop\" coincidentes se conocen como colas ADT."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT203-P1-37",
+        "t": "T2.03",
+        "o": "A",
+        "q": "¿Qué es YAML?",
+        "a": [
+          "Un lenguaje para serializar datos, legible por seres humanos, usado en el despliegue de contenedores de aplicaciones (docker).",
+          "Una librería que facilita la creación de aplicaciones dirigidas a mejorar la experiencia de usuario (UX) mediante la realidad aumentada.",
+          "Un comando que permite parametrizaciones avanzadas en el despliegue de políticas de grupo (GPO) en entornos de Directorio Activo.",
+          "Una herramienta con un potente interfaz visual que, mediante el análisis de logs, permite la monitorización del rendimiento de la infraestructura T.I. de las organizaciones."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT203-P1-39",
+        "t": "T2.03",
+        "o": "A",
+        "q": "¿Cuál de los siguientes algoritmos de ordenación es de complejidad O(n log n)?",
+        "a": [
+          "Ordenación por mezcla (Merge sort).",
+          "Ordenación por burbuja (Bubble sort).",
+          "Ordenación por burbuja bidireccional (Cocktail sort).",
+          "Ordenación por selección (Selection sort)."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT203-P1-40",
+        "t": "T2.03",
+        "o": "A",
+        "q": "La organización de ficheros en que se puede insertar registros en cualquier posición del fichero (donde haya espacio suficiente) se llama:",
+        "a": [
+          "Ordenados.",
+          "Hash estático.",
+          "Hash dinámico.",
+          "Montículo."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT203-P1-41",
+        "t": "T2.03",
+        "o": "A",
+        "q": "¿Cuál de entre los siguientes algoritmos ordena un vector V eligiendo entre sus elementos un valor clave P que actúa como pivote y organiza tres secciones entre P, elementos a la izquierda de P y elementos a la derecha de P:",
+        "a": [
+          "MergeSort.",
+          "QuickSort.",
+          "KeySort.",
+          "Burbuja."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT203-P1-42",
+        "t": "T2.03",
+        "o": "A",
+        "q": "Dentro de la teoría de grafos, la definición \"es un grafo conexo, sin ciclos y de grado mayor a 1\", correspondería a:",
+        "a": [
+          "Lista.",
+          "Pila.",
+          "Cola.",
+          "Árbol."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT203-P1-43",
+        "t": "T2.03",
+        "o": "A",
+        "q": "Los grafos se representan por medio de dos conjuntos, G=(V, A), de tal modo que V son los vértices y A las aristas. Indique cuál de los siguientes conjuntos representa un grafo regular de grado 3, G= (V,A), donde:",
+        "a": [
+          "V={1,2,3} y A={{1,2},{2,3}}.",
+          "V={1,2,3} y A={{1,2},{2,3},{3,1}}.",
+          "V={1,2,3,4} y A={{1,2},{2,4},{3,1},{1,4},{2,3}}.",
+          "V={1,2,3,4} y A={{1,2},{3,4},{3,1},{2,3},{1,4},{2,4}}."
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT203-P1-44",
+        "t": "T2.03",
+        "o": "A",
+        "q": "Con respecto al tipo abstracto de datos árbol podemos decir que:",
+        "a": [
+          "La profundidad de un nodo en un árbol es la longitud del camino desde que dicho nodo a la hoja más lejana que sea alcanzable desde él.",
+          "La altura de un nodo en un árbol es la longitud del único camino existente desde el nodo raíz hasta dicho nodo.",
+          "La altura de un árbol es el nivel de la hoja menos profunda.",
+          "El grado de un árbol es el número máximo de hijos que pueden tener sus subárboles."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT203-P1-45",
+        "t": "T2.03",
+        "o": "A",
+        "q": "Señale la afirmación correcta en relación al Algoritmo de Floyd-Warshall para grafos:",
+        "a": [
+          "Compara todos los posibles caminos a través del grafo entre cada par de vértices.",
+          "Es un ejemplo de programación estática.",
+          "Resuelve el problema de encontrar el camino mínimo en grafos no dirigidos ponderados.",
+          "Supone que hay ciclos negativos para que haya coherencia numérica."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT203-P1-46",
+        "t": "T2.03",
+        "o": "A",
+        "q": "¿Cuál es el comportamiento de una estructura de datos abstractos de tipo Pila (stack)?",
+        "a": [
+          "First in first output (FIFO).",
+          "Last in first output (LIFO).",
+          "First out last output (FOLO).",
+          "Last in first input (LOFI)."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT203-P1-47",
+        "t": "T2.03",
+        "o": "A",
+        "q": "¿Cuál es el grado de un árbol binario lleno de 15 nodos?",
+        "a": [
+          "1.",
+          "2.",
+          "3.",
+          "4."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT203-P1-48",
+        "t": "T2.03",
+        "o": "A",
+        "q": "En relación a las estructuras de datos, señale la respuesta INCORRECTA:",
+        "a": [
+          "Las cadenas son estructuras de datos contiguas.",
+          "Los vectores no son estructuras de datos contiguas.",
+          "Un array bidimensional es una matriz.",
+          "Una cola es una estructura FIFO (first in, first out)."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT203-P1-49",
+        "t": "T2.03",
+        "o": "A",
+        "q": "Dado un árbol binario no vacío, ¿cómo se denomina el recorrido que primero recorre el subárbol izquierdo, luego la raíz y, por último, el subárbol derecho?",
+        "a": [
+          "Recorrido INORDEN.",
+          "Recorrido PREORDEN.",
+          "Recorrido EXORDEN.",
+          "Recorrido POSORDEN."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT203-P1-50",
+        "t": "T2.03",
+        "o": "A",
+        "q": "Con respecto a JSON, señale la respuesta correcta:",
+        "a": [
+          "Es un tipo de gramática XML.",
+          "Es una API de Java.",
+          "Es un conjunto de librerías de Javascript.",
+          "Es un formato de intercambio de ficheros."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          13
+        ],
+        "d": 1,
+        "n": "JSON."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS03-P1-35",
+        "t": "T2.03",
+        "o": "A",
+        "q": "Sea el array [10, 3, 12, 7, 2, 20]. Si se emplea el algoritmo de ordenación por selección, después de tres iteraciones (ordenación ascendente), el estado del array será:",
+        "a": [
+          "[3, 10, 12, 7, 2, 20].",
+          "[2, 3, 12, 7, 10, 20].",
+          "[2, 3, 7, 10, 12, 20].",
+          "[2, 3, 7, 12, 10, 20]."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS03-P1-61",
+        "t": "T2.03",
+        "o": "A",
+        "q": "En el peor caso, el algoritmo de ordenación rápida (Quicksort) posee una complejidad:",
+        "a": [
+          "O(n3).",
+          "O(n).",
+          "O(n)n.",
+          "O(n2)."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS03-P1-70",
+        "t": "T2.03",
+        "o": "A",
+        "q": "¿Cuál de los siguientes tipos abstractos de datos NO tienen un orden definido?",
+        "a": [
+          "Pila.",
+          "Lista.",
+          "Diccionario.",
+          "Mapa."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS03-P1-71",
+        "t": "T2.03",
+        "o": "A",
+        "q": "El algoritmo de búsqueda binaria o dicotómica:",
+        "a": [
+          "Es siempre el más rápido de los algoritmos de búsqueda.",
+          "No se puede implementar mediante funciones recursivas.",
+          "Exige que el array esté totalmente ordenado.",
+          "También es conocido con el nombre de “Quicksort”."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS03-P1-72",
+        "t": "T2.03",
+        "o": "A",
+        "q": "Si un árbol binario recorrido en “preorden” da como resultado a-b-d-c-e-f y recorrido en “inorden” b-d-a-e-c- f, ¿cómo será el orden de visitas si el árbol binario es recorrido en “postorden”?",
+        "a": [
+          "d-b-a-e-f-c.",
+          "f-d-b-e-c-a.",
+          "a-d-c-d-e-f.",
+          "d-b-e-f-c-a."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS03-P1-74",
+        "t": "T2.03",
+        "o": "A",
+        "q": "La estructura de datos conocida como Pila:",
+        "a": [
+          "Es una estructura de datos en la que los nodos se organizan de modo que cada uno apunta al siguiente, y el último no apunta a nada.",
+          "Es una estructura de datos de tipo LIFO que permite almacenar y recuperar datos.",
+          "Es una estructura de datos de tipo FIFO que permite almacenar y recuperar datos.",
+          "Es una estructura de datos que consiste en un conjunto o agrupación de variables del mismo tipo cuyo acceso se realiza por índices."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS03-P1-85",
+        "t": "T2.03",
+        "o": "A",
+        "q": "Señale la afirmación INCORRECTA:",
+        "a": [
+          "Un conjunto es una colección homogénea y no ordenada de elementos distintos entre los cuales existe una relación de orden.",
+          "En un mapa las claves pueden estar repetidas.",
+          "Una bolsa es una variante de un conjunto el cual permite la existencia de elementos repetidos.",
+          "En una bicola de entrada restringida las inserciones se realizan solo por un extremo y las eliminaciones por cualquiera de los dos extremos."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS03-P1-90",
+        "t": "T2.03",
+        "o": "A",
+        "q": "Indique cuál de las siguientes extensiones se corresponde con el estándar de documentos abiertos para aplicaciones ofimáticas (OpenDocument) para documentos de texto (cuyo tipo MIME es application/vnd.oasis.opendocument.text):",
+        "a": [
+          ".ods.",
+          ".doc.",
+          ".txt.",
+          ".odt."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS03-P1-92",
+        "t": "T2.03",
+        "o": "A",
+        "q": "¿Cuál de los siguientes NO es un algoritmo de ordenación?",
+        "a": [
+          "Quicksort.",
+          "Mergesort.",
+          "Middlesort.",
+          "Bubblesort."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS03-P1-93",
+        "t": "T2.03",
+        "o": "A",
+        "q": "¿Cuál de las siguientes estructuras de datos requiere más capacidad de almacenamiento de información?",
+        "a": [
+          "Árbol binario.",
+          "Lista.",
+          "Lista enlazada.",
+          "Árbol B."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS03-P1-94",
+        "t": "T2.03",
+        "o": "A",
+        "q": "En un árbol B de orden 5:",
+        "a": [
+          "Todas las páginas tienen el mismo número de nodos y menos de 5.",
+          "Todas las páginas tienen 2 nodos.",
+          "Todas las páginas tienen al menos 2 nodos excepto la raíz que puede tener 1.",
+          "Todas las páginas tienen 4 nodos."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS04-P1-37",
+        "t": "T2.03",
+        "o": "A",
+        "q": "Con respecto al tipo abstracto de datos árbol podemos decir que:",
+        "a": [
+          "La profundidad de un nodo en un árbol es la longitud del camino desde dicho nodo a la hoja más lejana que sea alcanzable desde él.",
+          "La altura de un nodo en un árbol es la longitud del único camino existente desde el nodo raíz hasta dicho nodo.",
+          "La altura de un árbol es el nivel de la hoja menos profunda.",
+          "El grado de un árbol es el número máximo de hijos que pueden tener sus subárboles."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS04-P1-64",
+        "t": "T2.03",
+        "o": "A",
+        "q": "En un árbol B de orden N, se puede asegurar que:",
+        "a": [
+          "A cada nodo hoja se podrá accede con un máximo de N accesos.",
+          "Cada nodo tendrá como máximo N hijos.",
+          "A cada nodo hoja se accederá con un mínimo de N accesos.",
+          "El número de nodos hoja es log2(N)."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS04-P1-66",
+        "t": "T2.03",
+        "o": "A",
+        "q": "Los árboles son estructuras dinámicas de datos. Señale la respuesta INCORRECTA respecto a dicha estructura de datos:",
+        "a": [
+          "Un árbol binario balanceado es un árbol binario en el cual las alturas de los dos subárboles de cualquier nodo difieren a lo sumo en 2 unidades.",
+          "Los árboles AVL están siempre equilibrados de tal modo que para todos los nodos, la altura de la rama izquierda no difiere en más de una unidad de la altura de la rama derecha o viceversa. Gracias a esta forma de equilibro (o balanceo), la complejidad de una búsqueda en uno de estos árboles se mantiene siempre en orden de complejidad O(log n).",
+          "Para recorrer un árbol binario no vacío en postorden, hay que realizar las siguientes operaciones recursivamente en cada nodo: 1. Recorra el subárbol izquierdo, 2. Recorra el subárbol derecho y 3. Visite la raíz.",
+          "Los montículos máximos tienen la característica de que cada nodo padre tiene un valor mayor que el de cualquiera de sus nodos hijos, mientras que en los montículos mínimos, el valor del nodo padre es siempre menor al de sus nodos hijos."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS04-P1-81",
+        "t": "T2.03",
+        "o": "A",
+        "q": "¿Qué tipo de organización de ficheros permite insertar registros en cualquier posición del fichero en el que haya espacio suficiente, no existiendo ninguna ordenación de los registros?",
+        "a": [
+          "Organización en montículos.",
+          "Organización dispersa indexada.",
+          "Organización direccionada directa.",
+          "Organización secuencial."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS04-P1-87",
+        "t": "T2.03",
+        "o": "A",
+        "q": "Existen multitud de tipos abstractos de datos (TAD) que permiten almacenar información. Indique cuál de los siguientes tiene por definición almacenar una colección no ordenada de elementos distintos, todos los elementos son del mismo tipo y entre los elementos existe una relación de orden:",
+        "a": [
+          "TAD Lista.",
+          "TAD Árbol.",
+          "TAD Bolsa.",
+          "TAD Conjunto."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS04-P1-99",
+        "t": "T2.03",
+        "o": "A",
+        "q": "Empleando el algoritmo Bubble Sort, en caso de querer ordenar un array de 10 elementos, ¿cuántas pasadas sería necesario realizar?",
+        "a": [
+          "10.",
+          "5.",
+          "11.",
+          "9."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS05G-P1-47",
+        "t": "T2.03",
+        "o": "A",
+        "q": "Señale la respuesta INCORRECTA respecto a la estructura de datos Cola:",
+        "a": [
+          "Siguen la filosofía LIFO.",
+          "La operación Queue añade un elemento al final de la cola.",
+          "Una aplicación práctica es para implementar el acceso a recursos compartidos dedicados.",
+          "Se considera un caso especial de lista."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS05G-P1-49",
+        "t": "T2.03",
+        "o": "A",
+        "q": "¿Qué definición es INCORRECTA respecto a la estructura de datos árbol?",
+        "a": [
+          "La altura del árbol es la profundidad máxima de cualquier nodo.",
+          "Un árbol ponderado es aquel en el que cada arista tiene asociado un peso.",
+          "El grado de un nodo es el mayor grado de sus nodos.",
+          "Es un grafo no dirigido acíclico y conexo."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS05G-P1-50",
+        "t": "T2.03",
+        "o": "A",
+        "q": "En un árbol B de orden 5, ¿cuántos nodos tendrá como máximo una página?",
+        "a": [
+          "3.",
+          "4.",
+          "5.",
+          "6."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS05G-P1-51",
+        "t": "T2.03",
+        "o": "A",
+        "q": "De entre las siguientes técnicas de compresión de imágenes, ¿cuál es con pérdida?",
+        "a": [
+          "RLE.",
+          "Huffman.",
+          "Transformación.",
+          "Lempel-Ziv."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS05G-P1-52",
+        "t": "T2.03",
+        "o": "A",
+        "q": "¿Qué formato de almacenamiento es con pérdida?",
+        "a": [
+          ".raw.",
+          ".tiff.",
+          ".png.",
+          ".jpeg."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS06-P1-06",
+        "t": "T2.03",
+        "o": "A",
+        "q": "¿Cuál de los siguientes NO es un formato de intercambio de datos?",
+        "a": [
+          "CS.",
+          "JSON.",
+          "YAML.",
+          "CSV."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS06-P1-88",
+        "t": "T2.03",
+        "o": "A",
+        "q": "¿Cuál de los siguientes conceptos se clasifica dentro de la topología de Estructuras de datos no lineales?",
+        "a": [
+          "Pilas.",
+          "Listas.",
+          "Colas.",
+          "Árboles."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS06-P1-89",
+        "t": "T2.03",
+        "o": "A",
+        "q": "¿Cuál es el número máximo de niveles que puede tener un árbol binario completo que tiene 5 nodos?",
+        "a": [
+          "3.",
+          "4.",
+          "5.",
+          "2."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS06-P1-90",
+        "t": "T2.03",
+        "o": "A",
+        "q": "Un árbol está equilibrado en altura:",
+        "a": [
+          "Si, y sólo si, para cada uno de sus nodos ocurre que las alturas de sus dos subárboles difieren como mucho en 1.",
+          "Si, para cada nodo, el número de nodos en el subárbol izquierdo, y el número de nodos en el subárbol derecho, difieren como mucho en una unidad.",
+          "Si, para cada nodo, el número de nodos en el subárbol izquierdo, y el número de nodos en el subárbol derecho, es el mismo.",
+          "Si, y solo si, para algunos de sus nodos ocurre que las alturas de sus dos subárboles difieren como mucho en 1."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS07-P1-46",
+        "t": "T2.03",
+        "o": "A",
+        "q": "¿Qué desventaja tiene el formato de imágenes JPEG?",
+        "a": [
+          "La imagen pierde información cuando se comprime.",
+          "La magnitud de compresión es pequeña y ocupa demasiado espacio de disco.",
+          "Todos los programas que brindan soporte al formato JPEG han de pagar por el uso de la licencia del algoritmo de compresión que utiliza.",
+          "No tiene ninguna desventaja."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS07-P1-47",
+        "t": "T2.03",
+        "o": "A",
+        "q": "Es un algoritmo de compresión de imágenes sin pérdidas:",
+        "a": [
+          "ECW.",
+          "RLE.",
+          "MPEG.",
+          "TXA."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS07-P1-48",
+        "t": "T2.03",
+        "o": "A",
+        "q": "Si tenemos el array [51, 21, 39, 80, 36] y queremos ordenarlo con el algoritmo de ordenación por selección, ¿al final de qué iteración obtendremos [21, 36, 39, 51, 80]?",
+        "a": [
+          "1.",
+          "2.",
+          "3.",
+          "4."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS07-P1-49",
+        "t": "T2.03",
+        "o": "A",
+        "q": "¿Qué definición sobre grafos es cierta?",
+        "a": [
+          "Un grafo simple es aquel que no tiene bucles ni aristas múltiples.",
+          "El orden de un grafo es el número de aristas.",
+          "El tamaño de un grafo es el número de vértices.",
+          "Un árbol es un grafo no dirigido, acíclico e inconexo."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS07-P1-50",
+        "t": "T2.03",
+        "o": "A",
+        "q": "¿Qué definición sobre árboles es cierta?",
+        "a": [
+          "Un nodo hoja es aquel que puede tener descendientes.",
+          "La profundidad de un nodo es la longitud del camino desde la raíz hasta ese nodo.",
+          "La altura del árbol es la profundidad mínima de cualquier nodo.",
+          "Un árbol equilibrado en altura tiene un grado igual o mayor a dos."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08-P1-39",
+        "t": "T2.03",
+        "o": "A",
+        "q": "Si el resultado al recorrer un árbol binario en inorden es {4, 8, 2, 1, 5, 6, 9, 3, 0}, indique cuál es la raíz del árbol:",
+        "a": [
+          "4.",
+          "No se puede determinar la raíz del árbol.",
+          "5.",
+          "0."
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08-P1-40",
+        "t": "T2.03",
+        "o": "A",
+        "q": "El algoritmo perteneciente a la teoría de grafos para encontrar un árbol recubridor mínimo en un grafo conexo, no dirigido, cuyas aristas están etiquetadas y que comienza por cualquier vértice es:",
+        "a": [
+          "El algoritmo de Prim.",
+          "El algoritmo de Dijkstra.",
+          "El algoritmo de Kruskal.",
+          "El algoritmo de Moore."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08-P1-41",
+        "t": "T2.03",
+        "o": "A",
+        "q": "¿Cuál es la complejidad algorítmica del algoritmo de clasificación por inserción?",
+        "a": [
+          "O(n).",
+          "O(n*log n).",
+          "O(log n).",
+          "O(n2)."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08-P1-42",
+        "t": "T2.03",
+        "o": "A",
+        "q": "¿Cuál de los siguientes formatos NO está dirigido al intercambio de datos?",
+        "a": [
+          "YAML.",
+          "CER.",
+          "CSV.",
+          "XML."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08B-P1-36",
+        "t": "T2.03",
+        "o": "A",
+        "q": "Señale la respuesta INCORRECTA sobre los árboles:",
+        "a": [
+          "Un nodo interno es aquel que tiene al menos un hijo.",
+          "Puede haber varios caminos desde la raíz hasta cada nodo.",
+          "La profundidad de un nodo es la longitud desde la raíz hasta ese nodo.",
+          "Un árbol binario se puede recorrer en profundidad y en anchura."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-22",
+        "t": "T2.03",
+        "o": "A",
+        "q": "Los algoritmos de radix y shell son algoritmos de:",
+        "a": [
+          "Ordenación.",
+          "Búsqueda.",
+          "Negocio.",
+          "Inserción."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-30",
+        "t": "T2.03",
+        "o": "A",
+        "q": "¿Cuál de los siguientes algoritmos de ordenación consiste en comparar pares de elementos adyacentes e intercambiarlos entre sí si no están en el orden correcto?",
+        "a": [
+          "Inserción (Insertion sort).",
+          "Burbuja (Bubble sort).",
+          "Selección (Selection sort).",
+          "Combinación (Merge sort)."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-31",
+        "t": "T2.03",
+        "o": "A",
+        "q": "En relación a las estructuras de datos, señale la respuesta INCORRECTA:",
+        "a": [
+          "Un Mapa es una generalización de un Conjunto.",
+          "Un Diccionario es un Mapa para que el que se define una relación de orden sobre las claves.",
+          "Una Bolsa es un Conjunto en el que se permiten elementos repetidos.",
+          "Un Conjunto es una colección homogénea y ordenada de elementos distintos."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10-P1-31",
+        "t": "T2.03",
+        "o": "A",
+        "q": "Elija la respuesta correcta con respecto a los grafos:",
+        "a": [
+          "Un árbol es un grafo no dirigido, acíclico y conexo.",
+          "Un grafo está completamente conectado si existe como mínimo un camino entre cualquier par de vértices distintos.",
+          "En un grafo el grado interior de un vértice es el número de aristas que llegan a él.",
+          "La lista de adyacencia es una lista donde las filas y las columnas hacen referencia a los vértices para almacenar en cada casilla la longitud entre cada par de vértices del grafo."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10-P1-32",
+        "t": "T2.03",
+        "o": "A",
+        "q": "Indique la estructura de datos que utiliza una función para determinar la posición de almacenamiento de los elementos:",
+        "a": [
+          "Cola.",
+          "Pila.",
+          "Lista.",
+          "Tabla hash."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10B-P1-37",
+        "t": "T2.03",
+        "o": "A",
+        "q": "Los algoritmos que se caracterizan por resolver un problema mediante iteraciones, seleccionado en cada iteración la solución más localmente óptima se denominan algoritmos:",
+        "a": [
+          "Recursivos.",
+          "De vuelta atrás (algoritmos backtracking).",
+          "Divide y vencerás.",
+          "Voraces (algoritmos Greedy)."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10B-P1-39",
+        "t": "T2.03",
+        "o": "A",
+        "q": "El algoritmo de ordenación que consiste en seleccionar en cada iteración “i” el menor elemento de entre los que quedan por ordenar y lo intercambia por el elemento situado en la posición “i”, se denomina:",
+        "a": [
+          "Selección.",
+          "Burbuja.",
+          "Inserción.",
+          "Quicksort."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-43",
+        "t": "T2.03",
+        "o": "A",
+        "q": "En relación con el diseño físico de base de datos, señale la respuesta INCORRECTA:",
+        "a": [
+          "Si el fichero se va a actualizar mucho (inserción/eliminación) debemos reducir al mínimo el número de índices del fichero.",
+          "Una estructura común de índices en muchos sistemas gestores de bases de datos son los árboles B.",
+          "Debemos evitar técnicas de dispersión (hashing) sobre columnas poco actualizadas.",
+          "Para cada atributo (no de ordenación) que se use mucho en operaciones de selección o reunión, debemos crear un índice secundario."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11B-P1-40",
+        "t": "T2.03",
+        "o": "A",
+        "q": "Un árbol binario de búsqueda está ordenado por:",
+        "a": [
+          "El recorrido que se realice en preorden.",
+          "El orden de inserción de elementos en el árbol.",
+          "Una clave de ordenación.",
+          "El tercer hijo del nodo almacena la ordenación de cada hoja del árbol."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11B-P1-42",
+        "t": "T2.03",
+        "o": "A",
+        "q": "Indique qué característica se puede asociar al algoritmo de la burbuja:",
+        "a": [
+          "Algoritmo de búsqueda de complejidad cuadrática.",
+          "Algoritmo de ordenación de complejidad lineal.",
+          "Algoritmo de ordenación de complejidad cuadrática.",
+          "Algoritmo de búsqueda de complejidad logarítmica."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11B-P1-43",
+        "t": "T2.03",
+        "o": "A",
+        "q": "De entre las siguientes opciones, señale la técnica de compresión con pérdida:",
+        "a": [
+          "Portable Network Graphics (PNG).",
+          "Joint Photographic Experts Group (JPEG).",
+          "Free Lossless Audio Codec (FLAC).",
+          "Lempel-Ziv-Welch (LZW)."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11B-P1-R-02",
+        "t": "T2.03",
+        "o": "A",
+        "q": "La complejidad algorítmica representa:",
+        "a": [
+          "La cantidad de recursos (temporales) que necesita un algoritmo para resolver un problema.",
+          "La cantidad de esfuerzo que es necesaria para implementar un algoritmo.",
+          "La cantidad de recursos (memoria) que necesita un algoritmo para resolver un problema.",
+          "La cantidad de recursos (almacenamiento) que necesita un algoritmo para resolver un problema."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-24",
+        "t": "T2.03",
+        "o": "A",
+        "q": "En estructuras de datos, indique las operaciones disponibles para el manejo de datos en el tipo de datos pila:",
+        "a": [
+          "Apilar y crear.",
+          "Destruir y retirar.",
+          "Insertar al final, insertar al principio y retirar.",
+          "Apilar y retirar."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12B-P1-33",
+        "t": "T2.03",
+        "o": "A",
+        "q": "De entre las siguientes, la complejidad algorítmica más desfavorable es:",
+        "a": [
+          "O(log n).",
+          "O(en).",
+          "O(n2).",
+          "O(n3)."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          2
+        ],
+        "d": 1,
+        "n": "Complejidades algorítmicas.",
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    }
+  ],
+  "counts": {
+    "total": 479,
+    "alreadyHadCitation": 350,
+    "added": 4,
+    "pending": 125,
+    "withCitation": 354
+  }
+}

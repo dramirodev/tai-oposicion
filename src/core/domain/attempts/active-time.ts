@@ -8,6 +8,7 @@ const stops = new Set<AttemptEvent['type']>(['leave', 'pause', 'close']);
 
 interface ActiveTimeState {
   activeSince: number | null;
+  clockContext?: string;
   milliseconds: number;
   partial: boolean;
   intervals: number;
@@ -28,7 +29,7 @@ function processEvent(state: ActiveTimeState, event: AttemptEvent): void {
   }
   if (starts.has(event.type)) {
     if (state.activeSince !== null) state.partial = true;
-    else state.activeSince = monotonicAt;
+    else { state.activeSince = monotonicAt; state.clockContext = event.clockContext; }
     return;
   }
   if (!stops.has(event.type)) return;
@@ -36,7 +37,7 @@ function processEvent(state: ActiveTimeState, event: AttemptEvent): void {
     state.partial = true;
     return;
   }
-  if (monotonicAt < state.activeSince) {
+  if (state.clockContext !== event.clockContext || monotonicAt < state.activeSince) {
     state.partial = true;
     state.activeSince = null;
     return;

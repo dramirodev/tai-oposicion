@@ -1,3 +1,4 @@
+import { questionSemanticRevision } from '../../src/core/domain/attempts/question-semantic-revision.js';
 import { describe, expect, it } from 'vitest';
 import { summarizeAcademySectionPerformance } from '../../src/core/application/stats/academy-section-performance.ts';
 import { questionContentRevision } from '../../src/core/domain/attempts/highlights.ts';
@@ -9,13 +10,13 @@ const section = {
   sourceOrdinal: 1, sourceHash: hash('a'), materialKind: 'syllabus', outlineFingerprint: hash('b'), outlineStructureFingerprint: hash('c'), verification: 'pending',
 };
 const link = {
-  status: 'approved', questionId: question.id, contentRevision: questionContentRevision(question.statement, question.options),
+  status: 'approved', questionId: question.id, semanticRevision: questionSemanticRevision(question), contentRevision: questionContentRevision(question.statement, question.options),
   questionTopicId: question.topicId, testMaterialTopicId: 'T1.04', sectionTopicId: section.topicId, sectionId: section.id,
   testEvidence: { path: 'T1.04/test.pdf', sourceHash: hash('d'), page: 3 },
   sectionEvidence: { path: section.materialPath, sourceHash: section.sourceHash, outlineFingerprint: section.outlineFingerprint, page: section.printedPage },
   rationale: 'El test contiene evidencia precisa del concepto.', reviewedAt: 100, reviewer: 'editor-1',
 };
-const base = { sessionId: 'session-1', questionId: question.id, contentRevision: link.contentRevision, mode: 'practice', position: 0,
+const base = { sessionId: 'session-1', questionId: question.id, contentRevision: link.contentRevision, semanticRevision: link.semanticRevision, mode: 'practice', position: 0,
   exposure: 1, state: 'answered', response: 0, confidence: null, discardedOptions: [], highlights: [], createdAt: 100,
   lastSequence: 2, appliedEventIds: [], terminalEventId: 'answer' };
 const input = (overrides = {}) => ({
@@ -70,4 +71,27 @@ describe('objective academy section performance', () => {
     }));
     expect(result).toEqual({ status: 'no-current-links', rows: [], staleLinks: 1 });
   });
+});
+
+it('does not silently attribute old text-only attempts or a changed answer key', () => {
+  const old = { ...base, id: 'old', semanticRevision: undefined, outcome: 'wrong', completedAt: 300 };
+  expect(summarizeAcademySectionPerformance(input({ attempts: [old] }))).toMatchObject({ status: 'ready', rows: [{ practice: { observedQuestions: 0 } }] });
+  expect(summarizeAcademySectionPerformance(input({ questions: [{ ...question, correctIndex: 1 }] }))).toMatchObject({ status: 'no-current-links', staleLinks: 1 });
+});
+it('supports v3 curriculum-only evidence and rejects changed context/source', () => {
+  const { testEvidence, testMaterialTopicId, ...curriculum } = link;
+  const manifest = { schemaVersion: 3, revision: 'fixture-v3', links: [{ ...curriculum, evidence: { kind: 'curriculum-only' } }] };
+  expect(summarizeAcademySectionPerformance(input({ manifest, availableTestMaterials: new Map() }))).toMatchObject({ status: 'ready', rows: [{ linkedQuestions: 1 }] });
+  expect(summarizeAcademySectionPerformance(input({ manifest, questions: [{ ...question, context: 'Nuevo supuesto' }] })).status).toBe('no-current-links');
+  expect(summarizeAcademySectionPerformance(input({ manifest, questions: [{ ...question, source: { url: 'new-source', verified: true } }] })).status).toBe('no-current-links');
+});
+it('breaks equal error-count and recency ties by section ID, not title or input order', () => {
+  const first = { ...section, id: 'ci-11111111111111111111', title: 'Zeta' };
+  const second = { ...section, id: 'ci-22222222222222222222', title: 'Alfa' };
+  const other = { ...question, id: 'q-2' };
+  const firstLink = { ...link, sectionId: first.id };
+  const secondLink = { ...link, questionId: other.id, sectionId: second.id };
+  const result = summarizeAcademySectionPerformance(input({ manifest: { schemaVersion: 2, revision: 'tie-fixture', links: [secondLink, firstLink] }, questions: [question, other], sections: [second, first],
+    attempts: [{ ...base, id: 'a-1', outcome: 'wrong', completedAt: 200 }, { ...base, id: 'a-2', questionId: other.id, outcome: 'wrong', completedAt: 200 }] }));
+  expect(result.rows.map(row => row.sectionId)).toEqual([first.id, second.id]);
 });

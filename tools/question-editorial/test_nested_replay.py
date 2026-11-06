@@ -144,7 +144,7 @@ class NestedReplayTests(unittest.TestCase):
 
 class CheckedInReplayTests(unittest.TestCase):
     def test_real_languages_web_chain_preserves_other_scenarios(self):
-        from historical_bank import copy_release_boundary
+        from historical_bank import copy_release_boundary, citation_base
         with tempfile.TemporaryDirectory() as temporary:
             folder=copy_release_boundary(Path(temporary),'reviewed-web23')
             batches=('reviewed-languages17','reviewed-web23')
@@ -152,7 +152,7 @@ class CheckedInReplayTests(unittest.TestCase):
             names={n for ledger in ledgers.values() for n in ledger['files']}
             for name in names:
                 if not (folder/name).exists():
-                    (folder/name).write_bytes((ROOT/'public/data'/name).read_bytes())
+                    (folder/name).write_bytes(citation_base(name, (ROOT/'public/data'/name).read_bytes()))
             snapshot=lambda:{n:(folder/n).read_bytes() for n in names}
             final=snapshot()
             for batch in reversed(batches):

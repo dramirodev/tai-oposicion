@@ -1,0 +1,3574 @@
+{
+  "schemaVersion": 1,
+  "topicId": "T2.05",
+  "baseCommit": "454a025ae26390dee0f057a4cfa9b6d5fc758fba",
+  "status": "CITATIONS_ACCEPTED_UNDER_USER_DELEGATION",
+  "scope": "Solo adición de citas para lectura; no concede nueva puntuabilidad ni altera pruebas editoriales previas.",
+  "file": {
+    "beforeSha256": "9a2b3d399046cf71e2b4001feb9f8eddc443adc6d83a8fabfa7b11f7b7070ef4",
+    "afterSha256": "f6080732d8ab7535abb6f55fa67aaccb28f65c3354a138ae492823aeb640d2f0"
+  },
+  "sample": {
+    "beforeSha256": "5400a17086fd2e4be4b9e33725fed7288b58bd0a14bfb18d33e51d58ccb92cc6",
+    "afterSha256": "5400a17086fd2e4be4b9e33725fed7288b58bd0a14bfb18d33e51d58ccb92cc6"
+  },
+  "sourceRoot": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario",
+  "sources": {
+    "e-TAIL2022-P1-33": {
+      "path": "T2.05 SGBD/T2.05 SGBD - Temario.pdf",
+      "sourceHash": "0b059be5a4bca8dc8ecf2dbffd7a73005d58b493c4adb42574533760e755c4a0",
+      "physicalPage": 5,
+      "printedPage": 5,
+      "excerpt": "Del ejemplo visto, se desprenden las propiedades que deben cumplir las transacciones: - ATOMICIDAD: una transacción es una unidad atómica de ejecución. O se ejecutan todas sus operaciones o ninguna. - CONSISTENCIA: la transacción debe dar lugar a un estado de la BD consistente, cumpliéndose todas las restricciones de integridad, es decir, nunca dejará datos inconsistentes. - AISLAMIENTO: las modificaciones introducidas por una transacción no confirmada no son visibles al resto de transacciones. - DURABILIDAD: la confirmación implica la grabación de los cambios introducidos en la BD, de modo que serán permanentes. A estas propiedades se las suele conocer como propiedades ACID por sus siglas en inglés: Atomicity, Consistency, Isolation y Durability.",
+      "label": "Transacciones — propiedades ACID"
+    },
+    "e-TAIL2022-P1-35": {
+      "path": "T2.05 SGBD/T2.05 SGBD - Temario.pdf",
+      "sourceHash": "0b059be5a4bca8dc8ecf2dbffd7a73005d58b493c4adb42574533760e755c4a0",
+      "physicalPage": 18,
+      "printedPage": 18,
+      "excerpt": "Conviene resaltar Machine Learning Services que es una característica de SQL Server que proporciona la capacidad de ejecutar scripts de Python y R con datos relacionales.",
+      "label": "Pasaje del temario"
+    },
+    "e-AS03-P1-43": {
+      "path": "T2.05 SGBD/T2.05 SGBD - Temario.pdf",
+      "sourceHash": "0b059be5a4bca8dc8ecf2dbffd7a73005d58b493c4adb42574533760e755c4a0",
+      "physicalPage": 3,
+      "printedPage": 3,
+      "excerpt": "Funciones Las funciones principales de un SGBD son: - Permitir la descripción unificada de los datos que integran la base de datos, su estructura y las relaciones que existen entre ellos, así como la definición de vistas parciales de los datos para distintos usuarios; ofreciendo flexibilidad en la definición del modelo. Esta función es llevada a cabo por medio del Lenguaje de Definición de Datos (DDL). - Facilitar la manipulación de los datos, es decir, el manejo de grandes volúmenes de datos, permitiendo a los usuarios de la base de datos añadir, buscar, suprimir o modificar los datos de la misma. Se lleva a cabo por medio del Lenguaje de Manipulación de Datos (DML). - Proporcionar un catálogo (diccionario de datos). - Garantizar la independencia física y lógica de las aplicaciones/usuarios respecto a la representación física de los datos. - Garantizar la seguridad y confidencialidad de la base de datos, mediante el control de acceso de los usuarios a la base de datos y la limitación del acceso a los datos gracias a un sistema de derechos o privilegios, a través del Lenguaje de Control de Datos (DCL). - Garantizar la integridad (consistencia) de los datos. Por una parte, asegura que los datos se almacenan correctamente y, por otra, que las actualizaciones de los usuarios sobre la BD se ejecutan correctamente y que se hacen permanentes. - Garantizar el acceso concurrente a los datos. Permitir que varios usuarios puedan utilizar los mismos datos sin que se produzcan problemas en los accesos simultáneos. - Proporcionar mecanismos para la recuperación ante fallos. - Ofrecer escalabilidad. - Facilitar estadísticas al vuelo de la explotación de la base de datos, donde se pueda observar su rendimiento.",
+      "label": "Pasaje del temario"
+    },
+    "e-AS08B-P1-44": {
+      "path": "T2.05 SGBD/T2.05 SGBD - Temario.pdf",
+      "sourceHash": "0b059be5a4bca8dc8ecf2dbffd7a73005d58b493c4adb42574533760e755c4a0",
+      "physicalPage": 28,
+      "printedPage": 28,
+      "excerpt": "7. Bigtable (orientada a columnas) Bigtable es un SGBD NoSQL orientado a columnas creado por Google. Como características destacan que es distribuido y la alta eficiencia que ofrece.",
+      "label": "Pasaje del temario"
+    },
+    "e-AS09B-P1-35": {
+      "path": "T2.05 SGBD/T2.05 SGBD - Temario.pdf",
+      "sourceHash": "0b059be5a4bca8dc8ecf2dbffd7a73005d58b493c4adb42574533760e755c4a0",
+      "physicalPage": 18,
+      "printedPage": 18,
+      "excerpt": "10. Aurora Amazon Aurora es una SGBD relacional compatible con MySQL y PostgreSQL creada para la nube. Combina el rendimiento y la disponibilidad de las bases de datos empresariales tradicionales con la simplicidad y la rentabilidad de las bases de datos de código abierto.",
+      "label": "Pasaje del temario"
+    },
+    "e-AS09B-P1-47": {
+      "path": "T2.05 SGBD/T2.05 SGBD - Temario.pdf",
+      "sourceHash": "0b059be5a4bca8dc8ecf2dbffd7a73005d58b493c4adb42574533760e755c4a0",
+      "physicalPage": 7,
+      "printedPage": 7,
+      "excerpt": "Según el nivel de error que se considere aceptable en nuestro sistema, se establecerá el NIVEL DE AISLAMIENTO necesario para evitar alguno o todos los problemas descritos en el apartado anterior. Los niveles de aislamiento de las transacciones contemplados en ANSI SQL-92 son (de menor a mayor nivel de aislamiento): - Lectura NO COMPROMETIDA (read uncommitted): los cambios realizados por las transacciones se encuentran disponibles inmediatamente. También denominada lectura no confirmada. - Lectura COMPROMETIDA (read committed): los cambios realizados por las transacciones sólo se encuentran a disposición del resto cuando se comprometen (se realiza un commit). Previene solo las lecturas sucias. También denominada lectura confirmada.",
+      "label": "Pasaje del temario"
+    },
+    "e-AS10-P1-43": {
+      "path": "T2.05 SGBD/T2.05 SGBD - Temario.pdf",
+      "sourceHash": "0b059be5a4bca8dc8ecf2dbffd7a73005d58b493c4adb42574533760e755c4a0",
+      "physicalPage": 27,
+      "printedPage": 27,
+      "excerpt": "MongoDB es un SBGD NoSQL orientado a documentos que almacena la información en estructuras BSON (basado en JSON) con un esquema dinámico que permite su facilidad de integración.",
+      "label": "MongoDB — modelo documental BSON"
+    }
+  },
+  "questions": [
+    {
+      "id": "TAIL2022-P1-33",
+      "before": {
+        "i": "TAIL2022-P1-33",
+        "t": "T2.05",
+        "o": "O",
+        "q": "Las bases de datos relacionales ofrecen propiedades ACID. Dicho acrónimo se refiere a:",
+        "a": [
+          "Atomicidad, Consistencia, Aislamiento y Durabilidad.",
+          "Atomicidad, Coherencia, Integridad y Distribución.",
+          "Disponibilidad, Coherencia, Intensidad y Durabilidad.",
+          "Atomicidad, Consistencia, Aislamiento y Disponibilidad."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          9
+        ],
+        "d": 1,
+        "n": "ACID con una palabra cambiada (Disponibilidad, Coherencia): ejemplo del catálogo (8).",
+        "y": "Ingreso libre OEP 2022 (2023)"
+      },
+      "after": {
+        "i": "TAIL2022-P1-33",
+        "t": "T2.05",
+        "o": "O",
+        "q": "Las bases de datos relacionales ofrecen propiedades ACID. Dicho acrónimo se refiere a:",
+        "a": [
+          "Atomicidad, Consistencia, Aislamiento y Durabilidad.",
+          "Atomicidad, Coherencia, Integridad y Distribución.",
+          "Disponibilidad, Coherencia, Intensidad y Durabilidad.",
+          "Atomicidad, Consistencia, Aislamiento y Disponibilidad."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          9
+        ],
+        "d": 1,
+        "n": "ACID con una palabra cambiada (Disponibilidad, Coherencia): ejemplo del catálogo (8).",
+        "y": "Ingreso libre OEP 2022 (2023)",
+        "u": "T2.05 SGBD - Temario.pdf — Transacciones — propiedades ACID\n\nTemario, p. 5 (PDF p. 5)\n\nDel ejemplo visto, se desprenden las propiedades que deben cumplir las transacciones: - ATOMICIDAD: una transacción es una unidad atómica de ejecución. O se ejecutan todas sus operaciones o ninguna. - CONSISTENCIA: la transacción debe dar lugar a un estado de la BD consistente, cumpliéndose todas las restricciones de integridad, es decir, nunca dejará datos inconsistentes. - AISLAMIENTO: las modificaciones introducidas por una transacción no confirmada no son visibles al resto de transacciones. - DURABILIDAD: la confirmación implica la grabación de los cambios introducidos en la BD, de modo que serán permanentes. A estas propiedades se las suele conocer como propiedades ACID por sus siglas en inglés: Atomicity, Consistency, Isolation y Durability.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "3c196bd81430866329e160e19b3477c188b3959941ef942236306603c1408d3a",
+      "afterSha256": "9469bdc701fe701c8c5730c813cc467d309a66f214c057b788ad39cff9a4762c",
+      "evidenceKeys": [
+        "e-TAIL2022-P1-33"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "TAIL2022-P1-35",
+      "before": {
+        "i": "TAIL2022-P1-35",
+        "t": "T2.05",
+        "o": "O",
+        "q": "Señale qué es el Machine Learning Services para SQL Server:",
+        "a": [
+          "Es un conjunto de tecnologías destinadas a la copia y distribución de datos y objetos de base de datos desde una base de datos a otra, para luego sincronizar ambas bases de datos y mantener su coherencia.",
+          "Es una característica de SQL Server que proporciona la capacidad de ejecutar scripts de Python y R con datos relacionales.",
+          "Es un producto de calidad de datos basado en conocimiento.",
+          "Es el servicio principal para almacenar, procesar y proteger los datos."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Distractores = definiciones de otros servicios de SQL Server.",
+        "y": "Ingreso libre OEP 2022 (2023)"
+      },
+      "after": {
+        "i": "TAIL2022-P1-35",
+        "t": "T2.05",
+        "o": "O",
+        "q": "Señale qué es el Machine Learning Services para SQL Server:",
+        "a": [
+          "Es un conjunto de tecnologías destinadas a la copia y distribución de datos y objetos de base de datos desde una base de datos a otra, para luego sincronizar ambas bases de datos y mantener su coherencia.",
+          "Es una característica de SQL Server que proporciona la capacidad de ejecutar scripts de Python y R con datos relacionales.",
+          "Es un producto de calidad de datos basado en conocimiento.",
+          "Es el servicio principal para almacenar, procesar y proteger los datos."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Distractores = definiciones de otros servicios de SQL Server.",
+        "y": "Ingreso libre OEP 2022 (2023)",
+        "u": "T2.05 SGBD - Temario.pdf — Pasaje del temario\n\nTemario, p. 18 (PDF p. 18)\n\nConviene resaltar Machine Learning Services que es una característica de SQL Server que proporciona la capacidad de ejecutar scripts de Python y R con datos relacionales.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "accaee354e1bc5f902e0700df3d89a927a7b78aa7793dd06b908086a51576faf",
+      "afterSha256": "7da6ce8ebce3219936e25bbd105186496d7048b24dcd07f8f8d50b1965ddbd27",
+      "evidenceKeys": [
+        "e-TAIL2022-P1-35"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AS03-P1-43",
+      "before": {
+        "i": "AS03-P1-43",
+        "t": "T2.05",
+        "o": "A",
+        "q": "Al lenguaje que interactúa con el sistema gestor de base de datos y permite recuperar, insertar, eliminar y modificar la información existente se le denomina:",
+        "a": [
+          "De manipulación de datos.",
+          "De definición de datos.",
+          "De control de datos.",
+          "De carga de datos."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AS03-P1-43",
+        "t": "T2.05",
+        "o": "A",
+        "q": "Al lenguaje que interactúa con el sistema gestor de base de datos y permite recuperar, insertar, eliminar y modificar la información existente se le denomina:",
+        "a": [
+          "De manipulación de datos.",
+          "De definición de datos.",
+          "De control de datos.",
+          "De carga de datos."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T2.05 SGBD - Temario.pdf — Pasaje del temario\n\nTemario, p. 3 (PDF p. 3)\n\nFunciones Las funciones principales de un SGBD son: - Permitir la descripción unificada de los datos que integran la base de datos, su estructura y las relaciones que existen entre ellos, así como la definición de vistas parciales de los datos para distintos usuarios; ofreciendo flexibilidad en la definición del modelo. Esta función es llevada a cabo por medio del Lenguaje de Definición de Datos (DDL). - Facilitar la manipulación de los datos, es decir, el manejo de grandes volúmenes de datos, permitiendo a los usuarios de la base de datos añadir, buscar, suprimir o modificar los datos de la misma. Se lleva a cabo por medio del Lenguaje de Manipulación de Datos (DML). - Proporcionar un catálogo (diccionario de datos). - Garantizar la independencia física y lógica de las aplicaciones/usuarios respecto a la representación física de los datos. - Garantizar la seguridad y confidencialidad de la base de datos, mediante el control de acceso de los usuarios a la base de datos y la limitación del acceso a los datos gracias a un sistema de derechos o privilegios, a través del Lenguaje de Control de Datos (DCL). - Garantizar la integridad (consistencia) de los datos. Por una parte, asegura que los datos se almacenan correctamente y, por otra, que las actualizaciones de los usuarios sobre la BD se ejecutan correctamente y que se hacen permanentes. - Garantizar el acceso concurrente a los datos. Permitir que varios usuarios puedan utilizar los mismos datos sin que se produzcan problemas en los accesos simultáneos. - Proporcionar mecanismos para la recuperación ante fallos. - Ofrecer escalabilidad. - Facilitar estadísticas al vuelo de la explotación de la base de datos, donde se pueda observar su rendimiento.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "7c82152a06aef58e228489fe5e4bd91860c0874c9f3a16bac82865a9322c942a",
+      "afterSha256": "1577c269f961309bb90ea117c64a6b8309a3be782418adc71cef106e2d0a490e",
+      "evidenceKeys": [
+        "e-AS03-P1-43"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AS08B-P1-44",
+      "before": {
+        "i": "AS08B-P1-44",
+        "t": "T2.05",
+        "o": "A",
+        "q": "¿De qué tipo de base de datos NoSQL es BigTable?",
+        "a": [
+          "Clave-valor.",
+          "Orientado a columnas.",
+          "Documentos.",
+          "Grafos."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AS08B-P1-44",
+        "t": "T2.05",
+        "o": "A",
+        "q": "¿De qué tipo de base de datos NoSQL es BigTable?",
+        "a": [
+          "Clave-valor.",
+          "Orientado a columnas.",
+          "Documentos.",
+          "Grafos."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "T2.05 SGBD - Temario.pdf — Pasaje del temario\n\nTemario, p. 28 (PDF p. 28)\n\n7. Bigtable (orientada a columnas) Bigtable es un SGBD NoSQL orientado a columnas creado por Google. Como características destacan que es distribuido y la alta eficiencia que ofrece.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "dd244332517d61ee5a220129d03a704f46ae5174894d7b99ec11d98260277162",
+      "afterSha256": "731b58cfb6bf5e8353dfdcddaf9e9253beb7ddc587a7807178954bf1446cdc91",
+      "evidenceKeys": [
+        "e-AS08B-P1-44"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AS09B-P1-35",
+      "before": {
+        "i": "AS09B-P1-35",
+        "t": "T2.05",
+        "o": "A",
+        "q": "¿Cuál es un sistema gestor de base de datos relacional?",
+        "a": [
+          "MongoDB.",
+          "Amazon Aurora.",
+          "Neo4j.",
+          "Redis."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AS09B-P1-35",
+        "t": "T2.05",
+        "o": "A",
+        "q": "¿Cuál es un sistema gestor de base de datos relacional?",
+        "a": [
+          "MongoDB.",
+          "Amazon Aurora.",
+          "Neo4j.",
+          "Redis."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "T2.05 SGBD - Temario.pdf — Pasaje del temario\n\nTemario, p. 18 (PDF p. 18)\n\n10. Aurora Amazon Aurora es una SGBD relacional compatible con MySQL y PostgreSQL creada para la nube. Combina el rendimiento y la disponibilidad de las bases de datos empresariales tradicionales con la simplicidad y la rentabilidad de las bases de datos de código abierto.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "c725585c463eeda3ea0dd4ed25a04a7313185abcb910ca055f7c6d46b9c42ffa",
+      "afterSha256": "4b98aa2155512c32ae592f924e1849d2d3fdcdab5481ab168885a27db9fb5da9",
+      "evidenceKeys": [
+        "e-AS09B-P1-35"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AS09B-P1-47",
+      "before": {
+        "i": "AS09B-P1-47",
+        "t": "T2.05",
+        "o": "A",
+        "q": "¿En qué nivel de aislamiento de una transacción SQL puede ocurrir una violación del tipo Lectura sucia?",
+        "a": [
+          "SERIALIZABLE.",
+          "REPEATABLE READ.",
+          "READ COMMITTED.",
+          "READ UNCOMMITTED."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "after": {
+        "i": "AS09B-P1-47",
+        "t": "T2.05",
+        "o": "A",
+        "q": "¿En qué nivel de aislamiento de una transacción SQL puede ocurrir una violación del tipo Lectura sucia?",
+        "a": [
+          "SERIALIZABLE.",
+          "REPEATABLE READ.",
+          "READ COMMITTED.",
+          "READ UNCOMMITTED."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1,
+        "u": "T2.05 SGBD - Temario.pdf — Pasaje del temario\n\nTemario, p. 7 (PDF p. 7)\n\nSegún el nivel de error que se considere aceptable en nuestro sistema, se establecerá el NIVEL DE AISLAMIENTO necesario para evitar alguno o todos los problemas descritos en el apartado anterior. Los niveles de aislamiento de las transacciones contemplados en ANSI SQL-92 son (de menor a mayor nivel de aislamiento): - Lectura NO COMPROMETIDA (read uncommitted): los cambios realizados por las transacciones se encuentran disponibles inmediatamente. También denominada lectura no confirmada. - Lectura COMPROMETIDA (read committed): los cambios realizados por las transacciones sólo se encuentran a disposición del resto cuando se comprometen (se realiza un commit). Previene solo las lecturas sucias. También denominada lectura confirmada.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "eb47d3f2beaabd88451b310a36e296da12b410d67e58840c7d8e4f16aecf9958",
+      "afterSha256": "c11b208db6a824bdecab576f8f2decbc311887315ec0d13511d09e5db6d04c7e",
+      "evidenceKeys": [
+        "e-AS09B-P1-47"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    },
+    {
+      "id": "AS10-P1-43",
+      "before": {
+        "i": "AS10-P1-43",
+        "t": "T2.05",
+        "o": "A",
+        "q": "La base de datos NoSQL MongoDB es de tipo:",
+        "a": [
+          "Orientada a documentos.",
+          "Orientada a columnas.",
+          "Clave-valor.",
+          "En grafo."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AS10-P1-43",
+        "t": "T2.05",
+        "o": "A",
+        "q": "La base de datos NoSQL MongoDB es de tipo:",
+        "a": [
+          "Orientada a documentos.",
+          "Orientada a columnas.",
+          "Clave-valor.",
+          "En grafo."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "T2.05 SGBD - Temario.pdf — MongoDB — modelo documental BSON\n\nTemario, p. 27 (PDF p. 27)\n\nMongoDB es un SBGD NoSQL orientado a documentos que almacena la información en estructuras BSON (basado en JSON) con un esquema dinámico que permite su facilidad de integración.\n\nPara interpretar la respuesta: Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+      },
+      "beforeSha256": "9dc56fafb0d5d1b04b4d95b18744c7ca935cee1eb71c065a8e5e12bc3849badb",
+      "afterSha256": "7a58842ce1b2fd512e80ed4921875bf55b53ed0b97f8e675e77a96cadc45ec0f",
+      "evidenceKeys": [
+        "e-AS10-P1-43"
+      ],
+      "rationale": "Cotejado enunciado, clave, alternativas y pasaje: la evidencia respalda la respuesta con las condiciones del material."
+    }
+  ],
+  "pending": [
+    {
+      "question": {
+        "i": "TAI2024B-P1-28",
+        "t": "T2.05",
+        "o": "O",
+        "q": "¿Qué es el lenguaje OQL en el contexto de las bases de datos orientadas a objetos?",
+        "a": [
+          "OQL no es un lenguaje en el contexto de las bases de datos orientadas a objetos.",
+          "Un lenguaje de definición de datos.",
+          "Un lenguaje de consulta de datos.",
+          "Un lenguaje de manipulación de datos."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          7,
+          12
+        ],
+        "d": 1,
+        "n": "OQL frente a ODL/OML; a) niega que sea un lenguaje. Transcripción normalizada: el PDF repite «de datos» al final de la opción c.",
+        "y": "Ingreso libre OEP 2023-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAI2024B-P1-29",
+        "t": "T2.05",
+        "o": "O",
+        "q": "¿Cuál de los siguientes es un Sistema de Gestión de Bases de Datos Orientadas a Objetos (SGDBOO)?",
+        "a": [
+          "Cézanne.",
+          "Picasso.",
+          "Matisse.",
+          "Rembrandt."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          9
+        ],
+        "d": 2,
+        "n": "Matisse frente a otros pintores: memorización pura del nombre comercial.",
+        "y": "Ingreso libre OEP 2023-2024 (2024)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAIL2022-P1-34",
+        "t": "T2.05",
+        "o": "O",
+        "q": "Entre las características obligatorias de un sistema gestor de bases de datos orientadas a objetos, NO se encuentra:",
+        "a": [
+          "Debe permitir construir objetos complejos.",
+          "El conjunto de tipos de datos debe ser fijo, consiguiendo así mayor eficiencia en las búsquedas.",
+          "Todos los objetos deben tener un identificador que sea independiente de los valores de sus atributos.",
+          "El esquema de una BDOO incluye únicamente un conjunto de clases (o de tipos)."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [
+          12
+        ],
+        "d": 2,
+        "n": "\"Debe ser fijo\": restricción falsa añadida.",
+        "y": "Ingreso libre OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAIL2022-P1-42",
+        "t": "T2.05",
+        "o": "O",
+        "q": "Señale la respuesta INCORRECTA. Los tipos más corrientes de anomalías de base de datos son:",
+        "a": [
+          "Lecturas no repetibles.",
+          "Lecturas hundidas.",
+          "Lecturas sucias.",
+          "Lecturas fantasma."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [
+          9
+        ],
+        "d": 1,
+        "n": "\"Lecturas hundidas\" inventado entre anomalías reales.",
+        "y": "Ingreso libre OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "TAIL2022-P1-R-03",
+        "t": "T2.05",
+        "o": "O",
+        "q": "Señale qué paquete R en SQL Server Machine Learning Services permite realizar transformaciones y manipulaciones de datos, resúmenes estadísticos, visualizaciones y muchas formas de modelado:",
+        "a": [
+          "Revoscalepy",
+          "Microsoftml",
+          "Revoscaler",
+          "SqlRutils"
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          9
+        ],
+        "d": 3,
+        "n": "RevoScaleR frente a revoscalepy (versión Python): un carácter de diferencia.",
+        "y": "Ingreso libre OEP 2022 (2023)",
+        "r": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2019-P1-34",
+        "t": "T2.05",
+        "o": "O",
+        "q": "¿Cuál de las siguientes opciones NO se corresponde con una de las 12 Reglas de Codd?",
+        "a": [
+          "Regla de la no subversión. Si el sistema ofrece una interfaz de acceso a bajo nivel, dicho acceso no se podrá usar para subvertir el sistema (por ejemplo para sortear restricciones de integridad o seguridad).",
+          "Tratamiento sistemático de valores nulos. El sistema debe permitir que haya campos nulos. Se debe disponer de una representación de valores desconocidos y no aplicables diferente de los valores normales.",
+          "Dependencia de la distribución. Que la base de datos se almacene o gestione de forma distribuida en varios servidores afecta al uso de la misma y a la programación de las aplicaciones de usuario.",
+          "Catálogo dinámico en línea basado en el modelo relacional. El sistema debe soportar un catálogo en línea, el catálogo relacional, que da acceso a la estructura de la base de datos y que debe ser accesible a los usuarios autorizados."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [
+          9,
+          8
+        ],
+        "d": 2,
+        "n": "\"Dependencia de la distribución\" invierte la regla de independencia de Codd.",
+        "y": "Ingreso libre OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2019-P1-43",
+        "t": "T2.05",
+        "o": "O",
+        "q": "Si utilizamos el gestor de base de datos Oracle (v.10g), ¿qué podríamos hacer si dentro de una transacción de la base de datos se quiere establecer un punto de recuperación?",
+        "a": [
+          "Utilizar la sentencia SAVEPOINT y así definir un punto de salvaguarda dentro de una transacción.",
+          "Utilizar la sentencia ROLLBACK y así definir un punto de salvaguarda dentro de una transacción",
+          "Usar los comandos GRANT para dar permisos adecuados de administrador DBA sobre las tablas.",
+          "Utilizar la sentencia RECOVERPOINT y así definir un punto de salvaguarda dentro de una transacción."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7,
+          9
+        ],
+        "d": 1,
+        "n": "SAVEPOINT frente a ROLLBACK y RECOVERPOINT inventado.",
+        "y": "Ingreso libre OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025A-P1-33",
+        "t": "T2.05",
+        "o": "O",
+        "q": "¿Cuál de las siguientes bases de datos utiliza Cypher como lenguaje de consulta de información?",
+        "a": [
+          "MongoDB.",
+          "CouchDB.",
+          "Cassandra.",
+          "Neo4j."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Bases NoSQL hermanas (Cypher → Neo4j).",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025A-P1-34",
+        "t": "T2.05",
+        "o": "O",
+        "q": "En el contexto de las bases de datos orientadas a objetos, ¿cuál de los siguientes NO es considerado un constructor de tipo de colección?",
+        "a": [
+          "Columna.",
+          "Array.",
+          "Bolsa.",
+          "Lista."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [
+          13
+        ],
+        "d": 2,
+        "n": "\"Columna\" no es constructor de colección.",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025A-P1-35",
+        "t": "T2.05",
+        "o": "O",
+        "q": "En el contexto de las bases de datos orientadas a objetos, y en relación con el identificador de objeto único (OID), ¿cuál de las siguientes opciones es correcta?",
+        "a": [
+          "Es visible para el usuario externo.",
+          "Puede depender de atributos del objeto.",
+          "Está generado por el sistema.",
+          "Está almacenado en el programa de aplicación que declara el objeto."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          8
+        ],
+        "d": 2,
+        "n": "OID: rasgos opuestos.",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025A-P1-36",
+        "t": "T2.05",
+        "o": "O",
+        "q": "Indique cuál de las siguientes opciones se corresponde con tipos de bases de datos NoSQL:",
+        "a": [
+          "Sistemáticos y documentales.",
+          "Clave-valor y sistemáticos.",
+          "Documentales y clave-valor.",
+          "Grafos y metodológicas."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          9
+        ],
+        "d": 1,
+        "n": "Pares con un tipo NoSQL inventado (\"sistemáticos\", \"metodológicas\").",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025A-P1-37",
+        "t": "T2.05",
+        "o": "O",
+        "q": "En el modelo de datos dimensional de Kimball, una dimensión outrigger es:",
+        "a": [
+          "Una tabla de hechos enlazada en otra tabla de hechos.",
+          "Una tabla de dimensión enlazada en otra tabla de dimensión.",
+          "Una tabla de dimensión enlazada en una tabla de hechos.",
+          "Una tabla de hechos enlazada en una tabla de dimensión."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          8
+        ],
+        "d": 3,
+        "n": "Dimensión outrigger: matriz hechos/dimensión.",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025X-P1-33",
+        "t": "T2.05",
+        "o": "O",
+        "q": "De las siguientes afirmaciones sobre bases de datos relacionales, indique cuál de ellas es INCORRECTA:",
+        "a": [
+          "Se llama clave primaria o clave principal a un campo o a una combinación de campos que identifica de forma única a cada fila de una tabla.",
+          "Un dominio es el conjunto válido de valores que puede tomar un atributo.",
+          "Una superclave es cualquier conjunto de atributos que identifica unívocamente a cada tupla de una relación.",
+          "Las bases de datos relacionales utilizan un método simple de clave-valor para almacenar datos."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [
+          11
+        ],
+        "d": 1,
+        "n": "El modelo clave-valor es NoSQL, no relacional.",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025X-P1-34",
+        "t": "T2.05",
+        "o": "O",
+        "q": "Señale cuál de las siguientes es una base datos orientada a grafos:",
+        "a": [
+          "DynamoDB.",
+          "CouchDB.",
+          "JanusGraph.",
+          "HBase."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Bases NoSQL hermanas.",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2025X-P1-39",
+        "t": "T2.05",
+        "o": "O",
+        "q": "En relación a los niveles de aislamiento de transacción que se definen mediante ANSI SQL, indique cuál de las siguientes sentencias es correcta:",
+        "a": [
+          "La lectura repetible protege contra la lectura sucia y la lectura no repetible, pero no contra la lectura fantasma.",
+          "La lectura no confirmada protege contra la lectura sucia, pero no contra la lectura no repetible, ni contra la lectura fantasma.",
+          "La lectura confirmada no protege contra la lectura sucia, ni contra la lectura no repetible, ni contra la lectura fantasma.",
+          "Serializable protege contra la lectura sucia y la lectura fantasma, pero no contra la lectura no repetible."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          8
+        ],
+        "d": 3,
+        "n": "Niveles de aislamiento con protecciones cruzadas.",
+        "y": "Ingreso libre convocatoria 2025 (extraordinario)",
+        "p": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2019-P1-21",
+        "t": "T2.05",
+        "o": "O",
+        "q": "Indique cuál de las siguientes NO es una de las Reglas de Codd:",
+        "a": [
+          "Regla de la independencia física de los datos.",
+          "Regla de no subversión.",
+          "Regla de la inserción, actualización y supresión de bajo nivel.",
+          "Regla de la actualización de vistas."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [
+          9
+        ],
+        "d": 2,
+        "n": "Regla de Codd deformada.",
+        "y": "Promoción interna OEP 2019"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2022-P1-19",
+        "t": "T2.05",
+        "o": "O",
+        "q": "Relacionado con las bases de datos, cuál es el significado del término CRUD:",
+        "a": [
+          "Create, Rename, Used and Delete.",
+          "Create, Read, Used and Drop.",
+          "Create, Read, Update and Delete.",
+          "Create, Reload, Update and Delete."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          9
+        ],
+        "d": 1,
+        "n": "Expansiones de CRUD cambiadas.",
+        "y": "Promoción interna OEP 2022 (2023)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "P2025A-P1-35",
+        "t": "T2.05",
+        "o": "O",
+        "q": "En el contexto de las transacciones en bases de datos, la propiedad de aislamiento implica que:",
+        "a": [
+          "Una transacción debe ejecutarse completamente o no ejecutarse en absoluto.",
+          "Los cambios confirmados por una transacción deben mantenerse incluso ante fallos del sistema.",
+          "Las transacciones concurrentes no deben interferir entre sí de forma que se comprometa la consistencia de los datos.",
+          "Tras finalizar una transacción, los datos deben cumplir todas las restricciones definidas en la base de datos."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 1,
+        "n": "Propiedades ACID cruzadas.",
+        "y": "Promoción interna convocatoria 2025"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2018-P1-38",
+        "t": "T2.05",
+        "o": "O",
+        "q": "¿Cuál de las siguientes opciones NO es una Base de Datos NoSQL?",
+        "a": [
+          "Riak.",
+          "DynamoDB.",
+          "Aurora.",
+          "Redis."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [
+          13
+        ],
+        "d": 2,
+        "n": "Aurora (relacional) entre NoSQL.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2018-P1-39",
+        "t": "T2.05",
+        "o": "O",
+        "q": "En relación al gestor de base de datos ORACLE, señale la correcta:",
+        "a": [
+          "Un tablespace es una unidad lógica de almacenamiento.",
+          "Un datafile (archivo de datos) puede pertenecer a varios tablespace.",
+          "Un segmento es la unidad mínima de almacenamiento físico.",
+          "Una extensión es una agrupación de índices multinivel."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          8,
+          7
+        ],
+        "d": 2,
+        "n": "Oracle: tablespace/datafile/segmento con relaciones invertidas.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2018-P1-47",
+        "t": "T2.05",
+        "o": "O",
+        "q": "En PostgreSQL 9.2, una vez conectado al terminal interactivo de PostgreSQL mediante el comando psql, ¿qué opción se puede ejecutar para obtener las bases de datos disponibles?",
+        "a": [
+          "Show databases;",
+          "\\list",
+          "select databases from dual;",
+          "psql_show_db"
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [
+          10,
+          11
+        ],
+        "d": 3,
+        "n": "\\list (equivalente a \\l) lista las bases de datos en psql. Fuente: https://www.postgresql.org/docs/9.2/app-psql.html ; original INAP 2018, pág. 4.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2018-P1-51",
+        "t": "T2.05",
+        "o": "O",
+        "q": "De entre las siguientes, señale cuál es una ventaja de las instantáneas de Base de Datos (snapshot) en SQLSERVER:",
+        "a": [
+          "Ofrecen una interfaz gráfica que facilita la normalización de las relaciones existentes en la Base de Datos.",
+          "Facilitan la automatización de catálogos compuestos por elementos repetitivos simples utilizando los datos de un archivo de texto separado por comas o tabuladores.",
+          "Permiten crear instantáneas de un momento temporal determinado permitiendo, entre otros, la generación de informes a partir de los datos contenidos en las mismas.",
+          "Optimizan la indexación para el manejo eficiente de consultas en tiempo real en archivos en formato XES (Extensible Event Stream)."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          9
+        ],
+        "d": 2,
+        "n": "Snapshot de SQL Server: ventajas inventadas.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)"
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "L2018-P1-R-05",
+        "t": "T2.05",
+        "o": "O",
+        "q": "De entre las siguientes, señale cuál NO es una regla de CODD del modelo relacional de Bases de Datos:",
+        "a": [
+          "Regla del acceso garantizado.",
+          "Regla del tratamiento sistemático de valores nulos.",
+          "Regla de la cardinalidad de las entidades.",
+          "Regla de la independencia de la distribución."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [
+          9
+        ],
+        "d": 2,
+        "n": "Regla de Codd inventada.",
+        "y": "Ingreso libre OEP 2018 (1er ejercicio, 100 preguntas)",
+        "r": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT205-P1-01",
+        "t": "T2.05",
+        "o": "A",
+        "q": "¿Cuál de los siguientes sistemas de bases de datos es orientado a objetos?",
+        "a": [
+          "MySQL.",
+          "SQLite.",
+          "Zope Object DB.",
+          "MariaDB."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT205-P1-02",
+        "t": "T2.05",
+        "o": "A",
+        "q": "Señale, de entre los siguientes, cuál es un gestor de bases de datos relacional:",
+        "a": [
+          "PostgreSQL.",
+          "Datawarehouse.",
+          "Snowflake.",
+          "CouchDB."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT205-P1-03",
+        "t": "T2.05",
+        "o": "A",
+        "q": "La ejecución de una transacción en un SGBD debe cumplir, entre otras, las características de:",
+        "a": [
+          "Consistencia y herencia.",
+          "Atomicidad y herencia.",
+          "Atomicidad y consistencia.",
+          "Abstracción y polimorfismo."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT205-P1-04",
+        "t": "T2.05",
+        "o": "A",
+        "q": "¿Qué es MongoDB?",
+        "a": [
+          "Es una base de datos NoSQL de código abierto basada en documentos tipo JSON.",
+          "Es un almacén de estructuras de datos en memoria, usado como base de datos, caché y bróker de mensajería.",
+          "Es una extensión de PostgreSQL para el tratamiento de información geográfica.",
+          "Es una base de datos relacional de código abierto, compatible con Oracle."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT205-P1-05",
+        "t": "T2.05",
+        "o": "A",
+        "q": "¿Cuál de las siguientes Bases de Datos NoSQL es de tipo clave-valor?",
+        "a": [
+          "MongoDB.",
+          "Redis.",
+          "CouchDB.",
+          "Knosys."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT205-P1-06",
+        "t": "T2.05",
+        "o": "A",
+        "q": "¿Cuál de las siguientes características en relación a las bases de datos SQL y NoSQL es FALSA?",
+        "a": [
+          "NoSQL no suele utilizar SQL como lenguaje de consultas.",
+          "No se suelen realizar operaciones JOIN en NoSQL por el alto coste.",
+          "Es más sencillo realizar escalado horizontal en NoSQL que en una base de datos SQL.",
+          "Las bases de datos NoSQL garantizan completamente las propiedades ACID."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT205-P1-07",
+        "t": "T2.05",
+        "o": "A",
+        "q": "El proyecto de la fundación Apache que provee una base de datos NoSQL se denomina:",
+        "a": [
+          "Hadoop.",
+          "CouchDB.",
+          "Ignite.",
+          "MetaModel."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Proyectos Apache: CouchDB."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT205-P1-08",
+        "t": "T2.05",
+        "o": "A",
+        "q": "¿Cuál de las siguientes afirmaciones sobre MongoDB es CORRECTA?",
+        "a": [
+          "Permite el uso de instrucciones SQL.",
+          "El equivalente en MongoDB a una tabla de un SGBDR se denomina Documento.",
+          "Utiliza BSON con formato de serialización para almacenar datos.",
+          "Soporte transacciones sobre múltiples documentos."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT205-P1-09",
+        "t": "T2.05",
+        "o": "A",
+        "q": "En relación con el modelo relacional, cuál de entre las siguientes NO se considera una de las reglas de CODD:",
+        "a": [
+          "Regla de la actualización de vistas.",
+          "Tratamiento sistemático de valores nulos.",
+          "Regla de la no subversión.",
+          "Regla de la independencia del catálogo."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT205-P1-10",
+        "t": "T2.05",
+        "o": "A",
+        "q": "Señale cuál de las siguientes NO es una base de datos NoSQL basada en un modelo de almacenamiento clave-valor:",
+        "a": [
+          "Cassandra.",
+          "Dynamo.",
+          "Radiant.",
+          "Oracle NoSQL."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT205-P1-11",
+        "t": "T2.05",
+        "o": "A",
+        "q": "¿Cuál de las siguientes características es propia de los sistemas de base de datos NoSQL?",
+        "a": [
+          "Soportan operaciones JOIN.",
+          "Garantizan completamente ACID.",
+          "Requieren estructuras fijas, como tablas.",
+          "Escalan bien horizontalmente."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT205-P1-12",
+        "t": "T2.05",
+        "o": "A",
+        "q": "Entre los tipos de Bases de Datos NoSQL no se encuentran:",
+        "a": [
+          "Bases de datos orientadas a filas.",
+          "Bases de datos orientadas a documentos.",
+          "Bases de datos de clave/valor.",
+          "Bases de datos orientadas a objetos."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT205-P1-13",
+        "t": "T2.05",
+        "o": "A",
+        "q": "Entre las características de las Bases de Datos NoSQL se encuentran:",
+        "a": [
+          "Pueden manejar enormes cantidades de datos estructurados.",
+          "Existe un control estricto de las transacciones (propiedades ACID).",
+          "Se basan en sistemas distribuidos.",
+          "Se basan en el modelo de datos relacional."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT205-P1-14",
+        "t": "T2.05",
+        "o": "A",
+        "q": "Son bases de datos NoSQL:",
+        "a": [
+          "MongoDB y MariaDB",
+          "HBase y DynamoDB.",
+          "MariaDB, Cassandra y BigTable",
+          "Memcached y ObjectDB."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT205-P1-15",
+        "t": "T2.05",
+        "o": "A",
+        "q": "¿Quién desarrolló inicialmente la base de datos NoSQL Cassandra?",
+        "a": [
+          "Apache.",
+          "Facebook.",
+          "Apple.",
+          "Twitter."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT205-P1-16",
+        "t": "T2.05",
+        "o": "A",
+        "q": "Un sistema de gestión de base de datos NoSQL:",
+        "a": [
+          "Es un sistema de base de datos relacional que no utiliza SQL.",
+          "Almacena sus datos en estructuras fijas (tablas).",
+          "Garantiza completamente las propiedades ACID.",
+          "Tienen como ventaja principal la gran escalabilidad y rendimiento."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT205-P1-17",
+        "t": "T2.05",
+        "o": "A",
+        "q": "Es un sistema de bases de datos es orientado a objetos:",
+        "a": [
+          "GemStone.",
+          "ObjectDB.",
+          "Son correctas las respuestas a) y b).",
+          "Ninguna de las anteriores respuestas es correcta."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT205-P1-18",
+        "t": "T2.05",
+        "o": "A",
+        "q": "¿Cuál NO es una ventaja de los sistemas de base de datos NoSQL?",
+        "a": [
+          "Manejan eficientemente grandes cantidades de datos.",
+          "Ofrecen una gran eficiencia en operaciones en tiempo real.",
+          "Utilizan estructuras flexibles.",
+          "Genera cuellos de botella."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT205-P1-19",
+        "t": "T2.05",
+        "o": "A",
+        "q": "En el ámbito de las bases de datos Oracle una vista materializada:",
+        "a": [
+          "Es un objeto de la base de datos donde se almacena la información de todas las vistas de la BD.",
+          "Es un objeto de la base de datos donde se almacena la definición de la tabla que materializa.",
+          "Es un objeto de la base de datos donde se almacena el resultado de una consulta.",
+          "Es una vista ordinaria que automáticamente se actualizará siempre que se actualicen las tablas involucradas en esa vista."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          1
+        ],
+        "d": 2,
+        "n": "Vista materializada."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT205-P1-20",
+        "t": "T2.05",
+        "o": "A",
+        "q": "Respecto a la tecnología de almacenamiento InnoDB señale la respuesta afirmativa:",
+        "a": [
+          "InnoDB es una tecnología de almacenamiento de datos de código abierto para la base de datos Oracle.",
+          "Es la tecnología de almacenamiento de datos por defecto por el sistema administrador de bases de datos relacionales MySQL.",
+          "Se basa en el código ISAM.",
+          "No permite las búsquedas denominadas full-text, que para conjuntos de datos grandes son mucho más eficientes."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT205-P1-21",
+        "t": "T2.05",
+        "o": "A",
+        "q": "En Oracle, un tablespace es:",
+        "a": [
+          "El espacio que ocupa un fichero en donde reside un índice.",
+          "El espacio físico de almacenamiento de datos.",
+          "El espacio que ocupa un fichero en donde reside una tabla.",
+          "El espacio lógico de almacenamiento de datos."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT205-P1-22",
+        "t": "T2.05",
+        "o": "A",
+        "q": "¿Qué alternativas existen en otros sistemas de base de datos a las vistas materializadas de Oracle?",
+        "a": [
+          "Vistas indexadas.",
+          "Vistas normalizadas.",
+          "Vistas físicas.",
+          "No existen alternativas."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT205-P1-23",
+        "t": "T2.05",
+        "o": "A",
+        "q": "En el contexto del SGBD ORACLE, al conjunto compartido de estructuras de memoria y procesos que acceden a un grupo de ficheros de la base de datos, se denomina:",
+        "a": [
+          "Réplica.",
+          "Segmento.",
+          "Instancia.",
+          "Tablespace."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT205-P1-24",
+        "t": "T2.05",
+        "o": "A",
+        "q": "La regla 2 de Codd es la del:",
+        "a": [
+          "Tratamiento sistemático de valores nulos.",
+          "Acceso garantizado.",
+          "Actualización de vistas.",
+          "Integridad referencial."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT205-P1-25",
+        "t": "T2.05",
+        "o": "A",
+        "q": "¿En qué consiste la regla de Independencia de Integridad establecida por Codd?",
+        "a": [
+          "Los programas de aplicación y actividades del terminal permanecerán inalterados a nivel lógico cuando se realicen cambios sobre las tablas base que preservan la información.",
+          "Las limitaciones de integridad han de poder ser definidos utilizando el sublenguaje de datos relacional y almacenables en el catálogo dinámico.",
+          "La independencia de integridad requiere la definición de claves ajenas con la opción CASCADE, a fin de que se propaguen a la clave ajena los cambios realizados sobre la clave primaria referenciada.",
+          "Si en una relación hay una clave ajena, sus valores deben coincidir con los valores de la clave primaria a que se refiere, o deben ser completamente nulos."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 3,
+        "n": "Reglas de Codd: independencia de integridad vs integridad referencial."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT205-P1-26",
+        "t": "T2.05",
+        "o": "A",
+        "q": "¿Cuál de las siguientes es una regla de Codd?",
+        "a": [
+          "Regla de la no subversión.",
+          "Regla de la no concurrencia.",
+          "Regla de la restricción.",
+          "Regla de la no replicación de Información."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7,
+          9
+        ],
+        "d": 2,
+        "n": "Reglas de Codd con nombres inventados."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT205-P1-27",
+        "t": "T2.05",
+        "o": "A",
+        "q": "¿Cuál de las siguientes afirmaciones sobre bases de datos relacionales se deriva de las reglas de Codd?",
+        "a": [
+          "Un SGBD no debe permitir el uso de valores vacíos.",
+          "Los cambios realizados a nivel físico no deben afectar al nivel lógico.",
+          "Un SGBD no debe almacenar información redundante ni cíclica.",
+          "Un SGBD no debe instalarse de manera distribuida para evitar restricciones de acceso a los datos."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT205-P1-28",
+        "t": "T2.05",
+        "o": "A",
+        "q": "¿Cuál de las siguientes NO es una de las llamadas doce reglas de Codd?",
+        "a": [
+          "Independencia física de los datos.",
+          "Independencia de distribución.",
+          "Independencia de actualización.",
+          "Independencia de integridad."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT205-P1-29",
+        "t": "T2.05",
+        "o": "A",
+        "q": "EI acrónimo en inglés \"ACID\" relacionado con una transacción de base de datos se corresponde con las propiedades:",
+        "a": [
+          "Authentication, Consistency, Integrity, Durability.",
+          "Atomicity, Confidentiality, Identification, Durability.",
+          "Atomicity, Consistency, Isolation, Durability.",
+          "Availability, Consistency, Isolation, Durability."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT205-P1-34",
+        "t": "T2.05",
+        "o": "A",
+        "q": "Indique la respuesta correcta en relación a los componentes de proceso de un SGBD:",
+        "a": [
+          "Interfaces, modelo de referencia, compilador y precompilador DML.",
+          "Compilador DML, precompilador DML, intérprete DDL y motor de ejecución.",
+          "Gestor de ficheros, compilador y precompilador DML y gestor de transacciones.",
+          "Estructuras de datos, gestor de transacciones, intérprete DDL y motor de ejecución."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT205-P1-35",
+        "t": "T2.05",
+        "o": "A",
+        "q": "\"Cualquier información almacenada en la base de datos debe poder ser accesible de manera unívoca mediante un nombre de tabla, un nombre de columna y el valor de la clave primaria para la fila en la que está almacenada la información en cuestión\". Según las Reglas de Codd, nos estaríamos refiriendo a:",
+        "a": [
+          "La regla fundamental.",
+          "La regla de la información.",
+          "La regla del acceso garantizado.",
+          "La regla del tratamiento sistemático de los valores nulos."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT205-P1-36",
+        "t": "T2.05",
+        "o": "A",
+        "q": "El principio BASE se corresponde con:",
+        "a": [
+          "Basically Available, Soft state y Eventual consistency.",
+          "BSON format, Serial transactions y Eventual consistency.",
+          "Basically Available, Serial transactions y Execute independent.",
+          "BSON format, Soft state y Execute independent."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT205-P1-37",
+        "t": "T2.05",
+        "o": "A",
+        "q": "Son bases de datos NoSQL orientadas a grafos:",
+        "a": [
+          "FlockDB, OrientDB, SimpleDB.",
+          "Neo4j, OrientDB, CouchDB.",
+          "InfinityGraph, AllegroGraph, RethinkDB.",
+          "Neo4j, OrientDB, AllegroGraph."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT205-P1-38",
+        "t": "T2.05",
+        "o": "A",
+        "q": "En relación con Redis, señale la respuesta correcta:",
+        "a": [
+          "Es un sistema de base de datos NoSQL orientado a columnas.",
+          "Redis es el acrónimo de Remote Dictionary Server.",
+          "Ha sido desarrollado en lenguaje Python.",
+          "Solo está disponible en sistemas Windows."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT205-P1-39",
+        "t": "T2.05",
+        "o": "A",
+        "q": "NO es una base de datos de series temporales:",
+        "a": [
+          "InfluxDB.",
+          "QuestDB.",
+          "AWS Timestream.",
+          "IndexedDB."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT205-P1-40",
+        "t": "T2.05",
+        "o": "A",
+        "q": "Señale la respuesta correcta:",
+        "a": [
+          "Hbase es un sistema de gestión de bases de datos orientado a grafos.",
+          "Bigtable fue creado por Google.",
+          "IndexedDB ofrece almacenamiento persistente en el servidor web.",
+          "SQLite es un sistema de gestión de bases de datos relacional y altamente escalable."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT205-P1-41",
+        "t": "T2.05",
+        "o": "A",
+        "q": "En Oracle existen 5 tipos de segmentos:",
+        "a": [
+          "De datos, de índices, de rollback, temporales y de bootstrap.",
+          "De datos, de control, de commit, de rollback y temporales.",
+          "De índices, de bootstrap, de control, de joins y de datos.",
+          "Temporales, de rollback, de joins, de datos y de índices."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT205-P1-42",
+        "t": "T2.05",
+        "o": "A",
+        "q": "En Oracle, la estructura física está compuesta por los siguientes tipos de ficheros:",
+        "a": [
+          "Ficheros de redo log, ficheros de control y ficheros de datos.",
+          "Ficheros de datos y ficheros rollback.",
+          "Ficheros de control, ficheros temporales y ficheros de datos.",
+          "Ficheros de redo log y ficheros de control."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT205-P1-43",
+        "t": "T2.05",
+        "o": "A",
+        "q": "El sistema de gestión de bases de datos Oracle está formado por los siguientes elementos:",
+        "a": [
+          "Los procesos y las estructuras en memoria principal.",
+          "Los archivos de la base de datos, los procesos y los protocolos de comunicaciones.",
+          "La instancia de Oracle y los protocolos de comunicación.",
+          "Los archivos de la base de datos y la instancia de Oracle."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT205-P1-45",
+        "t": "T2.05",
+        "o": "A",
+        "q": "¿Cuál de las siguientes NO es una base de datos NoSQL?",
+        "a": [
+          "MongoDB.",
+          "Cassandra.",
+          "HBase.",
+          "Kaltura."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AT205-P1-46",
+        "t": "T2.05",
+        "o": "A",
+        "q": "Dentro de las bases de datos NoSQL, ¿de qué tipo es la base de datos Neo4j?",
+        "a": [
+          "Clave-valor.",
+          "Documentos.",
+          "Familia de columnas.",
+          "Grafos."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-22",
+        "t": "T2.05",
+        "o": "A",
+        "q": "El objetivo de la normalización de bases de datos es:",
+        "a": [
+          "Conseguir que los datos incluidos en la misma estén representados según los estándares de organizaciones internacionales como ISO.",
+          "Eliminar redundancias de los datos incluidos en las mismas y prevenir la aparición de inconsistencias.",
+          "Que se emplee SQL como lenguaje de definición de datos y lenguaje de manipulación de datos.",
+          "Conseguir que las consultas a la base de datos sean más sencillas y eficientes."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-23",
+        "t": "T2.05",
+        "o": "A",
+        "q": "Cuando hablamos de restricciones de integridad en bases de datos nos estamos refiriendo a:",
+        "a": [
+          "Un mecanismo de seguridad para el acceso a la base de datos, que debe preservar su integridad.",
+          "Un mecanismo de sincronización de tareas y orquestación de procesos, diseñado para evitar los problemas de concurrencia en acceso múltiple de transacciones a las tablas de la base de datos.",
+          "Una serie de condiciones que deben cumplir los datos almacenados en la base de datos.",
+          "Una serie de condiciones que deben cumplir los mecanismos de almacenamiento físico de la base de datos."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS01-P1-61",
+        "t": "T2.05",
+        "o": "A",
+        "q": "¿Cuál de las siguientes NO es una ventaja de un modelo de datos?",
+        "a": [
+          "Comprensión de los datos de una organización y de su funcionamiento.",
+          "Obtención de estructuras de datos dependientes del entorno físico.",
+          "Control de los posibles errores desde el principio, o al menos, darse cuenta de las deficiencias lo antes posible.",
+          "Mejora el mantenimiento."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS02-P1-29",
+        "t": "T2.05",
+        "o": "A",
+        "q": "¿Cuál de las siguientes afirmaciones sobre SGBD NoSQL orientado a grafos es INCORRECTA?",
+        "a": [
+          "La información se representa en los nodos.",
+          "Las relaciones vienen representadas por las aristas.",
+          "El modelo de grafos ofrece una elevada flexibilidad para manipular los datos.",
+          "El rendimiento se deteriora con el crecimiento de la base de datos."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS02-P1-34",
+        "t": "T2.05",
+        "o": "A",
+        "q": "Señale la afirmación correcta en relación a MongoDB:",
+        "a": [
+          "Almacena la información en documentos BSON.",
+          "Por defecto soporta consultas SQL.",
+          "Sigue siendo vulnerable a las clásicas inyecciones SQL.",
+          "Al no utilizar tablas, no incorpora el concepto de transacción."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS02-P1-35",
+        "t": "T2.05",
+        "o": "A",
+        "q": "¿Cuál de los siguientes SGBD es orientado a objetos?",
+        "a": [
+          "Microsoft SQL Server.",
+          "Versant.",
+          "MariaDB.",
+          "MySQL."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS02-P1-51",
+        "t": "T2.05",
+        "o": "A",
+        "q": "Indique cuál de las siguientes características es propia de los sistemas de base de datos NoSQL:",
+        "a": [
+          "Soporta operaciones con JOIN.",
+          "Garantizan transacciones ACID.",
+          "Utilizan estructuras de tipo tabla para el trabajo relacional.",
+          "Escalan bien horizontalmente."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS02-P1-54",
+        "t": "T2.05",
+        "o": "A",
+        "q": "Indique a qué corresponden las siglas ACID refiriéndose a una transacción de base de datos:",
+        "a": [
+          "Authentication, Consistency, Isolation, Durability.",
+          "Atomicity, Consistency, Isolation, Durability.",
+          "Availability, Consistency, Isolation, Durability.",
+          "Availability, Correctness, Isolation, Durability."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS02-P1-55",
+        "t": "T2.05",
+        "o": "A",
+        "q": "Indique cómo se denomina en el SGBD Oracle al conjunto de extensiones (extents) que contienen todos los datos para una estructura de almacenamiento lógica específica dentro de un Tablespace:",
+        "a": [
+          "Data Block.",
+          "Segment.",
+          "Instance.",
+          "Sub-Tablespace."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS02-P1-59",
+        "t": "T2.05",
+        "o": "A",
+        "q": "En relación al lenguaje SQL, señale la afirmación INCORRECTA:",
+        "a": [
+          "SQL es un lenguaje específico del dominio que da acceso a un sistema de gestión de bases de datos relacionales.",
+          "Una de sus características es el manejo del álgebra y el cálculo relacional que permiten efectuar consultas con el fin de recuperar información de bases de datos, así como hacer cambios en ellas.",
+          "SQL es un lenguaje de definición de datos basado en objetos.",
+          "SQL a veces se describe como un lenguaje declarativo que también incluye elementos procedurales."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS02-P1-61",
+        "t": "T2.05",
+        "o": "A",
+        "q": "En el modelo de bases de datos orientadas a objetos, el lenguaje utilizado para gestionar la base de datos se llama:",
+        "a": [
+          "SQL.",
+          "ODL.",
+          "OQL.",
+          "SDL."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS02-P1-65",
+        "t": "T2.05",
+        "o": "A",
+        "q": "¿Qué regla de Codd describe el tratamiento sistemático de los valores nulos?",
+        "a": [
+          "Regla 9.",
+          "Regla 5.",
+          "Regla 3.",
+          "Ninguna de las respuestas es correcta."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS02-P1-79",
+        "t": "T2.05",
+        "o": "A",
+        "q": "NO es una base de datos de series temporales:",
+        "a": [
+          "OpenTSDB.",
+          "IndexedDB.",
+          "InfluxDB.",
+          "Prometheus."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS02-P1-87",
+        "t": "T2.05",
+        "o": "A",
+        "q": "En relación a los SGBD, el catálogo o diccionario de datos:",
+        "a": [
+          "Es un elemento opcional en los sistemas de gestión de base de datos.",
+          "Emplea ficheros planos para almacenar los esquemas de las bases de datos y no tener autodependencias.",
+          "Es un conjunto de metadatos que contiene las características de los datos que se van a utilizar en el sistema.",
+          "Se conoce también como information_syscat o information_system."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS02-P1-90",
+        "t": "T2.05",
+        "o": "A",
+        "q": "Entre las siguientes definiciones hay una que NO se corresponde con las funciones de un Sistema Gestor de Bases de Datos (SGBD):",
+        "a": [
+          "Atender peticiones de definición de datos.",
+          "Atender peticiones para el manipulado de datos.",
+          "Definir las políticas de seguridad e integridad.",
+          "Incluir una función de diccionario de datos."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS02-P1-94",
+        "t": "T2.05",
+        "o": "A",
+        "q": "Según los niveles de aislamiento definidos en SQL, señale la respuesta correcta:",
+        "a": [
+          "El nivel de aislamiento Lectura no comprometida evita la lectura fantasma.",
+          "El nivel de aislamiento Lectura comprometida evita la lectura sucia.",
+          "El nivel de aislamiento Lectura repetible evita la lectura no repetible y la lectura fantasma.",
+          "El nivel de aislamiento Serializable evita solo la lectura sucia y la lectura no repetible."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS02-P1-97",
+        "t": "T2.05",
+        "o": "A",
+        "q": "¿Cuál de las siguientes NO es un ejemplo de base de datos NoSQL?",
+        "a": [
+          "MongoDB.",
+          "HBase.",
+          "Cassandra.",
+          "MariaDB."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS02-P1-R-03",
+        "t": "T2.05",
+        "o": "A",
+        "q": "Indique el SGBD NoSQL de tipo grafo:",
+        "a": [
+          "FlockDB.",
+          "BigTable.",
+          "SimpleDB.",
+          "Oracle NoSQL."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1,
+        "n": "FlockDB es una base de datos de grafos; SimpleDB es el nombre del distractor, con su capitalización corregida."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS02-P1-R-05",
+        "t": "T2.05",
+        "o": "A",
+        "q": "¿Qué es ZODB?",
+        "a": [
+          "Un SGBD relacional.",
+          "Un SGBD orientado a objetos.",
+          "Un SGBD NoSQL de tipo clave-valor.",
+          "Un SGBD NoSQL tabular."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS03-P1-54",
+        "t": "T2.05",
+        "o": "A",
+        "q": "En el entorno de base de datos, los índices son de vital importancia en las transacciones de acceso. ¿Cuál de las siguientes afirmaciones NO es correcta?",
+        "a": [
+          "El índice es también una tabla almacenada en un disco.",
+          "Las tablas de índices se actualizan cuando se actualizan las tablas de datos.",
+          "La actualización de las tablas de índices es transparente al usuario.",
+          "Las actualizaciones de los índices no consumen recursos."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS03-P1-60",
+        "t": "T2.05",
+        "o": "A",
+        "q": "¿Cuál de los siguientes es un Sistema Gestor de Bases de Datos Orientado a Objetos?",
+        "a": [
+          "Microsoft SQL Server.",
+          "Versant.",
+          "MariaDB.",
+          "MySQL."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS03-P1-65",
+        "t": "T2.05",
+        "o": "A",
+        "q": "¿Cuál de los siguientes sistemas de bases de datos es orientado a objetos?",
+        "a": [
+          "SQLite.",
+          "Cassandra.",
+          "Zope.",
+          "Redis."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS03-P1-69",
+        "t": "T2.05",
+        "o": "A",
+        "q": "Señale, de entre los siguientes, cuál es un gestor de base de datos relacional:",
+        "a": [
+          "Snowflake.",
+          "CouchDB.",
+          "Datawarehouse.",
+          "PostgreSQL."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS03-P1-82",
+        "t": "T2.05",
+        "o": "A",
+        "q": "¿Cuál de las siguientes es una regla de Codd?",
+        "a": [
+          "Dependencia física de los datos.",
+          "Dependencia lógica de los datos.",
+          "Regla de la inversión.",
+          "Actualización de vistas."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS03-P1-89",
+        "t": "T2.05",
+        "o": "A",
+        "q": "¿Cuál de las siguientes respuestas se corresponde con una base de datos NoSQL destinada a almacenar enormes cantidades de datos?",
+        "a": [
+          "Citrix.",
+          "Oracle.",
+          "MySql Extend.",
+          "Cassandra."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS03-P1-91",
+        "t": "T2.05",
+        "o": "A",
+        "q": "Indique, de entre las siguientes, cuál NO es una de las reglas de Codd para bases de datos relaciones:",
+        "a": [
+          "Acceso garantizado.",
+          "Independencia de distribución.",
+          "Integridad de paridad.",
+          "No subversión."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS03-P1-95",
+        "t": "T2.05",
+        "o": "A",
+        "q": "En Oracle, ¿qué acción realiza el comando ROLLBACK?",
+        "a": [
+          "Limpiar el buffer de comandos SQL.",
+          "Cierra la sesión activa y vuelve a conectar de nuevo.",
+          "Termina la transacción actual y confirma los cambios realizados.",
+          "Termina la transacción actual y deshace los cambios realizados."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1,
+        "w": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS03-P1-97",
+        "t": "T2.05",
+        "o": "A",
+        "q": "Señale la respuesta INCORRECTA en relación con las instantáneas de base de datos en SQL Server:",
+        "a": [
+          "Una instantánea de base de datos es una vista estática de solo lectura de una base de datos de SQL Server denominada base de datos de origen.",
+          "La instantánea de base de datos es coherente en cuanto a las transacciones con la base de datos de origen tal como existía en el momento de la creación de la instantánea.",
+          "Una instantánea de base de datos puede no residir en la misma instancia de servidor que la base de datos de origen.",
+          "Aunque las instantáneas de base de datos proporcionan una vista de solo lectura de los datos que se encuentran en el mismo estado que cuando se creó la instantánea, el tamaño del archivo de instantáneas crece a medida que se realizan cambios en la base de datos de origen."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS03-P1-98",
+        "t": "T2.05",
+        "o": "A",
+        "q": "De entre las ventajas de realizar un modelo de datos señale la respuesta INCORRECTA:",
+        "a": [
+          "Comprensión de los datos de una organización y del funcionamiento de la organización.",
+          "Obtención de estructuras de datos dependientes del entorno físico.",
+          "Control de los posibles errores desde el principio, o al menos, darse cuenta de las deficiencias lo antes posible.",
+          "Mejora del mantenimiento."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS03-P1-100",
+        "t": "T2.05",
+        "o": "A",
+        "q": "Señale cuál de las siguientes es una base de datos NoSQL basada de tipo clave-valor:",
+        "a": [
+          "Neo4j.",
+          "DynamoDB.",
+          "SimpleDB.",
+          "BitTable."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS03-P1-R-03",
+        "t": "T2.05",
+        "o": "A",
+        "q": "En relación con las bases de datos NoSQL, señale la respuesta INCORRECTA:",
+        "a": [
+          "Cassandra es de tipo clave-valor.",
+          "No pueden ser accedidas mediante lenguaje SQL.",
+          "Una de sus principales ventajas es la escalabilidad.",
+          "Está recomendado su uso cuando el esquema de bases de datos es homogéneo."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS04-P1-43",
+        "t": "T2.05",
+        "o": "A",
+        "q": "Indique cuál de los siguientes es un motor de bases de datos relacional:",
+        "a": [
+          "MaxDB.",
+          "MongoDB.",
+          "Apache Cassandra.",
+          "Amazon DynamoDB."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS04-P1-45",
+        "t": "T2.05",
+        "o": "A",
+        "q": "¿Cuál de las siguientes bases de datos NoSQL es del tipo clave-valor?",
+        "a": [
+          "MongoDB.",
+          "Redis.",
+          "CouchDB.",
+          "Knosys."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS04-P1-54",
+        "t": "T2.05",
+        "o": "A",
+        "q": "¿Cuál de los siguientes NO es un SGBD NoSQL?",
+        "a": [
+          "Redis.",
+          "Drupal.",
+          "Cassandra.",
+          "MongoDB."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS04-P1-56",
+        "t": "T2.05",
+        "o": "A",
+        "q": "Una de las particularidades destacable de los sistemas NoSQL es:",
+        "a": [
+          "Usan SQL como lenguaje de consulta.",
+          "Están optimizadas par la gestión de transacciones ACID-compliant.",
+          "Escalan bien horizontalmente.",
+          "No pueden manejar cantidades de datos muy grandes."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS04-P1-75",
+        "t": "T2.05",
+        "o": "A",
+        "q": "¿Qué afirmación sobre los Sistemas de Gestión de Base de Datos NO es correcta?",
+        "a": [
+          "El lenguaje de control de datos permite conceder o suprimir privilegios a los usuarios.",
+          "En el aislamiento, los resultados de una transacción se hacen visibles al resto de transacciones de otros procesos durante la duración de la transacción, para poder tener una copia de la transacción por si hay una pérdida de datos.",
+          "En el diccionario de datos se puede tener un historial de los cambios realizados sobre la base de datos.",
+          "En el control de integridad, cuando una operación cambia los datos de una base de datos, este módulo debe comprobar que la operación a realizar satisface todas las restricciones de integridad necesarias."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS04-P1-86",
+        "t": "T2.05",
+        "o": "A",
+        "q": "Para importar un fichero en una tabla de una base de datos relacional, el administrador de la BD decide eliminar la clave primaria existente. De entre las siguientes reglas de Codd que definen el modelo relacional, ¿cuál es la que posibilita esta acción?",
+        "a": [
+          "Regla 2: regla de acceso garantizado.",
+          "Regla 8: independencia física de los datos.",
+          "Regla 10: independencia de integridad.",
+          "Regla 11: independencia de la distribución."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS04-P1-R-01",
+        "t": "T2.05",
+        "o": "A",
+        "q": "Se quiere incluir una base de datos local en una aplicación para móviles Android. ¿Cuál de las siguientes sería la más adecuada?",
+        "a": [
+          "SQLite.",
+          "Oracle Pocket.",
+          "SQL Server compact.",
+          "MySQL micro Edition."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS05G-P1-60",
+        "t": "T2.05",
+        "o": "A",
+        "q": "Respecto a los sistemas de gestión de bases de datos relacionales, ¿cuál de las siguientes NO es una regla de Codd?",
+        "a": [
+          "Independencia de la distribución.",
+          "Regla de la inversión.",
+          "Catálogo dinámico.",
+          "Independencia de la integridad."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "n": "Edición de contenido: la opción D sustituye la alternativa repetida del original por la regla 10 de Codd, Independencia de la integridad (T2.05, p. 9). La respuesta sigue siendo B."
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS05G-P1-61",
+        "t": "T2.05",
+        "o": "A",
+        "q": "Indique cuál de los siguientes NO es un fichero perteneciente a la estructura física de una base de datos Oracle:",
+        "a": [
+          "Fichero de control.",
+          "Fichero de redo log.",
+          "Fichero de datos.",
+          "Tablespace."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS05G-P1-62",
+        "t": "T2.05",
+        "o": "A",
+        "q": "Indique la respuesta INCORRECTA sobre SQLite:",
+        "a": [
+          "Es una biblioteca escrita en C++.",
+          "Es de dominio público.",
+          "Soporta propiedades ACID.",
+          "El tamaño máximo de una base de datos es 281 TB."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS06-P1-58",
+        "t": "T2.05",
+        "o": "A",
+        "q": "¿Cuál de las siguientes NO es una regla de Codd?",
+        "a": [
+          "Regla del Acceso Garantizado.",
+          "Regla de Actualización de Vistas.",
+          "Independencia Lógica de Datos.",
+          "Regla de la Subversión."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS06-P1-61",
+        "t": "T2.05",
+        "o": "A",
+        "q": "Indique qué solución de las siguientes NO está relacionada con los Sistemas Gestores de Base de Datos (SGBD):",
+        "a": [
+          "MongoDB.",
+          "MariaDB.",
+          "HeidiSQL.",
+          "MarcoDB."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS06-P1-65",
+        "t": "T2.05",
+        "o": "A",
+        "q": "¿Cual de las siguientes bases de datos NoSQL NO está orientada a grafos?",
+        "a": [
+          "Neo4J.",
+          "OrientDB.",
+          "InfoGrid.",
+          "SimpleDB."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS06-P1-R-05",
+        "t": "T2.05",
+        "o": "A",
+        "q": "En el ámbito de los sistemas de gestión de bases de datos, NO pertenece al DCL:",
+        "a": [
+          "TRUNCATE.",
+          "COMMIT.",
+          "SAVEPOINT.",
+          "ROLLBACK."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS07-P1-56",
+        "t": "T2.05",
+        "o": "A",
+        "q": "La propiedad Isolation de una transacción consiste en:",
+        "a": [
+          "Una transacción es una unidad atómica de ejecución.",
+          "La ejecución de una transacción da lugar a un estado consistente de la base de datos.",
+          "Las modificaciones introducidas por una transacción no confirmada no son visibles al resto de transacciones.",
+          "La confirmación de una transacción implica la grabación de los cambios introducidos en la base de datos de forma permanente."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS07-P1-57",
+        "t": "T2.05",
+        "o": "A",
+        "q": "¿Cuál es la Regla número 4 de Codd?",
+        "a": [
+          "Acceso garantizado.",
+          "Independencia de la integridad.",
+          "Sublenguaje global de datos.",
+          "Catálogo dinámico."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS07-P1-58",
+        "t": "T2.05",
+        "o": "A",
+        "q": "En Oracle y en relación con la estructura lógica ¿qué tipo de segmento NO existe?",
+        "a": [
+          "Rollback.",
+          "Redo log.",
+          "Temporal.",
+          "Datos."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS07-P1-59",
+        "t": "T2.05",
+        "o": "A",
+        "q": "¿Qué SGBD NoSQL es orientado a columnas?",
+        "a": [
+          "Bigtable.",
+          "Neo4j.",
+          "CouchDB.",
+          "Redis."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS07-P1-60",
+        "t": "T2.05",
+        "o": "A",
+        "q": "¿Qué no caracteriza a un SGBD NoSQL?",
+        "a": [
+          "No requiere de estructuras de datos fijas como tablas.",
+          "No garantiza completamente las propiedades ACID.",
+          "Se basa en el modelo relacional.",
+          "Escala muy bien horizontalmente."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS07-P1-86",
+        "t": "T2.05",
+        "o": "A",
+        "q": "JNDI se usa para el acceso a:",
+        "a": [
+          "Datos de ficheros.",
+          "Colas de mensajería.",
+          "Sistemas gestores de bases de datos.",
+          "Directorios de nombres."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08-P1-47",
+        "t": "T2.05",
+        "o": "A",
+        "q": "La regla de Codd por la cual la descripción de la base de datos se representa a nivel lógico en la misma forma que los datos de manera que los usuarios autorizados puedan aplicar el mismo lenguaje para consultarlo es:",
+        "a": [
+          "Regla 2. Acceso garantizado.",
+          "Regla 5. Sublenguaje global de datos.",
+          "Regla 1. Representación de la información.",
+          "Regla 4. Catálogo dinámico."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08-P1-48",
+        "t": "T2.05",
+        "o": "A",
+        "q": "NO es una base de datos orientado a grafos:",
+        "a": [
+          "Neo4j.",
+          "FlockDB.",
+          "SimpleDB.",
+          "AllegroGraph."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08B-P1-42",
+        "t": "T2.05",
+        "o": "A",
+        "q": "¿Cuál de los siguientes sistemas de gestión de bases de datos NO es relacional?",
+        "a": [
+          "Clarion.",
+          "MariaDB.",
+          "MongoDB.",
+          "PostgreSQL."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS08B-P1-43",
+        "t": "T2.05",
+        "o": "A",
+        "q": "De entre las siguientes, señale cuál NO es una regla de Codd del modelo relacional de bases de datos:",
+        "a": [
+          "Regla de la actualización del modelo.",
+          "Regla del acceso garantizado.",
+          "Regla de la independencia de la distribución.",
+          "Regla de la no subversión."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-31",
+        "t": "T2.05",
+        "o": "A",
+        "q": "Según la arquitectura ANSI, ¿cuál de las siguientes NO es una característica de las transacciones ACID?",
+        "a": [
+          "Independencia.",
+          "Atomicidad.",
+          "Durabilidad.",
+          "Consistencia."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-32",
+        "t": "T2.05",
+        "o": "A",
+        "q": "Entre las siguientes bases de datos NoSQL, indique cuál de ellas es orientada a grafos:",
+        "a": [
+          "Cassandra.",
+          "Redis.",
+          "Neo4j.",
+          "MongoDB."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-33",
+        "t": "T2.05",
+        "o": "A",
+        "q": "En relación a las bases de datos NoSQL, señale la respuesta INCORRECTA:",
+        "a": [
+          "Generalmente están diseñadas para escalar verticalmente utilizando sistemas mainframes en lugar de clústeres distribuidos.",
+          "Las siglas NoSQL significan “Not only SQL” y en general cada sistema tiene su propio lenguaje de consulta en lugar de utilizar SQL.",
+          "Se suele decir que cumplen las propiedades BASE en contraposición a las propiedades ACID.",
+          "Los tipos principales de bases de datos NoSQL son: de clave valor, orientadas a columnas, orientadas a documentos y de grafos."
+        ],
+        "c": 0,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-39",
+        "t": "T2.05",
+        "o": "A",
+        "q": "El DDL de una base de datos sirve para:",
+        "a": [
+          "Definir la estructura lógica de una base de datos.",
+          "Insertar los datos en la base de datos.",
+          "Consultar/interrogar la información contenida en la base de datos.",
+          "Modificar los datos contenidos en la base de datos."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09-P1-99",
+        "t": "T2.05",
+        "o": "A",
+        "q": "El intervalo de tiempo máximo entre el momento de la última transacción de datos confirmada antes de un error que afecta a la continuidad del servicio TIC y la de los datos más recientes que podrían recuperarse se denomina:",
+        "a": [
+          "Objetivo de datos de recuperación (RDO).",
+          "Nivel objetivo de recuperación (RLO).",
+          "Punto objetivo de recuperación (RPO).",
+          "Tiempo de recuperación objetivo (RTO)."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1,
+        "w": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-36",
+        "t": "T2.05",
+        "o": "A",
+        "q": "¿Qué característica diferencia principalmente a una base de datos documental de una base de datos relacional en cuanto al esquema de datos?",
+        "a": [
+          "Las bases de datos documentales requieren un esquema rígido predefinido.",
+          "Las bases de datos documentales permiten esquemas flexibles y diferentes estructuras en cada documento.",
+          "Las bases de datos documentales no permiten relaciones entre documentos.",
+          "Las bases de datos documentales solo pueden almacenar documentos en formato XML."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS09B-P1-37",
+        "t": "T2.05",
+        "o": "A",
+        "q": "¿En qué consiste la técnica de \"Sharding\" en bases de datos distribuidas?",
+        "a": [
+          "Replicar todos los datos en varios servidores.",
+          "Dividir grandes volúmenes de datos en fragmentos distribuidos entre múltiples servidores.",
+          "Aplicar técnicas de compresión de datos a nivel de base de datos.",
+          "Utilizar índices secundarios para la búsqueda."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10-P1-37",
+        "t": "T2.05",
+        "o": "A",
+        "q": "El uso de transacciones en las operaciones sobre una base de datos relacional favorece:",
+        "a": [
+          "La rapidez en la programación.",
+          "El seguimiento de cambios en los datos.",
+          "La integridad de la información.",
+          "La velocidad en las operaciones."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10-P1-38",
+        "t": "T2.05",
+        "o": "A",
+        "q": "En Microsoft SQL Server, ¿en qué consiste una instantánea de base de datos?",
+        "a": [
+          "Una vista estática de solo lectura de una base de datos de SQL Server.",
+          "Bloqueo temporal de las lecturas y escrituras en la base de datos de SQL Server.",
+          "Grabación sobre un fichero externo de la marca de tiempo del registro de transacciones.",
+          "Recuperación completa de la base de datos a un instante dado."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10-P1-R-05",
+        "t": "T2.05",
+        "o": "A",
+        "q": "En comparación con las bases de datos relacionales, las bases de datos NoSQL:",
+        "a": [
+          "Permiten, opcionalmente, el uso de SQL como lenguaje de consulta.",
+          "Escalan peor horizontalmente.",
+          "No gestionan eficientemente grandes volúmenes de datos.",
+          "Son flexibles respecto a la normalización de su modelo de datos."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10B-P1-44",
+        "t": "T2.05",
+        "o": "A",
+        "q": "Según las 12 reglas de Codd para un sistema gestor de bases de datos (SGBD), señale cuál es la definición de la regla de no subversión:",
+        "a": [
+          "Toda la información en la base de datos es representada unidireccionalmente, por valores en posiciones de las columnas dentro de filas de tablas.",
+          "Todas las vistas que son teóricamente actualizables deben ser actualizables por el SGBD.",
+          "Ningún lenguaje de bajo nivel puede ser usado para violar las restricciones de integridad expresadas en el lenguaje de alto nivel, como SQL.",
+          "Los cambios al nivel lógico (tablas, columnas, filas, etc.) no deben requerir un cambio en los programas de aplicación."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10B-P1-45",
+        "t": "T2.05",
+        "o": "A",
+        "q": "¿Qué principio es común en las bases de datos NoSQL?",
+        "a": [
+          "ACID.",
+          "SOLID.",
+          "BASE.",
+          "FLEX"
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10B-P1-46",
+        "t": "T2.05",
+        "o": "A",
+        "q": "¿Cuál de las siguientes bases de datos NoSQL es orientada a columnas?",
+        "a": [
+          "MongoDB.",
+          "Redis.",
+          "Hbase.",
+          "Neo4j."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10B-P1-47",
+        "t": "T2.05",
+        "o": "A",
+        "q": "¿Cuál de las siguientes afirmaciones describe con mayor precisión una diferencia clave entre las bases de datos relacionales (SQL) y las bases de datos NoSQL en términos de escalabilidad y estructura de datos?",
+        "a": [
+          "Las bases de datos relacionales son más escalables horizontalmente que las NoSQL, ya que su modelo estructurado permite distribuir fácilmente las tablas entre múltiples servidores.",
+          "Las bases de datos NoSQL utilizan un modelo de datos rígido y normalizado, lo que las hace ideales para aplicaciones con esquemas complejos y relaciones entre múltiples entidades.",
+          "Las bases de datos relacionales requieren un esquema fijo y son más adecuadas para transacciones complejas, mientras que las NoSQL permiten esquemas flexibles y escalan horizontalmente con mayor facilidad.",
+          "Las bases de datos NoSQL no permiten realizar consultas complejas ni operaciones de agregación, lo que limita su uso en aplicaciones empresariales que requieren análisis de datos."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS10B-P1-80",
+        "t": "T2.05",
+        "o": "A",
+        "q": "Cuando una transacción devuelve un conjunto de filas que satisfacen una condición de búsqueda pero alguna de esas filas no existía cuando se inició la transacción, estamos hablando de:",
+        "a": [
+          "Lectura no repetible.",
+          "Lectura fantasma.",
+          "Lectura sucia.",
+          "Lectura arbitraria."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-39",
+        "t": "T2.05",
+        "o": "A",
+        "q": "Para importar un fichero en una tabla de una base de datos relacional, el administrador de la base de datos decide eliminar la clave primaria existente. De entre las siguientes reglas de Codd que definen el modelo relacional, ¿cuál es la que posibilita esta acción?",
+        "a": [
+          "Regla 2: Regla del acceso garantizado.",
+          "Regla 8: independencia física de los datos.",
+          "Regla 10: Independencia de la integridad.",
+          "Regla 11: Independencia de la distribución."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-40",
+        "t": "T2.05",
+        "o": "A",
+        "q": "Indique cuál de los siguientes NO es un tipo de fichero del SGBD de una base de datos Oracle:",
+        "a": [
+          "Fichero redolog.",
+          "Fichero de control.",
+          "Fichero de backup.",
+          "Fichero de datos."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11-P1-82",
+        "t": "T2.05",
+        "o": "A",
+        "q": "El intervalo o la latencia de tiempo entre la última transacción de datos confirmada antes del error y los datos más recientes recuperados después del error se denomina:",
+        "a": [
+          "Objetivo de tiempo de recuperación (RTO).",
+          "Objetivo de punto de recuperación (RPO).",
+          "Objetivo de nivel de recuperación (RLO).",
+          "Objetivo de datos de recuperación (RDO)."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1,
+        "w": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11B-P1-49",
+        "t": "T2.05",
+        "o": "A",
+        "q": "Según las reglas de Codd respecto a los sistemas relacionales, y atendiendo a la regla 2 (del acceso garantizado), ¿cuál de los siguientes requisitos NO se incluye en dicha regla como necesaria para acceder de manera unívoca a la información?",
+        "a": [
+          "Nombre de tabla.",
+          "Valor de clave primaria.",
+          "Número de fila.",
+          "Nombre de columna."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS11B-P1-50",
+        "t": "T2.05",
+        "o": "A",
+        "q": "FlockDB es un sistema de gestión de bases de datos NoSQL de tipo:",
+        "a": [
+          "Tabular.",
+          "Grafos.",
+          "Documentos.",
+          "Clave-valor."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-27",
+        "t": "T2.05",
+        "o": "A",
+        "q": "Los árboles B son utilizados comúnmente en:",
+        "a": [
+          "Algoritmos genéticos y mapas de color.",
+          "Sistemas de ficheros y bases de datos.",
+          "Accesibilidad web.",
+          "Memorias USB."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-34",
+        "t": "T2.05",
+        "o": "A",
+        "q": "¿Cuál es una de las características de los sistemas NoSQL?",
+        "a": [
+          "Usan SQL con lenguaje de consulta.",
+          "Están optimizadas para la gestión de transacciones ACID-compliant.",
+          "Escalan bien horizontalmente.",
+          "No pueden manejar cantidades de datos muy grandes."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-35",
+        "t": "T2.05",
+        "o": "A",
+        "q": "En los sistemas de gestión de bases de datos Oracle, ¿qué es un tablespace?",
+        "a": [
+          "Un diccionario de datos.",
+          "Un área lógica de almacenamiento de datos.",
+          "Una tabla de ejecución dinámica.",
+          "Un espacio físico de almacenamiento de datos."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12-P1-40",
+        "t": "T2.05",
+        "o": "A",
+        "q": "La arquitectura ANSI/X3/SPARC permite:",
+        "a": [
+          "La unión de aplicaciones con datos íntimamente.",
+          "El manejo de una sola vista por parte de los usuarios.",
+          "El uso de un catálogo para almacenar el esquema de la base de datos.",
+          "Reducir el número de índices a definir en la base de datos."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    },
+    {
+      "question": {
+        "i": "AS12B-P1-68",
+        "t": "T2.05",
+        "o": "A",
+        "q": "¿Cuál es el propósito de un registro de transacciones en un sistema de gestión de base de datos (SGBD)?",
+        "a": [
+          "Es un modo de funcionamiento del SGBD para ayudar al desarrollo de aplicaciones en el que se registran las operaciones enviadas por un programa en concreto así como sus respuestas.",
+          "Al ejecutar el SGBD en modo de evaluación de rendimiento, es el informe que se genera detallando las transacciones realizadas así como sus tiempos de procesado.",
+          "Es la historia de operaciones realizadas en la base de datos, para garantizar la atomicidad, consistencia, aislamiento y durabilidad, incluso en caso de caídas del sistema o fallos de hardware.",
+          "Si se sospecha una brecha de seguridad en el acceso al SGBD, puede activarse este registro, que recogerá cada operación realizada, así como la hora, usuario, permisos, etc."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          13
+        ],
+        "d": 2,
+        "n": "Registro de transacciones.",
+        "z": 1
+      },
+      "reason": "Sin evidencia aceptada en este lote. PENDIENTE de revisión semántica individual; no se considera dudosa por el mero hecho de no aparecer en la búsqueda literal.",
+      "reviewStatus": "unreviewed",
+      "evidenceKeys": []
+    }
+  ],
+  "counts": {
+    "total": 274,
+    "alreadyHadCitation": 123,
+    "added": 7,
+    "pending": 144,
+    "withCitation": 130
+  }
+}

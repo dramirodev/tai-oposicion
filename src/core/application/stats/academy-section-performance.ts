@@ -1,8 +1,8 @@
-import type { AcademyQuestionSectionManifest } from '../../domain/academy-question-section-map.js';
-import { isAcademyQuestionSectionManifest, resolveAcademyQuestionSectionLink } from '../../domain/academy-question-section-map.js';
+import { parsePublishedSectionManifest, resolvePublishedSectionLink } from '../../domain/academy-section-evidence.js';
 import type { AcademyCurriculumSection } from '../../domain/academy-curriculum-types.js';
 import type { Question } from '../../domain/entities.js';
-import type { QuestionAttempt } from '../../domain/attempts/transitions.js';
+import type { MetricsQuery } from './metrics-query.js';
+import type { QuestionAttempt, QuestionAttemptSession, AttemptEvent } from '../../domain/attempts/transitions.js';
 
 export interface AcademySectionPerformance {
   sectionId: string;
@@ -12,6 +12,10 @@ export interface AcademySectionPerformance {
   sourceHash: string;
   manifestRevision: string;
   linkedQuestions: number;
+  observedDistinct?: number;
+  latestWrongDistinct?: number;
+  lastPracticeAt?: number | null;
+  errorQuestions?: { practice: readonly string[]; simulation: readonly string[] };
   practice: AcademySectionAttemptSummary;
   simulation: AcademySectionAttemptSummary;
 }
@@ -73,9 +77,12 @@ export function summarizeAcademySectionPerformance(input: {
   sections: readonly AcademyCurriculumSection[];
   availableTestMaterials: ReadonlyMap<string, { topicId: string; sourceHash: string }>;
   attempts: readonly QuestionAttempt[];
+  sessions?: readonly QuestionAttemptSession[];
+  events?: readonly AttemptEvent[];
+  query?: MetricsQuery;
 }): AcademySectionPerformanceResult {
-  if (!isAcademyQuestionSectionManifest(input.manifest)) return { status: 'invalid-manifest', rows: [] };
-  const manifest: AcademyQuestionSectionManifest = input.manifest;
+  const manifest = parsePublishedSectionManifest(input.manifest);
+  if (!manifest) return { status: 'invalid-manifest', rows: [] };
   if (manifest.links.length === 0) return { status: 'no-approved-links', rows: [] };
 
   const questions = new Map(input.questions.map(question => [question.id, question]));
@@ -85,14 +92,30 @@ export function summarizeAcademySectionPerformance(input: {
   for (const link of manifest.links) {
     const question = questions.get(link.questionId);
     const section = sections.get(link.sectionId);
-    const resolved = question ? resolveAcademyQuestionSectionLink({ link, question, section, availableTestMaterials: input.availableTestMaterials }) : undefined;
+    const resolved = question ? resolvePublishedSectionLink({ link, question, section, availableTestMaterials: input.availableTestMaterials }) : undefined;
     if (!question || !resolved) { staleLinks++; continue; }
     byQuestion.set(`${link.questionId}\u0000${link.contentRevision}`, resolved);
   }
   if (byQuestion.size === 0) return { status: 'no-current-links', rows: [], staleLinks };
 
+  const sessionById = new Map(input.sessions?.map(session => [session.id, session]));
+  const terminalDates = new Map(input.events?.map(event => [event.id, event.at]));
+  const semanticByQuestion = new Map(manifest.links.map(link => [link.questionId, link.semanticRevision]));
+  const seenAttempts = new Set<string>();
   const attemptsByQuestion = new Map<string, QuestionAttempt[]>();
   for (const attempt of input.attempts) {
+    if (seenAttempts.has(attempt.id)) continue;
+    seenAttempts.add(attempt.id);
+    if (!attempt.semanticRevision || attempt.semanticRevision !== semanticByQuestion.get(attempt.questionId)) continue;
+    const question = questions.get(attempt.questionId);
+    const session = sessionById.get(attempt.sessionId);
+    if (input.sessions && attempt.mode === 'simulation' && session?.status !== 'completed') continue;
+    const at = (attempt.terminalEventId ? terminalDates.get(attempt.terminalEventId) : undefined) ?? attempt.completedAt ?? attempt.createdAt;
+    if (input.query && (at < input.query.fromInclusive || at >= input.query.toExclusive
+      || (input.query.topicId && input.query.topicId !== question?.topicId)
+      || (input.query.origin && input.query.origin !== question?.origin)
+      || (input.query.mode && input.query.mode !== attempt.mode)
+      || (input.query.activity && input.query.activity !== (session?.activity ?? 'questions')))) continue;
     const identity = `${attempt.questionId}\u0000${attempt.contentRevision}`;
     if (!byQuestion.has(identity)) continue;
     const values = attemptsByQuestion.get(identity) ?? [];
@@ -117,7 +140,7 @@ export function summarizeAcademySectionPerformance(input: {
       const summary = row[attempt.mode];
       if (attempt.exposureKind === 'immediate-retry') { summary.immediateRetryAttempts++; continue; }
       summary.answeredAttempts++;
-      const at = attempt.completedAt ?? attempt.createdAt;
+      const at = (attempt.terminalEventId ? terminalDates.get(attempt.terminalEventId) : undefined) ?? attempt.completedAt ?? attempt.createdAt;
       const current = summary.latestByQuestion.get(questionId);
       if (!current || at > current.at || (at === current.at && attempt.id.localeCompare(current.id) > 0)) {
         summary.latestByQuestion.set(questionId, { at, id: attempt.id, outcome: attempt.outcome, confidence: attempt.confidence, selfAssessment: attempt.selfAssessment });
@@ -139,11 +162,23 @@ export function summarizeAcademySectionPerformance(input: {
         else summary.selfAssessment.notRecorded++;
       }
     }
+    const latestCombined = new Map<string, { at: number; id: string; outcome: 'correct' | 'wrong' }>();
+    for (const summary of [row.practice, row.simulation]) for (const [id, latest] of summary.latestByQuestion) {
+      const previous = latestCombined.get(id);
+      if (!previous || latest.at > previous.at || (latest.at === previous.at && latest.id > previous.id)) latestCombined.set(id, latest);
+    }
     return {
       ...row,
+      observedDistinct: latestCombined.size,
+      latestWrongDistinct: [...latestCombined.values()].filter(value => value.outcome === 'wrong').length,
+      lastPracticeAt: latestCombined.size ? [...latestCombined.values()].reduce((latest, value) => Math.max(latest, value.at), 0) : null,
+      errorQuestions: {
+        practice: [...row.practice.latestByQuestion].filter(([, value]) => value.outcome === 'wrong').map(([id]) => id).sort(),
+        simulation: [...row.simulation.latestByQuestion].filter(([, value]) => value.outcome === 'wrong').map(([id]) => id).sort(),
+      },
       practice: toPublicAttemptSummary(row.practice),
       simulation: toPublicAttemptSummary(row.simulation),
     };
-  }).sort((first, second) => first.topicId.localeCompare(second.topicId) || first.title.localeCompare(second.title) || first.sectionId.localeCompare(second.sectionId));
+  }).sort((first, second) => (second.latestWrongDistinct ?? 0) - (first.latestWrongDistinct ?? 0) || (second.lastPracticeAt ?? 0) - (first.lastPracticeAt ?? 0) || first.sectionId.localeCompare(second.sectionId));
   return { status: 'ready', rows: output, staleLinks };
 }

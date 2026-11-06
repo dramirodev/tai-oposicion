@@ -170,3 +170,34 @@ it('offers a searchable candidate queue and opens a question without proposing a
   await user.type(screen.getByLabelText('Buscar candidato'), 'no existe');
   expect(screen.getByText('No hay candidatos pendientes para este tema o filtro.')).toBeInTheDocument();
 });
+
+it('exports a generated curricular proposal and a separately confirmed v3 review without inventing a source test', async () => {
+  const downloads = await import('../src/shared/ui/download-file.js');
+  const save = vi.spyOn(downloads, 'saveExportFile').mockImplementation(() => {});
+  const { publishedAcademyQuestionSectionManifest } = await import('../src/core/domain/academy-question-section-map.published.js');
+  window.localStorage.clear();
+  const user = userEvent.setup();
+  renderApp(createElement(AcademyQuestionSectionMapPage), { services: services(true, [{ ...question, o: 'G' }]), initialEntries: ['/curar-contenido'] });
+  try {
+    await user.selectOptions(await screen.findByLabelText('Tema de la pregunta'), 'T3.01');
+    await user.selectOptions(await screen.findByLabelText('Tema del epígrafe de destino'), 'T3.01');
+    await user.selectOptions(await screen.findByLabelText('Pregunta'), question.i);
+    const section = screen.getByLabelText('Epígrafe del temario');
+    await waitFor(() => expect(section.options.length).toBeGreaterThan(1));
+    await user.selectOptions(section, section.options[1].value);
+    await user.type(screen.getByLabelText('Por qué corresponde esta pregunta al epígrafe'), 'Justificación curricular de prueba sintética, pendiente de cotejo.');
+    expect(screen.getByRole('button', { name: 'Exportar revisión curricular v3' })).toBeDisabled();
+    await user.click(screen.getByRole('button', { name: 'Exportar propuesta para revisión' }));
+    const pending = JSON.parse(save.mock.calls[0][1]).proposals[0];
+    expect(pending.status).toBe('pending-review'); expect(pending).not.toHaveProperty('reviewer'); expect(pending.sourceCandidates).toEqual([]);
+    await user.type(screen.getByLabelText('Identificador del revisor'), 'synthetic-human');
+    await user.click(screen.getByRole('checkbox', { name: /He cotejado la pregunta/ }));
+    await user.click(screen.getByRole('button', { name: 'Exportar revisión curricular v3' }));
+    const reviewed = JSON.parse(save.mock.calls[1][1]);
+    expect(reviewed.schemaVersion).toBe(3); expect(reviewed.links[0].evidence).toEqual({ kind: 'curriculum-only' });
+    expect(reviewed.links[0]).not.toHaveProperty('testEvidence'); expect(reviewed.links[0]).not.toHaveProperty('testMaterialTopicId');
+    expect(reviewed.links[0].semanticRevision).toMatch(/^semantic-v1-/);
+    expect(publishedAcademyQuestionSectionManifest.links).toEqual([]);
+    expect(window.localStorage.getItem('tai.academy-question-section-map:v2:curator')).toBeNull();
+  } finally { save.mockRestore(); }
+});

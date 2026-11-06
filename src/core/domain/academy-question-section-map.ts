@@ -24,6 +24,7 @@ export interface AcademyQuestionSectionLink {
   status: 'approved';
   questionId: string;
   contentRevision: string;
+  semanticRevision?: string;
   questionTopicId: string;
   testMaterialTopicId: string;
   sectionTopicId: string;
@@ -74,15 +75,20 @@ function validTestEvidence(value: unknown): value is TestMaterialEvidence {
     && (value.questionNumber === undefined || (Number.isInteger(value.questionNumber) && (value.questionNumber as number) > 0));
 }
 
-function validLinkBase(value: Record<string, unknown>): boolean {
+export function validReviewedSectionLinkBase(value: Record<string, unknown>): boolean {
   return value.status === 'approved'
     && typeof value.questionId === 'string' && !!value.questionId && value.questionId.length <= 200
     && typeof value.contentRevision === 'string' && revisionPattern.test(value.contentRevision)
+    && (value.semanticRevision === undefined || (typeof value.semanticRevision === 'string' && /^semantic-v1-[a-f0-9]{8}$/.test(value.semanticRevision)))
     && typeof value.sectionId === 'string' && sectionIdPattern.test(value.sectionId)
-    && validTestEvidence(value.testEvidence) && validSectionEvidence(value.sectionEvidence)
+    && validSectionEvidence(value.sectionEvidence)
     && typeof value.rationale === 'string' && value.rationale.trim().length >= 10 && value.rationale.length <= 1000
     && Number.isFinite(value.reviewedAt) && (value.reviewedAt as number) > 0
     && typeof value.reviewer === 'string' && !!value.reviewer.trim() && value.reviewer.length <= 200;
+}
+
+function validLinkBase(value: Record<string, unknown>): boolean {
+  return validReviewedSectionLinkBase(value) && validTestEvidence(value.testEvidence);
 }
 
 export function isAcademyQuestionSectionLink(value: unknown): value is AcademyQuestionSectionLink {

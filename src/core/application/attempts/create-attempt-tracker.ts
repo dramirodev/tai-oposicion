@@ -8,12 +8,14 @@ interface CreateAttemptTrackerOptions {
   createId: (kind: 'session' | 'attempt' | 'event') => string;
   now: () => number;
   monotonicNow: () => number;
+  clockContext?: string;
   onError?: (error: unknown) => void;
 }
 
 export function createAttemptTracker(options: CreateAttemptTrackerOptions): AttemptTracker {
   let queue = Promise.resolve();
-  const retryableEvents = new Map<string, { id: string; at: number; monotonicAt: number }>();
+  const lastIntentByAttempt = new Map<string, string>();
+  const retryableEvents = new Map<string, { id: string; at: number; monotonicAt: number; clockContext?: string }>();
   const enqueue = (action: () => Promise<void>): Promise<boolean> => {
     const result = queue.then(action).then(() => true, error => {
       try { options.onError?.(error); } catch { /* Error reporting must not poison the queue. */ }
@@ -24,7 +26,7 @@ export function createAttemptTracker(options: CreateAttemptTrackerOptions): Atte
   };
 
   return {
-    beginSession(scope: string, mode: AttemptMode, startedAt: number, seeds: readonly AttemptSeed[], timeLimitSeconds?: number, sourceSessionId?: string): AttemptTrackingRef {
+    beginSession(scope: string, mode: AttemptMode, startedAt: number, seeds: readonly AttemptSeed[], timeLimitSeconds?: number, sourceSessionId?: string, activity?: 'questions' | 'attentive-reading'): AttemptTrackingRef {
       const retrySeed = seeds.length === 1 && seeds[0].exposureKind === 'immediate-retry' && seeds[0].retryOfAttemptId
         ? seeds[0] : undefined;
       const retryKey = retrySeed ? encodeURIComponent(retrySeed.retryOfAttemptId!) : undefined;
@@ -32,6 +34,7 @@ export function createAttemptTracker(options: CreateAttemptTrackerOptions): Atte
         id: retryKey ? `retry-session:${retryKey}` : options.createId('session'),
         ...(sourceSessionId ? { sourceSessionId } : {}),
         mode,
+        ...(activity ? { activity } : {}),
         status: 'active',
         startedAt,
         ...(timeLimitSeconds !== undefined && timeLimitSeconds > 0 ? { timeLimitSeconds } : {}),
@@ -43,6 +46,7 @@ export function createAttemptTracker(options: CreateAttemptTrackerOptions): Atte
         sessionId: session.id,
         questionId: seed.questionId,
         contentRevision: seed.contentRevision,
+        ...(seed.semanticRevision ? { semanticRevision: seed.semanticRevision } : {}),
         mode,
         position: seed.position,
         exposure: seed.exposure,
@@ -74,8 +78,12 @@ export function createAttemptTracker(options: CreateAttemptTrackerOptions): Atte
 
     record(scope: string, attemptId: string, intent: AttemptIntent): Promise<boolean> {
       const retryKey = JSON.stringify([scope, attemptId, intent]);
+      const attemptKey = JSON.stringify([scope, attemptId]);
+      if (lastIntentByAttempt.get(attemptKey) !== retryKey) retryableEvents.delete(retryKey);
+      lastIntentByAttempt.set(attemptKey, retryKey);
       const eventMetadata = retryableEvents.get(retryKey) || {
         id: options.createId('event'), at: options.now(), monotonicAt: options.monotonicNow(),
+        ...(options.clockContext ? { clockContext: options.clockContext } : {}),
       };
       retryableEvents.set(retryKey, eventMetadata);
       return enqueue(async () => {
@@ -89,7 +97,7 @@ export function createAttemptTracker(options: CreateAttemptTrackerOptions): Atte
           createEventId: () => options.createId('event'),
           eventMetadata,
         });
-        if (result.status === 'rejected') {
+        if (result.status === 'rejected' && result.reason !== 'duplicate-event') {
           throw new Error(`No se pudo registrar el evento del intento: ${result.reason}`);
         }
         if (retryableEvents.get(retryKey) === eventMetadata) retryableEvents.delete(retryKey);
