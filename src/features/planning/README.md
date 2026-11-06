@@ -730,3 +730,155 @@ El recorrido WebKit a 390×844 también completó dos actividades encadenadas de
 Se incorporan únicamente citas `u` para lectura tras fallo, sin cambiar enunciados, opciones, claves ni condiciones de puntuación. Las decisiones y los pasajes vigentes están en `editorial/citas-por-tema/`; cada tema conserva sus aceptadas y pendientes. Las citas existentes y las correcciones posteriores de main tienen prioridad. No se añade una acreditación de evaluación ni se modifican los 415 registros con prueba editorial de contenido.
 
 Los ficheros de `scripts/bank-editorial/citations/` registran before/after completos y hashes de pregunta y fichero. `citation_release.py` comprueba que solo se añadió `u` y reconstruye exactamente los bytes previos; el importador y las pruebas históricas utilizan esa base sin alterar los manifiestos anteriores. No se relajan las guardas ni se reescribe el historial de ediciones. Las PRs incluyen evidencia y pruebas; abrirlas no fusiona ni despliega el banco. Estado individual y próximo paso: registro de cada tema.
+
+
+## Progreso, estudio y diagnóstico por apartados — 2026-11-06
+
+Encargo local: ampliar Estadísticas por fases 0–9; sin publicar banco, desplegar, merge, push, datos reales ni generación de preguntas. Estado global: **EN PROGRESO**. Registro funcional en este archivo; hallazgos en `tests/e2e/audit-findings.md`.
+
+### Fase 0 — inventario y línea base
+
+**EN PROGRESO**. Checkout reutilizado: `audit/ux-integral-2026-11-04`, HEAD `c1d010cc9f0392c95492ab52934ba8008ef1f5c0`. Los cambios anteriores afectan README, registro canónico y evidencias E2E; no se restauran ni se atribuyen a este encargo. Las superficies de estadísticas y este handoff estaban limpias al iniciar; no se ha detectado conflicto que exija otro worktree. Node 24.22.1 coincide con `.nvmrc` (24); dependencias disponibles, lockfile conservado.
+
+Línea base reproducible: `npm run check` pasa (189 archivos, 966 pruebas; 1 archivo/27 pruebas omitidas); `npm run build` pasa. Salidas de esta sesión: `/tmp/tai-progress-baseline-check.log`, `/tmp/tai-progress-baseline-build.log`. Avisos previos: `window.scrollTo` en jsdom, anotaciones Rollup/Zod y chunks grandes Firebase/C++.
+
+| Métrica/fuente | Estado inicial | Alcance y límites |
+| --- | --- | --- |
+| Acierto, intentos, temas, trampas y lentas | existente, línea base verificada | Progreso agregado por cuenta disponible localmente; no fecha individual de cada respuesta. No combinar con eventos de la misma actividad. |
+| Sesiones y simulacros | existente | Historial agregado con fecha/política de puntuación; `sourceSessionId` permite reconocer coincidencias detalladas, no sumarlas. |
+| Último resultado ordinario por pregunta | derivable | Historial detallado IndexedDB por cuenta/dispositivo; exposición inmediata separada. Priorizar evento terminal; fecha alternativa debe declararse. |
+| Tiempo visible en preguntas | existente | `computeActiveTime` usa marcas monotónicas; resumen actual acumulado, no filtrado; no acredita atención, lectura externa ni unión entre pestañas. |
+| Actividad diaria/objetivo | parcial | Checkpoints y preferencias actuales; sin histórico versionado de objetivos no cabe cumplimiento retroactivo. |
+| Cobertura curricular declarada | existente | Material y apartados marcados; autoinforme, no dominio. |
+| Rendimiento por apartado | infraestructura existente | Cruza revisión de enunciado/opciones; manifiesto publicado v2 vacío, sin lecturas de intentos en estado vacío. |
+| Conceptos/confusiones | requiere curación | No existe taxonomía completa aprobada; trampas y familias no son conceptos. |
+| Predicción FSRS | existente en servicio | Estimación de tarjetas con muestra; actualmente oculta en UI por decisión previa, no eliminada del modelo. |
+| Sincronización de intentos/borrado/backup | existente | Puertos y adaptadores locales/Firebase propios; esta línea base unitaria no certifica sincronización remota ni Emulator. |
+
+Catálogo: índice 36 temas/15.661 preguntas; metadatos contienen 15.666 IDs (O 683, A 4.060, G 10.923). Hay discrepancia de cinco IDs que exige resolver elegibilidad mediante el cargador activo antes de presentar denominadores. No se han contado JSON de auditoría como preguntas adicionales. Candidatos existentes: 2.432 IDs, 41 materiales procesados, sin materiales omitidos; son coincidencias enunciado/opciones, no validación de clave/contexto ni aprobación. Publicación: 0 aprobaciones, 0 obsoletos publicados, resto sin clasificación aprobada. No se reutilizan dictámenes «Validada» como revisión humana.
+
+Decisión de implementación: contrato puro de consulta temporal y métricas detalladas, separado de acumulados heredados; sin duplicar persistencia. Ampliar servicio y vistas existentes conservando rutas/acciones. Evaluar revisiones semánticas compatibles sin reescribir huellas antiguas. No añadir librería para contar/filtrar; usar estructuras Map/Set e Intl ya disponible; verificar calendario Europe/Madrid y rendimiento con fixtures. Próximo paso: cerrar inventario de carga, identidad canónica y cuenta; implementar y probar fase 1.
+
+### Hito: núcleo de consulta y primera integración (fase 1)
+
+**IMPLEMENTADO SIN VERIFICAR** en integración; núcleo puro verificado con 10 casos en `tests/stats/detailed-metrics.test.js` (26 pruebas pasan al incluir composición/tracker/motor). Contrato `[fromInclusive,toExclusive)`, zona IANA, tema, origen y modalidad en `metrics-query.ts`; metadatos de fechas alternativas/exclusiones, ausencia distinta de cero y muestra en `detailed-metrics.ts`. Calendario probado en Europe/Madrid con días de 23/25 horas. Tiempo: intervalos monotónicos cerrados con colocación civil compatible, unión/recorte y reparto en medianoche; intervalos sin colocación fiable excluidos del total del periodo. No se reconstruyen intervalos abiertos.
+
+`load-detailed-metrics.ts` pagina por cuenta y comprueba identidad tras cada operación asíncrona; no usa exportación completa ni guarda caché derivada. Un resultado alimenta resumen, barras y tabla. El primer panel integrado sirve para comprobar el contrato; las herramientas heredadas conservan rótulo acumulado/periodo propio. La unificación completa de filtros y las comparaciones equivalentes siguen **PENDIENTE**, no se declara terminada la fase 1. Se mantiene forecast FSRS y su decisión previa de ocultación en UI; no se reconstruye una sección de tarjetas retirada.
+
+Hallazgo confirmado: la huella anterior omite clave/contexto/fuente. Se añade `semanticRevision` opcional en intentos nuevos, DTO/mapper/esquema y regla local de Firestore; se conservan huellas históricas. Los vínculos heredados sin esa evidencia se leen pero no permiten atribución semántica vigente. La nueva regla NO se ha desplegado; su verificación en Emulator queda pendiente antes del cierre. La lectura v3 distingue evidencia curricular y evidencia test+currículo, sin requerir PDF de test a preguntas generadas. Próximo paso: fixtures del camino poblado y compatibilidad v1/v2/v3; cola editorial y soporte de confusiones; continuar con instrumentación y comprobaciones de integración.
+
+### Hito: evidencias editoriales, conceptos e instrumentación
+
+Fase 2 técnica **IMPLEMENTADO SIN VERIFICAR** en integración (pruebas focalizadas de v3/compatibilidad pasan); cobertura editorial **BLOQUEADO** exclusivamente por ausencia de aprobaciones humanas auténticas. `academy-section-evidence.ts` mantiene lectura v1/v2 y valida v3 con evidencia discriminada curricular o test+currículo. La publicación real permanece v2 vacía. El editor conserva borradores/revisión previa y exporta propuestas pendientes/ambiguas/sin evidencia/rechazadas con identidad estable (`academy-section-proposals.ts`); no se rellenan páginas, hashes o revisores ausentes. El índice previo de candidatos sigue siendo orientación por texto, no prueba de clave/contexto ni aprobación. Vínculos v1/v2 sin `semanticRevision` se conservan legibles, pero quedan no atribuibles hasta recotejo.
+
+Fase 3 soporte **IMPLEMENTADO SIN VERIFICAR** en integración: catálogo explícito versionado vacío/pendiente y proyección de conceptos necesarios frente a mencionados (`concept-evidence.ts`). Exige concepto, relación y evidencia revisados, revisión semántica vigente y vínculo de apartado aprobado; normaliza opción visual mediante permutación explícita y excluye blancos/revelaciones/reintentos. Grupos no aditivos, preguntas distintas y «Respuesta compatible con la confusión…». Dos pruebas focalizadas pasan. No hay conceptos ni confusiones reales aprobados; no se presentan como recomendaciones.
+
+Fase 4 **EN PROGRESO**: medición explícita de Lectura atenta mediante el mismo AttemptRepository, sin segunda persistencia. Botón iniciar/reanudar/pausar, visibilidad/pagehide, checkpoints cada 15 s; no corte por inactividad de clics. Cada intervalo lleva contexto de reloj opcional para excluir diferencias monotónicas entre recargas. El ejercicio no tiene un aula/PDF integrado: no se fabrica una dependencia nueva. Tarjetas conservan su retirada previa de rutas; el forecast existente no se modifica. Duración manual y transcurrida no se suman al tiempo observado. No se añade sincronización nueva: los campos opcionales recorren los DTO, importación/exportación, tombstones y adaptador existentes; reglas locales ampliadas, pendientes de Emulator.
+
+Regresión detectada y corregida: el tracker reutilizaba metadatos de un `resume` aún en cola tras un `pause`; ahora un cambio de intención invalida el reuso de ese tipo previo, conservando identidad para reintentar errores reales. Focalizadas 17/17: 120 s visibles + 600 ocultos + 180 visibles = 300 s; cuenta distinta no ve eventos; borrar e importar copia anterior no recupera historial; relojes de contextos distintos no se restan. Núcleo de revisión/curación: 24/24 en cinco archivos. Typecheck y lint pasan hasta este hito.
+
+Fase 5 **EN PROGRESO**: lectura paginada de eventos por scope sobre la clave existente, sin migración de IndexedDB; evita una transacción por pregunta en el resumen. Sin caché persistida; cambios de historial/importación/sync/borrado invalidan la consulta visible. Las herramientas heredadas de evolución cargan bajo demanda. Fases 6–7 **EN PROGRESO**: panel temporal, filtros, barras/tabla y acción por IDs de errores vinculados; conserva ruta `/stats`, simulacros y herramientas acumuladas. Al abrir repaso comprueba cuenta y sesión activa antes/después de lecturas; no reemplaza un simulacro.
+
+Pendiente de integración: suite global, E2E, pruebas de cambios rápidos de filtro, benchmark 10k/100k, reglas/aislamiento Emulator y revisión responsive; completar filtros y criterios restantes antes de declarar cualquier cierre global. No se ha publicado ni escrito producción.
+
+### Inventario reproducible del catálogo activo
+
+Lectura exclusiva de los 36 ficheros indicados por `public/data/index.json`, sin contar auditorías como banco. Las cinco entradas extra de `meta.json` son alias; la cobertura comprobada se calcula bajo demanda sobre preguntas cargadas y reglas reutilizadas de selección. «Simulacro base» aplica exclusiones comunes; un examen concreto puede restringir más la selección. La cuarentena editorial publicada en este checkout está vacía.
+
+| Tema | Preguntas | O | A | G | Elegibles práctica | Simulacro base |
+| --- | ---: | ---: | ---: | ---: | ---: | ---: |
+| T1.01 | 442 | 20 | 278 | 144 | 441 | 436 |
+| T1.02 | 300 | 11 | 127 | 162 | 300 | 296 |
+| T1.03 | 313 | 8 | 113 | 192 | 313 | 309 |
+| T1.04 | 306 | 14 | 151 | 141 | 306 | 303 |
+| T1.05 | 397 | 4 | 141 | 252 | 397 | 395 |
+| T1.06 | 213 | 3 | 54 | 156 | 213 | 213 |
+| T1.07 | 293 | 15 | 119 | 159 | 292 | 288 |
+| T1.08 | 455 | 15 | 98 | 342 | 454 | 449 |
+| T1.09 | 221 | 16 | 106 | 99 | 218 | 215 |
+| T1.10 | 564 | 22 | 206 | 336 | 563 | 557 |
+| T1.11 | 244 | 15 | 79 | 150 | 244 | 238 |
+| T2.01 | 496 | 19 | 111 | 366 | 494 | 491 |
+| T2.02 | 248 | 21 | 92 | 135 | 244 | 238 |
+| T2.03 | 479 | 27 | 104 | 348 | 478 | 472 |
+| T2.04 | 621 | 32 | 127 | 462 | 618 | 610 |
+| T2.05 | 274 | 25 | 129 | 120 | 272 | 264 |
+| T3.01 | 221 | 9 | 101 | 111 | 221 | 218 |
+| T3.02 | 389 | 11 | 180 | 198 | 389 | 255 |
+| T3.03 | 367 | 15 | 91 | 261 | 366 | 363 |
+| T3.04 | 445 | 22 | 147 | 276 | 444 | 439 |
+| T3.05 | 519 | 26 | 106 | 387 | 518 | 512 |
+| T3.06 | 1558 | 32 | 116 | 1410 | 1556 | 1551 |
+| T3.07 | 704 | 20 | 111 | 573 | 703 | 699 |
+| T3.08 | 1776 | 28 | 164 | 1584 | 1772 | 1766 |
+| T3.09 | 181 | 15 | 91 | 75 | 180 | 177 |
+| T3.10 | 732 | 25 | 122 | 585 | 731 | 724 |
+| T4.01 | 145 | 22 | 99 | 24 | 145 | 138 |
+| T4.02 | 675 | 27 | 117 | 531 | 674 | 664 |
+| T4.03 | 163 | 10 | 51 | 102 | 163 | 163 |
+| T4.04 | 250 | 7 | 72 | 171 | 250 | 248 |
+| T4.05 | 172 | 21 | 76 | 75 | 169 | 165 |
+| T4.06 | 328 | 18 | 70 | 240 | 327 | 324 |
+| T4.07 | 210 | 27 | 90 | 93 | 209 | 204 |
+| T4.08 | 244 | 16 | 69 | 159 | 244 | 241 |
+| T4.09 | 387 | 39 | 96 | 252 | 383 | 374 |
+| T4.10 | 329 | 23 | 54 | 252 | 325 | 321 |
+
+Totales: {"O":680,"A":4058,"G":10923,"eligible":15616,"simulation":15320,"reserved":45}. Los vínculos publicados aprobados/vigentes son 0 y los obsoletos publicados 0; las 15.661 preguntas del índice carecen de clasificación aprobada. Hay 2.432 IDs con candidatos de fuente de texto (41 materiales), no equivalentes a propuestas semánticas revisadas. En práctica hay 15.616 elegibles con las preferencias de todos los orígenes, excluidas 45 reservadas. Ninguna cifra es dominio curricular.
+
+### Cierre técnico y aceptación — 2026-11-06
+
+**Resultado global: PARCIALMENTE COMPLETADO.** El desarrollo local queda integrado y comprobado en los ámbitos automatizados indicados debajo. La cobertura editorial real y la publicación de vínculos/conceptos siguen **BLOQUEADO** por falta de aprobaciones humanas incorporables; este encargo tampoco autoriza publicación del banco ni despliegue. Este cierre sustituye los estados intermedios anteriores, conservados como historial.
+
+| Fase | Estado al cierre | Evidencia / decisión |
+| --- | --- | --- |
+| 0 — inventario/línea base | COMPLETADO Y VERIFICADO | Rama/HEAD preservados, 36 temas inventariados, alias/exclusiones resueltos, fuentes y límites documentados. Base 966 pruebas; sin reinstalar ni cambiar lockfile. |
+| 1 — contrato/contexto | COMPLETADO Y VERIFICADO | Intervalos semiabiertos, zona del dispositivo, 7/30/todo/personalizado, filtros de tema/origen/modalidad/actividad y comparación de días civiles completos. Hoy queda fuera de ambas muestras comparadas. Agregados sin dimensiones suficientes solo en Todo el historial sin filtros incompatibles; las sesiones fechadas siguen rango y dimensiones conocidas. Ausencia no es 0; errores recuperables no se convierten en resultados. |
+| 2 — infraestructura editorial | COMPLETADO Y VERIFICADO | Lectura v1/v2/v3, evidencia curricular sin test ficticio, revisión semántica nueva, exclusión de datos antiguos no atribuibles, propuestas idempotentes y editor por lotes existentes. Exportación pendiente separada de exportación curricular v3 confirmada por persona. Ocho pruebas del editor, fixtures de seis vínculos y cambio de clave verificados. |
+| 2 — cobertura real | BLOQUEADO | 0 aprobados/vigentes y 0 obsoletos publicados. 2.432 candidatos de fuente no equivalen a revisiones semánticas. No se importaron dictámenes «Validada» como aprobación humana. |
+| 3 — conceptos/distractores | COMPLETADO Y VERIFICADO (soporte) | Catálogo vacío versionado y pendiente; requisitos de aprobación/evidencia, conceptos necesarios frente a mencionados, opción canónica y grupos no aditivos. Diez repeticiones no son diez preguntas distintas; blancos/reintentos/revisión incompatible no atribuyen confusión. Contenido real BLOQUEADO por revisión editorial. |
+| 4 — tiempo | COMPLETADO Y VERIFICADO | Preguntas y Lectura atenta existentes; inicio/pausa/reanudación explícitos, visibilidad simulada, pagehide/recarga, checkpoints de 15 s, contexto de reloj, unión/recorte y medianoche. 120 s + 180 s visibles con 600 s ocultos da 300 s. Historial de planificación conserva duración transcurrida y presupuesto de entonces, separado del observado; no se reconstruye cumplimiento con preferencias actuales. |
+| 5 — servicio/coste | COMPLETADO Y VERIFICADO | Un resumen por consulta para tarjetas, tabla, series y detalle; sesiones/eventos paginados por scope, sin migrar IndexedDB ni guardar derivados persistidos. Exportación y evolución heredada reutilizan lectura masiva paginada cuando el puerto la ofrece. Invalidación por actividad/importación/sync/borrado; rechazo de lecturas antiguas por cuenta/filtro. Benchmark sintético 10k/100k descrito debajo. |
+| 6 — interfaz | COMPLETADO Y VERIFICADO (automatizado) | Resumen, estudio, resultados, tabla buscable y detalle verificable, apartados, cobertura bajo demanda y repaso Ahora. Conserva `/stats`, simulacros, preferencias y acciones útiles. Etiquetas de dominio sustituidas por descripción de práctica; motivos de fallo se rotulan como declarados. Gráficos con tabla equivalente, teclado, claro/oscuro, 320/768/1440 y zoom CSS 200 %. No certificación física/VoiceOver. |
+| 7 — acciones | COMPLETADO Y VERIFICADO | Repaso de errores por IDs de apartado, revisión/origen/contexto compatibles y guardas de sesión activa/cuenta; última comprobación semántica al comenzar. Fallback «Practicar el tema completo» conserva origen seleccionado. «Continuar estudio» abre Planificación, sin prometer un PDF local accesible al navegador. |
+| 8 — pruebas | COMPLETADO Y VERIFICADO en el alcance reproducible | Suite global, build/diff, 18 E2E de estadísticas, 4 móviles, Auth Emulator (Chromium) y 2 pruebas de reglas/sync en Emulator. Límites enumerados debajo. |
+| 9 — aceptación global | BLOQUEADO para cobertura editorial | El código no publica datos sin revisión. Próximo paso humano exacto al final; no se marca la aceptación global COMPLETADO Y VERIFICADO. |
+
+#### Métricas disponibles y límites
+
+- Respuestas ordinarias, acierto con denominador, preguntas distintas y último resultado del periodo; reintentos, revelaciones, pendientes, abandonos y blancos de simulacro separados. Las versiones históricas no prueban igualdad con la pregunta actual; el detalle solo presenta enunciado como compatible si coincide la revisión semántica.
+- Tiempo observado deduplicado por intervalos cerrados con colocación civil coherente. Duraciones sin ubicación fiable quedan fuera del total temporal; intervalos abiertos no se extienden hasta ahora. Distribuciones por actividad pueden solaparse y se rotulan no sumables. Tiempo manual no instrumentado no se reconstruye, ni se suman segundos históricos al observado.
+- Constancia por actividad registrada, no por abrir Progreso. La planificación histórica solo informa sesiones completadas con presupuesto conservado: no demuestra el cumplimiento de días sin checkpoint ni atribuye objetivos actuales a fechas anteriores.
+- Cobertura indexada ligera y comprobación elegible bajo demanda con la misma función de exclusión que la selección. Fixture real T1.01: 442 registros, 1 reservado, 441 elegibles de práctica; 4 practicados no se convierten en cobertura editorial. Fixture sintético: 10 elegibles, 6 vínculos vigentes = 60 % de vinculación; 2 practicados = 20 % del banco.
+- Repaso Ahora es estado global explícito, separado de los filtros históricos. Se conserva la predicción FSRS; este encargo vuelve a hacerla consultable como estimación plegada de tarjetas con muestra/denominador, sin reabrir `/cards` ni extrapolar al examen. Sustituye la decisión anterior de ocultación únicamente para esa estimación solicitada.
+- Fuente principal: historial detallado disponible para la cuenta en este dispositivo, incluidos datos recibidos por sincronización. No se acredita completitud de otros dispositivos ni de actividad previa a la instrumentación. Sin indicadores de dominio curricular o pronóstico de aprobado.
+
+#### Validación reproducible y entorno
+
+- `npm run check`: 1.000 pruebas pasan; 29 omitidas (los tests de reglas originales sin Emulator y los dos de este harness se ejecutan solo bajo sus guardas). Arquitectura sin deuda nueva (dos excepciones previas), lint/exclusiones/tipos correctos. Línea base: 966/27 omitidas. Los tests de arranque que esperaban solo texto a 1 s detectaron carreras bajo carga: esperan ahora ruta/contenido listos y la misma aserción con límite de 5 s; no se eliminó ni rebajó ningún resultado esperado.
+- `npm run build` y `git diff --check` pasan. Permanecen avisos previos de Rollup/Zod, chunks Firebase/C++ y `window.scrollTo` de jsdom. Sin dependencias nuevas, cambios de versión ni cambios al manifiesto publicado.
+- Navegador: `npm run test:e2e -- tests/e2e/progress-metrics.spec.ts tests/e2e/stats-charts.spec.ts tests/e2e/stats-practice-journey.spec.ts --output=/tmp/tai-progress-final-browser-results`: 18/18 en Chromium/WebKit. Incluye estado vacío/poblado, cambios de filtros, muestra y denominadores, sesión real por tema, regreso a métricas, pausa/visibilidad simulada/recarga, service worker real con arranque en frío sin red, registro local y reconexión sin duplicación; foco, tablas, temas y reflujo/zoom de diseño.
+- `npm run test:e2e -- tests/e2e/mobile-layout.spec.ts -g 'informe de estrategia|apartados largos'`: 4/4. El zoom comprobado es CSS de diseño al 200 %, no un certificado de todos los zoom nativos ni de un lector de pantalla. No se probó dispositivo físico.
+- Auth: `npx --yes firebase-tools@13.35.1 emulators:exec --only auth,firestore --project demo-tai-auth 'TAI_AGENT_EMULATOR_ONLY=1 TAI_AUTH_EMULATOR=1 TAI_FIREBASE_EMULATORS=1 npm run test:e2e -- tests/e2e/auth-emulator.spec.ts'`: Chromium pasa; WebKit omitido por condición explícita del harness. Configuración efectiva demo/loopback y bloqueo de tráfico externo antes de escrituras; cuentas `example.test`.
+- Reglas/sync: `npx --yes firebase-tools@13.35.1 emulators:exec --only auth,firestore --project demo-tai-auth 'TAI_AGENT_EMULATOR_ONLY=1 npx vitest run tests/stats/metrics-emulator.test.js'`: 2/2. Guardas exigen GCLOUD_PROJECT y endpoints exactos antes de crear el entorno; campos nuevos, denegación a otra cuenta, sincronización entre repositorios aislados y tombstone contra copia vieja. No se ejecutó el script de reglas que apunta a `demo-tai-training-rules`.
+- Benchmark: Node 24.22.1/macOS, fixtures 10.000/100.000 intentos y 30.000/300.000 eventos, 1.000 preguntas distintas, ~5,85/~59,25 MB serializados. Ejecución aislada: proyección 69/513 ms y consulta con puertos paginados en memoria 53/482 ms, 401/4.001 lecturas de páginas; bajo suite concurrente se observaron aproximadamente 0,8–2,0 s para la proyección de 100k y hasta 1,57 s para la consulta, según carga. No mide latencia universal ni E/S física de IndexedDB. No se introdujo worker sin bloqueo de interfaz reproducido.
+- Una ejecución E2E tuvo ENOENT al cerrar trazas porque se inició otra invocación antes de que acabara; fue un error de orquestación, no una aserción de producto. Se repitió secuencialmente con salida aislada y pasó. El intento de puertos desde sandbox se repitió fuera de él. No se han sobrescrito las evidencias preexistentes; las nuevas están en `tests/e2e/evidence/progress-metrics-2026-11-06/`.
+
+#### Archivos y continuidad
+
+Núcleo: `metrics-query.ts`, `detailed-metrics.ts`, `load-detailed-metrics.ts`, `select-dated-statistics.ts`, `planned-study-metrics.ts`, `observed-intervals.ts`, `question-semantic-revision.ts`. Editorial: `academy-section-evidence.ts`, `academy-section-proposals.ts`, `concept-evidence.ts` y editor existente. Integración: composición de estadísticas, StatsServices, `PeriodMetricsPanel.tsx`, `CatalogueCoverage.tsx`, `TopicPeriodEvidence.tsx` y pantalla existente. Persistencia: campos opcionales en DTO/mappers/esquemas, paginación por scope, tracker/observación y reglas locales; sin colección paralela.
+
+Hallazgos propios: MET-001, MET-002 y MET-003 cerrados con evidencia en el registro canónico. Cambios anteriores de README, auditoría y capturas se conservan sin atribuirlos a este encargo. Se inspeccionó una muestra de `banco/dictamenes.json` (`GEN-T1.01-20.v2`): «Validada» y una referencia curricular no aportan identidad/revisión humana ni equivalen a vínculo aprobado, por lo que no se incorporó como tal.
+
+**Próximo paso exacto:** una persona debe cotejar pregunta, clave, contexto, apartado y material vigente en `/curar-contenido`, preparar/exportar el vínculo v2 o la revisión curricular v3 y proporcionar esa revisión auténtica para una incorporación explícita/versionada posterior. Revisar conceptos/distractores por el mismo criterio. Hasta entonces la publicación conserva `links: []`; los resultados por tema y el tiempo observado funcionan sin esos vínculos. No hubo commit, push, merge, publicación de banco, deploy ni escritura de datos reales.
+
+
+### Publicación de métricas autorizada — 2026-11-06
+
+**EN PROGRESO.** El usuario autoriza integrar y desplegar las métricas y publicar lotes de citas con evidencia clara. Se integra el trabajo local sobre main `454a025`, preservando las reparaciones editoriales, la cuarentena condicionada a contenido verificado, el filtro de lectura y las notas parciales oficiales. No se convierten citas en vínculos estadísticos aprobados. El checkout original y sus cambios ajenos permanecen intactos.
+
+Línea base actual: `npm run check` pasa con 1.091 pruebas y 29 omitidas. El primer intento dentro del sandbox se detuvo al escribir la caché de las dependencias enlazadas; repetido fuera del sandbox, correcto. Verificación de integración, PR y despliegue pendientes.
+
+**Integración local COMPLETADO Y VERIFICADO; publicación EN PROGRESO.** `npm run check`: 1.125 aprobadas/31 omitidas, 209 archivos correctos/4 omitidos; Python: 75 pruebas, una omitida; build correcto; emuladores `demo-tai-auth` Auth9099/Firestore8080: 2/2 métricas y sincronización, salida 0. Los campos opcionales no abren acceso entre cuentas. Se añade esta prueba de emulador a CI antes de integrar. Versión preparada 1.1.23.
+
+La nueva ejecución local de navegador se detuvo antes de las pruebas: el puerto4187 pertenece al worktree `simplificacion-cinco-temas`; no se mata ni reutiliza su servidor. Las 18 pruebas de métricas existentes se incluyen en la suite completa de CI de esta PR; el resultado nuevo queda pendiente, sin atribuirle el resultado del checkout antiguo. Logs locales: `/tmp/tai-metrics-integrated-{check,python,build}.log` y `/tmp/tai-metrics-release-emulator.log`. No se publican citas nuevas ni vínculos en esta PR.

@@ -1,4 +1,6 @@
 import { clearBooklet, openBooklet, readBookletDeadline } from '../adapters/local/official-booklet-storage.js';
+import { createQuestionObservation } from '../core/application/attempts/create-question-observation.js';
+import { getAttemptTracker } from '../core/application/study-session-engine.js';
 import type { SettingsServices, SettingsSnapshot, StudyServices } from '../shared/ui/study-services.js';
 import { questionNotice, sourceHtml } from '../shared/presentation/study-content.js';
 import { VERIFIED_SOURCES } from '../adapters/http/verified-sources.js';
@@ -348,7 +350,11 @@ const settingsServicesWithSubscription = {
     return () => { settingsListeners.delete(listener); offStore(); offSync(); };
   },
 };
-const statsServices = createStatsServices({ go, startRun, startRepaso, trapTest }, localProgressRepository, localStudyProgressGateway);
+const statsServices = {
+  ...createStatsServices({ go, startRun, startRepaso, trapTest }, localProgressRepository, localStudyProgressGateway),
+  getSyncSummary: () => ({ configured: !!sync.status.configured, state: sync.status.state, error: !!sync.status.error }),
+  onSyncChange: sync.onStatus,
+};
 const quizServices = createQuizServices(go, hashPath('home'), () => {
   const current = new URLSearchParams(location.hash.split('?')[1] || '');
   const activity = current.get('dailyTraining');
@@ -403,6 +409,7 @@ const trapsServices = createTrapsComposition({
   writeDetectionStats: stats => localStudyProgressGateway.updatePreferences(current => ({ ...current, tdet: Object.fromEntries(Object.entries(stats).map(([id, value]) => [id, [...value]])) })),
 });
 const readingServices = createReadingComposition({
+  observation: createQuestionObservation({ tracker: getAttemptTracker, accountId: localStudyProgressGateway.accountId, now: Date.now }),
   accountId: localStudyProgressGateway.accountId,
   onAccountChange: localStudyProgressGateway.onAccountChange,
   loadQuestionMetadata: getMeta,

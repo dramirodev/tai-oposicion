@@ -28,6 +28,7 @@ export interface QuestionAttemptDto {
   sessionId: string;
   questionId: string;
   contentRevision: string;
+  semanticRevision?: string;
   mode: AttemptModeDto;
   position: number;
   exposure: number;
@@ -55,5 +56,6 @@ export interface AttemptEventDto {
   type: AttemptEventTypeDto;
   at: number;
   monotonicAt?: number;
+  clockContext?: string;
   payload: Record<string, unknown>;
 }

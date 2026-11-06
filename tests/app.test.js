@@ -28,7 +28,7 @@ it('navega por las pantallas y oculta la ruta de tarjetas sin afectar al resto',
   });
   ({ unmountApp } = await import('../src/app/main'));
   const waitText = async text => vi.waitFor(() => expect(document.querySelector('#app').textContent).toContain(text), { timeout: 10000 });
-  const navigate = async (route, text) => { location.hash = '#/' + route; await waitText(text); };
+  const navigate = async (route, text) => { location.hash = '#/' + route; await vi.waitFor(() => { expect(document.querySelector('.route-transition')?.getAttribute('data-screen')).toBe(route === 'cards' ? 'home' : route); expect(document.querySelector('#app .page-loading')).toBeNull(); }, { timeout: 10000 }); await waitText(text); };
   await waitText('Sesión rápida');
   await navigate('test', 'Test por tema');
   await vi.waitFor(() => expect(document.querySelector('.bar2 .btn').disabled).toBe(false));

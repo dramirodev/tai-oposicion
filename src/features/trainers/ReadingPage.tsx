@@ -20,6 +20,7 @@ export function ReadingPage() {
   const progress = useSyncExternalStore(reading.subscribe, reading.getProgress, reading.getProgress);
   const [loading, setLoading] = useState(!progress);
   const [error, setError] = useState(false);
+  const [observing, setObserving] = useState(false);
   const [clock, setClock] = useState(() => Date.now());
 
   useEffect(() => {
@@ -34,6 +35,15 @@ export function ReadingPage() {
     return () => clearInterval(timer);
   }, [progress?.step, progress?.selectedAnswer, progress?.index]);
 
+  useEffect(() => {
+    const visibility = () => reading.setObservedVisible?.(observing && document.visibilityState === 'visible');
+    const hide = () => reading.setObservedVisible?.(false);
+    visibility();
+    document.addEventListener('visibilitychange', visibility);
+    window.addEventListener('pagehide', hide);
+    const timer = observing ? setInterval(() => reading.checkpointObservation?.(), 15_000) : undefined;
+    return () => { hide(); document.removeEventListener('visibilitychange', visibility); window.removeEventListener('pagehide', hide); if (timer) clearInterval(timer); };
+  }, [reading, observing, progress?.index, progress?.complete]);
   const exit = async () => { if (await ask('¿Salir del ejercicio?', 'Salir')) { reading.reset(); navigate('/home'); } };
   if (loading && !progress) return <PageLoading variant="study" />;
   if (error && !progress) return <><h1>Lectura atenta</h1><div className="card" role="alert"><p>No se pudieron cargar preguntas disponibles. Comprueba la conexión e inténtalo de nuevo.</p><button className="btn" onClick={() => { reading.reset(); setError(false); setLoading(true); }}>Reintentar</button></div></>;
@@ -45,6 +55,7 @@ export function ReadingPage() {
   return <>
     <div className="qhead sticky top-[calc(var(--sat)/var(--z,1))] z-[3] mb-4 flex items-center gap-4 border-b-0 bg-canvas py-3"><StudyExitButton onExit={() => void exit()} /><StudyProgressBar trackClassName="prog min-w-0 h-[.375rem] flex-1 overflow-hidden rounded-full bg-line" percent={100 * progress.index / questionCount} valueNow={progress.index} valueMax={questionCount} /><div className="cnt min-w-11 text-right text-[length:var(--fs-m)] font-semibold text-muted">{progress.index + 1}/{questionCount}</div></div>
     <h1 className="sub">Lectura atenta · paso {progress.step + 1} de 3</h1>
+    {reading.setObservedVisible && <div className="card"><button type="button" className="btn sec" aria-pressed={observing} onClick={() => setObserving(value => !value)}>{observing ? 'Pausar medición' : 'Iniciar o reanudar medición'}</button><p className="legend">Tiempo observado del ejercicio de lectura atenta. Se pausa al ocultar la app; no cuenta lectura en otra aplicación. Los cierres abruptos conservan solo intervalos confirmados.</p></div>}
     {progress.step === 0 && <MeaningStep question={question} progress={progress} reading={reading} />}
     {progress.step === 1 && <KeywordStep question={question} progress={progress} reading={reading} />}
     {progress.step === 2 && <OptionsStep question={question} progress={progress} reading={reading} clock={clock} questionCount={questionCount} />}

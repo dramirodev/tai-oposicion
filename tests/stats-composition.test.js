@@ -6,6 +6,7 @@ const mocks = vi.hoisted(() => ({
     getTopicName: vi.fn(), getQuestions: vi.fn(),
   },
   falladasIds: vi.fn(),
+  hasActiveRun: vi.fn(),
   loadStudyActivity: vi.fn(),
   loadStrategyReportForPeriod: vi.fn(),
   renderStrategyReport: vi.fn(),
@@ -14,6 +15,7 @@ const mocks = vi.hoisted(() => ({
 vi.mock('../src/app/composition/study/study-engine-composition.js', () => ({
   studyQuestionCatalog: mocks.catalog,
   falladasIds: mocks.falladasIds,
+  hasActiveRun: mocks.hasActiveRun,
 }));
 vi.mock('../src/app/composition/topics/topic-mastery-composition.js', () => ({
   createTopicMasteryComposition: () => async () => [],
@@ -35,6 +37,7 @@ describe('stats composition boundaries', () => {
     mocks.catalog.getMetadataSnapshot.mockReturnValue({ _by: {} });
     mocks.catalog.now.mockReturnValue(1_800_000_000_000);
     mocks.falladasIds.mockReturnValue([]);
+    mocks.hasActiveRun.mockReturnValue(false);
   });
 
   it('builds statistics and comparisons from domain sessions in the injected repository', async () => {
@@ -93,4 +96,42 @@ describe('stats composition boundaries', () => {
     await expect(services.loadAcademySectionPerformance()).resolves.toEqual({ status: 'no-approved-links', rows: [] });
     expect(getScopePage).not.toHaveBeenCalled();
   });
+});
+
+it('does not replace an active session with a section-error practice', async () => {
+  mocks.hasActiveRun.mockReturnValue(true);
+  const startRun = vi.fn(), getScopePage = vi.fn();
+  const services = createStatsServices({ startRun }, {}, { accountId: () => 'A' }, { repository: { getScopePage } });
+  expect(await services.practiceSectionErrors('ci-synthetic', { fromInclusive: 1, toExclusive: 2, timeZone: 'Europe/Madrid' })).toBe('active-session');
+  expect(startRun).not.toHaveBeenCalled(); expect(getScopePage).not.toHaveBeenCalled();
+});
+
+import { questionRecordSemanticRevision } from '../src/core/domain/attempts/question-semantic-revision.js';
+import { questionContentRevision } from '../src/core/domain/attempts/highlights.js';
+it('checks 60 percent approved linking independently from 20 percent bank practice without reading attempts', async () => {
+  const questions = Array.from({ length: 10 }, (_, index) => ({ i: `q${index}`, t: 'T1.01', o: 'G', q: `Pregunta ${index}`, a: ['a', 'b'], c: 0 }));
+  const section = { id: 'ci-0123456789abcdefabcd', topicId: 'T1.01', title: 'Apartado sintético', materialPath: 'fixture/temario.pdf', printedPage: 2,
+    sourceOrdinal: 1, sourceHash: 'a'.repeat(64), materialKind: 'syllabus', outlineFingerprint: 'b'.repeat(64), outlineStructureFingerprint: 'c'.repeat(64), verification: 'pending' };
+  const manifest = { schemaVersion: 3, revision: 'synthetic-six-reviewed', links: questions.slice(0, 6).map(question => ({ status: 'approved', questionId: question.i,
+    contentRevision: questionContentRevision(question.q, question.a), semanticRevision: questionRecordSemanticRevision(question), questionTopicId: question.t,
+    sectionTopicId: section.topicId, sectionId: section.id, sectionEvidence: { path: section.materialPath, sourceHash: section.sourceHash, outlineFingerprint: section.outlineFingerprint, page: section.printedPage },
+    evidence: { kind: 'curriculum-only' }, rationale: 'Relación revisada solo en fixture sintético', reviewedAt: 100, reviewer: 'human-fixture' })) };
+  mocks.catalog.getIndex.mockResolvedValue({ temas: [{ id: 'T1.01' }] });
+  mocks.catalog.getTopicQuestions = vi.fn().mockResolvedValue(questions);
+  const getScopePage = vi.fn();
+  const startRun = vi.fn().mockReturnValue(true);
+  mocks.hasActiveRun.mockReturnValue(false);
+  mocks.catalog.getQuestions.mockImplementation(async ids => questions.filter(question => ids.includes(question.i)));
+  const services = createStatsServices({ startRun }, {}, { accountId: () => 'A' }, { manifest, repository: { getScopePage }, loadQuestions: async ids => questions.filter(question => ids.includes(question.i)).map(question => ({ id: question.i, topicId: question.t, origin: question.o, statement: question.q, options: question.a, correctIndex: question.c })), loadTopic: async () => ({ id: 'T1.01', files: [], sections: [section] }) });
+  const query = { fromInclusive: 1, toExclusive: 1000, timeZone: 'Europe/Madrid' };
+  expect(await services.loadCatalogueCoverage(query, ['q0', 'q1'])).toMatchObject({ eligible: 10, practiced: 2, percent: 20, approvedLinks: 6, approvedPercent: 60, staleLinks: 0 });
+  expect(getScopePage).not.toHaveBeenCalled();
+  getScopePage.mockResolvedValue({ attempts: questions.slice(0, 2).map((question, index) => ({ id: `a${index}`, sessionId: 's', questionId: question.i,
+    contentRevision: questionContentRevision(question.q, question.a), semanticRevision: questionRecordSemanticRevision(question), mode: 'practice', state: 'answered', outcome: index === 0 ? 'wrong' : 'correct', completedAt: 500, createdAt: 100, confidence: null })), nextCursor: null });
+  expect(await services.practiceSectionErrors(section.id, query)).toBe('started');
+  expect(startRun).toHaveBeenCalledWith(expect.objectContaining({ items: [questions[0]] }));
+  questions[0].c = 1;
+  expect(await services.loadCatalogueCoverage(query, ['q0', 'q1'])).toMatchObject({ approvedLinks: 5, staleLinks: 1 });
+  expect(await services.practiceSectionErrors(section.id, query)).toBe('empty');
+  expect(startRun).toHaveBeenCalledOnce();
 });

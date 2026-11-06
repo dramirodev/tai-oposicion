@@ -31,7 +31,7 @@ service cloud.firestore {
     function validAttempt(attemptId) {
       let d = request.resource.data;
       return d.keys().hasOnly([
-          'schemaVersion', 'id', 'sessionId', 'questionId', 'contentRevision', 'mode', 'position',
+          'schemaVersion', 'id', 'sessionId', 'questionId', 'contentRevision', 'semanticRevision', 'mode', 'position',
           'exposure', 'exposureKind', 'retryOfAttemptId', 'state', 'response', 'outcome', 'confidence', 'discardedOptions', 'highlights',
           'createdAt', 'completedAt', 'lastSequence', 'appliedEventIds', 'terminalEventId'
         ])
@@ -40,6 +40,7 @@ service cloud.firestore {
         && d.sessionId is string && d.sessionId.size() > 0 && d.sessionId.size() <= 128
         && d.questionId is string && d.questionId.size() > 0 && d.questionId.size() <= 128
         && d.contentRevision is string && d.contentRevision.size() <= 128
+        && (!('semanticRevision' in d) || (d.semanticRevision is string && d.semanticRevision.matches('^semantic-v1-[a-f0-9]{8}$')))
         && d.mode in ['practice', 'simulation']
         && d.position is int && d.position >= 0
         && d.exposure is int && d.exposure >= 1
@@ -80,10 +81,11 @@ service cloud.firestore {
 
     function validAttemptSession(sessionId) {
       let d = request.resource.data;
-      return d.keys().hasOnly(['schemaVersion', 'id', 'sourceSessionId', 'mode', 'status', 'startedAt', 'timeLimitSeconds', 'elapsedSeconds', 'endedAt', 'lastSequence'])
+      return d.keys().hasOnly(['schemaVersion', 'id', 'sourceSessionId', 'activity', 'mode', 'status', 'startedAt', 'timeLimitSeconds', 'elapsedSeconds', 'endedAt', 'lastSequence'])
         && d.schemaVersion == 1
         && d.id == sessionId
         && (!('sourceSessionId' in d) || (d.sourceSessionId is string && d.sourceSessionId.size() <= 128))
+        && (!('activity' in d) || d.activity in ['questions', 'attentive-reading'])
         && d.mode in ['practice', 'simulation']
         && d.status in ['active', 'completed', 'interrupted']
         && d.startedAt is number
@@ -257,12 +259,13 @@ service cloud.firestore {
     function validAttemptEvent(eventId, attemptId) {
       let d = request.resource.data;
       let p = d.payload;
-      return d.keys().hasOnly(['schemaVersion', 'id', 'attemptId', 'sequence', 'type', 'at', 'monotonicAt', 'payload'])
+      return d.keys().hasOnly(['schemaVersion', 'id', 'attemptId', 'sequence', 'type', 'at', 'monotonicAt', 'clockContext', 'payload'])
         && d.schemaVersion == 1
         && d.id == eventId && d.attemptId == attemptId
         && d.sequence is int && d.sequence > 0
         && d.at is number
         && (!('monotonicAt' in d) || d.monotonicAt is number)
+        && (!('clockContext' in d) || (d.clockContext is string && d.clockContext.size() > 0 && d.clockContext.size() <= 128))
         && p is map
         && (d.type in ['open', 'leave', 'mark-pending', 'reveal', 'pause', 'resume', 'close']
           ? p.keys().size() == 0

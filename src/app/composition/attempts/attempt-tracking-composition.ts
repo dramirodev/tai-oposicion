@@ -25,6 +25,7 @@ export function initializeAttemptTracking(): void {
   setAttemptTracker(createAttemptTracker({
     repository: localAttemptRepository,
     createId,
+    clockContext: createId('event'),
     now: () => Date.now(),
     monotonicNow: () => performance.now(),
     onError: () => toast('No se pudo guardar el historial detallado de esta sesión. El progreso habitual sigue guardándose.'),
