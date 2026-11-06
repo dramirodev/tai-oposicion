@@ -4,6 +4,10 @@
 
 Esta sección prevalece sobre los hitos históricos que se conservan debajo.
 
+Hito de cierre PR110: integrado como c38058d909bad19e08e7ef11ec6a7f2f17614081, CI42215300160 SUCCESS y despliegue42220705417 SUCCESS. Main avanzó después a f6aa79f (PR116); se conserva la mejora concurrente de sincronización por lotes y las reparaciones editoriales. La continuación audit/followup-2026-11-06 integra ese main; único conflicto documental resuelto conservando ambos historiales. UX-023 verificado antes de integrar: check1050/29skip, Supertest15/15 y Firefox39/39. Revalidación conjunta correcta: check1088/29 omitidas y Supertest17/17 (2,4min), con los cuatro casos de300sesiones online/offline/latencia500ms. PR118: CI42248356835 del código ec73586 SUCCESS:1088unit/29omitidas,17QUICK,2Auth,76referencia,312E2E/40omitidas. Cambios posteriores exclusivamente documentales. Perfil EXTREME remoto42247874417 SUCCESS: QUICK16/16, referencia76/76, candidata312/38 omitidas y estrés2/2 (1.000 acciones por motor), artefactos publicados, cero Gemini. Despacho independiente QUICK42252271997 SUCCESS. ATE-006 cerrado con evidencia remota de ejecución y artefactos; cron configurado, no observado aún. ATE-017 cerrado por CI real. UX-009 y ATE-005 globales siguen parciales. Próximo paso: continuar ATE-005 con caducidad de sesión y la matriz control→acción→oráculo; UX-009 conserva el límite de lector real/zoom nativo/contraste integral. No reabrir UX-007 ni ATE-006 sin regresión.
+
+Lo que sigue en esta sección describe hitos históricos anteriores al cierre; la autorización vigente permite integrar PR110 y su despliegue automático existente.
+
 Hito10:37: ATE-015/016 corregidos y verificados. Importación repetida300 sesiones deduplicada; recuperación exacta en contexto limpio. Supertest13/13(1,7min), sync26/26, check1049/29 omitidas. Helper REST pagina y segundo login reutiliza proveedor.
 
 - Checkout activo: `/tmp/tai-audit-integration`, PR110, integración de main6b68b0b publicada como2e85f9e. Checkout original con cambios concurrentes intacto.
@@ -229,3 +233,12 @@ Nuevos fixtures locales versionados0/2/300 sesiones y recorrido Progreso con com
 El usuario autoriza completar e integrar PR110 y continuar la auditoría restante. Headpublicadoebef00a falla CI42196589639 en Auth al segundo login (permiso esperado no visible); ATE-017 registra la carrera del helper que leía una identidad persistida sin comprobar email. Corrección espera el email solicitado y reutiliza proveedor existente; no cambia reglas ni timeout. Se añade artefacto específico Auth incluso si falla antes de la regresión global. Variante300 offline/online en verificación; después repetir Auth, publicar headfinal y exigir CI verde antes de integrar. La integración activa el despliegue automático existente de main; comprobar su resultado sin ejecutar escrituras de prueba en producción.
 
 Verificación previa a publicar: Supertest14/14(2,1min), Auth6/6(42,5s; tres repeticiones), typecheck/diff-check/YAML correctos. Sin cambios de producto desdecheck1049/29 omitidas. Publicar revisión y esperar CI del SHAfinal antes de integrar.
+
+## Continuación aislada mientras CI valida PR110
+
+Rama audit/followup-2026-11-06 en /tmp/tai-audit-followup. UX-023 pérdida de foco al cancelar revocación reproducida y corregida; nuevo recorrido permisos con dos contextos verifica aprobación/cancelación/revocación/solicitud/rechazo. Check1050/29 omitidas, componente3/3, Supertest15/15. Framework externo revalidado sin proveedor:141 casos,5 omitidos, sin fallos (136 ejecutados). Estos cambios no se añaden al SHA6207545 del PR110; se publicarán en PR posterior tras integración.
+
+
+### ATE-005 — Recuperación con Firestore inaccesible
+
+Ampliación del recorrido autenticado: tras responder y avanzar a pregunta2, se abortan las peticiones HTTP al Emulator Firestore8080 durante la recarga. Se verifica diálogo2/3, continuar la misma pregunta y conservación exacta de IDs, índice y respuesta. Se retira la inyección y se finaliza como sesión interrumpida con checkpoint eliminado. Supertest18/18, código0; typecheck y diff-check correctos. Solo Emulator demo-tai-auth. Esto comprueba el estado local/UI; no certifica sincronización remota final ni caducidad de token. ATE-005 continúa EN CORRECCIÓN. Próximo paso: instrumentar conteo de peticiones abortadas y caducidad forzada con oráculo de reautenticación, sin modificar seguridad de producción.

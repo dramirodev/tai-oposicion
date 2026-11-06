@@ -259,7 +259,8 @@ test.describe('Firebase Auth Emulator supertest', () => {
       await expect(page.getByRole('heading', { name: heading, exact: true })).toBeVisible({ timeout: 15_000 });
     }
   });
-  test('una sesión autenticada se recupera tras pagehide y recarga sin perder respuestas', async ({ page }) => {
+  for (const firestoreUnavailable of [false, true])
+  test(`una sesión autenticada se recupera tras pagehide y recarga sin perder respuestas · ${firestoreUnavailable ? 'Firestore inaccesible' : 'con conexión'}`, async ({ page }) => {
     test.setTimeout(120_000);
     await page.setViewportSize({ width: 1280, height: 900 });
     await page.clock.install({ time: new Date('2026-10-29T12:00:00+01:00') });
@@ -298,6 +299,7 @@ test.describe('Firebase Auth Emulator supertest', () => {
     const evidenceDir = 'tests/e2e/evidence/accessibility-2026-11-05';
     mkdirSync(evidenceDir, { recursive: true });
     await page.screenshot({ path: `${evidenceDir}/authenticated-run-before-reload.png`, fullPage: true });
+    if (firestoreUnavailable) await page.route('http://127.0.0.1:8080/**', route => route.abort('failed'));
     await page.reload();
     const resumeDialog = page.getByRole('dialog');
     await expect(resumeDialog).toContainText('Tienes sin terminar');
@@ -312,6 +314,7 @@ test.describe('Firebase Auth Emulator supertest', () => {
     expect(resumed.ids).toEqual(checkpoint.ids);
     expect(resumed.idx).toBe(checkpoint.idx);
     expect(resumed.ans[0]).toBe(checkpoint.ans[0]);
+    if (firestoreUnavailable) await page.unroute('http://127.0.0.1:8080/**');
     await page.getByRole('button', { name: 'Salir', exact: true }).click();
     const confirmation = page.getByRole('dialog');
     await expect(confirmation).toContainText('Lo respondido se guardará como sesión interrumpida');
@@ -596,6 +599,57 @@ test.describe('Firebase Auth Emulator supertest', () => {
       path: artifact,
       contentType: 'application/json',
     });
+  });
+  test('gestión de accesos aprueba, cancela, revoca y rechaza con efecto en otro usuario', async ({
+    page,
+    browser,
+  }) => {
+    test.setTimeout(120_000);
+    await signInSynthetic(page, identities.owner.email);
+    await page.goto('/#/acceso');
+    const member = page.locator('.arow').filter({ hasText: identities.pending.email });
+    await expect(member.getByRole('button', { name: 'Aprobar', exact: true })).toBeVisible();
+    const studentContext = await browser.newContext({ baseURL: 'http://127.0.0.1:4191' });
+    try {
+      await guardSyntheticBrowser(studentContext);
+      const student = await studentContext.newPage();
+      await signInSynthetic(student, identities.pending.email);
+      await expect(student.getByText('Acceso completo aprobado.')).toHaveCount(0);
+      await member.getByRole('button', { name: 'Aprobar', exact: true }).click();
+      await expect(member.getByRole('button', { name: 'Revocar', exact: true })).toBeVisible();
+      await expect(student.getByText('Acceso completo aprobado.')).toBeVisible();
+      await student.goto('/#/planificacion');
+      await expect(student.getByRole('heading', { name: 'Planificación de estudio', exact: true })).toBeVisible();
+      const revoke = member.getByRole('button', { name: 'Revocar', exact: true });
+      await revoke.click();
+      await expect(page.getByRole('dialog')).toContainText('Volverá a poder hacer solo la sesión rápida');
+      await page.keyboard.press('Escape');
+      await expect(page.getByRole('dialog')).toBeHidden();
+      await expect(revoke).toBeFocused();
+      await student.reload();
+      await expect(student.getByRole('heading', { name: 'Planificación de estudio', exact: true })).toBeVisible();
+      await revoke.click();
+      await page.getByRole('dialog').getByRole('button', { name: 'Revocar', exact: true }).click();
+      await expect(member).toHaveCount(0);
+      await student.goto('/#/settings');
+      await expect(student.getByRole('button', { name: 'Pedir acceso completo' })).toBeVisible();
+      await student.goto('/#/planificacion');
+      await expect(student).toHaveURL(/#\/home$/);
+      await student.goto('/#/settings');
+      await student.getByRole('button', { name: 'Pedir acceso completo' }).click();
+      await expect(member.getByRole('button', { name: 'Rechazar', exact: true })).toBeVisible();
+      await member.getByRole('button', { name: 'Rechazar', exact: true }).click();
+      await page.getByRole('dialog').getByRole('button', { name: 'Rechazar', exact: true }).click();
+      await expect(member).toHaveCount(0);
+      await expect(student.getByRole('button', { name: 'Pedir acceso completo' })).toBeVisible();
+      await student.reload();
+      await expect(student.getByText('Acceso completo aprobado.')).toHaveCount(0);
+      await expect(student.getByRole('button', { name: 'Pedir acceso completo' })).toBeVisible();
+      await page.screenshot({ path: test.info().outputPath('access-owner-after-rejection.png'), fullPage: true });
+      await student.screenshot({ path: test.info().outputPath('access-student-restricted.png'), fullPage: true });
+    } finally {
+      await studentContext.close();
+    }
   });
   for (const role of ['normal', 'restricted', 'pending', 'anonymous'] as const) {
     test(`${role}: navegación directa respeta permisos`, async ({ page }) => {

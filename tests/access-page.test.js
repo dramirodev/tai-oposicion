@@ -24,3 +24,22 @@ it('does not apply an old confirmation after the screen has unmounted',async()=>
   view.unmount();
   confirm(true);await Promise.resolve();expect(revoke).not.toHaveBeenCalled();
 });
+
+it('keeps confirmation trigger enabled and rejects duplicate activations until cancellation', async () => {
+  const user = userEvent.setup();
+  let resolveConfirmation;
+  const confirm = vi.fn(() => new Promise(resolve => { resolveConfirmation=resolve; }));
+  const revoke = vi.fn(async()=>true);
+  const access={accountId:()=> 'owner',subscribe:()=>()=>{},load:async()=>({owner:true,requests:[],grants:[{uid:'other',email:'other@example.test'}]}),confirm,revoke,notify:vi.fn()};
+  const view=renderApp(createElement(AccessPage),{services:{access}});
+  const trigger=await within(view.container).findByRole('button',{name:'Revocar'});
+  await user.click(trigger);
+  expect(trigger.disabled).toBe(false);
+  await user.click(trigger);
+  expect(confirm).toHaveBeenCalledTimes(1);
+  resolveConfirmation(false);
+  await vi.waitFor(()=>expect(revoke).not.toHaveBeenCalled());
+  await user.click(trigger);
+  expect(confirm).toHaveBeenCalledTimes(2);
+  resolveConfirmation(false);
+});

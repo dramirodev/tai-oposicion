@@ -289,7 +289,7 @@ Estados válidos: `DETECTADO`, `ANALIZADO`, `PRIORIZADO`, `EN CORRECCIÓN`, `COR
 - **Brecha restante:** el inventario cubre controles visibles en estados iniciales y algunos estados dinámicos concretos, pero aún no asocia cada control y estado a una acción y oráculo. Quedan perfiles longitudinales reutilizables de usuario nuevo/progreso parcial/historial extenso, caducidad forzada de token, conflictos de escritura y recuperación multi-dispositivo, además de formularios y diálogos aún sin recorrer. La importación, retirada, aislamiento por cuenta del borrador y sincronización de Planificación entre dos pestañas sí tienen regresiones específicas; no deben figurar como ausencia total de cobertura. Se cierra la brecha específica del round-trip de historial de intentos en la copia local; no se afirma cobertura exhaustiva. Continuar matriz control→acción→resultado y journeys longitudinales/adversariales.
 - **Resultado final:** Cobertura ampliada y reproducible, hallazgo todavía abierto hasta cerrar estados dinámicos, continuidad entre módulos y oráculos de dominio en los controles identificados. La suite completa `bridge.spec.ts` pasó **48/48** en Chromium/WebKit tras añadir el caso de configuración; la configuración por sí sola pasó **2/2**.
 
-### ATE-006 — Perfiles CI integrados localmente; ejecución remota pendiente
+### ATE-006 — Perfiles CI integrados y verificados remotamente
 
 - **Categoría / funcionalidad:** Automatización / CI.
 - **Descripción:** QUICK/INTENSIVE/EXTREME tienen workflows y comandos locales configurados, pero la ejecución de GitHub Actions aún no está demostrada.
@@ -298,10 +298,10 @@ Estados válidos: `DETECTADO`, `ANALIZADO`, `PRIORIZADO`, `EN CORRECCIÓN`, `COR
 - **Causa:** `e2e-profiles.yml` se encuentra solo en esta rama; GitHub no permite despacharlo mientras no exista en la rama por defecto. Históricamente no había PR ni ejecución; el 6/11 PR110 activa CI y el run42184320823 ya supera QUICK y Auth. El workflow de perfiles sigue pendiente de registro en default y ejecución remota.
 - **Solución propuesta:** QUICK en PR sin Gemini; INTENSIVE programado; EXTREME solo bajo demanda con Emulator y budgets explícitos.
 - **Archivos afectados:** `.github/workflows/` y documentación de ejecución.
-- **Estado de implementación:** CORREGIDO SIN VERIFICAR.
+- **Estado de implementación:** CORREGIDO Y VERIFICADO (6/11/2026).
 - **Solución implementada:** `ci.yml` ejecuta QUICK autenticado en Emulator en PR y carga resultados como artefacto. `e2e-profiles.yml` añade INTENSIVE programado/manual y EXTREME manual; los perfiles usan solo pruebas Playwright deterministas, sin Gemini. EXTREME ejecuta la suite de navegador más un escenario acotado de 1.000 acciones con aserciones de estado/foco.
 - **Pruebas:** YAML de ambos workflows validado con parser local; Prettier pasa para workflows, package/config y pruebas. `npm run test:e2e:extreme` local **2/2** Chromium/WebKit (1.000 acciones cada uno; 50,4 s); suite global **260 pasadas/18 omitidas/0 fallidas**. Tras publicar `ac71bea`, `gh run list --branch audit/ux-integral-2026-11-04` no mostró ejecuciones. `gh workflow list` no presenta `e2e-profiles.yml`; `gh workflow run ...` devolvió HTTP 404: workflow no encontrado en la rama por defecto. No se declara CI remoto verificado.
-- **Resultado final:** Integración local y perfiles deterministas verificados. Estado remoto requiere que el workflow se integre primero en la rama por defecto (por ejemplo, mediante PR y posterior integración) y una ejecución real. La misión ATE con framework externo no invoca Gemini desde CI.
+- **Resultado final vigente:** Workflow registrado en main, CI de PR11042215300160 y EXTREME42247874417 SUCCESS (incluye QUICK/INTENSIVE). Despacho QUICK independiente42252271997 SUCCESS. Artefactos publicados y límites efectivos. Detalle al final del registro; las observaciones anteriores se conservan como historial. El disparo cron futuro no se presenta como ejecutado.
 
 ### ATE-007 — Matriz de rechazo del guard Emulator no estaba cubierta
 
@@ -587,13 +587,21 @@ Supertest12/12 sobre demo-tai-auth, propietario sintético: Oficial2025(11), Por
 - **Causa probable:** IndexedDB aún conserva la identidad anterior; se prepara access para UID incorrecto.
 - **Corrección:** Esperar identidad persistida cuyo email coincida con el solicitado antes de preparar access; mantener aserciones UI y plazo15s.
 - **Archivos:** tests/e2e/auth-emulator.spec.ts.
-- **Estado:** CORREGIDO SIN VERIFICAR.
-- **Pruebas/resultado:** Auth local6/6 (dos recorridos ×tres repeticiones),42,5s. Typecheck y YAML correctos. Pendiente CI nueva para cierre remoto. No se modifica producto ni reglas.
+- **Estado:** CORREGIDO Y VERIFICADO.
+- **Pruebas/resultado:** Auth local6/6 (dos recorridos ×tres repeticiones),42,5s. Typecheck y YAML correctos. CI42215300160 del SHA6207545 terminó SUCCESS; paso Auth y regresión global aprobados el 6/11/2026. No se modifica producto ni reglas.
 
 ### ATE-005 — Importación sin conexión y recuperación longitudinal
 
 6/11: Supertest14/14(2,1min), variante online/offline de300 sesiones. Dos importaciones con red cortada conservan los DTO; reconectar guarda300 documentos, y otro contexto autenticado recupera exactamente el mismo historial y delta+20. Evidencia en evidence/history-sync-2026-11-06. ATE-015/016 permanecen cerrados; ATE-005 global sigue EN CORRECCIÓN por cobertura residual.
 
+### UX-023 — Cancelar revocación pierde el foco del activador
+
+- **Categoría/función:** Accesibilidad, gestión de permisos; WCAG2.4.3. **Prioridad:** P1.
+- **Evidencia:** Supertest45711,14 aprobadas/1 fallida: aprobar usuario→Revocar→Escape deja botón Revocar sin foco durante5s; reproducción con dos identidades Emulator.
+- **Causa:** AccessController publica pending antes de confirmar; AccessView desactiva activador. El diálogo intenta devolver foco mientras sigue disabled.
+- **Actual/propuesto/consecuencias:** Mantener exclusión de acciones por usuario desde el primer clic con un lock interno; publicar pending visual únicamente al confirmar y comenzar escritura. Cancelar puede devolver foco a un activador habilitado. Mantener protección por identidad/lifetime y deduplicación; no cambia permisos ni reglas.
+- **Archivos:** src/features/access/access-controller.ts; tests/access-page.test.js; tests/e2e/supertest-emulator.spec.ts.
+- **Estado:** CORREGIDO Y VERIFICADO. **Verificación:** componente3/3; check1050/29 omitidas; Supertest15/15,2min. **Resultado:** Escape devuelve foco sin permitir doble operación; cambios de permisos efectivos en otro usuario y persistentes tras reload. Evidencia en evidence/access-lifecycle-2026-11-06. Rama posterior independiente del PR110.
 
 ### ASTRA-M8-SYNTAX — tres erratas ejecutables y cierre de publicación105
 
@@ -629,6 +637,15 @@ legacy-sync usa writeBatch del SDK existente para grupos acotados de100en import
 
 Sólo demo-tai-auth,puertos9099/8080/app4191 ycuentas@example.test,con guardia de tráfico yconfiguración. Cero escrituras o acceso a datos reales de estudiantes en producción. La nueva CI oficial, merge y despliegue siguen pendientes; no atribuir el resultado local a producción. Fuentes de banco y405publicadas/PHP/8exclusiones se mantienen intactas.
 
+
+### ATE-006 — Evidencia remota de los tres niveles, 6/11/2026
+
+Workflow registrado tras integrar PR110. Run42247874417 (perfil extreme, main f6aa79f) SUCCESS: QUICK16/16 en Emulator; INTENSIVE referencia76/76 y candidata312 aprobadas/38 omitidas; EXTREME2/2 con1.000 acciones por motor. Paso de artefactos SUCCESS. Sin Gemini ni datos de usuarios reales. CI de PR11042215300160 también SUCCESS:1074unit/29omitidas,14QUICK,2Auth,76referencia,312E2E/34omitidas. La ejecución programada cron está configurada, pero todavía no ha llegado su siguiente disparo; no se atribuye una ejecución cron a este despacho manual. Despacho QUICK independiente42252271997 SUCCESS; confirma selección rápida sin ejecutar INTENSIVE ni EXTREME.
+
+
+### ATE-005 — Recuperación con Firestore inaccesible
+
+Ampliación del recorrido autenticado: tras responder y avanzar a pregunta2, se abortan las peticiones HTTP al Emulator Firestore8080 durante la recarga. Se verifica diálogo2/3, continuar la misma pregunta y conservación exacta de IDs, índice y respuesta. Se retira la inyección y se finaliza como sesión interrumpida con checkpoint eliminado. Supertest18/18, código0; typecheck y diff-check correctos. Solo Emulator demo-tai-auth. Esto comprueba el estado local/UI; no certifica sincronización remota final ni caducidad de token. ATE-005 continúa EN CORRECCIÓN. Próximo paso: instrumentar conteo de peticiones abortadas y caducidad forzada con oráculo de reautenticación, sin modificar seguridad de producción.
 ### ASTRA-M10-NETWORK2 — dos premisas de redes
 
 **Prioridad:** P0 editorial. **Estado:** CORREGIDO SIN VERIFICAR en CI/producción; validación local completada. **Origen:** dictámenes Astra `GEN-T4.09-70` y `GEN-T4.10-32.v2`, sin repetir la auditoría completa.
