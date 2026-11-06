@@ -15,6 +15,10 @@ BATCHES = {
     'T3.08': ('T3.08.json', 'reviewed-T3.08.json'),
     'T4.07': ('T4.07.json', 'reviewed-T4.07.json'),
 }
+REVIEWED_BATCHES = {
+    'reviewed-19': 'reviewed-19.json',
+    'reviewed-followup': 'reviewed-followup.json',
+}
 
 
 def encode(value):
@@ -50,7 +54,7 @@ def prepare(topic, edits, directory, reverse, fingerprints=None):
         if current != edit[source + 'Sha256']:
             raise ValueError(f"Huella inesperada: {edit['id']}.")
         if fingerprints:
-            # The 19-question ledger contains complete rows, including missing/nullable fields.
+            # Reviewed ledgers contain complete rows, including missing/nullable fields.
             row = edit[destination]
             if row['i'] != edit['id'] or row['t'] + '.json' != topic:
                 raise ValueError(f"ID o tema inesperado: {edit['id']}.")
@@ -70,7 +74,7 @@ def prepare(topic, edits, directory, reverse, fingerprints=None):
     return target, result, changed
 
 
-def replay(directory, reverse, batch):
+def replay(directory, reverse, batch, include_sample=False):
     directory = directory.resolve(strict=True)
     if directory.is_relative_to(PROJECT) or any((parent / '.git').exists()
                                                 for parent in (directory, *directory.parents)):
@@ -78,11 +82,19 @@ def replay(directory, reverse, batch):
     lock = os.open(directory, os.O_RDONLY)
     try:
         fcntl.flock(lock, fcntl.LOCK_EX)
-        if batch == 'reviewed-19':
-            ledger = json.loads((HERE / 'reviewed-19.json').read_text(encoding='utf-8'))
+        if batch in REVIEWED_BATCHES:
+            ledger = json.loads((HERE / REVIEWED_BATCHES[batch]).read_text(encoding='utf-8'))
             prepared = [prepare(topic, [q for q in ledger['questions'] if q['topic'] + '.json' == topic],
                                 directory, reverse, fingerprints)
                         for topic, fingerprints in ledger['files'].items()]
+            if include_sample:
+                sample = directory / 'sample'
+                if sample.is_symlink() or not sample.is_dir():
+                    raise ValueError('Falta una copia ordinaria del directorio sample.')
+                prepared += [prepare(topic, [q for q in ledger['questions']
+                                             if q.get('inSample') and q['topic'] + '.json' == topic],
+                                     sample, reverse, fingerprints)
+                             for topic, fingerprints in ledger.get('sampleFiles', {}).items()]
         else:
             topic, ledger = BATCHES[batch]
             edits = json.loads((HERE / ledger).read_text(encoding='utf-8'))
@@ -90,14 +102,14 @@ def replay(directory, reverse, batch):
         # All files are checked before staging. Interrupted writes can resume from either
         # of the two accepted hashes, or roll back to the prior release.
         with TemporaryDirectory(dir=directory) as staging:
-            for target, data, count in prepared:
+            for index, (target, data, count) in enumerate(prepared):
                 if count:
-                    pending = Path(staging) / target.name
+                    pending = Path(staging) / str(index)
                     pending.write_bytes(data)
                     pending.chmod(target.stat().st_mode & 0o777)
-            for target, _, count in prepared:
+            for index, (target, _, count) in enumerate(prepared):
                 if count:
-                    (Path(staging) / target.name).replace(target)
+                    (Path(staging) / str(index)).replace(target)
         return sum(count for _, _, count in prepared)
     finally:
         os.close(lock)
@@ -106,13 +118,14 @@ def replay(directory, reverse, batch):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--candidate-dir', type=Path, required=True)
-    parser.add_argument('--batch', choices=[*BATCHES, 'reviewed-19'], default='web', help='Lote editorial sobre una copia de su tema.')
+    parser.add_argument('--batch', choices=[*BATCHES, *REVIEWED_BATCHES], default='web', help='Lote editorial sobre una copia de su tema.')
+    parser.add_argument('--include-sample', action='store_true', help='Incluir las copias de muestra en candidate-dir/sample.')
     action = parser.add_mutually_exclusive_group(required=True)
     action.add_argument('--apply', action='store_true')
     action.add_argument('--rollback', action='store_true')
     args = parser.parse_args()
     try:
-        print(f'{replay(args.candidate_dir, args.rollback, args.batch)} preguntas modificadas.')
+        print(f'{replay(args.candidate_dir, args.rollback, args.batch, args.include_sample)} preguntas modificadas.')
     except (KeyError, OSError, ValueError, TypeError) as error:
         parser.exit(1, f'{error}\n')
 

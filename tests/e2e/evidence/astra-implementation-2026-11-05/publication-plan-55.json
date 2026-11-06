@@ -1,0 +1,2609 @@
+{
+  "project": "tai-oposicion",
+  "count": 55,
+  "batches": {
+    "reviewed19": 19,
+    "reviewedFollowup": 36
+  },
+  "version": 13,
+  "targetVersion": 14,
+  "deletions": 0,
+  "topics": [
+    "T1.02",
+    "T1.03",
+    "T1.06",
+    "T2.01",
+    "T2.03",
+    "T2.04",
+    "T3.01",
+    "T3.02",
+    "T3.03",
+    "T3.04",
+    "T3.05",
+    "T3.06",
+    "T3.07",
+    "T3.08",
+    "T4.08"
+  ],
+  "metaUpdateTime": "2026-11-05T23:36:37.120349Z",
+  "files": {
+    "T1.02": {
+      "beforeSha256": "a49793862a2b8b519f7e5498d1bf359ce689ba73a7fc2da27b3f31715b7f4906",
+      "afterSha256": "073db563ea8d1635cfd54eebf7ecda363f8952c58c391096ca5120cbcc20b5bb",
+      "updateTime": "2026-10-30T07:12:53.766068Z"
+    },
+    "T1.03": {
+      "beforeSha256": "916193b07dd8b8c415ec6cfaa74e5a847a073cea8e83be5bb8f54749a2c797ed",
+      "afterSha256": "1a15e2ac27ce4cecb79d3eb908340f17e4f30e6fa5c98c7b87f955575b939c0f",
+      "updateTime": "2026-10-28T15:13:54.159635Z"
+    },
+    "T1.06": {
+      "beforeSha256": "a0acd31f5b8406736b6c0d3a2b32e7a0db8d04925f61db593d6e8e1f602e4275",
+      "afterSha256": "1c2639ba83ff46b86bb36b11ab15508e1e053365f4cf23140bddbe4290abc76e",
+      "updateTime": "2026-10-28T15:13:55.333396Z"
+    },
+    "T2.01": {
+      "beforeSha256": "fb5753fa4824b626c014b42adcc03671fe0ae3537fec1d5f8af96b7c6b55bd39",
+      "afterSha256": "4b4965443fc01de3c2cadf832ee1cb9f18a44db87facf51568826028bc5d24ba",
+      "updateTime": "2026-10-28T19:03:55.355717Z"
+    },
+    "T2.03": {
+      "beforeSha256": "f538b81e1605a62497b8f21e67fe02e353ce36e6ca0e0408a23c86c36d585e9e",
+      "afterSha256": "22ebbf15f32b3cdc649812d9dc18b18a32b4f911abecd35e66f8692016abdcb6",
+      "updateTime": "2026-10-28T19:03:55.875757Z"
+    },
+    "T2.04": {
+      "beforeSha256": "1a12bb65facaba2156eda49e14887976f4583e7afb7838065431d67a118a524c",
+      "afterSha256": "9b957401de6e3a72bf206b664d27f717b20f7bbcb34557461713d37286ac7dd5",
+      "updateTime": "2026-10-30T07:12:54.398651Z"
+    },
+    "T3.01": {
+      "beforeSha256": "27e8b272f91ced721b8d4fc42e9af476ca52899d2ec6d20cff2ee00782b6447d",
+      "afterSha256": "9394a0bbf2dc964f6375c17a881366d0019b623aede03e802640f438fdd07fdb",
+      "updateTime": "2026-10-28T15:14:00.412559Z"
+    },
+    "T3.02": {
+      "beforeSha256": "f8f37e6bd4c437d5a5186bcec118f97d0d9a64c2581037f855e741b6b4c59225",
+      "afterSha256": "109c46e828fe7ea7b8e8caa35879eb3cfb382bc4e521bcdc2bcb8f8b65a1cf1c",
+      "updateTime": "2026-10-28T19:55:31.275863Z"
+    },
+    "T3.03": {
+      "beforeSha256": "85a36d74cfaea7129380c94436313a88899cbaee4671f8479f91755f652fd5b9",
+      "afterSha256": "4b9d32c1450a6f5e5a051664e4576754b11a195d8e0d8b98a2ac589601a2c725",
+      "updateTime": "2026-10-28T19:03:56.359984Z"
+    },
+    "T3.04": {
+      "beforeSha256": "5a53f7ccd448dc84b7e1981f3b582e40316879cc14a9ae50e97812ca3d265372",
+      "afterSha256": "83ecb3537e0a36a38d1fa9f35a160cc657961547685d79ba413b97ecf513354b",
+      "updateTime": "2026-10-28T15:14:01.766852Z"
+    },
+    "T3.05": {
+      "beforeSha256": "9459dd1ee2aa39744e1477a42e07525247609e42837149186e1330efbd6e1b14",
+      "afterSha256": "955dc0ef4234a15e8d5ab95d96a03daba66ace9e8773332550d281362e4a9e0a",
+      "updateTime": "2026-10-28T19:03:56.978178Z"
+    },
+    "T3.06": {
+      "beforeSha256": "69cf1099e32bb554e639c0b244458d128f932f87321b0f63c5fa73de26a70375",
+      "afterSha256": "c94d861bcd56726c8840ef402bc0576279138b322ce9ea14af4b09c6143fde73",
+      "updateTime": "2026-10-28T19:20:10.804506Z"
+    },
+    "T3.07": {
+      "beforeSha256": "c5dad52a59ec6d76cd2e27d792c095e0a11ece2f77b2c51f06bc87348649468a",
+      "afterSha256": "de39c93580377a346fa1b46a3639b65cdf6f974e71efb4d89a557884015ddcb8",
+      "updateTime": "2026-10-28T19:23:51.404065Z"
+    },
+    "T3.08": {
+      "beforeSha256": "7715faca985ffeed0a6e6f621bb2a14edf4171837d1af5b0fab6bae031eaa5b5",
+      "afterSha256": "48b50daf5b8f6bb5dde81dc30673f24bf6fa94a6106e8ccd51831840c8d7ae70",
+      "updateTime": "2026-11-05T23:36:37.120349Z"
+    },
+    "T4.08": {
+      "beforeSha256": "2c1745be700df4c711503d34f703cf458c6ee90ca53cae412effbdef09afc4d3",
+      "afterSha256": "5de4121bf23d918d79c749d9a531f8d3117994441f74478c271b09816da4609c",
+      "updateTime": "2026-10-28T19:04:01.193913Z"
+    }
+  },
+  "changes": [
+    {
+      "id": "AT102-P1-46",
+      "topic": "T1.02",
+      "before": {
+        "i": "AT102-P1-46",
+        "t": "T1.02",
+        "o": "A",
+        "q": "¿Cuál es el número de miembros que componen la Diputación Permanente del Congreso?",
+        "a": [
+          "20.",
+          "15.",
+          "21.",
+          "24."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT102-P1-46",
+        "t": "T1.02",
+        "o": "A",
+        "q": "Según el artículo 78.1 de la Constitución, ¿cuál es el número mínimo de miembros de la Diputación Permanente del Congreso?",
+        "a": [
+          "20.",
+          "15.",
+          "21.",
+          "24."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "n": "El mínimo constitucional es 21. El artículo 78.1 no fija en 21 la composición efectiva de todas las legislaturas.",
+        "u": "una Diputación Permanente compuesta por un mínimo de 21 [p. 6]"
+      }
+    },
+    {
+      "id": "AT102-P1-64",
+      "topic": "T1.02",
+      "before": {
+        "i": "AT102-P1-64",
+        "t": "T1.02",
+        "o": "A",
+        "q": "De acuerdo con la Constitución Española, las elecciones tendrán lugar:",
+        "a": [
+          "A los treinta días de terminar el mandato.",
+          "A los sesenta días de terminar el mandato.",
+          "Transcurridos treinta días desde la terminación del mandato.",
+          "Transcurridos sesenta días desde la terminación del mandato."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT102-P1-64",
+        "t": "T1.02",
+        "o": "A",
+        "q": "Según el artículo 68.6 de la Constitución, ¿en qué intervalo tendrán lugar las elecciones tras la terminación del mandato?",
+        "a": [
+          "Entre los 15 y los 30 días.",
+          "Entre los 20 y los 40 días.",
+          "Entre los 30 y los 60 días.",
+          "Entre los 60 y los 90 días."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "n": "El artículo 68.6 establece los límites de 30 y 60 días. No ordena celebrarlas necesariamente al cumplirse un único día del intervalo.",
+        "u": "entre los 30 y los 60 [p. 10]"
+      }
+    },
+    {
+      "id": "AT102-P1-65",
+      "topic": "T1.02",
+      "before": {
+        "i": "AT102-P1-65",
+        "t": "T1.02",
+        "o": "A",
+        "q": "Para que las Cámaras puedan reunirse en sesión extraordinaria, a petición de los miembros de las mismas, la Constitución Española requiere:",
+        "a": [
+          "Mayoría absoluta de cada Cámara.",
+          "Mayoría de cada Cámara.",
+          "Mayoría conjunta de ambas Cámaras.",
+          "Sólo es posible a petición de la Diputación Permanente."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT102-P1-65",
+        "t": "T1.02",
+        "o": "A",
+        "q": "Según el artículo 73.2 de la Constitución, ¿qué petición de parlamentarios permite convocar sesiones extraordinarias de las Cámaras?",
+        "a": [
+          "La de la mayoría absoluta de los miembros de cualquiera de las Cámaras.",
+          "La de la mayoría simple de los presentes en una Cámara.",
+          "La de un tercio de cada Cámara.",
+          "La de cualquier grupo parlamentario por sí solo."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "n": "La petición puede proceder de la mayoría absoluta de cualquiera de las dos Cámaras. El mismo precepto también legitima al Gobierno y a la Diputación Permanente.",
+        "u": "De la mayoría absoluta de los miembros de cualquiera de las Cámaras. [p. 5]"
+      }
+    },
+    {
+      "id": "AT103-P1-41",
+      "topic": "T1.03",
+      "before": {
+        "i": "AT103-P1-41",
+        "t": "T1.03",
+        "o": "A",
+        "q": "¿Quién cesa a los Vicepresidentes del Gobierno?",
+        "a": [
+          "Presidente del Gobierno.",
+          "Rey.",
+          "Consejo de Ministros.",
+          "Cortes Generales."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT103-P1-41",
+        "t": "T1.03",
+        "o": "A",
+        "q": "¿Quién acuerda formalmente la separación de los Vicepresidentes del Gobierno, a propuesta del Presidente del Gobierno?",
+        "a": [
+          "El Presidente del Gobierno.",
+          "El Rey.",
+          "El Consejo de Ministros.",
+          "Las Cortes Generales."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "n": "El Presidente propone la separación y el Rey la formaliza, conforme al artículo 100 de la Constitución.",
+        "u": "serán nombrados y separados por el Rey, a propuesta de [p. 14]"
+      }
+    },
+    {
+      "id": "GEN-T1.03-52.v1",
+      "topic": "T1.03",
+      "before": {
+        "i": "GEN-T1.03-52.v1",
+        "t": "T1.03",
+        "o": "G",
+        "q": "Las Cámaras y sus Comisiones, conforme al artículo 109 de la Constitución, pueden reclamar:",
+        "a": [
+          "La presencia del Rey.",
+          "La dimisión de los miembros del Gobierno.",
+          "La presencia de los miembros del Gobierno.",
+          "La presencia de los Consejeros de Estado."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          3,
+          7
+        ],
+        "d": 2,
+        "f": "GEN-T1.03-52",
+        "u": "Las Cámaras y sus Comisiones podrán recabar, a través de los Presidentes de aquéllas, la información y ayuda que precisen del Gobierno … Asimismo las Cámaras y sus Comisiones pueden reclamar la presencia de los miembros del Gobierno.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T1.03-52.v1",
+        "t": "T1.03",
+        "o": "G",
+        "q": "Las Cámaras y sus Comisiones, conforme al artículo 110.1 de la Constitución, pueden reclamar:",
+        "a": [
+          "La presencia del Rey.",
+          "La dimisión de los miembros del Gobierno.",
+          "La presencia de los miembros del Gobierno.",
+          "La presencia de los Consejeros de Estado."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          3,
+          7
+        ],
+        "d": 2,
+        "f": "GEN-T1.03-52",
+        "u": "las Cámaras y sus Comisiones pueden reclamar la presencia de los miembros del [p. 22]",
+        "v": 0,
+        "w": 1,
+        "n": "El artículo 110.1 permite reclamar la presencia de los miembros del Gobierno. El 109 regula la información y ayuda que pueden recabar las Cámaras y sus Comisiones."
+      }
+    },
+    {
+      "id": "AT106-P1-31",
+      "topic": "T1.06",
+      "before": {
+        "i": "AT106-P1-31",
+        "t": "T1.06",
+        "o": "A",
+        "q": "De acuerdo con la Constitución Española, los españoles de origen podrán ser privados de su nacionalidad:",
+        "a": [
+          "Por Ley ordinaria.",
+          "Por Real Decreto.",
+          "Por Sentencia judicial firme.",
+          "Ningún español podrá ser privado de su nacionalidad."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT106-P1-31",
+        "t": "T1.06",
+        "o": "A",
+        "q": "Según el artículo 11.2 de la Constitución, un español de origen puede ser privado de su nacionalidad:",
+        "a": [
+          "Por ley ordinaria.",
+          "Por real decreto.",
+          "Por sentencia judicial firme.",
+          "En ningún caso."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "n": "El artículo 11.2 prohíbe privar de la nacionalidad a los españoles de origen. La pregunta se limita a la privación, y no a otros supuestos de pérdida.",
+        "u": "Ningún español de origen podrá ser privado de su nacionalidad. [p. 10]"
+      }
+    },
+    {
+      "id": "AT201-P1-13",
+      "topic": "T2.01",
+      "before": {
+        "i": "AT201-P1-13",
+        "t": "T2.01",
+        "o": "A",
+        "q": "Cuando se habla de un procesador de dos núcleos significa:",
+        "a": [
+          "Hay dos chips que están trabajando independientemente y al mismo tiempo.",
+          "Cada uno accede a una partición distinta del disco duro.",
+          "Cada uno accede a un bloque de memoria RAM distinto.",
+          "Un núcleo ejecuta las instrucciones lógicas y el otro las instrucciones aritméticas."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT201-P1-13",
+        "t": "T2.01",
+        "o": "A",
+        "q": "Un procesador de dos núcleos contiene:",
+        "a": [
+          "Dos núcleos de ejecución, que pueden compartir el mismo chip.",
+          "Dos particiones obligatorias del disco.",
+          "Dos bancos de RAM obligatoriamente independientes.",
+          "Un núcleo exclusivamente lógico y otro exclusivamente aritmético."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "n": "Dos núcleos son dos unidades de procesamiento dentro de la arquitectura del procesador. La expresión no obliga a disponer de dos chips físicos.",
+        "u": "integrar cada vez más núcleos dentro de los procesadores [p. 41]"
+      }
+    },
+    {
+      "id": "AS08B-P1-37",
+      "topic": "T2.03",
+      "before": {
+        "i": "AS08B-P1-37",
+        "t": "T2.03",
+        "o": "A",
+        "q": "Dado el siguiente árbol, indique cuál es el recorrido en postorden:",
+        "a": [
+          "1, 3, 4, 6, 7, 8, 10, 13, 14.",
+          "13, 14, 10, 8, 4, 6, 7, 1, 3.",
+          "1, 4, 7, 6, 3, 13, 14, 10, 8.",
+          "8, 3, 1, 6, 4, 7, 10, 14, 13."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "after": {
+        "i": "AS08B-P1-37",
+        "t": "T2.03",
+        "o": "A",
+        "q": "Dado el siguiente árbol, indique cuál es el recorrido en postorden:\n\nÁrbol binario de raíz 8. Hijo izquierdo/derecho de 8: 3/10. De 3: 1/6. De 6: 4/7. De 10: ninguno/14. De 14: 13/ninguno. Los nodos 1, 4, 7 y 13 son hojas.",
+        "a": [
+          "1, 3, 4, 6, 7, 8, 10, 13, 14.",
+          "13, 14, 10, 8, 4, 6, 7, 1, 3.",
+          "1, 4, 7, 6, 3, 13, 14, 10, 8.",
+          "8, 3, 1, 6, 4, 7, 10, 14, 13."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1,
+        "n": "Postorden visita izquierda, derecha y raíz. Produce 1,4,7,6,3 en el subárbol izquierdo y 13,14,10 en el derecho, seguido de 8. Opción C.",
+        "u": "Postorden (IZQ-DCHA-R): primero se visita el subárbol izquierdo, luego el subárbol derecho y, por último, el nodo raíz. [p. 18]"
+      }
+    },
+    {
+      "id": "AS10B-P1-40",
+      "topic": "T2.03",
+      "before": {
+        "i": "AS10B-P1-40",
+        "t": "T2.03",
+        "o": "A",
+        "q": "Dado el siguiente grafo, indique cuál será el recorrido en anchura, teniendo en cuenta que se iniciará en el nodo A:",
+        "a": [
+          "A B C I D F H E L G K J",
+          "A C F L D E K J G B I H",
+          "A B C D F I E L H G K J",
+          "A C F L B D E K J G I H"
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1
+      },
+      "after": {
+        "i": "AS10B-P1-40",
+        "t": "T2.03",
+        "o": "A",
+        "q": "Dado el grafo no dirigido descrito a continuación, ¿cuál de los siguientes puede ser un recorrido en anchura comenzando en A?\n\nGrafo no dirigido con vértices A,B,C,D,E,F,G,H,I,J,K,L y aristas A-B, A-C, C-D, C-F, F-L, D-E, D-I, I-H, E-K, E-G, K-J, G-J.",
+        "a": [
+          "A B C I D F H E L G K J",
+          "A C F L D E K J G B I H",
+          "A B C D F I E L H G K J",
+          "A C F L B D E K J G I H"
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "z": 1,
+        "n": "Desde A los niveles son A / B,C / D,F / I,E,L / H,G,K / J. Solo C conserva el orden de los niveles entre las cuatro opciones. El dibujo no fija el desempate entre vecinos: C es un recorrido válido, sin que sea el único recorrido BFS posible.",
+        "u": "Recorrido en ANCHURA (BFS o por niveles): primero visita los hermanos y después los hijos. [p. 27]"
+      }
+    },
+    {
+      "id": "GEN-T2.03-07.v2",
+      "topic": "T2.03",
+      "before": {
+        "i": "GEN-T2.03-07.v2",
+        "t": "T2.03",
+        "o": "G",
+        "q": "El índice de un array es:",
+        "a": [
+          "Una clave alfanumérica única.",
+          "Una variable numérica entera positiva que permite acceder a los elementos según su posición.",
+          "El tamaño de cada elemento.",
+          "Un puntero al primer elemento."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T2.03-07",
+        "u": "Colección de elementos homogéneos (de igual longitud y tipo) entre los que existe una relación lineal determinada por la posición del elemento dentro de la estructura",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T2.03-07.v2",
+        "t": "T2.03",
+        "o": "G",
+        "q": "En un array de cinco elementos indexado desde cero, ¿qué índice corresponde al primer elemento?",
+        "a": [
+          "1.",
+          "0.",
+          "4.",
+          "5."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T2.03-07",
+        "u": "Un índice comienza en 0 [p. 6]",
+        "v": 0,
+        "w": 1,
+        "n": "La indexación desde cero asigna a los cinco elementos los índices 0, 1, 2, 3 y 4."
+      }
+    },
+    {
+      "id": "GEN-T2.03-25.v1",
+      "topic": "T2.03",
+      "before": {
+        "i": "GEN-T2.03-25.v1",
+        "t": "T2.03",
+        "o": "G",
+        "q": "Un diccionario es:",
+        "a": [
+          "Una cola con prioridades.",
+          "Un conjunto de elementos no ordenados.",
+          "Un mapa en el que se permiten claves repetidas.",
+          "Un mapa para el que se define una relación de orden sobre las claves."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T2.03-25",
+        "u": "Un mapa (array asociativo) es una generalización del concepto de conjunto, formado por un conjunto de pares {clave, valor}",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T2.03-25.v1",
+        "t": "T2.03",
+        "o": "G",
+        "q": "En un diccionario clave-valor, ¿qué describe el papel de una clave?",
+        "a": [
+          "Determina siempre una prioridad de extracción.",
+          "Obliga a ordenar todas las entradas de menor a mayor.",
+          "Puede identificar simultáneamente dos entradas distintas del mismo mapa.",
+          "Identifica la entrada a la que se asocia un valor."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T2.03-25",
+        "u": "Un mapa (array asociativo) [p. 15]",
+        "v": 0,
+        "w": 1,
+        "n": "El diccionario asocia claves con valores. La página 15 también describe una tabla hash como contenedor asociativo y aclara la unicidad de sus claves."
+      }
+    },
+    {
+      "id": "GEN-T2.03-62.v2",
+      "topic": "T2.03",
+      "before": {
+        "i": "GEN-T2.03-62.v2",
+        "t": "T2.03",
+        "o": "G",
+        "q": "El análisis del caso promedio es:",
+        "a": [
+          "Siempre igual al caso peor.",
+          "Una media ponderada de los casos peor y mejor, cuyo cálculo es complejo.",
+          "El caso más sencillo de calcular.",
+          "Siempre igual al mejor caso."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T2.03-62",
+        "u": "Al caso PEOR: estamos indicando un límite superior, el máximo valor, del tiempo de ejecución para cualquier entrada al algoritmo.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T2.03-62.v2",
+        "t": "T2.03",
+        "o": "G",
+        "q": "Un algoritmo cuesta 1, 4 o 9 operaciones en tres entradas equiprobables. ¿Cuál es su coste medio?",
+        "a": [
+          "5 operaciones.",
+          "14/3 operaciones.",
+          "1 operación.",
+          "9 operaciones."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T2.03-62",
+        "u": "Al caso PROMEDIO: será una media ponderada [p. 30]",
+        "v": 0,
+        "w": 1,
+        "n": "El promedio pondera todas las entradas: (1+4+9)/3 = 14/3. En este caso no basta promediar el mejor y el peor."
+      }
+    },
+    {
+      "id": "GEN-T2.03-70",
+      "topic": "T2.03",
+      "before": {
+        "i": "GEN-T2.03-70",
+        "t": "T2.03",
+        "o": "G",
+        "q": "La recursividad se denomina también:",
+        "a": [
+          "Búsqueda voraz.",
+          "Fuerza bruta.",
+          "Divide y vencerás.",
+          "Programación dinámica."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T2.03-70",
+        "u": "Técnica denominada también “divide y vencerás”. Este método divide el problema original en varios más pequeños que son del mismo tipo que el inicial",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T2.03-70",
+        "t": "T2.03",
+        "o": "G",
+        "q": "Una función calcula factorial(n) mediante n*factorial(n-1) y termina al llegar a factorial(0). ¿Qué propiedad muestra?",
+        "a": [
+          "Selecciona siempre una opción voraz.",
+          "Enumera todas las permutaciones.",
+          "Se llama a sí misma sobre un argumento menor.",
+          "Guarda obligatoriamente una tabla de soluciones."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T2.03-70",
+        "u": "más pequeños que son del mismo tipo [p. 33]",
+        "v": 0,
+        "w": 1,
+        "n": "El ejemplo utiliza recursión y un caso base. Esta propiedad no exige dividir en varios subproblemas ni guardar sus resultados."
+      }
+    },
+    {
+      "id": "GEN-T2.03-99.v1",
+      "topic": "T2.03",
+      "before": {
+        "i": "GEN-T2.03-99.v1",
+        "t": "T2.03",
+        "o": "G",
+        "q": "El formato PNG, al contrario que TIFF:",
+        "a": [
+          "Puede comprimir la imagen sin pérdida.",
+          "Comprime con pérdida.",
+          "Solo admite 256 colores.",
+          "No admite compresión."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          7,
+          2
+        ],
+        "d": 3,
+        "f": "GEN-T2.03-99",
+        "u": "TIFF (Tagged Image File Format): es, en principio, un formato muy flexible con o sin pérdida.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T2.03-99.v1",
+        "t": "T2.03",
+        "o": "G",
+        "q": "¿Qué afirmación sobre PNG y TIFF es correcta?",
+        "a": [
+          "PNG usa compresión sin pérdida y TIFF también permite esquemas sin pérdida.",
+          "PNG utiliza obligatoriamente compresión con pérdida.",
+          "TIFF nunca admite compresión.",
+          "PNG solo admite imágenes de 256 colores."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          7,
+          2
+        ],
+        "d": 3,
+        "f": "GEN-T2.03-99",
+        "u": "Formatos sin pérdida: GIF, PNG, BMP, TIFF, RAW. [p. 50]",
+        "v": 0,
+        "w": 1,
+        "n": "La propia página enumera TIFF entre los formatos sin pérdida. Debe eliminarse la oposición que afirma que TIFF no puede comprimir."
+      }
+    },
+    {
+      "id": "AT204-P1-22",
+      "topic": "T2.04",
+      "before": {
+        "i": "AT204-P1-22",
+        "t": "T2.04",
+        "o": "A",
+        "q": "Se presentan a continuación una lista de comandos UNIX, y una lista de funciones. 1) “Is”. 2) “pwd”. 3) “cat”. 4) “more”. I) Lista los archivos del directorio activo. II) Muestra en pantalla el contenido de un archivo página a página. III) Muestra el camino completo del directorio actual. IV) Imprime en la salida estándar el contenido de un archivo. El orden correcto de emparejamiento entre comandos y funciones es:",
+        "a": [
+          "1-I, 2-II, 3-III y 4-IV.",
+          "1-I, 2-III, 3-IV y 4-II.",
+          "1-II, 2-III, 3-IV y 4-IV.",
+          "1-III, 2-IV, 3-I y 4-II."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "w": 1
+      },
+      "after": {
+        "i": "AT204-P1-22",
+        "t": "T2.04",
+        "o": "A",
+        "q": "Relacione los comandos UNIX 1) ls, 2) pwd, 3) cat y 4) more con estas funciones: I) listar archivos del directorio actual; II) mostrar el contenido de un archivo página a página; III) mostrar la ruta del directorio actual; IV) copiar el contenido del archivo a la salida estándar.",
+        "a": [
+          "1-I, 2-II, 3-III y 4-IV.",
+          "1-I, 2-III, 3-IV y 4-II.",
+          "1-II, 2-III, 3-IV y 4-IV.",
+          "1-III, 2-IV, 3-I y 4-II."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "w": 1,
+        "n": "Errata de transcripción: el comando es ls, con ele minúscula. pwd muestra la ruta, cat copia el contenido y more permite paginar.",
+        "u": "pwd (Print Working Directory) [p. 66]"
+      }
+    },
+    {
+      "id": "AT204-P1-29",
+      "topic": "T2.04",
+      "before": {
+        "i": "AT204-P1-29",
+        "t": "T2.04",
+        "o": "A",
+        "q": "El sistema de ficheros ext4 se caracteriza por la utilización del concepto:",
+        "a": [
+          "pages.",
+          "segments.",
+          "extends.",
+          "filespaces."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT204-P1-29",
+        "t": "T2.04",
+        "o": "A",
+        "q": "En ext4, ¿cómo se denomina la estructura que describe un intervalo contiguo de bloques de un archivo?",
+        "a": [
+          "Page.",
+          "Segment.",
+          "Extent.",
+          "Filespace."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "n": "La denominación documentada por Linux es extent. El temario escribe «extends» en este pasaje, una errata terminológica.",
+        "u": "conjunto de bloques físicos contiguos [p. 32]"
+      }
+    },
+    {
+      "id": "AT204-P1-41",
+      "topic": "T2.04",
+      "before": {
+        "i": "AT204-P1-41",
+        "t": "T2.04",
+        "o": "A",
+        "q": "En Linux, el comando umask permite establecer los permisos por defecto al crear un fichero. Indique la respuesta correcta para que se creen con los permisos 741:",
+        "a": [
+          "umask 741.",
+          "umask 036.",
+          "umask 022.",
+          "umask 713."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT204-P1-41",
+        "t": "T2.04",
+        "o": "A",
+        "q": "En Linux se crea un directorio solicitando modo 0777, sin ACL predeterminada. ¿Qué umask de las siguientes produce permisos 0741?",
+        "a": [
+          "umask 741.",
+          "umask 036.",
+          "umask 022.",
+          "umask 713."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "n": "Se aplica la máscara al modo solicitado: 0777 & ~0036 = 0741. Es necesario fijar 0777; los ficheros ordinarios suelen solicitar 0666.",
+        "u": "umask [mascara] [p. 76]"
+      }
+    },
+    {
+      "id": "AT204-P1-44",
+      "topic": "T2.04",
+      "before": {
+        "i": "AT204-P1-44",
+        "t": "T2.04",
+        "o": "A",
+        "q": "El algoritmo de reemplazo de páginas que elige la página que NO ha sido referenciada en el ciclo anterior es:",
+        "a": [
+          "NRU.",
+          "LRU.",
+          "NFU.",
+          "LFU."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT204-P1-44",
+        "t": "T2.04",
+        "o": "A",
+        "q": "¿Qué algoritmo de reemplazo mantiene contadores de referencias que se incrementan periódicamente según los bits de referencia y selecciona una página con contador mínimo?",
+        "a": [
+          "NRU.",
+          "LRU.",
+          "NFU.",
+          "FIFO."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "n": "NFU incrementa acumulativamente un contador por página a partir del bit de referencia muestreado. Escoge un contador mínimo; no equivale a considerar solo el ciclo anterior.",
+        "u": "La no usada frecuentemente (NFU) [p. 23]"
+      }
+    },
+    {
+      "id": "AT204-P1-55",
+      "topic": "T2.04",
+      "before": {
+        "i": "AT204-P1-55",
+        "t": "T2.04",
+        "o": "A",
+        "q": "¿Cómo se denomina a una instancia de un programa en ejecución?",
+        "a": [
+          "Proceso terminal.",
+          "Proceso o thread.",
+          "Gestión de entrada y salida.",
+          "Proceso o threat."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT204-P1-55",
+        "t": "T2.04",
+        "o": "A",
+        "q": "¿Cómo se denomina a una instancia de un programa en ejecución?",
+        "a": [
+          "Terminal.",
+          "Proceso.",
+          "Operación de entrada y salida.",
+          "Planificador."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "n": "Un proceso es una instancia de un programa en ejecución. Un hilo es una unidad de ejecución dentro de un proceso.",
+        "u": "Un PROCESO es un programa en ejecución. [p. 11]"
+      }
+    },
+    {
+      "id": "GEN-T2.04-30.v1",
+      "topic": "T2.04",
+      "before": {
+        "i": "GEN-T2.04-30.v1",
+        "t": "T2.04",
+        "o": "G",
+        "q": "La condición de espera ocupada sucede cuando:",
+        "a": [
+          "Un proceso retiene un recurso mientras solicita otro.",
+          "Un proceso solicita un recurso asignado a otro y debe esperar a que este lo libere voluntariamente.",
+          "Dos procesos acceden a un recurso sin control.",
+          "Un proceso es postergado continuamente."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T2.04-30",
+        "u": "Condición de espera ocupada: sucede cuando un proceso solicita un recurso previamente asignado a otro proceso y tiene que esperar a que voluntariamente libere dicho recurso (esto último se conoce como condición de no apropiación).",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T2.04-30.v1",
+        "t": "T2.04",
+        "o": "G",
+        "q": "Un hilo espera a que se libere un recurso consultando repetidamente una bandera, sin bloquearse. Esta forma de esperar se denomina:",
+        "a": [
+          "Espera circular.",
+          "Espera ocupada.",
+          "Inanición.",
+          "Paginación."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T2.04-30",
+        "u": "Condición de espera ocupada [p. 16]",
+        "v": 0,
+        "w": 1,
+        "n": "La espera ocupada comprueba una condición repetidamente mientras el hilo continúa ejecutándose. Esperar bloqueado hasta una señal es un mecanismo distinto."
+      }
+    },
+    {
+      "id": "GEN-T2.04-75.v2",
+      "topic": "T2.04",
+      "before": {
+        "i": "GEN-T2.04-75.v2",
+        "t": "T2.04",
+        "o": "G",
+        "q": "El número de bits de la arquitectura de un procesador hace referencia al ancho del:",
+        "a": [
+          "Bus de control.",
+          "Bus de direcciones.",
+          "Bus de datos.",
+          "Registro de instrucciones."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          2,
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T2.04-75",
+        "u": "El número de bits hace referencia al ancho del bus de direcciones. Por tanto, un procesador de 32 bits puede direccionar hasta un máximo de 4 GB de RAM. En cambio, un procesador de 64 bits, es capaz de direccionar hasta un máximo de 16 EB.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T2.04-75.v2",
+        "t": "T2.04",
+        "o": "G",
+        "q": "Un sistema direcciona bytes mediante un espacio de direcciones de 32 bits, sin extensiones. ¿Cuántas direcciones distintas puede representar?",
+        "a": [
+          "2^16.",
+          "2^32.",
+          "32.",
+          "2^64."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          2,
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T2.04-75",
+        "u": "ancho del bus de direcciones [p. 37]",
+        "v": 0,
+        "w": 1,
+        "n": "Un campo de dirección de 32 bits representa 2^32 direcciones. La pregunta fija ese campo; la anchura de registros de una ISA no determina por sí sola el espacio físico implementado."
+      }
+    },
+    {
+      "id": "GEN-T2.04-117.v2",
+      "topic": "T2.04",
+      "before": {
+        "i": "GEN-T2.04-117.v2",
+        "t": "T2.04",
+        "o": "G",
+        "q": "En la salida de ps, el estado «Z» corresponde a:",
+        "a": [
+          "Sleeping: proceso sin actividad por el momento.",
+          "Runnable: proceso en ejecución.",
+          "Zombie: proceso que no terminó de manera correcta y que no debería existir.",
+          "Stopped: proceso detenido."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T2.04-117",
+        "u": "R runnable, en ejecución. S sleeping, proceso en ejecución pero sin actividad por el momento, o esperando por algún evento para continuar. T sTopped, proceso detenido totalmente, pero puede ser reiniciado. Z zombie, difunto, proceso que por alguna razón no terminó de manera correcta, no debe haber procesos zombies. D uninterruptible sleep, son procesos generalmente asociados a acciones de IO del sistema.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T2.04-117.v2",
+        "t": "T2.04",
+        "o": "G",
+        "q": "En ps de Linux, el estado Z identifica un proceso que:",
+        "a": [
+          "Está dormido esperando un evento.",
+          "Está preparado para ejecutarse.",
+          "Ha terminado y conserva su estado de salida pendiente de recogida.",
+          "Está detenido y puede reanudarse."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T2.04-117",
+        "u": "Z zombie [p. 61]",
+        "v": 0,
+        "w": 1,
+        "n": "Un proceso zombi ya terminó. Puede haber salido con código cero; su presencia no implica una terminación errónea."
+      }
+    },
+    {
+      "id": "GEN-T3.01-05.v1",
+      "topic": "T3.01",
+      "before": {
+        "i": "GEN-T3.01-05.v1",
+        "t": "T3.01",
+        "o": "G",
+        "q": "Las extensiones al modelo básico añaden:",
+        "a": [
+          "Los dominios y los identificadores.",
+          "Los procesos y los almacenes.",
+          "Las claves y las cardinalidades.",
+          "Los atributos de las entidades y la jerarquía entre éstas."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 2,
+        "f": "GEN-T3.01-05",
+        "u": "existiendo dos elementos principales: las ENTIDADES y las RELACIONES. Las extensiones al modelo básico añaden además los atributos de las entidades y la jerarquía entre éstas. … Diagramas ORM. Diagramas IDEF1X. Diagramas UML. Diagramas CASE*Method.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.01-05.v1",
+        "t": "T3.01",
+        "o": "G",
+        "q": "¿Qué finalidad tienen las extensiones del modelo Entidad-Relación básico?",
+        "a": [
+          "Eliminar todos los atributos de las entidades.",
+          "Sustituir el modelo conceptual por código ejecutable.",
+          "Reducir cualquier relación a una lista sin entidades.",
+          "Aportar al modelo una mayor capacidad expresiva."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 2,
+        "f": "GEN-T3.01-05",
+        "u": "Estas extensiones tienen como finalidad aportar al modelo una mayor capacidad expresiva. [p. 5]",
+        "v": 0,
+        "n": "Las extensiones amplían la capacidad expresiva del modelo conceptual. Esta pregunta no atribuye a las extensiones la introducción de los atributos: la redacción anterior mezclaba atributos y jerarquías."
+      }
+    },
+    {
+      "id": "GEN-T3.01-10.v1",
+      "topic": "T3.01",
+      "before": {
+        "i": "GEN-T3.01-10.v1",
+        "t": "T3.01",
+        "o": "G",
+        "q": "El conjunto mínimo de atributos que identifican unívocamente cada ocurrencia se denomina:",
+        "a": [
+          "Superclave.",
+          "Identificador principal o clave primaria.",
+          "Atributo derivado.",
+          "Atributo compuesto."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          2
+        ],
+        "d": 3,
+        "f": "GEN-T3.01-10",
+        "u": "Es una propiedad o característica de un tipo de entidad. Se trata de la unidad básica de información que sirve para identificar o describir la entidad. Un atributo se define sobre un dominio. … Cada tipo de entidad ha de tener un conjunto mínimo de atributos que identifiquen unívocamente cada ocurrencia del tipo de entidad. Este atributo o atributos se denomina identificador principal o CLAVE PRIMARIA.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.01-10.v1",
+        "t": "T3.01",
+        "o": "G",
+        "q": "Entre los conjuntos mínimos de atributos capaces de identificar unívocamente cada ocurrencia, ¿cómo se llama el elegido como identificador principal?",
+        "a": [
+          "Superclave con algún atributo redundante.",
+          "Clave primaria.",
+          "Atributo derivado.",
+          "Atributo compuesto no necesariamente identificador."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          2
+        ],
+        "d": 3,
+        "f": "GEN-T3.01-10",
+        "u": "Este atributo o atributos se denomina identificador principal o CLAVE PRIMARIA. [p. 6]",
+        "v": 0,
+        "n": "La clave primaria es el identificador principal elegido. La minimalidad por sí sola no determina cuál de las claves candidatas se ha elegido; el enunciado incorpora expresamente esa elección."
+      }
+    },
+    {
+      "id": "GEN-T3.01-22.v1",
+      "topic": "T3.01",
+      "before": {
+        "i": "GEN-T3.01-22.v1",
+        "t": "T3.01",
+        "o": "G",
+        "q": "En una relación 1:1:",
+        "a": [
+          "Cada ocurrencia de ambas entidades puede corresponderse con varias de la otra.",
+          "Cada ocurrencia puede relacionarse con cero, una o varias de la otra.",
+          "Cada ocurrencia de una entidad se relaciona con una y solo una ocurrencia de la otra.",
+          "No existen ocurrencias relacionadas."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.01-22",
+        "u": "TIPO DE CORRESPONDENCIA (o razón de cardinalidad): es el número máximo de ocurrencias de cada tipo de entidad que pueden intervenir en una ocurrencia de la relación que se está tratando. … Relaciones 1:1 (uno a uno): cada ocurrencia de una entidad se relaciona con una y sólo una ocurrencia de la otra entidad.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.01-22.v1",
+        "t": "T3.01",
+        "o": "G",
+        "q": "En una relación 1:1 en la que ambas entidades tienen participación obligatoria, ¿qué ocurre?",
+        "a": [
+          "Cada ocurrencia de ambas entidades puede corresponderse con varias de la otra.",
+          "Cada ocurrencia puede relacionarse con cero, una o varias de la otra.",
+          "Cada ocurrencia de una entidad se relaciona con una y solo una ocurrencia de la otra.",
+          "No existen ocurrencias relacionadas."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.01-22",
+        "u": "La cardinalidad máxima coincide con el tipo de correspondencia. [p. 10]",
+        "v": 0,
+        "n": "El máximo 1 procede de la correspondencia 1:1 y el mínimo 1 de la participación obligatoria de ambas entidades. Así se obtiene exactamente una asociación por ocurrencia; 1:1 sin ese mínimo no obliga a que toda ocurrencia participe."
+      }
+    },
+    {
+      "id": "GEN-T3.02-20.v2",
+      "topic": "T3.02",
+      "before": {
+        "i": "GEN-T3.02-20.v2",
+        "t": "T3.02",
+        "o": "G",
+        "q": "Como norma general, una relación 1:1:",
+        "a": [
+          "Se transforma siempre en una única tabla.",
+          "No admite propagación de clave.",
+          "Es un caso particular de las 1:N y se propaga la clave en las dos direcciones.",
+          "Se transforma siempre en una tabla nueva."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.02-20",
+        "u": "Como norma general, es un caso particular de las 1:N y por tanto se propaga la clave en las dos direcciones. … Las cardinalidades mínimas son cero (ambas), esto evitará valores nulos en las claves ajenas y mantendrá la simetría natural",
+        "v": 1
+      },
+      "after": {
+        "i": "GEN-T3.02-20.v2",
+        "t": "T3.02",
+        "o": "G",
+        "q": "En una relación 1:1, si ambas entidades participan de forma completa y tienen identificadores distintos, ¿qué transformación contempla el temario?",
+        "a": [
+          "Transformarlas siempre en una única tabla, aunque sus identificadores sean distintos.",
+          "Prohibir cualquier clave ajena entre sus tablas.",
+          "Transformar cada entidad en una tabla y poder propagar la clave de una a la otra, atendiendo a los accesos.",
+          "Crear obligatoriamente una tabla intermedia para toda relación 1:1."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.02-20",
+        "u": "se puede propagar la clave de cualquiera de ellas a la tabla resultante de la otra, [p. 13]",
+        "v": 1,
+        "n": "La página 13 distingue este caso: cada entidad se transforma en una tabla y se puede propagar una clave a la otra según los accesos prioritarios. No es una obligación duplicar la propagación en ambos sentidos. Para conservar el máximo uno, la clave ajena necesita la unicidad correspondiente."
+      }
+    },
+    {
+      "id": "GEN-T3.02-21.v1",
+      "topic": "T3.02",
+      "before": {
+        "i": "GEN-T3.02-21.v1",
+        "t": "T3.02",
+        "o": "G",
+        "q": "En una relación 1:1 con una cardinalidad mínima cero y otra uno, conviene propagar la clave:",
+        "a": [
+          "En ambas direcciones.",
+          "A una nueva tabla.",
+          "De la entidad de participación opcional a la obligatoria.",
+          "De la entidad de participación obligatoria a la otra."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.02-21",
+        "u": "Si una de las cardinalidades mínimas es cero y la otra no, será (1,1), conviene propagar la clave de esta última (la obligatoria) a la primera. … Si las entidades tienen el mismo identificador se transforman en una única tabla formada por la concatenación de los atributos de los dos tipos de entidad.",
+        "v": 1
+      },
+      "after": {
+        "i": "GEN-T3.02-21.v1",
+        "t": "T3.02",
+        "o": "G",
+        "q": "Cada empleado debe estar asignado a exactamente una plaza y cada plaza puede tener cero o un empleado. Si se usan dos tablas y se quiere evitar una clave ajena nula en los registros existentes, ¿dónde se sitúa la clave ajena de la asignación?",
+        "a": [
+          "En ambas tablas, duplicando obligatoriamente la asignación.",
+          "En una tercera tabla obligatoria en toda relación 1:1.",
+          "En EMPLEADO, referenciando la plaza y con unicidad para que no se comparta.",
+          "En PLAZA, referenciando al empleado y exigiendo que nunca sea nula."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.02-21",
+        "u": "teniendo en cuenta, en este caso, los accesos más frecuentes y prioritarios a los datos de las tablas. [p. 13]",
+        "v": 1,
+        "n": "Cada empleado tiene plaza: EMPLEADO puede guardar una referencia no nula y única a PLAZA. Las plazas vacantes siguen existiendo sin necesitar referencia a un empleado. El ejemplo explicita la participación y evita la ambigüedad de la frase anterior sobre el sentido de propagación."
+      }
+    },
+    {
+      "id": "GEN-T3.02-55.v2",
+      "topic": "T3.02",
+      "before": {
+        "i": "GEN-T3.02-55.v2",
+        "t": "T3.02",
+        "o": "G",
+        "q": "Para realizar un join es necesario que las relaciones presenten:",
+        "a": [
+          "Igual grado y compatibilidad de dominios.",
+          "Al menos un campo en común sobre el que establecer la condición de igualdad.",
+          "Las mismas claves primarias.",
+          "La misma cardinalidad."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          2
+        ],
+        "d": 3,
+        "f": "GEN-T3.02-55",
+        "u": "Operadores NO fundamentales: Join: dadas dos relaciones R y S, se define la concatenación o join como la relación resultante del producto cartesiano entre ambas tablas una vez seleccionadas aquellas filas que tomen igual valor … Para que la operación se pueda producir es necesario que ambas relaciones presenten, al menos, un campo en común sobre el que establecer la condición de igualdad",
+        "v": 1
+      },
+      "after": {
+        "i": "GEN-T3.02-55.v2",
+        "t": "T3.02",
+        "o": "G",
+        "q": "Para la operación de concatenación por igualdad sobre un campo común descrita en el temario, ¿qué condición se utiliza para seleccionar las filas del producto cartesiano?",
+        "a": [
+          "Que ambas relaciones tengan siempre el mismo número de columnas.",
+          "Que los valores de los campos comparados cumplan la igualdad indicada.",
+          "Que ambas relaciones tengan las mismas claves primarias.",
+          "Que ambas relaciones contengan el mismo número de filas."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          2
+        ],
+        "d": 3,
+        "f": "GEN-T3.02-55",
+        "u": "al menos, un campo en común sobre el que establecer la condición de igualdad [p. 27]",
+        "v": 1,
+        "n": "La operación descrita selecciona las combinaciones que cumplen una igualdad. Se acota ese caso y no se afirma que todo join posible requiera campos del mismo nombre o sólo condiciones de igualdad."
+      }
+    },
+    {
+      "id": "GEN-T3.02-66.v2",
+      "topic": "T3.02",
+      "before": {
+        "i": "GEN-T3.02-66.v2",
+        "t": "T3.02",
+        "o": "G",
+        "q": "Para evitar la pérdida de información en una dependencia de combinación hay que descomponer la relación, al menos, en:",
+        "a": [
+          "Otras cuatro relaciones.",
+          "Otras tres relaciones.",
+          "Otras dos relaciones.",
+          "Una única relación."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.02-66",
+        "u": "Una relación está en quinta forma normal si y sólo si está en 4FN y además toda dependencia de combinación está implicada por una clave candidata. … Una dependencia de combinación aparece en relaciones que no pueden descomponerse en otras dos sin perder información. Para evitar esta pérdida de información hay que descomponerla, al menos, en otras tres relaciones.",
+        "v": 1
+      },
+      "after": {
+        "i": "GEN-T3.02-66.v2",
+        "t": "T3.02",
+        "o": "G",
+        "q": "En la descomposición del ejemplo Solidarios(ONG, Proyecto, Lugar) utilizada para estudiar la quinta forma normal, ¿qué conjunto de proyecciones permite reconstruir la relación mediante reunión natural sin tuplas falsas?",
+        "a": [
+          "R1(ONG), R2(Proyecto), R3(Lugar).",
+          "R1(ONG, Proyecto), R2(Proyecto, Lugar), R3(ONG, Lugar).",
+          "R1(ONG, Proyecto), R2(Proyecto, Lugar).",
+          "R1(ONG, Proyecto), R2(ONG, Lugar)."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.02-66",
+        "u": "Si aplicamos una Reunión Natural a dos de esas tres relaciones, se producen tuplas falsas, [p. 35]",
+        "v": 1,
+        "n": "La página 35 descompone Solidarios en las proyecciones de los tres pares de atributos. El ejemplo establece que la reunión de dos genera tuplas falsas, mientras que la reunión de las tres reconstruye la relación. La afirmación se limita a ese ejemplo."
+      }
+    },
+    {
+      "id": "AT303-P1-09",
+      "topic": "T3.03",
+      "before": {
+        "i": "AT303-P1-09",
+        "t": "T3.03",
+        "o": "A",
+        "q": "Indique el número de veces que se ejecuta el cuerpo del siguiente bucle: int salto = 3; for (int i=0; i<9; (++i)*salto) System.out.println(i);",
+        "a": [
+          "1.",
+          "2.",
+          "3.",
+          "9."
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT303-P1-09",
+        "t": "T3.03",
+        "o": "A",
+        "q": "En Java, ¿cuántas veces se ejecuta la impresión? for (int i=0; i<9; ++i) System.out.println(i);",
+        "a": [
+          "1.",
+          "2.",
+          "3.",
+          "9."
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [],
+        "d": null,
+        "n": "Errata de la academia: (++i)*salto no es una expresión de actualización válida en el for de Java. Con ++i, el índice aumenta en una unidad e imprime los nueve valores de 0 a 8 (opción D).",
+        "u": "for (inicialización; condición prueba; incremento/decremento) { [p. 29]"
+      }
+    },
+    {
+      "id": "AT303-P1-13",
+      "topic": "T3.03",
+      "before": {
+        "i": "AT303-P1-13",
+        "t": "T3.03",
+        "o": "A",
+        "q": "La ejecución del siguiente código produce qué salida: for (int indice=1, sel=2, elec=3; índice<20; indice=(indice+sel)*elec) { System.out.println(indice); sel++; }",
+        "a": [
+          "2 8 22 52",
+          "0 4 14 32",
+          "1 12",
+          "0 4 14 52"
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT303-P1-13",
+        "t": "T3.03",
+        "o": "A",
+        "q": "¿Qué valores imprime por orden este bucle Java? for (int indice=1, sel=2, elec=3; indice<20; indice=(indice+sel)*elec) { System.out.println(indice); sel++; }",
+        "a": [
+          "2, 8, 22, 52",
+          "0, 4, 14, 32",
+          "1, 12",
+          "0, 4, 14, 52"
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null,
+        "n": "Después de imprimir 12, sel sube a 4 e indice pasa a (12+4)×3=48, que ya no es menor que 20.",
+        "u": "for (inicialización; condición prueba; incremento/decremento) { [p. 29]"
+      }
+    },
+    {
+      "id": "AT303-P1-17",
+      "topic": "T3.03",
+      "before": {
+        "i": "AT303-P1-17",
+        "t": "T3.03",
+        "o": "A",
+        "q": "Indique qué se imprime por pantalla con el siguiente código: for (int i=10; j=1; i>0; i=i-j) {System.out.println(i);j++;}",
+        "a": [
+          "10873",
+          "10963",
+          "10851",
+          "1051"
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT303-P1-17",
+        "t": "T3.03",
+        "o": "A",
+        "q": "¿Qué valores imprime por orden este bucle Java? for (int i=10, j=1; i>0; i=i-j) { System.out.println(i); j++; }",
+        "a": [
+          "10, 8, 7, 3",
+          "10, 9, 6, 3",
+          "10, 8, 5, 1",
+          "10, 5, 1"
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null,
+        "n": "j se incrementa en el cuerpo antes de actualizar i. Se imprimen 10, 8, 5 y 1.",
+        "u": "for (inicialización; condición prueba; incremento/decremento) { [p. 29]"
+      }
+    },
+    {
+      "id": "AT303-P1-36",
+      "topic": "T3.03",
+      "before": {
+        "i": "AT303-P1-36",
+        "t": "T3.03",
+        "o": "A",
+        "q": "¿Qué salida genera la ejecución del siguiente código? int i=0, r; while(i<3) { switch(i) { case 0: r = i; break; case 1: r = i+1; break; case 2: r = i+2; case 3: r = i+3; } i++; } System.out.println(r);",
+        "a": [
+          "6",
+          "5",
+          "4",
+          "3"
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT303-P1-36",
+        "t": "T3.03",
+        "o": "A",
+        "q": "En Java, ¿qué imprime este fragmento? int i=0, r=0; while(i<3) { switch(i) { case 0: r=i; break; case 1: r=i+1; break; case 2: r=i+2; case 3: r=i+3; } i++; } System.out.println(r);",
+        "a": [
+          "6",
+          "5",
+          "4",
+          "3"
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [],
+        "d": null,
+        "n": "En la última iteración, case 2 asigna 4 y continúa en case 3 al faltar break. La última asignación deja r en 5.",
+        "u": "case 0: System.out.println(\"i es cero.\"); [p. 28]"
+      }
+    },
+    {
+      "id": "GEN-T3.03-47.v1",
+      "topic": "T3.03",
+      "before": {
+        "i": "GEN-T3.03-47.v1",
+        "t": "T3.03",
+        "o": "G",
+        "q": "true y false son:",
+        "a": [
+          "Operadores lógicos.",
+          "Constantes numéricas.",
+          "Tipos de datos primitivos.",
+          "Palabras reservadas."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.03-47",
+        "u": "los dos únicos posibles valores que puede representar un dato lógico son true y false. true y false son palabras reservadas.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T3.03-47.v1",
+        "t": "T3.03",
+        "o": "G",
+        "q": "Según la gramática léxica de Java, ¿a qué categoría pertenecen los tokens true y false?",
+        "a": [
+          "Operadores lógicos",
+          "Literales numéricos",
+          "Nombres de tipos primitivos",
+          "Literales booleanos"
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.03-47",
+        "u": "representar un dato lógico son true y false. [p. 20]",
+        "v": 0,
+        "w": 1,
+        "n": "true y false son los dos literales de tipo boolean."
+      }
+    },
+    {
+      "id": "GEN-T3.03-74.v2",
+      "topic": "T3.03",
+      "before": {
+        "i": "GEN-T3.03-74.v2",
+        "t": "T3.03",
+        "o": "G",
+        "q": "Para definir funciones recursivas se aplica la técnica:",
+        "a": [
+          "Divide y vencerás.",
+          "Fuerza bruta.",
+          "Programación dinámica.",
+          "Voraz."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.03-74",
+        "u": "la recursividad consiste en definir problema en base a la propia definición.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T3.03-74.v2",
+        "t": "T3.03",
+        "o": "G",
+        "q": "Al evaluar f(4) en Java con int f(int n) { return n==0 ? 1 : n*f(n-1); }, ¿cuántas invocaciones de f se realizan, incluida la inicial?",
+        "a": [
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.03-74",
+        "u": "resultado=facR(n-1)*n; [p. 31]",
+        "v": 0,
+        "w": 1,
+        "n": "El caso base f(0) también cuenta como invocación. La multiplicación no añade llamadas."
+      }
+    },
+    {
+      "id": "GEN-T3.04-32",
+      "topic": "T3.04",
+      "before": {
+        "i": "GEN-T3.04-32",
+        "t": "T3.04",
+        "o": "G",
+        "q": "La sentencia UPDATE Empleados SET sueldo=sueldo*1,0125 sin WHERE:",
+        "a": [
+          "Produce un error.",
+          "Actualiza solo el primer empleado.",
+          "Actualiza el sueldo de todos los empleados.",
+          "Actualiza solo los que tienen sueldo nulo."
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.04-32",
+        "u": "UPDATE <nombre_tabla> SET <nombre_columna> = {<expresión>|DEFAULT|NULL} … UPDATE Empleados SET variable=1000 WHERE tiempo>=3;",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.04-32",
+        "t": "T3.04",
+        "o": "G",
+        "q": "La tabla Empleados tiene sueldos numéricos 80 y 160. Tras UPDATE Empleados SET sueldo=sueldo*1.0125, ¿qué sueldos contiene, ordenados de menor a mayor?",
+        "a": [
+          "80 y 160",
+          "81 y 160",
+          "81 y 162",
+          "80 y 162"
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.04-32",
+        "u": "Ejemplo: Actualizar el sueldo de todos los empleados un 1,25%. [p. 13]",
+        "v": 0,
+        "n": "El punto forma parte del literal numérico SQL. Sin WHERE se actualizan las dos filas."
+      }
+    },
+    {
+      "id": "GEN-T3.04-46.v1",
+      "topic": "T3.04",
+      "before": {
+        "i": "GEN-T3.04-46.v1",
+        "t": "T3.04",
+        "o": "G",
+        "q": "Los campos de la cláusula ORDER BY tienen que haber sido previamente definidos en:",
+        "a": [
+          "La cláusula SELECT.",
+          "La cláusula HAVING.",
+          "La cláusula GROUP BY.",
+          "La cláusula WHERE."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.04-46",
+        "u": "si queremos definir un orden concreto hay que utilizar la cláusula ORDER BY … El sentido de la ordenación puede ser ascendente (ASC) o descendente DESC, estableciéndose como sentido por defecto el ascendente.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.04-46.v1",
+        "t": "T3.04",
+        "o": "G",
+        "q": "En SQLite, empleados(nombre,sueldo) contiene ('Ana',200) y ('Luis',100). ¿Qué devuelve SELECT nombre FROM empleados ORDER BY sueldo ASC?",
+        "a": [
+          "Luis, Ana",
+          "Ana, Luis",
+          "Un error por omitir sueldo en SELECT",
+          "Una sola fila con Luis"
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.04-46",
+        "u": "Ejemplo: Obtener las autorizaciones ordenadas por fecha de entrada. [p. 18]",
+        "v": 0,
+        "n": "Se proyecta nombre y se ordena por sueldo aunque sueldo no esté en la salida."
+      }
+    },
+    {
+      "id": "GEN-T3.04-51.v1",
+      "topic": "T3.04",
+      "before": {
+        "i": "GEN-T3.04-51.v1",
+        "t": "T3.04",
+        "o": "G",
+        "q": "La combinación (JOIN) exige que:",
+        "a": [
+          "Coincidan los valores de las columnas relacionadas en ambas tablas.",
+          "Las tablas sean la misma.",
+          "Se combinen todas las filas con todas.",
+          "No coincidan los valores de las columnas."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.04-51",
+        "u": "Combinación (JOIN): permite crear una sola tabla a partir de las tablas especificadas en la cláusula FROM, teniendo en cuenta que tenemos que hacer que coincidan los valores de las columnas relacionadas en ambas tablas (en otro caso sería un producto cartesiano). … Si <tabla1> y <tabla2> son la misma tabla, se le denomina SELF JOIN.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.04-51.v1",
+        "t": "T3.04",
+        "o": "G",
+        "q": "En SQLite, a(x) contiene 1 y 4, y b(y) contiene 2 y 3. ¿Qué pares devuelve SELECT x,y FROM a JOIN b ON x<y ORDER BY x,y?",
+        "a": [
+          "(1,2) y (1,3)",
+          "Ninguna fila",
+          "Los cuatro pares posibles",
+          "(4,2) y (4,3)"
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.04-51",
+        "u": "Así, la opción JOIN permite vincular las tablas [p. 21]",
+        "v": 0,
+        "n": "ON evalúa x<y para cada par. Solo las filas con x=1 satisfacen la condición."
+      }
+    },
+    {
+      "id": "GEN-T3.04-51.v2",
+      "topic": "T3.04",
+      "before": {
+        "i": "GEN-T3.04-51.v2",
+        "t": "T3.04",
+        "o": "G",
+        "q": "Si en la combinación no coinciden los valores de las columnas relacionadas, el resultado sería:",
+        "a": [
+          "Una combinación natural.",
+          "Un producto cartesiano.",
+          "Una intersección.",
+          "Una unión."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.04-51",
+        "u": "Combinación (JOIN): permite crear una sola tabla a partir de las tablas especificadas en la cláusula FROM, teniendo en cuenta que tenemos que hacer que coincidan los valores de las columnas relacionadas en ambas tablas (en otro caso sería un producto cartesiano). … Si <tabla1> y <tabla2> son la misma tabla, se le denomina SELF JOIN.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.04-51.v2",
+        "t": "T3.04",
+        "o": "G",
+        "q": "Si a(x) contiene 1 y 2, y b(y) contiene 3 y 4, ¿qué devuelve SELECT COUNT(*) FROM a INNER JOIN b ON a.x=b.y?",
+        "a": [
+          "1",
+          "0",
+          "2",
+          "4"
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.04-51",
+        "u": "FROM ciudadanos c JOIN autorizaciones a ON c.nif=a.nif; [p. 21]",
+        "v": 0,
+        "n": "El criterio de igualdad falla para los cuatro pares candidatos."
+      }
+    },
+    {
+      "id": "AS09-P1-48",
+      "topic": "T3.05",
+      "before": {
+        "i": "AS09-P1-48",
+        "t": "T3.05",
+        "o": "A",
+        "q": "Elija qué afirmación es cierta, según el diagrama UML siguiente:",
+        "a": [
+          "Las clases Icono, IconoRectangular e IconoArbitrario pueden tener instancias directas.",
+          "La clase Botón es abstracta.",
+          "La clase BotónOK puede tener hijos.",
+          "La operación Icono::obtenerID() no es polimórfica."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AS09-P1-48",
+        "t": "T3.05",
+        "o": "A",
+        "q": "Según los nombres en cursiva del diagrama UML descrito a continuación, ¿qué conjunto está formado exclusivamente por clases abstractas?\n\nIcono, IconoRectangular e IconoArbitrario tienen sus nombres en cursiva. Icono contiene origen: Punto, dibujar() en cursiva y obtenerID: Integer {leaf}. IconoRectangular hereda de Icono y contiene altura: Integer, anchura: Integer y estáDentro(p:Punto):Boolean. IconoArbitrario hereda de Icono y contiene borde: ColecciónDeLíneas. Botón (nombre en letra redonda) hereda de IconoRectangular y contiene dibujar(). BotónOK (nombre en letra redonda) {leaf} hereda de Botón y contiene dibujar().",
+        "a": [
+          "Icono, IconoRectangular e IconoArbitrario.",
+          "Botón y BotónOK.",
+          "Icono y Botón.",
+          "IconoArbitrario y BotónOK."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "n": "En la notación de clases UML del temario, un nombre de clase en cursiva representa una clase abstracta. Los nombres Icono, IconoRectangular e IconoArbitrario aparecen en cursiva y forman el conjunto A. Botón y BotónOK aparecen en letra redonda como clases concretas del diagrama.",
+        "u": "El nombre de la clase aparece centrado y si la clase es abstracta se representa en cursiva. [p. 45]"
+      }
+    },
+    {
+      "id": "AS10B-P1-63",
+      "topic": "T3.05",
+      "before": {
+        "i": "AS10B-P1-63",
+        "t": "T3.05",
+        "o": "A",
+        "q": "¿Qué tipo de diagrama UML es el siguiente?",
+        "a": [
+          "Diagrama de secuencia.",
+          "Diagrama de flujo.",
+          "Diagrama de actividad.",
+          "Diagrama de estados."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AS10B-P1-63",
+        "t": "T3.05",
+        "o": "A",
+        "q": "¿Qué tipo de diagrama UML corresponde a la siguiente descripción de sus elementos y conexiones?\n\nCírculo negro sólido con flecha hacia un rectángulo de esquinas redondeadas rotulado «Punkte addieren». De este sale una flecha hacia un rombo. Del rombo sale una flecha con [Punkte < 100] hacia un rectángulo redondeado «Klausur verfehlt» y otra con [Punkte >= 100] hacia uno «Klausur bestanden». Desde «Klausur bestanden» se llega a «Note ermitteln», también redondeado. Después hay una barra horizontal negra de la que salen dos flechas hacia sendos rectángulos redondeados «Note veröffentlichen» y «Schein ausstellen». De estos llegan dos flechas a otra barra negra horizontal. Una flecha desde esta barra y otra desde «Klausur verfehlt» terminan en el mismo círculo negro rodeado de un anillo.",
+        "a": [
+          "Diagrama de secuencia.",
+          "Diagrama de flujo.",
+          "Diagrama de actividad.",
+          "Diagrama de estados."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "n": "Los nodos de acción, la decisión con guardas y las barras de bifurcación/reunión representan el flujo de una actividad UML. Coincide con la plantilla C.",
+        "u": "El Diagrama de Actividades es una variante de los Diagramas de Estados, organizado con respecto a las acciones. Muestra un flujo de actividades. [p. 54]"
+      }
+    },
+    {
+      "id": "GEN-T3.05-21",
+      "topic": "T3.05",
+      "before": {
+        "i": "GEN-T3.05-21",
+        "t": "T3.05",
+        "o": "G",
+        "q": "Una clase que no tenga instancias se denomina:",
+        "a": [
+          "Clase base.",
+          "Clase abstracta.",
+          "Clase derivada.",
+          "Clase final."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.05-21",
+        "u": "Una clase que no tenga instancias se denomina clase abstracta. Una clase abstracta puede servir para declarar las propiedades de un conjunto determinado de clases pero que a ese nivel de abstracción no se pueden concretar.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T3.05-21",
+        "t": "T3.05",
+        "o": "G",
+        "q": "Se declaran estas clases Java y todavía no se ha creado ningún objeto de ellas. Desde un método con acceso a ambas clases, ¿qué expresión de creación de objetos es válida?\n\nabstract class Figura {}\nclass Cuadrado extends Figura {}",
+        "a": [
+          "Tanto new Figura() como new Cuadrado().",
+          "Solo new Cuadrado().",
+          "Solo new Figura().",
+          "Ninguna, porque aún no existen instancias."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.05-21",
+        "u": "Las clases abstractas no son instanciables directamente sino en sus descendientes. [p. 43]",
+        "v": 0,
+        "w": 1,
+        "n": "Figura es abstracta y no puede instanciarse directamente. Cuadrado es concreta y puede crearse con new Cuadrado(). Que aún no haya objetos no vuelve abstracta una clase concreta."
+      }
+    },
+    {
+      "id": "GEN-T3.05-23.v1",
+      "topic": "T3.05",
+      "before": {
+        "i": "GEN-T3.05-23.v1",
+        "t": "T3.05",
+        "o": "G",
+        "q": "Al invocar un método de un objeto, este solo se referirá a:",
+        "a": [
+          "La estructura de datos de la superclase únicamente.",
+          "La estructura de datos de ese objeto.",
+          "La estructura de datos de todos los objetos de la clase.",
+          "Los datos globales."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.05-23",
+        "u": "El conjunto de procedimientos compartidos que contienen los objetos se denomina métodos.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T3.05-23.v1",
+        "t": "T3.05",
+        "o": "G",
+        "q": "En Java, tras declarar Contador, se ejecutan las siguientes instrucciones dentro de un método. ¿Qué valor se imprime?\n\nclass Contador {\n    int valor = 1;\n    void incrementar() { valor++; }\n}\n\nContador x1 = new Contador();\nContador x2 = new Contador();\nx1.incrementar();\nSystem.out.println(x2.valor);",
+        "a": [
+          "2.",
+          "1.",
+          "0.",
+          "Se produce un error de compilación."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.05-23",
+        "u": "Atributos: elementos que mantienen el estado del objeto. [p. 10]",
+        "v": 0,
+        "w": 1,
+        "n": "valor es un atributo de instancia. x1 y x2 se crean con dos expresiones new distintas y cada objeto empieza con valor 1. incrementar modifica únicamente valor de x1, por lo que x2 conserva 1."
+      }
+    },
+    {
+      "id": "GEN-T3.05-45.v2",
+      "topic": "T3.05",
+      "before": {
+        "i": "GEN-T3.05-45.v2",
+        "t": "T3.05",
+        "o": "G",
+        "q": "En Abstract Factory, las diferentes familias de productos son:",
+        "a": [
+          "Los Productos únicos.",
+          "Los ProductosAbstractos.",
+          "Las FactoríasConcretas.",
+          "Los Clientes."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.05-45",
+        "u": "FactoríaAbstracta: es la definición de las interfaces de las factorías.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T3.05-45.v2",
+        "t": "T3.05",
+        "o": "G",
+        "q": "En Abstract Factory, ¿qué participante proporciona instancias de los productos concretos de una familia compatible?",
+        "a": [
+          "Un producto individual, que sustituye a toda la factoría.",
+          "La interfaz ProductoAbstracto, por el mero hecho de declararse.",
+          "Una FactoríaConcreta.",
+          "El Cliente, como definición de las interfaces de todas las factorías."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.05-45",
+        "u": "Provee de la instancia concreta de la familia que se encarga de crear. [p. 20]",
+        "v": 0,
+        "w": 1,
+        "n": "La factoría concreta crea productos de una familia compatible; la familia está formada por esos productos relacionados. El cliente usa la factoría y los productos abstractos definen interfaces: no son la propia factoría concreta."
+      }
+    },
+    {
+      "id": "AS09-P1-52",
+      "topic": "T3.06",
+      "before": {
+        "i": "AS09-P1-52",
+        "t": "T3.06",
+        "o": "A",
+        "q": "Indique qué muestra por pantalla la ejecución del siguiente código en Java:",
+        "a": [
+          "3.",
+          "5.",
+          "4.",
+          "null."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AS09-P1-52",
+        "t": "T3.06",
+        "o": "A",
+        "q": "Indique qué muestra por pantalla la ejecución del siguiente código en Java:\n\n```java\nimport java.util.*;\n\npublic class Main {\n    public static void main(String[] args) throws Exception {\n        int i;\n        i=3;\n        System.out.println(i++);\n    }\n}\n```",
+        "a": [
+          "3.",
+          "5.",
+          "4.",
+          "null."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "n": "i vale 3. El postincremento entrega el valor previo a println y después incrementa i a 4. La salida es 3, opción A, corroborada por la plantilla.",
+        "u": "variable++ Post-incremento [p. 23]"
+      }
+    },
+    {
+      "id": "GEN-T3.07-170.v2",
+      "topic": "T3.07",
+      "before": {
+        "i": "GEN-T3.07-170.v2",
+        "t": "T3.07",
+        "o": "G",
+        "q": "Las partes de un JWT están codificadas en:",
+        "a": [
+          "Hexadecimal.",
+          "UTF-16.",
+          "Base64.",
+          "ASCII."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          8,
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T3.07-170",
+        "u": "Un JWT consta de tres partes, todas ellas codificadas en Base64 y separadas por un punto: HEADER.PAYLOAD.SIGNATURE",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.07-170.v2",
+        "t": "T3.07",
+        "o": "G",
+        "q": "Al codificar los octetos FB FF (hexadecimal) en base64url sin relleno para JWS compacto, ¿qué texto se obtiene?",
+        "a": [
+          "+/8=",
+          "-_8=",
+          "-_8",
+          "fbff"
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          8,
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T3.07-170",
+        "u": "La cabecera está codificada en Base64Url. [p. 51]",
+        "v": 0,
+        "n": "La Base64 ordinaria produce +/8=. En base64url sin relleno se sustituyen + y / por - y _ y se omite =."
+      }
+    },
+    {
+      "id": "GEN-T3.08-58",
+      "topic": "T3.08",
+      "before": {
+        "i": "GEN-T3.08-58",
+        "t": "T3.08",
+        "o": "G",
+        "q": "En la declaración XML, standalone=\"no\" indica que el documento:",
+        "a": [
+          "No necesita DTD.",
+          "No está bien formado.",
+          "No tiene prólogo.",
+          "Va acompañado de un DTD."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          8,
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-58",
+        "u": "standalone indica si el documento va acompañado de un DTD (“no”) o no lo necesita (“yes”). … fichero.dtd contiene las reglas (elementos) que se pueden usar en el fichero XML.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-58",
+        "t": "T3.08",
+        "o": "G",
+        "q": "Considere este documento XML 1.0 completo: <?xml version=\"1.0\" standalone=\"no\"?><r/>. ¿Qué puede concluirse sobre su buena formación?",
+        "a": [
+          "Está mal formado por carecer de DTD.",
+          "Está bien formado y su elemento raíz se llama r.",
+          "Está mal formado porque r está vacío.",
+          "Está mal formado porque standalone solo admite yes."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          8,
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-58",
+        "u": "<?xml version=\"1.0\" standalone=\"no\" ?> [p. 19]",
+        "v": 0,
+        "n": "Un documento XML puede estar bien formado sin DTD. standalone=\"no\" es un valor permitido y no introduce una DTD."
+      }
+    },
+    {
+      "id": "GEN-T3.08-60.v1",
+      "topic": "T3.08",
+      "before": {
+        "i": "GEN-T3.08-60.v1",
+        "t": "T3.08",
+        "o": "G",
+        "q": "Los comentarios en XML son:",
+        "a": [
+          "Obligatorios.",
+          "Procesados como elementos.",
+          "Convertidos en atributos.",
+          "Ignorados por el procesador XML."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 2,
+        "f": "GEN-T3.08-60",
+        "u": "ATRIBUTOS: permiten incorporar propiedades a los elementos de un documento. Deben ir entre comillas dobles. … COMENTARIOS: son ignorados por el procesador XML.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-60.v1",
+        "t": "T3.08",
+        "o": "G",
+        "q": "En el documento XML <r><!-- aviso --><x/></r>, ¿cuántos elementos, incluida la raíz, hay?",
+        "a": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 2,
+        "f": "GEN-T3.08-60",
+        "u": "<!-- Esto es un comentario --> [p. 20]",
+        "v": 0,
+        "n": "El comentario puede representarse como un nodo propio de la API, pero no aumenta el número de elementos XML."
+      }
+    },
+    {
+      "id": "GEN-T3.08-1101.v1",
+      "topic": "T3.08",
+      "before": {
+        "i": "GEN-T3.08-1101.v1",
+        "t": "T3.08",
+        "o": "G",
+        "q": "La compilación a bytecode de Python:",
+        "a": [
+          "Genera código ensamblador.",
+          "Genera un ejecutable nativo.",
+          "No es una compilación en sentido estricto, pues no se genera un código binario.",
+          "Genera código C."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          8,
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-1101",
+        "u": "Compilado a bytecodes: Python \"compila\" (no es una compilación en sentido estricto ya que no se genera un código binario) el código fuente de Python a bytecode, y en ese momento interpreta ese bytecode, ejecutándolo sobre la marcha.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-1101.v1",
+        "t": "T3.08",
+        "o": "G",
+        "q": "En CPython 3, ¿qué crea compile(\"3+4\", \"<ejemplo>\", \"eval\") con los argumentos indicados?",
+        "a": [
+          "Texto en ensamblador",
+          "Un ejecutable nativo",
+          "Un objeto de código evaluable",
+          "Un archivo fuente C"
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          8,
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-1101",
+        "u": "el código fuente de Python a bytecode [p. 3]",
+        "v": 0,
+        "n": "El objeto contiene bytecode de CPython. Al pasarlo a eval se obtiene el entero 7."
+      }
+    },
+    {
+      "id": "GEN-T3.08-1110.v2",
+      "topic": "T3.08",
+      "before": {
+        "i": "GEN-T3.08-1110.v2",
+        "t": "T3.08",
+        "o": "G",
+        "q": "En format, el marcador {:n} sin símbolo alinea el valor:",
+        "a": [
+          "A la izquierda, rellenando con espacios por la derecha.",
+          "Sin relleno.",
+          "Al centro.",
+          "A la derecha."
+        ],
+        "c": 0,
+        "k": "K",
+        "x": [
+          7,
+          8,
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-1110",
+        "u": "{:n}: alinea el valor a la izquierda rellenando con espacios por la derecha hasta los n caracteres. … {:>n}: alinea el valor a la derecha rellenando con espacios por la izquierda hasta los n caracteres.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-1110.v2",
+        "t": "T3.08",
+        "o": "G",
+        "q": "En Python 3, ¿qué representa repr(\"{:3}\".format(7))? Las comillas delimitan la cadena y dejan ver los espacios.",
+        "a": [
+          "'7  '",
+          "' 7 '",
+          "'7'",
+          "'  7'"
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [
+          7,
+          8,
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-1110",
+        "u": "c.format(valores): cadena c tras sustituir los valores [p. 7]",
+        "v": 0,
+        "n": "El número 3 fija el ancho mínimo. Para el entero 7 la representación contiene dos espacios seguidos del dígito."
+      }
+    },
+    {
+      "id": "GEN-T3.08-1133",
+      "topic": "T3.08",
+      "before": {
+        "i": "GEN-T3.08-1133",
+        "t": "T3.08",
+        "o": "G",
+        "q": "Según el temario, en Python el paso de argumentos a una función es:",
+        "a": [
+          "Por nombre.",
+          "Por valor para listas.",
+          "Siempre por referencia.",
+          "Siempre por valor."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          8,
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-1133",
+        "u": "En Python el paso de argumentos a una función es siempre por referencia, es decir, se pasa una referencia al objeto del argumento, de manera que cualquier cambio que se haga dentro de la función mediante el parámetro asociado afectará al objeto original, siempre y cuando este sea mutable.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-1133",
+        "t": "T3.08",
+        "o": "G",
+        "q": "En Python 3, f(x) ejecuta x.append(2) y después x = [9]. Si a = [1] y se llama a f(a), ¿cuánto vale a tras la llamada?",
+        "a": [
+          "[9]",
+          "[1]",
+          "[1, 2]",
+          "[1, 2, 9]"
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          8,
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-1133",
+        "u": "una referencia al objeto del argumento [p. 16]",
+        "v": 0,
+        "n": "a y x comparten inicialmente la lista. append la modifica y la asignación posterior vincula x a otro objeto."
+      }
+    },
+    {
+      "id": "GEN-T3.08-1140.v1",
+      "topic": "T3.08",
+      "before": {
+        "i": "GEN-T3.08-1140.v1",
+        "t": "T3.08",
+        "o": "G",
+        "q": "Los atributos creados fuera de __init__ en una clase se conocen como:",
+        "a": [
+          "Atributos locales.",
+          "Atributos privados.",
+          "Atributos del objeto.",
+          "Atributos de la clase."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          7,
+          8,
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-1140",
+        "u": "Los atributos que se crean dentro del método __init__ se conocen como atributos del objeto, mientras que los que se crean fuera de él se conocen como atributos de la clase.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-1140.v1",
+        "t": "T3.08",
+        "o": "G",
+        "q": "En una clase ordinaria C de Python 3, el método fijar(self) ejecuta self.x=3. No hay x en la clase. Si a=C(), b=C() y solo se llama a a.fijar(), ¿dónde aparece x?",
+        "a": [
+          "Solo en b",
+          "En la clase C",
+          "En todas las instancias",
+          "Solo en a"
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          7,
+          8,
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-1140",
+        "u": "# Atributo de instancia [p. 19]",
+        "v": 0,
+        "n": "La asignación self.x crea el atributo en la instancia que recibe la llamada, también fuera de __init__."
+      }
+    },
+    {
+      "id": "AT408-P1-30",
+      "topic": "T4.08",
+      "before": {
+        "i": "AT408-P1-30",
+        "t": "T4.08",
+        "o": "A",
+        "q": "Las secciones que puede contener un mensaje DNS son:",
+        "a": [
+          "QUESTION, ANSWER, AUTHORITY y ADITTIONAL.",
+          "QUESTION y ANSWER.",
+          "QUESTION, ANSWER y OPTIONS.",
+          "QUESTION, ANSWER, AUTHORITY, ADITTIONAL y HEADER."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT408-P1-30",
+        "t": "T4.08",
+        "o": "A",
+        "q": "En DNS, ¿qué cuatro secciones cuentan respectivamente QDCOUNT, ANCOUNT, NSCOUNT y ARCOUNT de la cabecera?",
+        "a": [
+          "Question, Answer, Authority, Additional",
+          "Header, Question, Answer, Authority",
+          "Question, Answer, Additional, Authority",
+          "Question, Authority, Answer, Additional"
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "n": "La cabecera precede a las cuatro secciones. QDCOUNT cuenta preguntas y los otros tres campos cuentan registros en Answer, Authority y Additional.",
+        "u": "El mensaje se divide en una cabecera HEADER y 4 secciones [p. 21]"
+      }
+    },
+    {
+      "id": "AT408-P1-44",
+      "topic": "T4.08",
+      "before": {
+        "i": "AT408-P1-44",
+        "t": "T4.08",
+        "o": "A",
+        "q": "Los puertos de escucha de un servidor DHCP y otro servidor DHCPv6 son:",
+        "a": [
+          "TCP/66 y TCP/67 para el servidor DHCP y TCP/544 y TCP/556 para el servidor DHCPv6.",
+          "UDP/66 y UDP/67 para el servidor DHCP y UDP/544 y UDP/556 para el servidor DHCPv6.",
+          "TCP/67 y TCP/68 para el servidor DHCP y TCP/545 y TCP/547 para el servidor DHCPv6.",
+          "UDP/67 y UDP/68 para el servidor DHCP y UDP/546 y UDP/547 para el servidor DHCPv6."
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT408-P1-44",
+        "t": "T4.08",
+        "o": "A",
+        "q": "En sus puertos UDP estándar, ¿a qué puertos de destino envía un cliente los mensajes dirigidos, respectivamente, a un servidor DHCPv4 y a un servidor DHCPv6?",
+        "a": [
+          "67 y 546",
+          "68 y 547",
+          "68 y 546",
+          "67 y 547"
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [],
+        "d": null,
+        "n": "El servidor DHCPv4 recibe en UDP/67 (RFC 2131 §4.1) y el servidor DHCPv6 en UDP/547. Los clientes usan 68 y 546.",
+        "u": "DHCP viene definido en el RFC 2131 y utiliza los puertos UDP/67 y UDP/68. [p. 33]"
+      }
+    },
+    {
+      "id": "GEN-T4.08-20.v1",
+      "topic": "T4.08",
+      "before": {
+        "i": "GEN-T4.08-20.v1",
+        "t": "T4.08",
+        "o": "G",
+        "q": "Un nombre de dominio completo (FQDN) puede contener hasta un máximo de _____ caracteres, incluyendo los puntos.",
+        "a": [
+          "255",
+          "127",
+          "512",
+          "63"
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          2,
+          7
+        ],
+        "d": 1,
+        "f": "GEN-T4.08-20",
+        "u": "B4T8 INTERNET TAI - gTLD (genéricos, generic): dirigidos a tipos de organizaciones. Los códigos están formados por 3 o más letras. Ejemplos: .com, .net, .org, .juegos, .pfizer. - Patrocinados (sponsored) no están gestionados por la ICANN pero siguen su política. Están restringidos a usos específicos. Subconjunto de gTLD. Ejemplos: .cat, .museum, .asia, .int, .jobs. - Restringidos (generic-stricted): de uso restringido a determinados propósitos. Subconjunto de gTLD. Ejemplos: .pro, .name, .biz. Una zona es una porción del espacio de dominio de nombres cuya administración es delegada a un servidor DNS que ejerce como \"autoridad\" de esa porción o dominio. A este servidor se le conoce como servidor autoritativo de la zona. La jerarquía comienza en la zona raíz \".\" siendo el nivel más alto. Aunque normalmente no es mostrado, todo dominio completo termina en un punto final \".\" que indica el final del espacio en la zona raíz. Por ejemplo, \"www.ejemplo.com\" realmente es \"www.ejemplo.com.\", donde el punto final más a la derecha representa la zona raíz. Este dominio completo es el Fully Qualified Domain Name (FQDN). Nomenclatura DNS. Dependiendo de su posición en la jerarquía, cada nombre de dominio del espacio de nombres está compuesto por una o más etiquetas separadas por un punto \".\" cada una con un máximo de 63 caracteres. Un nombre final FQDN puede contener hasta un máximo de 255 caracteres, incluyendo los \".\". PABLO ARELLANO www.theglobeformacion.com Página 14",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T4.08-20.v1",
+        "t": "T4.08",
+        "o": "G",
+        "q": "En un nombre DNS formado por etiquetas ASCII, ¿cuál es la longitud máxima de una etiqueta, sin contar el punto separador?",
+        "a": [
+          "255 caracteres.",
+          "127 caracteres.",
+          "512 caracteres.",
+          "63 caracteres."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          2,
+          7
+        ],
+        "d": 1,
+        "f": "GEN-T4.08-20",
+        "u": "cada una con un máximo de 63 caracteres. [p. 14]",
+        "v": 0,
+        "w": 1,
+        "n": "El apartado Nomenclatura DNS del temario limita cada etiqueta a 63 caracteres. Para etiquetas ASCII, estos 63 caracteres ocupan 63 octetos, coherentes con RFC 1035. El máximo de 255 octetos corresponde al nombre completo codificado en el protocolo, incluyendo longitudes de etiquetas y terminación raíz."
+      }
+    }
+  ],
+  "authorization": "PENDIENTE_AUTORIZACION_LITERAL_55",
+  "preparedAt": "2026-11-06T06:30:13.174Z",
+  "reads": 16,
+  "writes": 0
+}

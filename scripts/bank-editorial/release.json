@@ -7,7 +7,8 @@
     "scripts/bank-editorial/reviewed-web.json",
     "scripts/bank-editorial/reviewed-T4.07.json",
     "scripts/bank-editorial/reviewed-T3.08.json",
-    "scripts/bank-editorial/reviewed-19.json"
+    "scripts/bank-editorial/reviewed-19.json",
+    "scripts/bank-editorial/reviewed-followup.json"
   ],
   "files": {
     "T1.01.json": {
@@ -16,11 +17,11 @@
     },
     "T1.02.json": {
       "sourceBuildSha256": "863c79f79e54672d12bc9506b6d9a2db0e21451f31deb8055af443fec5871ac6",
-      "approvedSha256": "a49793862a2b8b519f7e5498d1bf359ce689ba73a7fc2da27b3f31715b7f4906"
+      "approvedSha256": "073db563ea8d1635cfd54eebf7ecda363f8952c58c391096ca5120cbcc20b5bb"
     },
     "T1.03.json": {
       "sourceBuildSha256": "e87dc6d476279d12eaa5e89081adf151494a872442db94474bcf95e7e71c23ca",
-      "approvedSha256": "916193b07dd8b8c415ec6cfaa74e5a847a073cea8e83be5bb8f54749a2c797ed"
+      "approvedSha256": "1a15e2ac27ce4cecb79d3eb908340f17e4f30e6fa5c98c7b87f955575b939c0f"
     },
     "T1.04.json": {
       "sourceBuildSha256": "51eedd406cf7af0c9587cc91eeca0a0dccc59b4b766986fce3e27f7cd714eeef",
@@ -32,7 +33,7 @@
     },
     "T1.06.json": {
       "sourceBuildSha256": "9ab418a8f211cb7a27210d1c54d699162b1effbd42d7e3fea38e8e9dee8836d8",
-      "approvedSha256": "a0acd31f5b8406736b6c0d3a2b32e7a0db8d04925f61db593d6e8e1f602e4275"
+      "approvedSha256": "1c2639ba83ff46b86bb36b11ab15508e1e053365f4cf23140bddbe4290abc76e"
     },
     "T1.07.json": {
       "sourceBuildSha256": "72041beb46d8d26d512d39cc703152a3a02f6f3ed5aa657812e40d0b5b210d5c",
@@ -56,7 +57,7 @@
     },
     "T2.01.json": {
       "sourceBuildSha256": "4bde8eff389c02982ffabaef64dc3d5487c1e7c14ad0dfdb5aa7ae048ca50b7b",
-      "approvedSha256": "fb5753fa4824b626c014b42adcc03671fe0ae3537fec1d5f8af96b7c6b55bd39"
+      "approvedSha256": "4b4965443fc01de3c2cadf832ee1cb9f18a44db87facf51568826028bc5d24ba"
     },
     "T2.02.json": {
       "sourceBuildSha256": "3e3b6ee7d7915a633a1a7e30a73c6ec3fa0e87c6b42031a67d6da0a397f369f5",
@@ -64,11 +65,11 @@
     },
     "T2.03.json": {
       "sourceBuildSha256": "2aaac6432bf68d68c8e23da2a4063137940417f6929b1ba0ab76a3e762686fb7",
-      "approvedSha256": "f538b81e1605a62497b8f21e67fe02e353ce36e6ca0e0408a23c86c36d585e9e"
+      "approvedSha256": "22ebbf15f32b3cdc649812d9dc18b18a32b4f911abecd35e66f8692016abdcb6"
     },
     "T2.04.json": {
       "sourceBuildSha256": "ec168f362794a5a80954786b633028fff45dad3fc33ff96800f44479675e60a8",
-      "approvedSha256": "1a12bb65facaba2156eda49e14887976f4583e7afb7838065431d67a118a524c"
+      "approvedSha256": "9b957401de6e3a72bf206b664d27f717b20f7bbcb34557461713d37286ac7dd5"
     },
     "T2.05.json": {
       "sourceBuildSha256": "e217af45f92cdcc7fd0598f17793c4d86d8e9932377d679c514ccb4c4873ee1f",
@@ -76,11 +77,11 @@
     },
     "T3.01.json": {
       "sourceBuildSha256": "36f9e07d0bcfc8578a6de202dede1fce16407f243c4fa39ed22175b7009ee4be",
-      "approvedSha256": "27e8b272f91ced721b8d4fc42e9af476ca52899d2ec6d20cff2ee00782b6447d"
+      "approvedSha256": "9394a0bbf2dc964f6375c17a881366d0019b623aede03e802640f438fdd07fdb"
     },
     "T3.02.json": {
       "sourceBuildSha256": "bbade058669eabf40aa46820a525e1a8c023133f799be97104ee410b87f0ac13",
-      "approvedSha256": "f8f37e6bd4c437d5a5186bcec118f97d0d9a64c2581037f855e741b6b4c59225"
+      "approvedSha256": "109c46e828fe7ea7b8e8caa35879eb3cfb382bc4e521bcdc2bcb8f8b65a1cf1c"
     },
     "T3.03.json": {
       "sourceBuildSha256": "c872082add7e9ba79c29bc0ea3d17e35217350d5c0fafea44d28e8ffe539b544",
@@ -92,11 +93,11 @@
     },
     "T3.05.json": {
       "sourceBuildSha256": "26bdf8c50662598d60470edc1a3b97532d8034d69951c813f8c190e2254a6ded",
-      "approvedSha256": "9459dd1ee2aa39744e1477a42e07525247609e42837149186e1330efbd6e1b14"
+      "approvedSha256": "955dc0ef4234a15e8d5ab95d96a03daba66ace9e8773332550d281362e4a9e0a"
     },
     "T3.06.json": {
       "sourceBuildSha256": "2acbb6cc84034956e06fda7241297e19fdca38b48e75b7a568d84935c7e67c9e",
-      "approvedSha256": "69cf1099e32bb554e639c0b244458d128f932f87321b0f63c5fa73de26a70375"
+      "approvedSha256": "c94d861bcd56726c8840ef402bc0576279138b322ce9ea14af4b09c6143fde73"
     },
     "T3.07.json": {
       "sourceBuildSha256": "02b0137e359ecbf35300ae60e152f65dac9f68af11c4815d5e9a7474bcbfd292",
@@ -144,7 +145,7 @@
     },
     "T4.08.json": {
       "sourceBuildSha256": "6cd1ea69186770bb23cf715923a847c69a3622665667104035ca0a3e6f54aab7",
-      "approvedSha256": "4950baf07755d2fe1b4b3d883151f3335619599b437a0ad3c6388a487ed888d5"
+      "approvedSha256": "5de4121bf23d918d79c749d9a531f8d3117994441f74478c271b09816da4609c"
     },
     "T4.09.json": {
       "sourceBuildSha256": "dffbdfc74ac41a3453839169fe7e189058e1aec858557356586086ea297861b7",
