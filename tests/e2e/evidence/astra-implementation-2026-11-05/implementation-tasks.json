@@ -1267,7 +1267,7 @@
     "classification": "Incorrecta",
     "originalJudgment": "El servidor DHCPv4 recibe en UDP/67 y el v6 en UDP/547; 68 y 546 son puertos del cliente. D enumera los cuatro como si fueran puertos de escucha de servidores. A/B fallan en numeración y C añade TCP. Ninguna opción contesta literalmente.",
     "location": "public/data/T4.08.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Edición de 19 correcciones revisada, cuatro opciones justificadas, oráculo semántico y replay reversible. Expediente scripts/bank-editorial/reviewed-19.json. Publicación real requiere autorización específica.",
     "dependencies": [
       "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
     ],
@@ -1278,7 +1278,7 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "AT408-P1-44",
       "topic": "T4.08",
@@ -18694,7 +18694,7 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "CORREGIDO Y VERIFICADO",
+    "status": "PUBLICADO_VERIFICADO_V13",
     "localVerification": "26 pruebas, replay y rollback byte por byte",
     "productionStatus": "BLOQUEADO: requiere autorización específica para escribir preguntas en Firestore",
     "change": "scripts/bank-editorial/reviewed-*.json",
@@ -18714,7 +18714,7 @@
     "classification": "Incorrecta",
     "originalJudgment": "standalone=no permite que declaraciones externas puedan influir en el documento; no obliga a que vaya acompañado de DTD. W3C XML 1.0 §2.9. Ninguna opción expresa la regla.",
     "location": "public/data/T3.08.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Edición de 19 correcciones revisada, cuatro opciones justificadas, oráculo semántico y replay reversible. Expediente scripts/bank-editorial/reviewed-19.json. Publicación real requiere autorización específica.",
     "dependencies": [
       "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
     ],
@@ -18725,7 +18725,7 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.08-58",
       "topic": "T3.08",
@@ -18826,7 +18826,7 @@
     "classification": "Incorrecta",
     "originalJudgment": "Los comentarios no son elementos ni contenido de caracteres, pero el procesador puede ponerlos a disposición de la aplicación; no exige ignorarlos. W3C XML §2.5.",
     "location": "public/data/T3.08.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Edición de 19 correcciones revisada, cuatro opciones justificadas, oráculo semántico y replay reversible. Expediente scripts/bank-editorial/reviewed-19.json. Publicación real requiere autorización específica.",
     "dependencies": [
       "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
     ],
@@ -18837,7 +18837,7 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.08-60.v1",
       "topic": "T3.08",
@@ -20181,7 +20181,7 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "CORREGIDO Y VERIFICADO",
+    "status": "PUBLICADO_VERIFICADO_V13",
     "localVerification": "26 pruebas, replay y rollback byte por byte",
     "productionStatus": "BLOQUEADO: requiere autorización específica para escribir preguntas en Firestore",
     "change": "scripts/bank-editorial/reviewed-*.json",
@@ -20744,7 +20744,7 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "CORREGIDO Y VERIFICADO",
+    "status": "PUBLICADO_VERIFICADO_V13",
     "localVerification": "26 pruebas, replay y rollback byte por byte",
     "productionStatus": "BLOQUEADO: requiere autorización específica para escribir preguntas en Firestore",
     "change": "scripts/bank-editorial/reviewed-*.json",
@@ -21419,7 +21419,7 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "CORREGIDO Y VERIFICADO",
+    "status": "PUBLICADO_VERIFICADO_V13",
     "localVerification": "26 pruebas, replay y rollback byte por byte",
     "productionStatus": "BLOQUEADO: requiere autorización específica para escribir preguntas en Firestore",
     "change": "scripts/bank-editorial/reviewed-*.json",
@@ -24390,7 +24390,7 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "CORREGIDO Y VERIFICADO",
+    "status": "MITIGADO_POR_EXCLUSION_MATERIAL_PENDIENTE",
     "change": "src/core/domain/question-review-overrides.ts",
     "localVerification": "Exclusión de puntuación desde banco, sesión directa y reanudación; conserva consulta.",
     "pendingMaterial": "Restituir figura o código mediante edición documentada; hasta entonces, np=1 en lectura y evaluación.",
@@ -24477,7 +24477,7 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "CORREGIDO Y VERIFICADO",
+    "status": "MITIGADO_POR_EXCLUSION_MATERIAL_PENDIENTE",
     "change": "src/core/domain/question-review-overrides.ts",
     "localVerification": "Exclusión de puntuación desde banco, sesión directa y reanudación; conserva consulta.",
     "pendingMaterial": "Restituir figura o código mediante edición documentada; hasta entonces, np=1 en lectura y evaluación.",
@@ -30741,7 +30741,7 @@
     "classification": "Incorrecta",
     "originalJudgment": "En Java (++i)*salto no es expresión de actualización válida como statement expression. El código con System.out.println no compila; nueve solo resultaría en una sintaxis que admitiera descartar el producto.",
     "location": "public/data/T3.03.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Edición de 19 correcciones revisada, cuatro opciones justificadas, oráculo semántico y replay reversible. Expediente scripts/bank-editorial/reviewed-19.json. Publicación real requiere autorización específica.",
     "dependencies": [
       "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
     ],
@@ -30752,7 +30752,7 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "AT303-P1-09",
       "topic": "T3.03",
@@ -30769,7 +30769,7 @@
     "classification": "Incorrecta",
     "originalJudgment": "Se declara indice y se usa índice en la condición, por lo que falta ese identificador en Java. Corrigiéndolo a indice, se imprime 1 y luego (1+3)×3=12; la próxima actualización supera 20.",
     "location": "public/data/T3.03.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Edición de 19 correcciones revisada, cuatro opciones justificadas, oráculo semántico y replay reversible. Expediente scripts/bank-editorial/reviewed-19.json. Publicación real requiere autorización específica.",
     "dependencies": [
       "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
     ],
@@ -30780,7 +30780,7 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "AT303-P1-13",
       "topic": "T3.03",
@@ -30825,7 +30825,7 @@
     "classification": "Incorrecta",
     "originalJudgment": "El for contiene cuatro cláusulas separadas por tres puntos y coma y j no está declarada. No produce salida en Java. Con int i=10,j=1 como inicialización se obtiene 10,8,5,1, la intención de C.",
     "location": "public/data/T3.03.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Edición de 19 correcciones revisada, cuatro opciones justificadas, oráculo semántico y replay reversible. Expediente scripts/bank-editorial/reviewed-19.json. Publicación real requiere autorización específica.",
     "dependencies": [
       "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
     ],
@@ -30836,7 +30836,7 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "AT303-P1-17",
       "topic": "T3.03",
@@ -31021,7 +31021,7 @@
     "classification": "Incorrecta",
     "originalJudgment": "Java rechaza leer r no definitivamente asignada después del while. Inicializando r antes, al i=2 hay caída a case 3 y resultaría 5. JLS §16.2.10 https://docs.oracle.com/javase/specs/jls/se17/html/jls-16.html",
     "location": "public/data/T3.03.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Edición de 19 correcciones revisada, cuatro opciones justificadas, oráculo semántico y replay reversible. Expediente scripts/bank-editorial/reviewed-19.json. Publicación real requiere autorización específica.",
     "dependencies": [
       "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
     ],
@@ -31032,7 +31032,7 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "AT303-P1-36",
       "topic": "T3.03",
@@ -42204,7 +42204,7 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "CORREGIDO Y VERIFICADO",
+    "status": "MITIGADO_POR_EXCLUSION_MATERIAL_PENDIENTE",
     "change": "src/core/domain/question-review-overrides.ts",
     "localVerification": "Exclusión de puntuación desde banco, sesión directa y reanudación; conserva consulta.",
     "pendingMaterial": "Restituir figura o código mediante edición documentada; hasta entonces, np=1 en lectura y evaluación.",
@@ -42263,7 +42263,7 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "CORREGIDO Y VERIFICADO",
+    "status": "MITIGADO_POR_EXCLUSION_MATERIAL_PENDIENTE",
     "change": "src/core/domain/question-review-overrides.ts",
     "localVerification": "Exclusión de puntuación desde banco, sesión directa y reanudación; conserva consulta.",
     "pendingMaterial": "Restituir figura o código mediante edición documentada; hasta entonces, np=1 en lectura y evaluación.",
@@ -48006,7 +48006,7 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "CORREGIDO Y VERIFICADO",
+    "status": "PUBLICADO_VERIFICADO_V13",
     "localVerification": "26 pruebas, replay y rollback byte por byte",
     "productionStatus": "BLOQUEADO: requiere autorización específica para escribir preguntas en Firestore",
     "change": "scripts/bank-editorial/reviewed-*.json",
@@ -48065,7 +48065,7 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "CORREGIDO Y VERIFICADO",
+    "status": "PUBLICADO_VERIFICADO_V13",
     "localVerification": "26 pruebas, replay y rollback byte por byte",
     "productionStatus": "BLOQUEADO: requiere autorización específica para escribir preguntas en Firestore",
     "change": "scripts/bank-editorial/reviewed-*.json",
@@ -48981,7 +48981,7 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave A. El mensaje tiene cinco secciones incluyendo Header. La opción marcada lo omite y escribe mal Additional.",
     "location": "public/data/T4.08.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Edición de 19 correcciones revisada, cuatro opciones justificadas, oráculo semántico y replay reversible. Expediente scripts/bank-editorial/reviewed-19.json. Publicación real requiere autorización específica.",
     "dependencies": [
       "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
     ],
@@ -48992,7 +48992,7 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "AT408-P1-30",
       "topic": "T4.08",
@@ -52772,7 +52772,7 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "CORREGIDO Y VERIFICADO",
+    "status": "PUBLICADO_VERIFICADO_V13",
     "localVerification": "26 pruebas, replay y rollback byte por byte",
     "productionStatus": "BLOQUEADO: requiere autorización específica para escribir preguntas en Firestore",
     "change": "scripts/bank-editorial/reviewed-*.json",
@@ -52803,7 +52803,7 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "CORREGIDO Y VERIFICADO",
+    "status": "PUBLICADO_VERIFICADO_V13",
     "localVerification": "26 pruebas, replay y rollback byte por byte",
     "productionStatus": "BLOQUEADO: requiere autorización específica para escribir preguntas en Firestore",
     "change": "scripts/bank-editorial/reviewed-*.json",
@@ -70530,7 +70530,7 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "CORREGIDO Y VERIFICADO",
+    "status": "MITIGADO_POR_EXCLUSION_MATERIAL_PENDIENTE",
     "change": "src/core/domain/question-review-overrides.ts",
     "localVerification": "Exclusión de puntuación desde banco, sesión directa y reanudación; conserva consulta.",
     "pendingMaterial": "Restituir figura o código mediante edición documentada; hasta entonces, np=1 en lectura y evaluación.",
@@ -82730,7 +82730,7 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada D. D llama palabras reservadas a true/false. En Java son literales booleanos, no keywords. Ninguna de las opciones dice «literales booleanos».",
     "location": "public/data/T3.03.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Edición de 19 correcciones revisada, cuatro opciones justificadas, oráculo semántico y replay reversible. Expediente scripts/bank-editorial/reviewed-19.json. Publicación real requiere autorización específica.",
     "dependencies": [
       "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
     ],
@@ -82741,7 +82741,7 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.03-47.v1",
       "topic": "T3.03",
@@ -82954,7 +82954,7 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada A. A presenta divide y vencerás como definición necesaria de recursividad. Factorial con una única subllamada es un contraejemplo. Ninguna técnica listada es obligatoria.",
     "location": "public/data/T3.03.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Edición de 19 correcciones revisada, cuatro opciones justificadas, oráculo semántico y replay reversible. Expediente scripts/bank-editorial/reviewed-19.json. Publicación real requiere autorización específica.",
     "dependencies": [
       "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
     ],
@@ -82965,7 +82965,7 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.03-74.v2",
       "topic": "T3.03",
@@ -83318,7 +83318,7 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada C. En SQL el separador decimal del literal es punto. En SET sueldo=sueldo*1,0125 la coma inicia otra asignación inválida. A (error) es correcta; sustituir por 1.0125 para obtener C.",
     "location": "public/data/T3.04.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Edición de 19 correcciones revisada, cuatro opciones justificadas, oráculo semántico y replay reversible. Expediente scripts/bank-editorial/reviewed-19.json. Publicación real requiere autorización específica.",
     "dependencies": [
       "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
     ],
@@ -83329,7 +83329,7 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.04-32",
       "topic": "T3.04",
@@ -83486,7 +83486,7 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada A. Una consulta ordinaria puede ordenar por una columna de origen que no proyecta: SELECT nombre FROM empleados ORDER BY sueldo. A no es obligatoria; distinguir SELECT DISTINCT o conjuntos.",
     "location": "public/data/T3.04.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Edición de 19 correcciones revisada, cuatro opciones justificadas, oráculo semántico y replay reversible. Expediente scripts/bank-editorial/reviewed-19.json. Publicación real requiere autorización específica.",
     "dependencies": [
       "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
     ],
@@ -83497,7 +83497,7 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.04-46.v1",
       "topic": "T3.04",
@@ -83542,7 +83542,7 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada A. A exige igualdad, aunque un JOIN permite ON a.x < b.x y otros predicados. No existe en las opciones una exigencia general correcta.",
     "location": "public/data/T3.04.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Edición de 19 correcciones revisada, cuatro opciones justificadas, oráculo semántico y replay reversible. Expediente scripts/bank-editorial/reviewed-19.json. Publicación real requiere autorización específica.",
     "dependencies": [
       "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
     ],
@@ -83553,7 +83553,7 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.04-51.v1",
       "topic": "T3.04",
@@ -83570,7 +83570,7 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada B. Si ninguna clave coincide en un inner equijoin el resultado es vacío. Producto cartesiano se obtiene omitiendo condición o con ON TRUE; B es falsa.",
     "location": "public/data/T3.04.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Edición de 19 correcciones revisada, cuatro opciones justificadas, oráculo semántico y replay reversible. Expediente scripts/bank-editorial/reviewed-19.json. Publicación real requiere autorización específica.",
     "dependencies": [
       "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
     ],
@@ -83581,7 +83581,7 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.04-51.v2",
       "topic": "T3.04",
@@ -92530,7 +92530,7 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada C. El alfabeto exigido es base64url, sin relleno en compact serialization. Base64 ordinario no es intercambiable.",
     "location": "public/data/T3.07.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Edición de 19 correcciones revisada, cuatro opciones justificadas, oráculo semántico y replay reversible. Expediente scripts/bank-editorial/reviewed-19.json. Publicación real requiere autorización específica.",
     "dependencies": [
       "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
     ],
@@ -92541,7 +92541,7 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.07-170.v2",
       "topic": "T3.07",
@@ -95890,7 +95890,7 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada C. Traducir a bytecode sí es compilación. No es requisito producir instrucciones nativas.",
     "location": "public/data/T3.08.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Edición de 19 correcciones revisada, cuatro opciones justificadas, oráculo semántico y replay reversible. Expediente scripts/bank-editorial/reviewed-19.json. Publicación real requiere autorización específica.",
     "dependencies": [
       "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
     ],
@@ -95901,7 +95901,7 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.08-1101.v1",
       "topic": "T3.08",
@@ -95957,7 +95957,7 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "CORREGIDO Y VERIFICADO",
+    "status": "PUBLICADO_VERIFICADO_V13",
     "localVerification": "26 pruebas, replay y rollback byte por byte",
     "productionStatus": "BLOQUEADO: requiere autorización específica para escribir preguntas en Firestore",
     "change": "scripts/bank-editorial/reviewed-*.json",
@@ -95988,7 +95988,7 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "CORREGIDO Y VERIFICADO",
+    "status": "PUBLICADO_VERIFICADO_V13",
     "localVerification": "26 pruebas, replay y rollback byte por byte",
     "productionStatus": "BLOQUEADO: requiere autorización específica para escribir preguntas en Firestore",
     "change": "scripts/bank-editorial/reviewed-*.json",
@@ -96008,7 +96008,7 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada A. Con ancho sin alineación, el texto se alinea a la izquierda y los números a la derecha. Además, n literal es un código numérico, no una anchura genérica.",
     "location": "public/data/T3.08.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Edición de 19 correcciones revisada, cuatro opciones justificadas, oráculo semántico y replay reversible. Expediente scripts/bank-editorial/reviewed-19.json. Publicación real requiere autorización específica.",
     "dependencies": [
       "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
     ],
@@ -96019,7 +96019,7 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.08-1110.v2",
       "topic": "T3.08",
@@ -96103,7 +96103,7 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "CORREGIDO Y VERIFICADO",
+    "status": "PUBLICADO_VERIFICADO_V13",
     "localVerification": "26 pruebas, replay y rollback byte por byte",
     "productionStatus": "BLOQUEADO: requiere autorización específica para escribir preguntas en Firestore",
     "change": "scripts/bank-editorial/reviewed-*.json",
@@ -96134,7 +96134,7 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "CORREGIDO Y VERIFICADO",
+    "status": "PUBLICADO_VERIFICADO_V13",
     "localVerification": "26 pruebas, replay y rollback byte por byte",
     "productionStatus": "BLOQUEADO: requiere autorización específica para escribir preguntas en Firestore",
     "change": "scripts/bank-editorial/reviewed-*.json",
@@ -96221,7 +96221,7 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "CORREGIDO Y VERIFICADO",
+    "status": "PUBLICADO_VERIFICADO_V13",
     "localVerification": "26 pruebas, replay y rollback byte por byte",
     "productionStatus": "BLOQUEADO: requiere autorización específica para escribir preguntas en Firestore",
     "change": "scripts/bank-editorial/reviewed-*.json",
@@ -96241,7 +96241,7 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada C. El mecanismo es paso por asignación o compartición de objetos, no paso por referencia al vínculo del llamador.",
     "location": "public/data/T3.08.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Edición de 19 correcciones revisada, cuatro opciones justificadas, oráculo semántico y replay reversible. Expediente scripts/bank-editorial/reviewed-19.json. Publicación real requiere autorización específica.",
     "dependencies": [
       "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
     ],
@@ -96252,7 +96252,7 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.08-1133",
       "topic": "T3.08",
@@ -96409,7 +96409,7 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada D. Desde cualquier método se puede asignar self.x fuera de __init__ y crear un atributo de instancia. La ubicación sola no establece que sea de clase.",
     "location": "public/data/T3.08.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Edición de 19 correcciones revisada, cuatro opciones justificadas, oráculo semántico y replay reversible. Expediente scripts/bank-editorial/reviewed-19.json. Publicación real requiere autorización específica.",
     "dependencies": [
       "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
     ],
@@ -96420,7 +96420,7 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.08-1140.v1",
       "topic": "T3.08",

@@ -44,8 +44,11 @@ test('Firebase Auth Emulator aísla el estudio al cambiar de cuenta y de día en
   await page.clock.setFixedTime(new Date('2026-10-30T12:00:00+02:00'));
   await page.reload();
   const activities = page.locator('.planning-activity');
-  await expect(activities.nth(1)).toContainText('Preguntas del tema prioritario');
-  await expect(activities.nth(1)).toContainText(firstTopic!);
+  const priority = activities.filter({ hasText:'Preguntas del tema prioritario' });
+  await expect(priority).toHaveCount(1);
+  await expect(priority).toContainText(firstTopic!);
+  await priority.getByText('Instrucciones y motivo').click();
+  await expect(priority).toContainText('Tu autoevaluación de recuerdo en papel fue «Parcialmente» el 29 de octubre de 2026');
 
   await page.goto('/#/settings');
   await page.getByRole('button', { name:'Cerrar sesión' }).click();
