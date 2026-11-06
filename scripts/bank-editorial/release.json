@@ -22,7 +22,8 @@
     "scripts/bank-editorial/reviewed-foundations18.json",
     "scripts/bank-editorial/reviewed-systems16.json",
     "scripts/bank-editorial/quarantines-reviewed8.json",
-    "scripts/bank-editorial/reviewed-syntax3.json"
+    "scripts/bank-editorial/reviewed-syntax3.json",
+    "scripts/bank-editorial/reviewed-admin5.json"
   ],
   "files": {
     "T1.01.json": {
@@ -127,7 +128,7 @@
     },
     "T3.10.json": {
       "sourceBuildSha256": "8d62014f229dc18497c48c64ebd701481128b8dc988fd1775118e5c81c4da1ce",
-      "approvedSha256": "9979c71f14830b44f6b161662698c6b7a9c8e7a95d39a56008f835e35f6dbef3"
+      "approvedSha256": "07c1050aafa79545a05851f37d7da9a2a20e0dce19bfa81494db780784a3129f"
     },
     "T4.01.json": {
       "sourceBuildSha256": "9b0cd37321aa7f87a11dae4b6b732afeb5b511ea367d593ccbdc8f0a6c36b054",
@@ -179,7 +180,7 @@
     },
     "supuestos.json": {
       "sourceBuildSha256": "8e38f2d07f8f00e08365b469d5dc9ea13131cbacd094fe09888f52714fb77dd2",
-      "approvedSha256": "ab5eb20d7c0a13d48b5fb5e9cc6ce1ac33a4dc82e37699a63d1c5355d4593f47"
+      "approvedSha256": "4b30172976c6eecf4f3c251a347346203b4efc64682b7b9aee038ea33c60c226"
     }
   }
 }

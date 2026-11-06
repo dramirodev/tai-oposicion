@@ -63,6 +63,16 @@ it.each(['L2025A-S1', 'L2025A-S2'])('pins all 100 scored answers for model A and
   expect(matchesOfficialExamKey(id, items.slice(1))).toBe(false);
   expect(matchesOfficialExamKey(id, items.map((q, i) => i ? q : { ...q, c: (q.c + 1) % 4 }))).toBe(false);
 });
+it('requires the repaired Docker content before enabling the official second case', async () => {
+  const id = 'L2025A-S2';
+  const items = loadModelA(id);
+  const ledger = JSON.parse(readFileSync('scripts/bank-editorial/reviewed-admin5.json', 'utf8'));
+  const entry = ledger.questions.find(q => q.id === 'L2025A-S2-09');
+  const historical = await verifyQuestionContent({ ...entry.before, supTexto: catalog[id].text });
+  expect(matchesOfficialExamKey(id, items)).toBe(true);
+  expect(matchesOfficialExamKey(id, items.map(q => q.i === entry.id ? historical : q))).toBe(false);
+  expect(items.map(q => q.i)).toHaveLength(100);
+});
 it('transforms both parts independently, enforces the first cutoff and distinguishes the two quotas', () => {
   const items = loadModelA('L2025A-S1');
   const exam = { profile: 'tai-li-2025', scenarioId: 'L2025A-S1', quota: 'general', deadlineAt: 1 };

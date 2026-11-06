@@ -12,6 +12,46 @@ export interface QuestionReviewOverride {
 
 export const questionReviewOverrides: readonly QuestionReviewOverride[] = [
   {
+    id: 'GEN-T3.10-144.v2',
+    status: 'quarantined',
+    reason:
+      'La versión anterior contiene una incorrección confirmada. Sólo el contenido exacto de la corrección revisada puede puntuar; una copia antigua permanece excluida.',
+    source: 'T3.10 Metodologías de Pruebas y Colaboración - Temario.pdf',
+    page: 30,
+  },
+  {
+    id: 'L2018S-S2-13',
+    status: 'quarantined',
+    reason:
+      'La versión anterior contiene una incorrección confirmada. Sólo el contenido exacto de la corrección revisada puede puntuar; una copia antigua permanece excluida.',
+    source: 'T4.01 Administración de SO - Temario (version alternativa).pdf',
+    page: 25,
+  },
+  {
+    id: 'L2025A-S2-09',
+    status: 'quarantined',
+    reason:
+      'La versión anterior contiene una incorrección confirmada. Sólo el contenido exacto de la corrección revisada puede puntuar; una copia antigua permanece excluida.',
+    source: 'T4.02 Administración de BD y Virtualización - Temario.pdf',
+    page: 82,
+  },
+  {
+    id: 'TAI2024B-S2-R-01',
+    status: 'quarantined',
+    reason:
+      'La versión anterior contiene una incorrección confirmada. Sólo el contenido exacto de la corrección revisada puede puntuar; una copia antigua permanece excluida.',
+    source: 'T4.03 Administración del Correo - Temario.pdf',
+    page: 17,
+  },
+  {
+    id: 'P2022-S2-08',
+    status: 'quarantined',
+    reason:
+      'La versión anterior contiene una incorrección confirmada. Sólo el contenido exacto de la corrección revisada puede puntuar; una copia antigua permanece excluida.',
+    source: 'T2.04 Sistemas Operativos - Temario.pdf',
+    page: 62,
+  },
+  {
     id: 'AS12B-S2-08',
     status: 'quarantined',
     reason:

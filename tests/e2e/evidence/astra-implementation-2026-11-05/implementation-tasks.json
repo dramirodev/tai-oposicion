@@ -40397,9 +40397,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "D emplea $helo_name, que no es el parámetro del cliente SMTP de Postfix: se llama smtp_helo_name en main.cf. El banner entrante corresponde a smtpd_banner. Cambiar un servidor no configura todos. Las demás opciones tampoco cumplen. https://www.postfix.org/postconf.5.html",
     "location": "public/data/supuestos.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Corrección del dictamen Astra contrastada con temario, original y fuentes primarias; cuatro opciones y clave conservada. Alcance de Postfix/Squid adjudicado explícitamente, discrepancia caja blanca registrada.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI final incluida prueba Linux privada de dpkg, integración y despliegue verificados",
+      "Autorización específica y publicación CAS; las autorizaciones previas no cubren estas cinco"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -40408,13 +40409,29 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "TAI2024B-S2-R-01",
       "topic": "T4.03",
       "origin": "O",
       "family": null,
       "scenario": "TAI2024B-S2"
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-admin5.json",
+      "beforeSha256": "ccea3d55c7545e511bce6bf67414ce99e3167b6b5349f8942f16da38501e33ce",
+      "afterSha256": "00dbf4fb9093dcf945e48246396efd50936ec0c506ed1079128b35450181223a",
+      "source": {
+        "pdf": "01_Temario/T4.03 Administración del Correo/T4.03 Administración del Correo - Temario.pdf",
+        "page": 17,
+        "quote": "C EHLO relay.client.com",
+        "sha256": "db3cd01ac360f546a252c040fb97b6b436bee4809c5255b610b8a43d6f1f6bee",
+        "visualCheck": true
+      },
+      "publication": "NOT_AUTHORIZED_NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTEXTUAL_CONTENT_ONLY",
+      "validation": "1084unit29skip;70PythonPASS1Linuxskip;build1.1.21/cards/render5bothbrowsersPASS;UbuntuCIpending",
+      "newPeerModelSignature": false
     }
   },
   {
@@ -41056,9 +41073,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "D es el subcomando de descarga. Images lista el almacén, get y download no lo descargan. El nombre literal ImagenA contiene mayúsculas y Docker exige los nombres de repositorio en minúsculas.",
     "location": "public/data/supuestos.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Corrección del dictamen Astra contrastada con temario, original y fuentes primarias; cuatro opciones y clave conservada. Alcance de Postfix/Squid adjudicado explícitamente, discrepancia caja blanca registrada.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI final incluida prueba Linux privada de dpkg, integración y despliegue verificados",
+      "Autorización específica y publicación CAS; las autorizaciones previas no cubren estas cinco"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -41067,13 +41085,29 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "L2025A-S2-09",
       "topic": "T4.02",
       "origin": "O",
       "family": null,
       "scenario": "L2025A-S2"
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-admin5.json",
+      "beforeSha256": "e253df9812a091909b9c327bc409d359c9959c199bb8a3062d8cc58886897322",
+      "afterSha256": "9cc2b7af2933111a9a92ad90d043e8cb58c0ecd7cd1f4f3f525c6743c92d2bb0",
+      "source": {
+        "pdf": "01_Temario/T4.02 Administración de BD y Virtualización/T4.02 Administración de BD y Virtualización - Temario.pdf",
+        "page": 82,
+        "quote": "Con docker pull es posible descargar una imagen concreta del repositorio a local.",
+        "sha256": "27e64d9f792c38d63afe91f3e887bebbd9c7c5ea85f0fdc06ee93a6a59fcf64f",
+        "visualCheck": true
+      },
+      "publication": "NOT_AUTHORIZED_NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTEXTUAL_CONTENT_ONLY",
+      "validation": "1084unit29skip;70PythonPASS1Linuxskip;build1.1.21/cards/render5bothbrowsersPASS;UbuntuCIpending",
+      "newPeerModelSignature": false
     }
   },
   {
@@ -41808,9 +41842,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "D es el único proxy caché entre una base de series, un visualizador y un monitor. El proyecto Squid declara en diseño el soporte HTTP/2 nativo; un túnel CONNECT no implica almacenar en caché ese tráfico. Fuente https://wiki.squid-cache.org/Features/HTTP2",
     "location": "public/data/supuestos.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Corrección del dictamen Astra contrastada con temario, original y fuentes primarias; cuatro opciones y clave conservada. Alcance de Postfix/Squid adjudicado explícitamente, discrepancia caja blanca registrada.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI final incluida prueba Linux privada de dpkg, integración y despliegue verificados",
+      "Autorización específica y publicación CAS; las autorizaciones previas no cubren estas cinco"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -41819,13 +41854,29 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "P2022-S2-08",
       "topic": "T4.08",
       "origin": "O",
       "family": null,
       "scenario": "P2022-S2"
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-admin5.json",
+      "beforeSha256": "d64b7e275eafe0218bde3cdcea0cd84372f310dd960d9a2a33c7588074aae84e",
+      "afterSha256": "7fd233c0406b02b4bdb42370c40deba6f713ff2160a11cd5acaafa956d645c69",
+      "source": {
+        "pdf": "01_Temario/T2.04 Sistemas Operativos/T2.04 Sistemas Operativos - Temario.pdf",
+        "page": 62,
+        "quote": "server squid",
+        "sha256": "d90c16c37eb47ab64152e40b217794d257fc0c1f0457311dc82b71987609f0e1",
+        "visualCheck": true
+      },
+      "publication": "NOT_AUTHORIZED_NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTEXTUAL_CONTENT_ONLY",
+      "validation": "1084unit29skip;70PythonPASS1Linuxskip;build1.1.21/cards/render5bothbrowsersPASS;UbuntuCIpending",
+      "newPeerModelSignature": false
     }
   },
   {
@@ -42284,9 +42335,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "B consulta metadatos de versiones disponibles, sin garantizar la instalada. A confunde la interfaz de dpkg con la de dpkg-query, que sí ofrece --show. Véase https://manpages.debian.org/bookworm/dpkg/dpkg.1.en.html . El comando fiable es dpkg-query -W nginx. C no informa versión y D tampoco selecciona inequívocamente la instalada.",
     "location": "public/data/supuestos.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Corrección del dictamen Astra contrastada con temario, original y fuentes primarias; cuatro opciones y clave conservada. Alcance de Postfix/Squid adjudicado explícitamente, discrepancia caja blanca registrada.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI final incluida prueba Linux privada de dpkg, integración y despliegue verificados",
+      "Autorización específica y publicación CAS; las autorizaciones previas no cubren estas cinco"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -42295,13 +42347,29 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "L2018S-S2-13",
       "topic": "T4.01",
       "origin": "O",
       "family": null,
       "scenario": "L2018S-S2"
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-admin5.json",
+      "beforeSha256": "e8869f521d730ece6d7676882629a669f83771f5f26e2402c257935522949be4",
+      "afterSha256": "f270a3516325334ff6fcaec4ab4d9fca965ed36abbdb0eddd6b80ced0f011b14",
+      "source": {
+        "pdf": "01_Temario/T4.01 Administración de SO/T4.01 Administración de SO - Temario (version alternativa).pdf",
+        "page": 25,
+        "quote": "dpkg -s paquete # comprueba si el paquete está instalado",
+        "sha256": "f7c99562cca2c5d2b7923505c7faced04877e46def902faa38faa149ea2c575e",
+        "visualCheck": true
+      },
+      "publication": "NOT_AUTHORIZED_NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTEXTUAL_CONTENT_ONLY",
+      "validation": "1084unit29skip;70PythonPASS1Linuxskip;build1.1.21/cards/render5bothbrowsersPASS;UbuntuCIpending",
+      "newPeerModelSignature": false
     }
   },
   {
@@ -104090,9 +104158,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada A. La selección estructural de entradas no impide contrastar los resultados con los esperados.",
     "location": "public/data/T3.10.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Corrección del dictamen Astra contrastada con temario, original y fuentes primarias; cuatro opciones y clave conservada. Alcance de Postfix/Squid adjudicado explícitamente, discrepancia caja blanca registrada.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI final incluida prueba Linux privada de dpkg, integración y despliegue verificados",
+      "Autorización específica y publicación CAS; las autorizaciones previas no cubren estas cinco"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -104101,13 +104170,29 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.10-144.v2",
       "topic": "T3.10",
       "origin": "G",
       "family": "GEN-T3.10-144",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-admin5.json",
+      "beforeSha256": "fbbae3a3703014668c0e6d5a8f9a6efd6e17d451e9de8f8c02729a5eba7a4ab3",
+      "afterSha256": "ca922c54f2ee999c27233cf166544db47e246543013978256aefd10bbea8ae6b",
+      "source": {
+        "pdf": "01_Temario/T3.10 Metodologías de Pruebas y Colaboración/T3.10 Metodologías de Pruebas y Colaboración - Temario.pdf",
+        "page": 30,
+        "quote": "Enfoque estructural o de CAJA BLANCA (logic driven).",
+        "sha256": "68ea4f2bd2e450d418b4e0faecb0c0ffe9c7aaab298218252925dbf6445e8581",
+        "visualCheck": true
+      },
+      "publication": "NOT_AUTHORIZED_NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTEXTUAL_CONTENT_ONLY",
+      "validation": "1084unit29skip;70PythonPASS1Linuxskip;build1.1.21/cards/render5bothbrowsersPASS;UbuntuCIpending",
+      "newPeerModelSignature": false
     }
   },
   {
