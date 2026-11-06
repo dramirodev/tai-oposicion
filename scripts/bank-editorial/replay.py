@@ -5,7 +5,7 @@ import hashlib
 import json
 import os
 from pathlib import Path
-from tempfile import NamedTemporaryFile
+from tempfile import TemporaryDirectory
 
 
 HERE = Path(__file__).resolve().parent
@@ -25,55 +25,80 @@ def sha256(row):
     return hashlib.sha256(encode(row)).hexdigest()
 
 
-def replay(directory, reverse, batch):
-    topic, ledger = BATCHES[batch]
-    directory = directory.resolve(strict=True)
-    if directory.is_relative_to(PROJECT) or any((parent / '.git').exists()
-                                                for parent in (directory, *directory.parents)):
-        raise ValueError('El candidato debe estar fuera del repositorio.')
+def prepare(topic, edits, directory, reverse, fingerprints=None):
     target = directory / topic
     if target.is_symlink() or not target.is_file():
         raise ValueError(f'Falta una copia ordinaria del tema {topic}.')
-    # Lock a stable directory descriptor: the target inode is replaced on success.
-    lock = os.open(directory, os.O_RDONLY)
-    try:
-        fcntl.flock(lock, fcntl.LOCK_EX)
-        original = target.read_bytes()
-        rows = json.loads(original)
-        by_id = {row['i']: row for row in rows}
-        if len(by_id) != len(rows):
-            raise ValueError('El tema contiene IDs duplicados.')
-        source, destination = ('after', 'before') if reverse else ('before', 'after')
-        changed = 0
-        for edit in json.loads((HERE / ledger).read_text(encoding='utf-8')):
-            row = by_id.get(edit['id'])
-            if row is None:
-                raise ValueError(f"Falta la pregunta {edit['id']}.")
-            current = sha256(row)
-            if current == edit[destination + 'Sha256']:
-                continue
-            if current != edit[source + 'Sha256']:
-                raise ValueError(f"Huella inesperada: {edit['id']}.")
+    original = target.read_bytes()
+    source, destination = ('after', 'before') if reverse else ('before', 'after')
+    if fingerprints and hashlib.sha256(original).hexdigest() not in (
+            fingerprints[source + 'Sha256'], fingerprints[destination + 'Sha256']):
+        raise ValueError(f'Deriva externa en {topic}.')
+    rows = json.loads(original)
+    by_id = {row['i']: index for index, row in enumerate(rows)}
+    if len(by_id) != len(rows):
+        raise ValueError('El tema contiene IDs duplicados.')
+    changed = 0
+    for edit in edits:
+        index = by_id.get(edit['id'])
+        if index is None:
+            raise ValueError(f"Falta la pregunta {edit['id']}.")
+        row = rows[index]
+        current = sha256(row)
+        if current == edit[destination + 'Sha256']:
+            continue
+        if current != edit[source + 'Sha256']:
+            raise ValueError(f"Huella inesperada: {edit['id']}.")
+        if fingerprints:
+            # The 19-question ledger contains complete rows, including missing/nullable fields.
+            row = edit[destination]
+            if row['i'] != edit['id'] or row['t'] + '.json' != topic:
+                raise ValueError(f"ID o tema inesperado: {edit['id']}.")
+            rows[index] = row
+        else:
             for field, value in edit[destination].items():
                 if value is None:
                     row.pop(field, None)
                 else:
                     row[field] = value
-            if sha256(row) != edit[destination + 'Sha256']:
-                raise ValueError(f"El parche no reproduce la huella de {edit['id']}.")
-            changed += 1
-        if changed:
-            # Preserve the bank's terminal whitespace. No write occurs on a partial failure.
-            trailing = original[len(original.rstrip()):]
-            with NamedTemporaryFile(dir=directory, delete=False) as staging:
-                tmp = Path(staging.name)
-            try:
-                tmp.write_bytes(encode(rows) + trailing)
-                tmp.chmod(target.stat().st_mode & 0o777)
-                tmp.replace(target)
-            finally:
-                tmp.unlink(missing_ok=True)
-        return changed
+        if sha256(row) != edit[destination + 'Sha256']:
+            raise ValueError(f"El parche no reproduce la huella de {edit['id']}.")
+        changed += 1
+    result = encode(rows) + original[len(original.rstrip()):] if changed else original
+    if fingerprints and hashlib.sha256(result).hexdigest() != fingerprints[destination + 'Sha256']:
+        raise ValueError(f'La huella resultante de {topic} difiere del lote.')
+    return target, result, changed
+
+
+def replay(directory, reverse, batch):
+    directory = directory.resolve(strict=True)
+    if directory.is_relative_to(PROJECT) or any((parent / '.git').exists()
+                                                for parent in (directory, *directory.parents)):
+        raise ValueError('El candidato debe estar fuera del repositorio.')
+    lock = os.open(directory, os.O_RDONLY)
+    try:
+        fcntl.flock(lock, fcntl.LOCK_EX)
+        if batch == 'reviewed-19':
+            ledger = json.loads((HERE / 'reviewed-19.json').read_text(encoding='utf-8'))
+            prepared = [prepare(topic, [q for q in ledger['questions'] if q['topic'] + '.json' == topic],
+                                directory, reverse, fingerprints)
+                        for topic, fingerprints in ledger['files'].items()]
+        else:
+            topic, ledger = BATCHES[batch]
+            edits = json.loads((HERE / ledger).read_text(encoding='utf-8'))
+            prepared = [prepare(topic, edits, directory, reverse)]
+        # All files are checked before staging. Interrupted writes can resume from either
+        # of the two accepted hashes, or roll back to the prior release.
+        with TemporaryDirectory(dir=directory) as staging:
+            for target, data, count in prepared:
+                if count:
+                    pending = Path(staging) / target.name
+                    pending.write_bytes(data)
+                    pending.chmod(target.stat().st_mode & 0o777)
+            for target, _, count in prepared:
+                if count:
+                    (Path(staging) / target.name).replace(target)
+        return sum(count for _, _, count in prepared)
     finally:
         os.close(lock)
 
@@ -81,7 +106,7 @@ def replay(directory, reverse, batch):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--candidate-dir', type=Path, required=True)
-    parser.add_argument('--batch', choices=BATCHES, default='web', help='Lote editorial sobre una copia de su tema.')
+    parser.add_argument('--batch', choices=[*BATCHES, 'reviewed-19'], default='web', help='Lote editorial sobre una copia de su tema.')
     action = parser.add_mutually_exclusive_group(required=True)
     action.add_argument('--apply', action='store_true')
     action.add_argument('--rollback', action='store_true')

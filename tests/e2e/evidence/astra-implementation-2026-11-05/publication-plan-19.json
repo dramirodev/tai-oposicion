@@ -1,0 +1,901 @@
+{
+  "project": "tai-oposicion",
+  "readAt": "2026-11-06T00:01:58.825Z",
+  "metaUpdateTime": "2026-11-05T23:36:37.120349Z",
+  "version": 13,
+  "targetVersion": 14,
+  "count": 19,
+  "deletions": 0,
+  "topics": [
+    "T3.03",
+    "T3.04",
+    "T3.07",
+    "T3.08",
+    "T4.08"
+  ],
+  "changes": [
+    {
+      "id": "AT303-P1-09",
+      "topic": "T3.03",
+      "before": {
+        "i": "AT303-P1-09",
+        "t": "T3.03",
+        "o": "A",
+        "q": "Indique el número de veces que se ejecuta el cuerpo del siguiente bucle: int salto = 3; for (int i=0; i<9; (++i)*salto) System.out.println(i);",
+        "a": [
+          "1.",
+          "2.",
+          "3.",
+          "9."
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT303-P1-09",
+        "t": "T3.03",
+        "o": "A",
+        "q": "En Java, ¿cuántas veces se ejecuta la impresión? for (int i=0; i<9; ++i) System.out.println(i);",
+        "a": [
+          "1.",
+          "2.",
+          "3.",
+          "9."
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [],
+        "d": null,
+        "n": "Errata de la academia: (++i)*salto no es una expresión de actualización válida en el for de Java. Con ++i, el índice aumenta en una unidad e imprime los nueve valores de 0 a 8 (opción D).",
+        "u": "for (inicialización; condición prueba; incremento/decremento) { [p. 29]"
+      }
+    },
+    {
+      "id": "AT303-P1-13",
+      "topic": "T3.03",
+      "before": {
+        "i": "AT303-P1-13",
+        "t": "T3.03",
+        "o": "A",
+        "q": "La ejecución del siguiente código produce qué salida: for (int indice=1, sel=2, elec=3; índice<20; indice=(indice+sel)*elec) { System.out.println(indice); sel++; }",
+        "a": [
+          "2 8 22 52",
+          "0 4 14 32",
+          "1 12",
+          "0 4 14 52"
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT303-P1-13",
+        "t": "T3.03",
+        "o": "A",
+        "q": "¿Qué valores imprime por orden este bucle Java? for (int indice=1, sel=2, elec=3; indice<20; indice=(indice+sel)*elec) { System.out.println(indice); sel++; }",
+        "a": [
+          "2, 8, 22, 52",
+          "0, 4, 14, 32",
+          "1, 12",
+          "0, 4, 14, 52"
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null,
+        "n": "Después de imprimir 12, sel sube a 4 e indice pasa a (12+4)×3=48, que ya no es menor que 20.",
+        "u": "for (inicialización; condición prueba; incremento/decremento) { [p. 29]"
+      }
+    },
+    {
+      "id": "AT303-P1-17",
+      "topic": "T3.03",
+      "before": {
+        "i": "AT303-P1-17",
+        "t": "T3.03",
+        "o": "A",
+        "q": "Indique qué se imprime por pantalla con el siguiente código: for (int i=10; j=1; i>0; i=i-j) {System.out.println(i);j++;}",
+        "a": [
+          "10873",
+          "10963",
+          "10851",
+          "1051"
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT303-P1-17",
+        "t": "T3.03",
+        "o": "A",
+        "q": "¿Qué valores imprime por orden este bucle Java? for (int i=10, j=1; i>0; i=i-j) { System.out.println(i); j++; }",
+        "a": [
+          "10, 8, 7, 3",
+          "10, 9, 6, 3",
+          "10, 8, 5, 1",
+          "10, 5, 1"
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null,
+        "n": "j se incrementa en el cuerpo antes de actualizar i. Se imprimen 10, 8, 5 y 1.",
+        "u": "for (inicialización; condición prueba; incremento/decremento) { [p. 29]"
+      }
+    },
+    {
+      "id": "AT303-P1-36",
+      "topic": "T3.03",
+      "before": {
+        "i": "AT303-P1-36",
+        "t": "T3.03",
+        "o": "A",
+        "q": "¿Qué salida genera la ejecución del siguiente código? int i=0, r; while(i<3) { switch(i) { case 0: r = i; break; case 1: r = i+1; break; case 2: r = i+2; case 3: r = i+3; } i++; } System.out.println(r);",
+        "a": [
+          "6",
+          "5",
+          "4",
+          "3"
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT303-P1-36",
+        "t": "T3.03",
+        "o": "A",
+        "q": "En Java, ¿qué imprime este fragmento? int i=0, r=0; while(i<3) { switch(i) { case 0: r=i; break; case 1: r=i+1; break; case 2: r=i+2; case 3: r=i+3; } i++; } System.out.println(r);",
+        "a": [
+          "6",
+          "5",
+          "4",
+          "3"
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [],
+        "d": null,
+        "n": "En la última iteración, case 2 asigna 4 y continúa en case 3 al faltar break. La última asignación deja r en 5.",
+        "u": "case 0: System.out.println(\"i es cero.\"); [p. 28]"
+      }
+    },
+    {
+      "id": "GEN-T3.03-47.v1",
+      "topic": "T3.03",
+      "before": {
+        "i": "GEN-T3.03-47.v1",
+        "t": "T3.03",
+        "o": "G",
+        "q": "true y false son:",
+        "a": [
+          "Operadores lógicos.",
+          "Constantes numéricas.",
+          "Tipos de datos primitivos.",
+          "Palabras reservadas."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.03-47",
+        "u": "los dos únicos posibles valores que puede representar un dato lógico son true y false. true y false son palabras reservadas.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T3.03-47.v1",
+        "t": "T3.03",
+        "o": "G",
+        "q": "Según la gramática léxica de Java, ¿a qué categoría pertenecen los tokens true y false?",
+        "a": [
+          "Operadores lógicos",
+          "Literales numéricos",
+          "Nombres de tipos primitivos",
+          "Literales booleanos"
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.03-47",
+        "u": "representar un dato lógico son true y false. [p. 20]",
+        "v": 0,
+        "w": 1,
+        "n": "true y false son los dos literales de tipo boolean."
+      }
+    },
+    {
+      "id": "GEN-T3.03-74.v2",
+      "topic": "T3.03",
+      "before": {
+        "i": "GEN-T3.03-74.v2",
+        "t": "T3.03",
+        "o": "G",
+        "q": "Para definir funciones recursivas se aplica la técnica:",
+        "a": [
+          "Divide y vencerás.",
+          "Fuerza bruta.",
+          "Programación dinámica.",
+          "Voraz."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.03-74",
+        "u": "la recursividad consiste en definir problema en base a la propia definición.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T3.03-74.v2",
+        "t": "T3.03",
+        "o": "G",
+        "q": "Al evaluar f(4) en Java con int f(int n) { return n==0 ? 1 : n*f(n-1); }, ¿cuántas invocaciones de f se realizan, incluida la inicial?",
+        "a": [
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.03-74",
+        "u": "resultado=facR(n-1)*n; [p. 31]",
+        "v": 0,
+        "w": 1,
+        "n": "El caso base f(0) también cuenta como invocación. La multiplicación no añade llamadas."
+      }
+    },
+    {
+      "id": "GEN-T3.04-32",
+      "topic": "T3.04",
+      "before": {
+        "i": "GEN-T3.04-32",
+        "t": "T3.04",
+        "o": "G",
+        "q": "La sentencia UPDATE Empleados SET sueldo=sueldo*1,0125 sin WHERE:",
+        "a": [
+          "Produce un error.",
+          "Actualiza solo el primer empleado.",
+          "Actualiza el sueldo de todos los empleados.",
+          "Actualiza solo los que tienen sueldo nulo."
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.04-32",
+        "u": "UPDATE <nombre_tabla> SET <nombre_columna> = {<expresión>|DEFAULT|NULL} … UPDATE Empleados SET variable=1000 WHERE tiempo>=3;",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.04-32",
+        "t": "T3.04",
+        "o": "G",
+        "q": "La tabla Empleados tiene sueldos numéricos 80 y 160. Tras UPDATE Empleados SET sueldo=sueldo*1.0125, ¿qué sueldos contiene, ordenados de menor a mayor?",
+        "a": [
+          "80 y 160",
+          "81 y 160",
+          "81 y 162",
+          "80 y 162"
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.04-32",
+        "u": "Ejemplo: Actualizar el sueldo de todos los empleados un 1,25%. [p. 13]",
+        "v": 0,
+        "n": "El punto forma parte del literal numérico SQL. Sin WHERE se actualizan las dos filas."
+      }
+    },
+    {
+      "id": "GEN-T3.04-46.v1",
+      "topic": "T3.04",
+      "before": {
+        "i": "GEN-T3.04-46.v1",
+        "t": "T3.04",
+        "o": "G",
+        "q": "Los campos de la cláusula ORDER BY tienen que haber sido previamente definidos en:",
+        "a": [
+          "La cláusula SELECT.",
+          "La cláusula HAVING.",
+          "La cláusula GROUP BY.",
+          "La cláusula WHERE."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.04-46",
+        "u": "si queremos definir un orden concreto hay que utilizar la cláusula ORDER BY … El sentido de la ordenación puede ser ascendente (ASC) o descendente DESC, estableciéndose como sentido por defecto el ascendente.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.04-46.v1",
+        "t": "T3.04",
+        "o": "G",
+        "q": "En SQLite, empleados(nombre,sueldo) contiene ('Ana',200) y ('Luis',100). ¿Qué devuelve SELECT nombre FROM empleados ORDER BY sueldo ASC?",
+        "a": [
+          "Luis, Ana",
+          "Ana, Luis",
+          "Un error por omitir sueldo en SELECT",
+          "Una sola fila con Luis"
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.04-46",
+        "u": "Ejemplo: Obtener las autorizaciones ordenadas por fecha de entrada. [p. 18]",
+        "v": 0,
+        "n": "Se proyecta nombre y se ordena por sueldo aunque sueldo no esté en la salida."
+      }
+    },
+    {
+      "id": "GEN-T3.04-51.v1",
+      "topic": "T3.04",
+      "before": {
+        "i": "GEN-T3.04-51.v1",
+        "t": "T3.04",
+        "o": "G",
+        "q": "La combinación (JOIN) exige que:",
+        "a": [
+          "Coincidan los valores de las columnas relacionadas en ambas tablas.",
+          "Las tablas sean la misma.",
+          "Se combinen todas las filas con todas.",
+          "No coincidan los valores de las columnas."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.04-51",
+        "u": "Combinación (JOIN): permite crear una sola tabla a partir de las tablas especificadas en la cláusula FROM, teniendo en cuenta que tenemos que hacer que coincidan los valores de las columnas relacionadas en ambas tablas (en otro caso sería un producto cartesiano). … Si <tabla1> y <tabla2> son la misma tabla, se le denomina SELF JOIN.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.04-51.v1",
+        "t": "T3.04",
+        "o": "G",
+        "q": "En SQLite, a(x) contiene 1 y 4, y b(y) contiene 2 y 3. ¿Qué pares devuelve SELECT x,y FROM a JOIN b ON x<y ORDER BY x,y?",
+        "a": [
+          "(1,2) y (1,3)",
+          "Ninguna fila",
+          "Los cuatro pares posibles",
+          "(4,2) y (4,3)"
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.04-51",
+        "u": "Así, la opción JOIN permite vincular las tablas [p. 21]",
+        "v": 0,
+        "n": "ON evalúa x<y para cada par. Solo las filas con x=1 satisfacen la condición."
+      }
+    },
+    {
+      "id": "GEN-T3.04-51.v2",
+      "topic": "T3.04",
+      "before": {
+        "i": "GEN-T3.04-51.v2",
+        "t": "T3.04",
+        "o": "G",
+        "q": "Si en la combinación no coinciden los valores de las columnas relacionadas, el resultado sería:",
+        "a": [
+          "Una combinación natural.",
+          "Un producto cartesiano.",
+          "Una intersección.",
+          "Una unión."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.04-51",
+        "u": "Combinación (JOIN): permite crear una sola tabla a partir de las tablas especificadas en la cláusula FROM, teniendo en cuenta que tenemos que hacer que coincidan los valores de las columnas relacionadas en ambas tablas (en otro caso sería un producto cartesiano). … Si <tabla1> y <tabla2> son la misma tabla, se le denomina SELF JOIN.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.04-51.v2",
+        "t": "T3.04",
+        "o": "G",
+        "q": "Si a(x) contiene 1 y 2, y b(y) contiene 3 y 4, ¿qué devuelve SELECT COUNT(*) FROM a INNER JOIN b ON a.x=b.y?",
+        "a": [
+          "1",
+          "0",
+          "2",
+          "4"
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.04-51",
+        "u": "FROM ciudadanos c JOIN autorizaciones a ON c.nif=a.nif; [p. 21]",
+        "v": 0,
+        "n": "El criterio de igualdad falla para los cuatro pares candidatos."
+      }
+    },
+    {
+      "id": "GEN-T3.07-170.v2",
+      "topic": "T3.07",
+      "before": {
+        "i": "GEN-T3.07-170.v2",
+        "t": "T3.07",
+        "o": "G",
+        "q": "Las partes de un JWT están codificadas en:",
+        "a": [
+          "Hexadecimal.",
+          "UTF-16.",
+          "Base64.",
+          "ASCII."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          8,
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T3.07-170",
+        "u": "Un JWT consta de tres partes, todas ellas codificadas en Base64 y separadas por un punto: HEADER.PAYLOAD.SIGNATURE",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.07-170.v2",
+        "t": "T3.07",
+        "o": "G",
+        "q": "Al codificar los octetos FB FF (hexadecimal) en base64url sin relleno para JWS compacto, ¿qué texto se obtiene?",
+        "a": [
+          "+/8=",
+          "-_8=",
+          "-_8",
+          "fbff"
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          8,
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T3.07-170",
+        "u": "La cabecera está codificada en Base64Url. [p. 51]",
+        "v": 0,
+        "n": "La Base64 ordinaria produce +/8=. En base64url sin relleno se sustituyen + y / por - y _ y se omite =."
+      }
+    },
+    {
+      "id": "GEN-T3.08-58",
+      "topic": "T3.08",
+      "before": {
+        "i": "GEN-T3.08-58",
+        "t": "T3.08",
+        "o": "G",
+        "q": "En la declaración XML, standalone=\"no\" indica que el documento:",
+        "a": [
+          "No necesita DTD.",
+          "No está bien formado.",
+          "No tiene prólogo.",
+          "Va acompañado de un DTD."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          8,
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-58",
+        "u": "standalone indica si el documento va acompañado de un DTD (“no”) o no lo necesita (“yes”). … fichero.dtd contiene las reglas (elementos) que se pueden usar en el fichero XML.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-58",
+        "t": "T3.08",
+        "o": "G",
+        "q": "Considere este documento XML 1.0 completo: <?xml version=\"1.0\" standalone=\"no\"?><r/>. ¿Qué puede concluirse sobre su buena formación?",
+        "a": [
+          "Está mal formado por carecer de DTD.",
+          "Está bien formado y su elemento raíz se llama r.",
+          "Está mal formado porque r está vacío.",
+          "Está mal formado porque standalone solo admite yes."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          8,
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-58",
+        "u": "<?xml version=\"1.0\" standalone=\"no\" ?> [p. 19]",
+        "v": 0,
+        "n": "Un documento XML puede estar bien formado sin DTD. standalone=\"no\" es un valor permitido y no introduce una DTD."
+      }
+    },
+    {
+      "id": "GEN-T3.08-60.v1",
+      "topic": "T3.08",
+      "before": {
+        "i": "GEN-T3.08-60.v1",
+        "t": "T3.08",
+        "o": "G",
+        "q": "Los comentarios en XML son:",
+        "a": [
+          "Obligatorios.",
+          "Procesados como elementos.",
+          "Convertidos en atributos.",
+          "Ignorados por el procesador XML."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 2,
+        "f": "GEN-T3.08-60",
+        "u": "ATRIBUTOS: permiten incorporar propiedades a los elementos de un documento. Deben ir entre comillas dobles. … COMENTARIOS: son ignorados por el procesador XML.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-60.v1",
+        "t": "T3.08",
+        "o": "G",
+        "q": "En el documento XML <r><!-- aviso --><x/></r>, ¿cuántos elementos, incluida la raíz, hay?",
+        "a": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 2,
+        "f": "GEN-T3.08-60",
+        "u": "<!-- Esto es un comentario --> [p. 20]",
+        "v": 0,
+        "n": "El comentario puede representarse como un nodo propio de la API, pero no aumenta el número de elementos XML."
+      }
+    },
+    {
+      "id": "GEN-T3.08-1101.v1",
+      "topic": "T3.08",
+      "before": {
+        "i": "GEN-T3.08-1101.v1",
+        "t": "T3.08",
+        "o": "G",
+        "q": "La compilación a bytecode de Python:",
+        "a": [
+          "Genera código ensamblador.",
+          "Genera un ejecutable nativo.",
+          "No es una compilación en sentido estricto, pues no se genera un código binario.",
+          "Genera código C."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          8,
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-1101",
+        "u": "Compilado a bytecodes: Python \"compila\" (no es una compilación en sentido estricto ya que no se genera un código binario) el código fuente de Python a bytecode, y en ese momento interpreta ese bytecode, ejecutándolo sobre la marcha.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-1101.v1",
+        "t": "T3.08",
+        "o": "G",
+        "q": "En CPython 3, ¿qué crea compile(\"3+4\", \"<ejemplo>\", \"eval\") con los argumentos indicados?",
+        "a": [
+          "Texto en ensamblador",
+          "Un ejecutable nativo",
+          "Un objeto de código evaluable",
+          "Un archivo fuente C"
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          8,
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-1101",
+        "u": "el código fuente de Python a bytecode [p. 3]",
+        "v": 0,
+        "n": "El objeto contiene bytecode de CPython. Al pasarlo a eval se obtiene el entero 7."
+      }
+    },
+    {
+      "id": "GEN-T3.08-1110.v2",
+      "topic": "T3.08",
+      "before": {
+        "i": "GEN-T3.08-1110.v2",
+        "t": "T3.08",
+        "o": "G",
+        "q": "En format, el marcador {:n} sin símbolo alinea el valor:",
+        "a": [
+          "A la izquierda, rellenando con espacios por la derecha.",
+          "Sin relleno.",
+          "Al centro.",
+          "A la derecha."
+        ],
+        "c": 0,
+        "k": "K",
+        "x": [
+          7,
+          8,
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-1110",
+        "u": "{:n}: alinea el valor a la izquierda rellenando con espacios por la derecha hasta los n caracteres. … {:>n}: alinea el valor a la derecha rellenando con espacios por la izquierda hasta los n caracteres.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-1110.v2",
+        "t": "T3.08",
+        "o": "G",
+        "q": "En Python 3, ¿qué representa repr(\"{:3}\".format(7))? Las comillas delimitan la cadena y dejan ver los espacios.",
+        "a": [
+          "'7  '",
+          "' 7 '",
+          "'7'",
+          "'  7'"
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [
+          7,
+          8,
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-1110",
+        "u": "c.format(valores): cadena c tras sustituir los valores [p. 7]",
+        "v": 0,
+        "n": "El número 3 fija el ancho mínimo. Para el entero 7 la representación contiene dos espacios seguidos del dígito."
+      }
+    },
+    {
+      "id": "GEN-T3.08-1133",
+      "topic": "T3.08",
+      "before": {
+        "i": "GEN-T3.08-1133",
+        "t": "T3.08",
+        "o": "G",
+        "q": "Según el temario, en Python el paso de argumentos a una función es:",
+        "a": [
+          "Por nombre.",
+          "Por valor para listas.",
+          "Siempre por referencia.",
+          "Siempre por valor."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          8,
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-1133",
+        "u": "En Python el paso de argumentos a una función es siempre por referencia, es decir, se pasa una referencia al objeto del argumento, de manera que cualquier cambio que se haga dentro de la función mediante el parámetro asociado afectará al objeto original, siempre y cuando este sea mutable.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-1133",
+        "t": "T3.08",
+        "o": "G",
+        "q": "En Python 3, f(x) ejecuta x.append(2) y después x = [9]. Si a = [1] y se llama a f(a), ¿cuánto vale a tras la llamada?",
+        "a": [
+          "[9]",
+          "[1]",
+          "[1, 2]",
+          "[1, 2, 9]"
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          8,
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-1133",
+        "u": "una referencia al objeto del argumento [p. 16]",
+        "v": 0,
+        "n": "a y x comparten inicialmente la lista. append la modifica y la asignación posterior vincula x a otro objeto."
+      }
+    },
+    {
+      "id": "GEN-T3.08-1140.v1",
+      "topic": "T3.08",
+      "before": {
+        "i": "GEN-T3.08-1140.v1",
+        "t": "T3.08",
+        "o": "G",
+        "q": "Los atributos creados fuera de __init__ en una clase se conocen como:",
+        "a": [
+          "Atributos locales.",
+          "Atributos privados.",
+          "Atributos del objeto.",
+          "Atributos de la clase."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          7,
+          8,
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-1140",
+        "u": "Los atributos que se crean dentro del método __init__ se conocen como atributos del objeto, mientras que los que se crean fuera de él se conocen como atributos de la clase.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-1140.v1",
+        "t": "T3.08",
+        "o": "G",
+        "q": "En una clase ordinaria C de Python 3, el método fijar(self) ejecuta self.x=3. No hay x en la clase. Si a=C(), b=C() y solo se llama a a.fijar(), ¿dónde aparece x?",
+        "a": [
+          "Solo en b",
+          "En la clase C",
+          "En todas las instancias",
+          "Solo en a"
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          7,
+          8,
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-1140",
+        "u": "# Atributo de instancia [p. 19]",
+        "v": 0,
+        "n": "La asignación self.x crea el atributo en la instancia que recibe la llamada, también fuera de __init__."
+      }
+    },
+    {
+      "id": "AT408-P1-30",
+      "topic": "T4.08",
+      "before": {
+        "i": "AT408-P1-30",
+        "t": "T4.08",
+        "o": "A",
+        "q": "Las secciones que puede contener un mensaje DNS son:",
+        "a": [
+          "QUESTION, ANSWER, AUTHORITY y ADITTIONAL.",
+          "QUESTION y ANSWER.",
+          "QUESTION, ANSWER y OPTIONS.",
+          "QUESTION, ANSWER, AUTHORITY, ADITTIONAL y HEADER."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT408-P1-30",
+        "t": "T4.08",
+        "o": "A",
+        "q": "En DNS, ¿qué cuatro secciones cuentan respectivamente QDCOUNT, ANCOUNT, NSCOUNT y ARCOUNT de la cabecera?",
+        "a": [
+          "Question, Answer, Authority, Additional",
+          "Header, Question, Answer, Authority",
+          "Question, Answer, Additional, Authority",
+          "Question, Authority, Answer, Additional"
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "n": "La cabecera precede a las cuatro secciones. QDCOUNT cuenta preguntas y los otros tres campos cuentan registros en Answer, Authority y Additional.",
+        "u": "El mensaje se divide en una cabecera HEADER y 4 secciones [p. 21]"
+      }
+    },
+    {
+      "id": "AT408-P1-44",
+      "topic": "T4.08",
+      "before": {
+        "i": "AT408-P1-44",
+        "t": "T4.08",
+        "o": "A",
+        "q": "Los puertos de escucha de un servidor DHCP y otro servidor DHCPv6 son:",
+        "a": [
+          "TCP/66 y TCP/67 para el servidor DHCP y TCP/544 y TCP/556 para el servidor DHCPv6.",
+          "UDP/66 y UDP/67 para el servidor DHCP y UDP/544 y UDP/556 para el servidor DHCPv6.",
+          "TCP/67 y TCP/68 para el servidor DHCP y TCP/545 y TCP/547 para el servidor DHCPv6.",
+          "UDP/67 y UDP/68 para el servidor DHCP y UDP/546 y UDP/547 para el servidor DHCPv6."
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT408-P1-44",
+        "t": "T4.08",
+        "o": "A",
+        "q": "En sus puertos UDP estándar, ¿a qué puertos de destino envía un cliente los mensajes dirigidos, respectivamente, a un servidor DHCPv4 y a un servidor DHCPv6?",
+        "a": [
+          "67 y 546",
+          "68 y 547",
+          "68 y 546",
+          "67 y 547"
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [],
+        "d": null,
+        "n": "El servidor DHCPv4 recibe en UDP/67 (RFC 2131 §4.1) y el servidor DHCPv6 en UDP/547. Los clientes usan 68 y 546.",
+        "u": "DHCP viene definido en el RFC 2131 y utiliza los puertos UDP/67 y UDP/68. [p. 33]"
+      }
+    }
+  ],
+  "authorization": "PENDIENTE_ESPECIFICA",
+  "sourceCommit": "004e818dc4e8561cef468f5e2623abc81b357af7",
+  "sourceArtifact": {
+    "archive": "Candidato-19-correcciones-no-publicado.zip",
+    "sha256": "59b37790c578f8cdf19fefbedf3868df7bd0c4e7ae21b2e8e6ea077975b74f9e"
+  }
+}

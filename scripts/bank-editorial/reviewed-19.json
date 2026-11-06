@@ -1,0 +1,1283 @@
+{
+  "baseCommit": "004e818dc4e8561cef468f5e2623abc81b357af7",
+  "status": "revision_local_pendiente_de_publicacion",
+  "excluded": [
+    "GEN-T4.08-20.v1"
+  ],
+  "files": {
+    "T3.03.json": {
+      "beforeSha256": "85a36d74cfaea7129380c94436313a88899cbaee4671f8479f91755f652fd5b9",
+      "afterSha256": "4b9d32c1450a6f5e5a051664e4576754b11a195d8e0d8b98a2ac589601a2c725",
+      "count": 367,
+      "changed": 6
+    },
+    "T3.04.json": {
+      "beforeSha256": "5a53f7ccd448dc84b7e1981f3b582e40316879cc14a9ae50e97812ca3d265372",
+      "afterSha256": "83ecb3537e0a36a38d1fa9f35a160cc657961547685d79ba413b97ecf513354b",
+      "count": 445,
+      "changed": 4
+    },
+    "T3.07.json": {
+      "beforeSha256": "c5dad52a59ec6d76cd2e27d792c095e0a11ece2f77b2c51f06bc87348649468a",
+      "afterSha256": "de39c93580377a346fa1b46a3639b65cdf6f974e71efb4d89a557884015ddcb8",
+      "count": 704,
+      "changed": 1
+    },
+    "T3.08.json": {
+      "beforeSha256": "7715faca985ffeed0a6e6f621bb2a14edf4171837d1af5b0fab6bae031eaa5b5",
+      "afterSha256": "48b50daf5b8f6bb5dde81dc30673f24bf6fa94a6106e8ccd51831840c8d7ae70",
+      "count": 1776,
+      "changed": 6
+    },
+    "T4.08.json": {
+      "beforeSha256": "2c1745be700df4c711503d34f703cf458c6ee90ca53cae412effbdef09afc4d3",
+      "afterSha256": "4950baf07755d2fe1b4b3d883151f3335619599b437a0ad3c6388a487ed888d5",
+      "count": 244,
+      "changed": 2
+    }
+  },
+  "questions": [
+    {
+      "id": "AT303-P1-09",
+      "topic": "T3.03",
+      "status": "propuesta_pendiente",
+      "before": {
+        "i": "AT303-P1-09",
+        "t": "T3.03",
+        "o": "A",
+        "q": "Indique el número de veces que se ejecuta el cuerpo del siguiente bucle: int salto = 3; for (int i=0; i<9; (++i)*salto) System.out.println(i);",
+        "a": [
+          "1.",
+          "2.",
+          "3.",
+          "9."
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT303-P1-09",
+        "t": "T3.03",
+        "o": "A",
+        "q": "En Java, ¿cuántas veces se ejecuta la impresión? for (int i=0; i<9; ++i) System.out.println(i);",
+        "a": [
+          "1.",
+          "2.",
+          "3.",
+          "9."
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [],
+        "d": null,
+        "n": "Errata de la academia: (++i)*salto no es una expresión de actualización válida en el for de Java. Con ++i, el índice aumenta en una unidad e imprime los nueve valores de 0 a 8 (opción D).",
+        "u": "for (inicialización; condición prueba; incremento/decremento) { [p. 29]"
+      },
+      "beforeSha256": "e6d9aeb7ca710727435dfe931365e75e5072c3bea23485debe1ba3a3853d2b77",
+      "afterSha256": "7e5079990d1b1f734728b6fe63bc9aa0f2af9831f00ebf957c2f1200a92340fb",
+      "inSample": false,
+      "issue": "(++i)*salto no es una expresión de actualización admitida como expresión de sentencia Java.",
+      "reviewedOptions": [
+        "Una ejecución solo imprimiría 0, pero 1 también cumple i<9.",
+        "Tras imprimir 0 y 1, el índice 2 aún cumple la condición.",
+        "Tres correspondería a incrementar de tres en tres. ++i suma una unidad.",
+        "Se imprimen 0, 1, 2, 3, 4, 5, 6, 7 y 8; con 9 el bucle termina."
+      ],
+      "reference": {
+        "pdf": "T3.03 Lenguajes de Programación/T3.03 Lenguajes de Programación - Temario.pdf",
+        "page": 29,
+        "quote": "for (inicialización; condición prueba; incremento/decremento) {",
+        "sha256": "00bd7927476cd6686d692146e80df1a95f13458ea0d083a65527bb1f416b08fb"
+      },
+      "primary": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-14.html",
+      "executable": "python3 tools/question-editorial/reviewed19/check.py AT303-P1-09"
+    },
+    {
+      "id": "AT303-P1-13",
+      "topic": "T3.03",
+      "status": "propuesta_pendiente",
+      "before": {
+        "i": "AT303-P1-13",
+        "t": "T3.03",
+        "o": "A",
+        "q": "La ejecución del siguiente código produce qué salida: for (int indice=1, sel=2, elec=3; índice<20; indice=(indice+sel)*elec) { System.out.println(indice); sel++; }",
+        "a": [
+          "2 8 22 52",
+          "0 4 14 32",
+          "1 12",
+          "0 4 14 52"
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT303-P1-13",
+        "t": "T3.03",
+        "o": "A",
+        "q": "¿Qué valores imprime por orden este bucle Java? for (int indice=1, sel=2, elec=3; indice<20; indice=(indice+sel)*elec) { System.out.println(indice); sel++; }",
+        "a": [
+          "2, 8, 22, 52",
+          "0, 4, 14, 32",
+          "1, 12",
+          "0, 4, 14, 52"
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null,
+        "n": "Después de imprimir 12, sel sube a 4 e indice pasa a (12+4)×3=48, que ya no es menor que 20.",
+        "u": "for (inicialización; condición prueba; incremento/decremento) { [p. 29]"
+      },
+      "beforeSha256": "b869e0bd50c2013a2787cbe72b72e92f37c8ab696d6e15ad62b60c4c21b1c610",
+      "afterSha256": "339df3d3b569af0a2cf6ef9c88bac0c52d5a76a16ff7b88558dc6a16e7a9333a",
+      "inSample": false,
+      "issue": "La condición usa el identificador índice, distinto del indice declarado.",
+      "reviewedOptions": [
+        "Empieza por 1.",
+        "0 no es el valor inicial.",
+        "Tras imprimir 1 se obtiene (1+3)×3=12.",
+        "Imprime dos enteros y el primero es 1."
+      ],
+      "reference": {
+        "pdf": "T3.03 Lenguajes de Programación/T3.03 Lenguajes de Programación - Temario.pdf",
+        "page": 29,
+        "quote": "for (inicialización; condición prueba; incremento/decremento) {",
+        "sha256": "00bd7927476cd6686d692146e80df1a95f13458ea0d083a65527bb1f416b08fb"
+      },
+      "primary": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-14.html",
+      "executable": "python3 tools/question-editorial/reviewed19/check.py AT303-P1-13"
+    },
+    {
+      "id": "AT303-P1-17",
+      "topic": "T3.03",
+      "status": "propuesta_pendiente",
+      "before": {
+        "i": "AT303-P1-17",
+        "t": "T3.03",
+        "o": "A",
+        "q": "Indique qué se imprime por pantalla con el siguiente código: for (int i=10; j=1; i>0; i=i-j) {System.out.println(i);j++;}",
+        "a": [
+          "10873",
+          "10963",
+          "10851",
+          "1051"
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT303-P1-17",
+        "t": "T3.03",
+        "o": "A",
+        "q": "¿Qué valores imprime por orden este bucle Java? for (int i=10, j=1; i>0; i=i-j) { System.out.println(i); j++; }",
+        "a": [
+          "10, 8, 7, 3",
+          "10, 9, 6, 3",
+          "10, 8, 5, 1",
+          "10, 5, 1"
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [],
+        "d": null,
+        "n": "j se incrementa en el cuerpo antes de actualizar i. Se imprimen 10, 8, 5 y 1.",
+        "u": "for (inicialización; condición prueba; incremento/decremento) { [p. 29]"
+      },
+      "beforeSha256": "d01f9a261a61e7b54d50881f104f55f6354081a041b241238a23ddf2898d0fb4",
+      "afterSha256": "28d06798bf68c575ec61fe48c31702ca77ed19f68aaac9e811a36766cd00710a",
+      "inSample": false,
+      "issue": "El for tiene cuatro cláusulas y j carece de declaración.",
+      "reviewedOptions": [
+        "Después de 8 se resta 3, no 1.",
+        "La primera actualización resta 2.",
+        "Los decrementos son 2, 3, 4 y 5.",
+        "A 10 le sigue 8."
+      ],
+      "reference": {
+        "pdf": "T3.03 Lenguajes de Programación/T3.03 Lenguajes de Programación - Temario.pdf",
+        "page": 29,
+        "quote": "for (inicialización; condición prueba; incremento/decremento) {",
+        "sha256": "00bd7927476cd6686d692146e80df1a95f13458ea0d083a65527bb1f416b08fb"
+      },
+      "primary": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-14.html",
+      "executable": "python3 tools/question-editorial/reviewed19/check.py AT303-P1-17"
+    },
+    {
+      "id": "AT303-P1-36",
+      "topic": "T3.03",
+      "status": "propuesta_pendiente",
+      "before": {
+        "i": "AT303-P1-36",
+        "t": "T3.03",
+        "o": "A",
+        "q": "¿Qué salida genera la ejecución del siguiente código? int i=0, r; while(i<3) { switch(i) { case 0: r = i; break; case 1: r = i+1; break; case 2: r = i+2; case 3: r = i+3; } i++; } System.out.println(r);",
+        "a": [
+          "6",
+          "5",
+          "4",
+          "3"
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT303-P1-36",
+        "t": "T3.03",
+        "o": "A",
+        "q": "En Java, ¿qué imprime este fragmento? int i=0, r=0; while(i<3) { switch(i) { case 0: r=i; break; case 1: r=i+1; break; case 2: r=i+2; case 3: r=i+3; } i++; } System.out.println(r);",
+        "a": [
+          "6",
+          "5",
+          "4",
+          "3"
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [],
+        "d": null,
+        "n": "En la última iteración, case 2 asigna 4 y continúa en case 3 al faltar break. La última asignación deja r en 5.",
+        "u": "case 0: System.out.println(\"i es cero.\"); [p. 28]"
+      },
+      "beforeSha256": "9c39c34fb4bc393f58ce860182ee1f27f6c943dd51413bbdd87e4698ed79a823",
+      "afterSha256": "2b3b1a105312134721aec3827341e562da0b2f9eb028c7b667264ddd8be4fbbd",
+      "inSample": false,
+      "issue": "La lectura final de r no satisface la asignación definida de Java.",
+      "reviewedOptions": [
+        "i vale 2 al entrar en case 2.",
+        "La caída a case 3 asigna 2+3.",
+        "4 se asigna y después se sobrescribe.",
+        "La última asignación no toma i igual a 0."
+      ],
+      "reference": {
+        "pdf": "T3.03 Lenguajes de Programación/T3.03 Lenguajes de Programación - Temario.pdf",
+        "page": 28,
+        "quote": "case 0: System.out.println(\"i es cero.\");",
+        "sha256": "00bd7927476cd6686d692146e80df1a95f13458ea0d083a65527bb1f416b08fb"
+      },
+      "primary": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-14.html",
+      "executable": "python3 tools/question-editorial/reviewed19/check.py AT303-P1-36"
+    },
+    {
+      "id": "GEN-T3.03-47.v1",
+      "topic": "T3.03",
+      "status": "propuesta_pendiente",
+      "before": {
+        "i": "GEN-T3.03-47.v1",
+        "t": "T3.03",
+        "o": "G",
+        "q": "true y false son:",
+        "a": [
+          "Operadores lógicos.",
+          "Constantes numéricas.",
+          "Tipos de datos primitivos.",
+          "Palabras reservadas."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.03-47",
+        "u": "los dos únicos posibles valores que puede representar un dato lógico son true y false. true y false son palabras reservadas.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T3.03-47.v1",
+        "t": "T3.03",
+        "o": "G",
+        "q": "Según la gramática léxica de Java, ¿a qué categoría pertenecen los tokens true y false?",
+        "a": [
+          "Operadores lógicos",
+          "Literales numéricos",
+          "Nombres de tipos primitivos",
+          "Literales booleanos"
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.03-47",
+        "u": "representar un dato lógico son true y false. [p. 20]",
+        "v": 0,
+        "w": 1,
+        "n": "true y false son los dos literales de tipo boolean."
+      },
+      "beforeSha256": "e09b3bc9bd8b41c9711f4dffdcb422d82b04f309ca5afd8ffce325e75c92bb0e",
+      "afterSha256": "6971f48ed8b01cc6ee729c059dcbcc87046479a18726d6bda8a2d613c1c45995",
+      "inSample": false,
+      "issue": "El temario denomina palabras reservadas a los dos literales de Java.",
+      "reviewedOptions": [
+        "&& y || son operadores lógicos.",
+        "No representan números.",
+        "El nombre del tipo es boolean.",
+        "Ambos tokens forman la producción BooleanLiteral."
+      ],
+      "reference": {
+        "pdf": "T3.03 Lenguajes de Programación/T3.03 Lenguajes de Programación - Temario.pdf",
+        "page": 20,
+        "quote": "representar un dato lógico son true y false.",
+        "sha256": "00bd7927476cd6686d692146e80df1a95f13458ea0d083a65527bb1f416b08fb"
+      },
+      "primary": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-3.html#jls-3.10.3",
+      "executable": "python3 tools/question-editorial/reviewed19/check.py GEN-T3.03-47.v1"
+    },
+    {
+      "id": "GEN-T3.03-74.v2",
+      "topic": "T3.03",
+      "status": "propuesta_pendiente",
+      "before": {
+        "i": "GEN-T3.03-74.v2",
+        "t": "T3.03",
+        "o": "G",
+        "q": "Para definir funciones recursivas se aplica la técnica:",
+        "a": [
+          "Divide y vencerás.",
+          "Fuerza bruta.",
+          "Programación dinámica.",
+          "Voraz."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.03-74",
+        "u": "la recursividad consiste en definir problema en base a la propia definición.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T3.03-74.v2",
+        "t": "T3.03",
+        "o": "G",
+        "q": "Al evaluar f(4) en Java con int f(int n) { return n==0 ? 1 : n*f(n-1); }, ¿cuántas invocaciones de f se realizan, incluida la inicial?",
+        "a": [
+          "3",
+          "4",
+          "5",
+          "6"
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.03-74",
+        "u": "resultado=facR(n-1)*n; [p. 31]",
+        "v": 0,
+        "w": 1,
+        "n": "El caso base f(0) también cuenta como invocación. La multiplicación no añade llamadas."
+      },
+      "beforeSha256": "ed6b72ea63c1a19571c40093bcadecef9dd5819676756d96e36995861eabc318",
+      "afterSha256": "94ce8f74a34713d0318e7d7d83034c4a89ec59799b449e7d3ee82d541788ee75",
+      "inSample": false,
+      "issue": "El stem presenta una estrategia de división como requisito universal para la recursión.",
+      "reviewedOptions": [
+        "Omitiría dos valores del argumento.",
+        "Cuenta las llamadas posteriores y omite la inicial.",
+        "Se invoca con 4, 3, 2, 1 y 0.",
+        "El caso base no invoca f(-1)."
+      ],
+      "reference": {
+        "pdf": "T3.03 Lenguajes de Programación/T3.03 Lenguajes de Programación - Temario.pdf",
+        "page": 31,
+        "quote": "resultado=facR(n-1)*n;",
+        "sha256": "00bd7927476cd6686d692146e80df1a95f13458ea0d083a65527bb1f416b08fb"
+      },
+      "primary": "https://docs.oracle.com/javase/specs/jls/se21/html/jls-15.html#jls-15.12",
+      "executable": "python3 tools/question-editorial/reviewed19/check.py GEN-T3.03-74.v2"
+    },
+    {
+      "id": "GEN-T3.04-32",
+      "topic": "T3.04",
+      "status": "propuesta_pendiente",
+      "before": {
+        "i": "GEN-T3.04-32",
+        "t": "T3.04",
+        "o": "G",
+        "q": "La sentencia UPDATE Empleados SET sueldo=sueldo*1,0125 sin WHERE:",
+        "a": [
+          "Produce un error.",
+          "Actualiza solo el primer empleado.",
+          "Actualiza el sueldo de todos los empleados.",
+          "Actualiza solo los que tienen sueldo nulo."
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.04-32",
+        "u": "UPDATE <nombre_tabla> SET <nombre_columna> = {<expresión>|DEFAULT|NULL} … UPDATE Empleados SET variable=1000 WHERE tiempo>=3;",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.04-32",
+        "t": "T3.04",
+        "o": "G",
+        "q": "La tabla Empleados tiene sueldos numéricos 80 y 160. Tras UPDATE Empleados SET sueldo=sueldo*1.0125, ¿qué sueldos contiene, ordenados de menor a mayor?",
+        "a": [
+          "80 y 160",
+          "81 y 160",
+          "81 y 162",
+          "80 y 162"
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.04-32",
+        "u": "Ejemplo: Actualizar el sueldo de todos los empleados un 1,25%. [p. 13]",
+        "v": 0,
+        "n": "El punto forma parte del literal numérico SQL. Sin WHERE se actualizan las dos filas."
+      },
+      "beforeSha256": "263c6858d86145767a0bef76ea67ea9320d4aa7189bfa28cd1ed4d8e11a0c580",
+      "afterSha256": "6d466037eb3a9e7fb7c54052583c37d9f97231f81fe70913fc32a7587c1f67c2",
+      "inSample": false,
+      "issue": "La coma decimal del UPDATE original produce error sintáctico.",
+      "reviewedOptions": [
+        "Ambos valores cambian.",
+        "La segunda fila también se actualiza.",
+        "80×1,0125=81 y 160×1,0125=162.",
+        "La primera fila también se actualiza."
+      ],
+      "reference": {
+        "pdf": "T3.04 SQL/T3.04 SQL - Temario.pdf",
+        "page": 13,
+        "quote": "Ejemplo: Actualizar el sueldo de todos los empleados un 1,25%.",
+        "sha256": "b99989c34d1326722c0dacc4aa425a947c6b8be180a834f2939525a9ccac4b25"
+      },
+      "primary": "https://www.sqlite.org/lang_update.html",
+      "executable": "python3 tools/question-editorial/reviewed19/check.py GEN-T3.04-32"
+    },
+    {
+      "id": "GEN-T3.04-46.v1",
+      "topic": "T3.04",
+      "status": "propuesta_pendiente",
+      "before": {
+        "i": "GEN-T3.04-46.v1",
+        "t": "T3.04",
+        "o": "G",
+        "q": "Los campos de la cláusula ORDER BY tienen que haber sido previamente definidos en:",
+        "a": [
+          "La cláusula SELECT.",
+          "La cláusula HAVING.",
+          "La cláusula GROUP BY.",
+          "La cláusula WHERE."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.04-46",
+        "u": "si queremos definir un orden concreto hay que utilizar la cláusula ORDER BY … El sentido de la ordenación puede ser ascendente (ASC) o descendente DESC, estableciéndose como sentido por defecto el ascendente.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.04-46.v1",
+        "t": "T3.04",
+        "o": "G",
+        "q": "En SQLite, empleados(nombre,sueldo) contiene ('Ana',200) y ('Luis',100). ¿Qué devuelve SELECT nombre FROM empleados ORDER BY sueldo ASC?",
+        "a": [
+          "Luis, Ana",
+          "Ana, Luis",
+          "Un error por omitir sueldo en SELECT",
+          "Una sola fila con Luis"
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.04-46",
+        "u": "Ejemplo: Obtener las autorizaciones ordenadas por fecha de entrada. [p. 18]",
+        "v": 0,
+        "n": "Se proyecta nombre y se ordena por sueldo aunque sueldo no esté en la salida."
+      },
+      "beforeSha256": "4ca52fe0087721828a716d85b76782b2bcc56fc1d6ca4a8d77a11193b25ad888",
+      "afterSha256": "862fc6673dbc08105bea0d59bfcb897b2e29d30ef4ad2103d8425a16675f639c",
+      "inSample": false,
+      "issue": "ORDER BY no exige proyectar el campo de orden en una consulta simple ordinaria.",
+      "reviewedOptions": [
+        "Los sueldos se ordenan 100, 200.",
+        "Sería orden descendente.",
+        "En esta consulta simple se puede ordenar por sueldo.",
+        "No hay LIMIT ni filtro."
+      ],
+      "reference": {
+        "pdf": "T3.04 SQL/T3.04 SQL - Temario.pdf",
+        "page": 18,
+        "quote": "Ejemplo: Obtener las autorizaciones ordenadas por fecha de entrada.",
+        "sha256": "b99989c34d1326722c0dacc4aa425a947c6b8be180a834f2939525a9ccac4b25"
+      },
+      "primary": "https://www.sqlite.org/lang_select.html",
+      "executable": "python3 tools/question-editorial/reviewed19/check.py GEN-T3.04-46.v1"
+    },
+    {
+      "id": "GEN-T3.04-51.v1",
+      "topic": "T3.04",
+      "status": "propuesta_pendiente",
+      "before": {
+        "i": "GEN-T3.04-51.v1",
+        "t": "T3.04",
+        "o": "G",
+        "q": "La combinación (JOIN) exige que:",
+        "a": [
+          "Coincidan los valores de las columnas relacionadas en ambas tablas.",
+          "Las tablas sean la misma.",
+          "Se combinen todas las filas con todas.",
+          "No coincidan los valores de las columnas."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.04-51",
+        "u": "Combinación (JOIN): permite crear una sola tabla a partir de las tablas especificadas en la cláusula FROM, teniendo en cuenta que tenemos que hacer que coincidan los valores de las columnas relacionadas en ambas tablas (en otro caso sería un producto cartesiano). … Si <tabla1> y <tabla2> son la misma tabla, se le denomina SELF JOIN.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.04-51.v1",
+        "t": "T3.04",
+        "o": "G",
+        "q": "En SQLite, a(x) contiene 1 y 4, y b(y) contiene 2 y 3. ¿Qué pares devuelve SELECT x,y FROM a JOIN b ON x<y ORDER BY x,y?",
+        "a": [
+          "(1,2) y (1,3)",
+          "Ninguna fila",
+          "Los cuatro pares posibles",
+          "(4,2) y (4,3)"
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.04-51",
+        "u": "Así, la opción JOIN permite vincular las tablas [p. 21]",
+        "v": 0,
+        "n": "ON evalúa x<y para cada par. Solo las filas con x=1 satisfacen la condición."
+      },
+      "beforeSha256": "75c3b6297989bd5b3b6cc7bfa58cbd815e9f69c4107cde18ee0cab853aca0f98",
+      "afterSha256": "96cc116203b4e553038b31441f658478e84bb75e7787565aa026ccc43d832eea",
+      "inSample": false,
+      "issue": "La condición ON de un JOIN no tiene por qué ser una igualdad.",
+      "reviewedOptions": [
+        "1 es inferior a ambos valores de b.",
+        "Hay dos comparaciones verdaderas.",
+        "Dos de las cuatro parejas incumplen el predicado.",
+        "4 es mayor que 2 y 3."
+      ],
+      "reference": {
+        "pdf": "T3.04 SQL/T3.04 SQL - Temario.pdf",
+        "page": 21,
+        "quote": "Así, la opción JOIN permite vincular las tablas",
+        "sha256": "b99989c34d1326722c0dacc4aa425a947c6b8be180a834f2939525a9ccac4b25"
+      },
+      "primary": "https://www.sqlite.org/lang_select.html",
+      "executable": "python3 tools/question-editorial/reviewed19/check.py GEN-T3.04-51.v1"
+    },
+    {
+      "id": "GEN-T3.04-51.v2",
+      "topic": "T3.04",
+      "status": "propuesta_pendiente",
+      "before": {
+        "i": "GEN-T3.04-51.v2",
+        "t": "T3.04",
+        "o": "G",
+        "q": "Si en la combinación no coinciden los valores de las columnas relacionadas, el resultado sería:",
+        "a": [
+          "Una combinación natural.",
+          "Un producto cartesiano.",
+          "Una intersección.",
+          "Una unión."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.04-51",
+        "u": "Combinación (JOIN): permite crear una sola tabla a partir de las tablas especificadas en la cláusula FROM, teniendo en cuenta que tenemos que hacer que coincidan los valores de las columnas relacionadas en ambas tablas (en otro caso sería un producto cartesiano). … Si <tabla1> y <tabla2> son la misma tabla, se le denomina SELF JOIN.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.04-51.v2",
+        "t": "T3.04",
+        "o": "G",
+        "q": "Si a(x) contiene 1 y 2, y b(y) contiene 3 y 4, ¿qué devuelve SELECT COUNT(*) FROM a INNER JOIN b ON a.x=b.y?",
+        "a": [
+          "1",
+          "0",
+          "2",
+          "4"
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.04-51",
+        "u": "FROM ciudadanos c JOIN autorizaciones a ON c.nif=a.nif; [p. 21]",
+        "v": 0,
+        "n": "El criterio de igualdad falla para los cuatro pares candidatos."
+      },
+      "beforeSha256": "7c38cad4c8ae88ff544fb3ff991dea48fafec9ae1ff4da6f54c4c0c7247339fb",
+      "afterSha256": "236da2edf72c85b4c439f048dc4a4eb9d3ca6487cfbde3991d4f867d028c6ba5",
+      "inSample": false,
+      "issue": "La ausencia de coincidencias en un equijoin no produce el producto cartesiano.",
+      "reviewedOptions": [
+        "Ningún valor es común.",
+        "El INNER JOIN no devuelve parejas y COUNT(*) resulta 0.",
+        "Cada tabla tiene dos filas, pero ninguna coincide.",
+        "4 contaría el producto cartesiano sin filtro."
+      ],
+      "reference": {
+        "pdf": "T3.04 SQL/T3.04 SQL - Temario.pdf",
+        "page": 21,
+        "quote": "FROM ciudadanos c JOIN autorizaciones a ON c.nif=a.nif;",
+        "sha256": "b99989c34d1326722c0dacc4aa425a947c6b8be180a834f2939525a9ccac4b25"
+      },
+      "primary": "https://www.sqlite.org/lang_select.html",
+      "executable": "python3 tools/question-editorial/reviewed19/check.py GEN-T3.04-51.v2"
+    },
+    {
+      "id": "GEN-T3.08-1101.v1",
+      "topic": "T3.08",
+      "status": "propuesta_pendiente",
+      "before": {
+        "i": "GEN-T3.08-1101.v1",
+        "t": "T3.08",
+        "o": "G",
+        "q": "La compilación a bytecode de Python:",
+        "a": [
+          "Genera código ensamblador.",
+          "Genera un ejecutable nativo.",
+          "No es una compilación en sentido estricto, pues no se genera un código binario.",
+          "Genera código C."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          8,
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-1101",
+        "u": "Compilado a bytecodes: Python \"compila\" (no es una compilación en sentido estricto ya que no se genera un código binario) el código fuente de Python a bytecode, y en ese momento interpreta ese bytecode, ejecutándolo sobre la marcha.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-1101.v1",
+        "t": "T3.08",
+        "o": "G",
+        "q": "En CPython 3, ¿qué crea compile(\"3+4\", \"<ejemplo>\", \"eval\") con los argumentos indicados?",
+        "a": [
+          "Texto en ensamblador",
+          "Un ejecutable nativo",
+          "Un objeto de código evaluable",
+          "Un archivo fuente C"
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          8,
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-1101",
+        "u": "el código fuente de Python a bytecode [p. 3]",
+        "v": 0,
+        "n": "El objeto contiene bytecode de CPython. Al pasarlo a eval se obtiene el entero 7."
+      },
+      "beforeSha256": "b69f054e6626fd03523f196732a5e08501608623f7212aa3758c6cd310080745",
+      "afterSha256": "433b593b316121d9ece954272da2e5523e3e55cb045fe139c4055475d366c3d1",
+      "inSample": false,
+      "issue": "Compilar no exige generar un ejecutable nativo. Se fija CPython y se pregunta por un resultado reproducible.",
+      "reviewedOptions": [
+        "compile no devuelve texto.",
+        "No produce un archivo ejecutable.",
+        "Devuelve un objeto code que eval puede ejecutar.",
+        "No escribe un archivo C."
+      ],
+      "reference": {
+        "pdf": "T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - Python.pdf",
+        "page": 3,
+        "quote": "el código fuente de Python a bytecode",
+        "sha256": "3c2812e69c47029198d5e8371123b6cd0c0984b4ca73c41e93a229534521969b"
+      },
+      "primary": "https://docs.python.org/3/library/functions.html#compile",
+      "executable": "python3 tools/question-editorial/reviewed19/check.py GEN-T3.08-1101.v1"
+    },
+    {
+      "id": "GEN-T3.08-1110.v2",
+      "topic": "T3.08",
+      "status": "propuesta_pendiente",
+      "before": {
+        "i": "GEN-T3.08-1110.v2",
+        "t": "T3.08",
+        "o": "G",
+        "q": "En format, el marcador {:n} sin símbolo alinea el valor:",
+        "a": [
+          "A la izquierda, rellenando con espacios por la derecha.",
+          "Sin relleno.",
+          "Al centro.",
+          "A la derecha."
+        ],
+        "c": 0,
+        "k": "K",
+        "x": [
+          7,
+          8,
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-1110",
+        "u": "{:n}: alinea el valor a la izquierda rellenando con espacios por la derecha hasta los n caracteres. … {:>n}: alinea el valor a la derecha rellenando con espacios por la izquierda hasta los n caracteres.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-1110.v2",
+        "t": "T3.08",
+        "o": "G",
+        "q": "En Python 3, ¿qué representa repr(\"{:3}\".format(7))? Las comillas delimitan la cadena y dejan ver los espacios.",
+        "a": [
+          "'7  '",
+          "' 7 '",
+          "'7'",
+          "'  7'"
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [
+          7,
+          8,
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-1110",
+        "u": "c.format(valores): cadena c tras sustituir los valores [p. 7]",
+        "v": 0,
+        "n": "El número 3 fija el ancho mínimo. Para el entero 7 la representación contiene dos espacios seguidos del dígito."
+      },
+      "beforeSha256": "b1e91998e243d3558e4d36f4bea579d79f871245e52504fd10d884ca661dda41",
+      "afterSha256": "95a862f9150b0c1bf503b1be98464d20fae63c0fdb14be2667e0c5d9b06a0d77",
+      "inSample": false,
+      "issue": "{:n} literal no significa ancho n; además, la alineación predeterminada depende del tipo.",
+      "reviewedOptions": [
+        "Alinearía el entero a la izquierda.",
+        "Lo centraría.",
+        "No alcanzaría el ancho de tres.",
+        "El entero se alinea a la derecha y completa con dos espacios."
+      ],
+      "reference": {
+        "pdf": "T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - Python.pdf",
+        "page": 7,
+        "quote": "c.format(valores): cadena c tras sustituir los valores",
+        "sha256": "3c2812e69c47029198d5e8371123b6cd0c0984b4ca73c41e93a229534521969b"
+      },
+      "primary": "https://docs.python.org/3/library/string.html#format-specification-mini-language",
+      "executable": "python3 tools/question-editorial/reviewed19/check.py GEN-T3.08-1110.v2"
+    },
+    {
+      "id": "GEN-T3.08-1133",
+      "topic": "T3.08",
+      "status": "propuesta_pendiente",
+      "before": {
+        "i": "GEN-T3.08-1133",
+        "t": "T3.08",
+        "o": "G",
+        "q": "Según el temario, en Python el paso de argumentos a una función es:",
+        "a": [
+          "Por nombre.",
+          "Por valor para listas.",
+          "Siempre por referencia.",
+          "Siempre por valor."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          8,
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-1133",
+        "u": "En Python el paso de argumentos a una función es siempre por referencia, es decir, se pasa una referencia al objeto del argumento, de manera que cualquier cambio que se haga dentro de la función mediante el parámetro asociado afectará al objeto original, siempre y cuando este sea mutable.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-1133",
+        "t": "T3.08",
+        "o": "G",
+        "q": "En Python 3, f(x) ejecuta x.append(2) y después x = [9]. Si a = [1] y se llama a f(a), ¿cuánto vale a tras la llamada?",
+        "a": [
+          "[9]",
+          "[1]",
+          "[1, 2]",
+          "[1, 2, 9]"
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          8,
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-1133",
+        "u": "una referencia al objeto del argumento [p. 16]",
+        "v": 0,
+        "n": "a y x comparten inicialmente la lista. append la modifica y la asignación posterior vincula x a otro objeto."
+      },
+      "beforeSha256": "e4aed015ab3ec7c290af73cb2954b06e732845bad0a1776285f2e77101cfd777",
+      "afterSha256": "4389c2f491010e5313437c863f657cbe27368edf11707e3ac8df7f3b493851fc",
+      "inSample": false,
+      "issue": "Decir siempre por referencia confunde mutar un objeto con reasignar la variable local.",
+      "reviewedOptions": [
+        "Solo se reasigna el nombre local x.",
+        "append sí modifica la lista original.",
+        "Se conserva la mutación y la reasignación local no alcanza a a.",
+        "Ninguna operación añade 9 a la lista original."
+      ],
+      "reference": {
+        "pdf": "T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - Python.pdf",
+        "page": 16,
+        "quote": "una referencia al objeto del argumento",
+        "sha256": "3c2812e69c47029198d5e8371123b6cd0c0984b4ca73c41e93a229534521969b"
+      },
+      "primary": "https://docs.python.org/3/faq/programming.html#how-do-i-write-a-function-with-output-parameters-call-by-reference",
+      "executable": "python3 tools/question-editorial/reviewed19/check.py GEN-T3.08-1133"
+    },
+    {
+      "id": "GEN-T3.08-1140.v1",
+      "topic": "T3.08",
+      "status": "propuesta_pendiente",
+      "before": {
+        "i": "GEN-T3.08-1140.v1",
+        "t": "T3.08",
+        "o": "G",
+        "q": "Los atributos creados fuera de __init__ en una clase se conocen como:",
+        "a": [
+          "Atributos locales.",
+          "Atributos privados.",
+          "Atributos del objeto.",
+          "Atributos de la clase."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          7,
+          8,
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-1140",
+        "u": "Los atributos que se crean dentro del método __init__ se conocen como atributos del objeto, mientras que los que se crean fuera de él se conocen como atributos de la clase.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-1140.v1",
+        "t": "T3.08",
+        "o": "G",
+        "q": "En una clase ordinaria C de Python 3, el método fijar(self) ejecuta self.x=3. No hay x en la clase. Si a=C(), b=C() y solo se llama a a.fijar(), ¿dónde aparece x?",
+        "a": [
+          "Solo en b",
+          "En la clase C",
+          "En todas las instancias",
+          "Solo en a"
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          7,
+          8,
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-1140",
+        "u": "# Atributo de instancia [p. 19]",
+        "v": 0,
+        "n": "La asignación self.x crea el atributo en la instancia que recibe la llamada, también fuera de __init__."
+      },
+      "beforeSha256": "d8963c28623d607b6850770b3809bb93d718f6160b6eda564705096ca1942849",
+      "afterSha256": "8580a1d34d4082d0c1e669dc12c31854aecbcb87d08dc0481c7818f32487ea13",
+      "inSample": false,
+      "issue": "Un atributo de instancia se puede crear desde un método distinto de __init__.",
+      "reviewedOptions": [
+        "b nunca recibe la asignación.",
+        "No se ejecuta C.x=3.",
+        "Cada objeto mantiene sus propios atributos.",
+        "self designa a y la asignación se realiza en esa instancia."
+      ],
+      "reference": {
+        "pdf": "T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - Python.pdf",
+        "page": 19,
+        "quote": "# Atributo de instancia",
+        "sha256": "3c2812e69c47029198d5e8371123b6cd0c0984b4ca73c41e93a229534521969b"
+      },
+      "primary": "https://docs.python.org/3/reference/datamodel.html#class-instances",
+      "executable": "python3 tools/question-editorial/reviewed19/check.py GEN-T3.08-1140.v1"
+    },
+    {
+      "id": "GEN-T3.08-58",
+      "topic": "T3.08",
+      "status": "propuesta_pendiente",
+      "before": {
+        "i": "GEN-T3.08-58",
+        "t": "T3.08",
+        "o": "G",
+        "q": "En la declaración XML, standalone=\"no\" indica que el documento:",
+        "a": [
+          "No necesita DTD.",
+          "No está bien formado.",
+          "No tiene prólogo.",
+          "Va acompañado de un DTD."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          8,
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-58",
+        "u": "standalone indica si el documento va acompañado de un DTD (“no”) o no lo necesita (“yes”). … fichero.dtd contiene las reglas (elementos) que se pueden usar en el fichero XML.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-58",
+        "t": "T3.08",
+        "o": "G",
+        "q": "Considere este documento XML 1.0 completo: <?xml version=\"1.0\" standalone=\"no\"?><r/>. ¿Qué puede concluirse sobre su buena formación?",
+        "a": [
+          "Está mal formado por carecer de DTD.",
+          "Está bien formado y su elemento raíz se llama r.",
+          "Está mal formado porque r está vacío.",
+          "Está mal formado porque standalone solo admite yes."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          8,
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-58",
+        "u": "<?xml version=\"1.0\" standalone=\"no\" ?> [p. 19]",
+        "v": 0,
+        "n": "Un documento XML puede estar bien formado sin DTD. standalone=\"no\" es un valor permitido y no introduce una DTD."
+      },
+      "beforeSha256": "0a017347fdf67996eb306576028b49d41970924771ac1bde3ac55457f282f76e",
+      "afterSha256": "7a28328abcaaf4504463048f2baaf6fb0ca6ec85e07003c0e81d999a2308b2d1",
+      "inSample": false,
+      "issue": "standalone=\"no\" no exige proporcionar una DTD.",
+      "reviewedOptions": [
+        "La declaración externa no es obligatoria.",
+        "La declaración es admisible y hay una sola raíz vacía.",
+        "La sintaxis de elemento vacío es válida.",
+        "standalone admite yes y no."
+      ],
+      "reference": {
+        "pdf": "T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario.pdf",
+        "page": 19,
+        "quote": "<?xml version=\"1.0\" standalone=\"no\" ?>",
+        "sha256": "980aaf92d3f84a4a632d5324ef15fde8d6ce8c71f385ec2a57fb3d806c9c0bc5"
+      },
+      "primary": "https://www.w3.org/TR/xml/#sec-rmd",
+      "executable": "python3 tools/question-editorial/reviewed19/check.py GEN-T3.08-58"
+    },
+    {
+      "id": "GEN-T3.08-60.v1",
+      "topic": "T3.08",
+      "status": "propuesta_pendiente",
+      "before": {
+        "i": "GEN-T3.08-60.v1",
+        "t": "T3.08",
+        "o": "G",
+        "q": "Los comentarios en XML son:",
+        "a": [
+          "Obligatorios.",
+          "Procesados como elementos.",
+          "Convertidos en atributos.",
+          "Ignorados por el procesador XML."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 2,
+        "f": "GEN-T3.08-60",
+        "u": "ATRIBUTOS: permiten incorporar propiedades a los elementos de un documento. Deben ir entre comillas dobles. … COMENTARIOS: son ignorados por el procesador XML.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-60.v1",
+        "t": "T3.08",
+        "o": "G",
+        "q": "En el documento XML <r><!-- aviso --><x/></r>, ¿cuántos elementos, incluida la raíz, hay?",
+        "a": [
+          "1",
+          "2",
+          "3",
+          "4"
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 2,
+        "f": "GEN-T3.08-60",
+        "u": "<!-- Esto es un comentario --> [p. 20]",
+        "v": 0,
+        "n": "El comentario puede representarse como un nodo propio de la API, pero no aumenta el número de elementos XML."
+      },
+      "beforeSha256": "23dbd6883928256a4ae5a947869f6cb35c5364ea5b7d051d857ad5fb763ccc21",
+      "afterSha256": "bd8d3604f1710cb6353129f07b7ef0281967a5adcd59872075f83c85db6eafe6",
+      "inSample": false,
+      "issue": "XML admite entregar comentarios a la aplicación. No se deben describir como universalmente ignorados.",
+      "reviewedOptions": [
+        "Omitiría el elemento x.",
+        "Los elementos son r y x.",
+        "El comentario no es un elemento.",
+        "Hay dos elementos aunque el procesador también exponga el nodo comentario."
+      ],
+      "reference": {
+        "pdf": "T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario.pdf",
+        "page": 20,
+        "quote": "<!-- Esto es un comentario -->",
+        "sha256": "980aaf92d3f84a4a632d5324ef15fde8d6ce8c71f385ec2a57fb3d806c9c0bc5"
+      },
+      "primary": "https://www.w3.org/TR/xml/#sec-comments",
+      "executable": "python3 tools/question-editorial/reviewed19/check.py GEN-T3.08-60.v1"
+    },
+    {
+      "id": "GEN-T3.07-170.v2",
+      "topic": "T3.07",
+      "status": "propuesta_pendiente",
+      "before": {
+        "i": "GEN-T3.07-170.v2",
+        "t": "T3.07",
+        "o": "G",
+        "q": "Las partes de un JWT están codificadas en:",
+        "a": [
+          "Hexadecimal.",
+          "UTF-16.",
+          "Base64.",
+          "ASCII."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          8,
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T3.07-170",
+        "u": "Un JWT consta de tres partes, todas ellas codificadas en Base64 y separadas por un punto: HEADER.PAYLOAD.SIGNATURE",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.07-170.v2",
+        "t": "T3.07",
+        "o": "G",
+        "q": "Al codificar los octetos FB FF (hexadecimal) en base64url sin relleno para JWS compacto, ¿qué texto se obtiene?",
+        "a": [
+          "+/8=",
+          "-_8=",
+          "-_8",
+          "fbff"
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          8,
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T3.07-170",
+        "u": "La cabecera está codificada en Base64Url. [p. 51]",
+        "v": 0,
+        "n": "La Base64 ordinaria produce +/8=. En base64url sin relleno se sustituyen + y / por - y _ y se omite =."
+      },
+      "beforeSha256": "ef95b03e3bd28a7e05b913de8a29b50fccaa9ce952717c5f40b4645be10d55e1",
+      "afterSha256": "21521976d8989133ab156e943fbb946972d98453162e2d3971954b1bfbdfa828",
+      "inSample": false,
+      "issue": "La Base64 ordinaria y base64url emplean alfabetos distintos. En JWS compacto se omite el relleno.",
+      "reviewedOptions": [
+        "Utiliza el alfabeto Base64 ordinario y relleno.",
+        "Usa el alfabeto URL pero conserva el relleno.",
+        "Los símbolos URL son - y _, y se elimina el signo igual final.",
+        "Es notación hexadecimal."
+      ],
+      "reference": {
+        "pdf": "T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf",
+        "page": 51,
+        "quote": "La cabecera está codificada en Base64Url.",
+        "sha256": "7ac226eb1c711e5def0166d08552f5c6c9fc667b531fdc470250337c024136c0"
+      },
+      "primary": "https://www.rfc-editor.org/rfc/rfc7515#section-2",
+      "executable": "python3 tools/question-editorial/reviewed19/check.py GEN-T3.07-170.v2"
+    },
+    {
+      "id": "AT408-P1-30",
+      "topic": "T4.08",
+      "status": "propuesta_pendiente",
+      "before": {
+        "i": "AT408-P1-30",
+        "t": "T4.08",
+        "o": "A",
+        "q": "Las secciones que puede contener un mensaje DNS son:",
+        "a": [
+          "QUESTION, ANSWER, AUTHORITY y ADITTIONAL.",
+          "QUESTION y ANSWER.",
+          "QUESTION, ANSWER y OPTIONS.",
+          "QUESTION, ANSWER, AUTHORITY, ADITTIONAL y HEADER."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT408-P1-30",
+        "t": "T4.08",
+        "o": "A",
+        "q": "En DNS, ¿qué cuatro secciones cuentan respectivamente QDCOUNT, ANCOUNT, NSCOUNT y ARCOUNT de la cabecera?",
+        "a": [
+          "Question, Answer, Authority, Additional",
+          "Header, Question, Answer, Authority",
+          "Question, Answer, Additional, Authority",
+          "Question, Authority, Answer, Additional"
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "n": "La cabecera precede a las cuatro secciones. QDCOUNT cuenta preguntas y los otros tres campos cuentan registros en Answer, Authority y Additional.",
+        "u": "El mensaje se divide en una cabecera HEADER y 4 secciones [p. 21]"
+      },
+      "beforeSha256": "87cd38d0dbc9868aff7c9921a82d5c896ec3879f2d7d4524ac5b3da399813796",
+      "afterSha256": "a09a03d6d2197f1638dcdb04eba03310005d53f0622c720a96f776d37f0a6fea",
+      "inSample": false,
+      "issue": "La opción marcada omite Header y dos alternativas escriben mal Additional.",
+      "reviewedOptions": [
+        "Es el orden de los cuatro contadores.",
+        "Header alberga los contadores y no es lo que cuenta QDCOUNT.",
+        "Intercambia NSCOUNT y ARCOUNT.",
+        "Intercambia ANCOUNT y NSCOUNT."
+      ],
+      "reference": {
+        "pdf": "T4.08 Internet/T4.08 Internet - Temario.pdf",
+        "page": 21,
+        "quote": "El mensaje se divide en una cabecera HEADER y 4 secciones",
+        "sha256": "2a460897d6652d005ebb5160190b24a80d3bdfa9b16cd61bca16bba5b7688060"
+      },
+      "primary": "https://www.rfc-editor.org/rfc/rfc1035#section-4.1",
+      "executable": "python3 tools/question-editorial/reviewed19/check.py AT408-P1-30"
+    },
+    {
+      "id": "AT408-P1-44",
+      "topic": "T4.08",
+      "status": "propuesta_pendiente",
+      "before": {
+        "i": "AT408-P1-44",
+        "t": "T4.08",
+        "o": "A",
+        "q": "Los puertos de escucha de un servidor DHCP y otro servidor DHCPv6 son:",
+        "a": [
+          "TCP/66 y TCP/67 para el servidor DHCP y TCP/544 y TCP/556 para el servidor DHCPv6.",
+          "UDP/66 y UDP/67 para el servidor DHCP y UDP/544 y UDP/556 para el servidor DHCPv6.",
+          "TCP/67 y TCP/68 para el servidor DHCP y TCP/545 y TCP/547 para el servidor DHCPv6.",
+          "UDP/67 y UDP/68 para el servidor DHCP y UDP/546 y UDP/547 para el servidor DHCPv6."
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT408-P1-44",
+        "t": "T4.08",
+        "o": "A",
+        "q": "En sus puertos UDP estándar, ¿a qué puertos de destino envía un cliente los mensajes dirigidos, respectivamente, a un servidor DHCPv4 y a un servidor DHCPv6?",
+        "a": [
+          "67 y 546",
+          "68 y 547",
+          "68 y 546",
+          "67 y 547"
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [],
+        "d": null,
+        "n": "El servidor DHCPv4 recibe en UDP/67 (RFC 2131 §4.1) y el servidor DHCPv6 en UDP/547. Los clientes usan 68 y 546.",
+        "u": "DHCP viene definido en el RFC 2131 y utiliza los puertos UDP/67 y UDP/68. [p. 33]"
+      },
+      "beforeSha256": "724df21f01ca1d5a6e09a7ecdac9f7144a1e7ed0c9e65f73ea8d2d9f21a92414",
+      "afterSha256": "2e7532db93fb590798080b3cb2f94a765e93ac941281a203f940f15b688d7d4d",
+      "inSample": false,
+      "issue": "La opción de servidores incluye también los dos puertos de los clientes.",
+      "reviewedOptions": [
+        "546 es el puerto del cliente DHCPv6.",
+        "68 es el puerto del cliente DHCPv4.",
+        "Son los dos puertos de cliente.",
+        "67 es el del servidor DHCPv4 y 547 el del servidor DHCPv6."
+      ],
+      "reference": {
+        "pdf": "T4.08 Internet/T4.08 Internet - Temario.pdf",
+        "page": 33,
+        "quote": "DHCP viene definido en el RFC 2131 y utiliza los puertos UDP/67 y UDP/68.",
+        "sha256": "2a460897d6652d005ebb5160190b24a80d3bdfa9b16cd61bca16bba5b7688060"
+      },
+      "primary": "https://www.rfc-editor.org/rfc/rfc9915#section-7.2",
+      "executable": "python3 tools/question-editorial/reviewed19/check.py AT408-P1-44"
+    }
+  ],
+  "provenance": {
+    "archive": "Candidato-19-correcciones-no-publicado.zip",
+    "sha256": "59b37790c578f8cdf19fefbedf3868df7bd0c4e7ae21b2e8e6ea077975b74f9e"
+  }
+}
