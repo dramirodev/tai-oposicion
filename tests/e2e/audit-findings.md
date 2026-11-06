@@ -289,7 +289,7 @@ Estados válidos: `DETECTADO`, `ANALIZADO`, `PRIORIZADO`, `EN CORRECCIÓN`, `COR
 - **Brecha restante:** el inventario cubre controles visibles en estados iniciales y algunos estados dinámicos concretos, pero aún no asocia cada control y estado a una acción y oráculo. Quedan perfiles longitudinales reutilizables de usuario nuevo/progreso parcial/historial extenso, caducidad forzada de token, conflictos de escritura y recuperación multi-dispositivo, además de formularios y diálogos aún sin recorrer. La importación, retirada, aislamiento por cuenta del borrador y sincronización de Planificación entre dos pestañas sí tienen regresiones específicas; no deben figurar como ausencia total de cobertura. Se cierra la brecha específica del round-trip de historial de intentos en la copia local; no se afirma cobertura exhaustiva. Continuar matriz control→acción→resultado y journeys longitudinales/adversariales.
 - **Resultado final:** Cobertura ampliada y reproducible, hallazgo todavía abierto hasta cerrar estados dinámicos, continuidad entre módulos y oráculos de dominio en los controles identificados. La suite completa `bridge.spec.ts` pasó **48/48** en Chromium/WebKit tras añadir el caso de configuración; la configuración por sí sola pasó **2/2**.
 
-### ATE-006 — Perfiles CI integrados localmente; ejecución remota pendiente
+### ATE-006 — Perfiles CI integrados y verificados remotamente
 
 - **Categoría / funcionalidad:** Automatización / CI.
 - **Descripción:** QUICK/INTENSIVE/EXTREME tienen workflows y comandos locales configurados, pero la ejecución de GitHub Actions aún no está demostrada.
@@ -298,10 +298,10 @@ Estados válidos: `DETECTADO`, `ANALIZADO`, `PRIORIZADO`, `EN CORRECCIÓN`, `COR
 - **Causa:** `e2e-profiles.yml` se encuentra solo en esta rama; GitHub no permite despacharlo mientras no exista en la rama por defecto. Históricamente no había PR ni ejecución; el 6/11 PR110 activa CI y el run42184320823 ya supera QUICK y Auth. El workflow de perfiles sigue pendiente de registro en default y ejecución remota.
 - **Solución propuesta:** QUICK en PR sin Gemini; INTENSIVE programado; EXTREME solo bajo demanda con Emulator y budgets explícitos.
 - **Archivos afectados:** `.github/workflows/` y documentación de ejecución.
-- **Estado de implementación:** CORREGIDO SIN VERIFICAR.
+- **Estado de implementación:** CORREGIDO Y VERIFICADO (6/11/2026).
 - **Solución implementada:** `ci.yml` ejecuta QUICK autenticado en Emulator en PR y carga resultados como artefacto. `e2e-profiles.yml` añade INTENSIVE programado/manual y EXTREME manual; los perfiles usan solo pruebas Playwright deterministas, sin Gemini. EXTREME ejecuta la suite de navegador más un escenario acotado de 1.000 acciones con aserciones de estado/foco.
 - **Pruebas:** YAML de ambos workflows validado con parser local; Prettier pasa para workflows, package/config y pruebas. `npm run test:e2e:extreme` local **2/2** Chromium/WebKit (1.000 acciones cada uno; 50,4 s); suite global **260 pasadas/18 omitidas/0 fallidas**. Tras publicar `ac71bea`, `gh run list --branch audit/ux-integral-2026-11-04` no mostró ejecuciones. `gh workflow list` no presenta `e2e-profiles.yml`; `gh workflow run ...` devolvió HTTP 404: workflow no encontrado en la rama por defecto. No se declara CI remoto verificado.
-- **Resultado final:** Integración local y perfiles deterministas verificados. Estado remoto requiere que el workflow se integre primero en la rama por defecto (por ejemplo, mediante PR y posterior integración) y una ejecución real. La misión ATE con framework externo no invoca Gemini desde CI.
+- **Resultado final vigente:** Workflow registrado en main, CI de PR11042215300160 y EXTREME42247874417 SUCCESS (incluye QUICK/INTENSIVE). Despacho QUICK independiente42252271997 SUCCESS. Artefactos publicados y límites efectivos. Detalle al final del registro; las observaciones anteriores se conservan como historial. El disparo cron futuro no se presenta como ejecutado.
 
 ### ATE-007 — Matriz de rechazo del guard Emulator no estaba cubierta
 
@@ -636,3 +636,8 @@ La traza contiene209POST de Write durante unos28s. La importación y recuperaci�
 legacy-sync usa writeBatch del SDK existente para grupos acotados de100en importación y recuperación. Conserva IDs/campos, ruta individual ordinaria, deduplicación pendiente porcuenta/payload y persistencia offline. Si un lote se rechaza, vuelve a la ruta individual sólo para esa misma cuenta activa y sin sobrescribir un payload posterior. No elimina registros ni cambia contratos.29pruebas sync comprueban también rechazo, cambio de cuenta y conservación de la versión reciente; global1087unit29skip,arquitectura/lint/tipos y QUICK16/16correctos (cuatro casos300online/offline/500ms). Evidencia history-import-sync-local.json.
 
 Sólo demo-tai-auth,puertos9099/8080/app4191 ycuentas@example.test,con guardia de tráfico yconfiguración. Cero escrituras o acceso a datos reales de estudiantes en producción. La nueva CI oficial, merge y despliegue siguen pendientes; no atribuir el resultado local a producción. Fuentes de banco y405publicadas/PHP/8exclusiones se mantienen intactas.
+
+
+### ATE-006 — Evidencia remota de los tres niveles, 6/11/2026
+
+Workflow registrado tras integrar PR110. Run42247874417 (perfil extreme, main f6aa79f) SUCCESS: QUICK16/16 en Emulator; INTENSIVE referencia76/76 y candidata312 aprobadas/38 omitidas; EXTREME2/2 con1.000 acciones por motor. Paso de artefactos SUCCESS. Sin Gemini ni datos de usuarios reales. CI de PR11042215300160 también SUCCESS:1074unit/29omitidas,14QUICK,2Auth,76referencia,312E2E/34omitidas. La ejecución programada cron está configurada, pero todavía no ha llegado su siguiente disparo; no se atribuye una ejecución cron a este despacho manual. Despacho QUICK independiente42252271997 SUCCESS; confirma selección rápida sin ejecutar INTENSIVE ni EXTREME.
