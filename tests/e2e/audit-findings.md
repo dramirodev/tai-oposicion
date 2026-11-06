@@ -593,3 +593,12 @@ Supertest12/12 sobre demo-tai-auth, propietario sintético: Oficial2025(11), Por
 ### ATE-005 — Importación sin conexión y recuperación longitudinal
 
 6/11: Supertest14/14(2,1min), variante online/offline de300 sesiones. Dos importaciones con red cortada conservan los DTO; reconectar guarda300 documentos, y otro contexto autenticado recupera exactamente el mismo historial y delta+20. Evidencia en evidence/history-sync-2026-11-06. ATE-015/016 permanecen cerrados; ATE-005 global sigue EN CORRECCIÓN por cobertura residual.
+
+### UX-023 — Cancelar revocación pierde el foco del activador
+
+- **Categoría/función:** Accesibilidad, gestión de permisos; WCAG2.4.3. **Prioridad:** P1.
+- **Evidencia:** Supertest45711,14 aprobadas/1 fallida: aprobar usuario→Revocar→Escape deja botón Revocar sin foco durante5s; reproducción con dos identidades Emulator.
+- **Causa:** AccessController publica pending antes de confirmar; AccessView desactiva activador. El diálogo intenta devolver foco mientras sigue disabled.
+- **Actual/propuesto/consecuencias:** Mantener exclusión de acciones por usuario desde el primer clic con un lock interno; publicar pending visual únicamente al confirmar y comenzar escritura. Cancelar puede devolver foco a un activador habilitado. Mantener protección por identidad/lifetime y deduplicación; no cambia permisos ni reglas.
+- **Archivos:** src/features/access/access-controller.ts; tests/access-page.test.js; tests/e2e/supertest-emulator.spec.ts.
+- **Estado:** CORREGIDO Y VERIFICADO. **Verificación:** componente3/3; check1050/29 omitidas; Supertest15/15,2min. **Resultado:** Escape devuelve foco sin permitir doble operación; cambios de permisos efectivos en otro usuario y persistentes tras reload. Evidencia en evidence/access-lifecycle-2026-11-06. Rama posterior independiente del PR110.

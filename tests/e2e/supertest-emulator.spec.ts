@@ -592,6 +592,57 @@ test.describe('Firebase Auth Emulator supertest', () => {
       contentType: 'application/json',
     });
   });
+  test('gestión de accesos aprueba, cancela, revoca y rechaza con efecto en otro usuario', async ({
+    page,
+    browser,
+  }) => {
+    test.setTimeout(120_000);
+    await signInSynthetic(page, identities.owner.email);
+    await page.goto('/#/acceso');
+    const member = page.locator('.arow').filter({ hasText: identities.pending.email });
+    await expect(member.getByRole('button', { name: 'Aprobar', exact: true })).toBeVisible();
+    const studentContext = await browser.newContext({ baseURL: 'http://127.0.0.1:4191' });
+    try {
+      await guardSyntheticBrowser(studentContext);
+      const student = await studentContext.newPage();
+      await signInSynthetic(student, identities.pending.email);
+      await expect(student.getByText('Acceso completo aprobado.')).toHaveCount(0);
+      await member.getByRole('button', { name: 'Aprobar', exact: true }).click();
+      await expect(member.getByRole('button', { name: 'Revocar', exact: true })).toBeVisible();
+      await expect(student.getByText('Acceso completo aprobado.')).toBeVisible();
+      await student.goto('/#/planificacion');
+      await expect(student.getByRole('heading', { name: 'Planificación de estudio', exact: true })).toBeVisible();
+      const revoke = member.getByRole('button', { name: 'Revocar', exact: true });
+      await revoke.click();
+      await expect(page.getByRole('dialog')).toContainText('Volverá a poder hacer solo la sesión rápida');
+      await page.keyboard.press('Escape');
+      await expect(page.getByRole('dialog')).toBeHidden();
+      await expect(revoke).toBeFocused();
+      await student.reload();
+      await expect(student.getByRole('heading', { name: 'Planificación de estudio', exact: true })).toBeVisible();
+      await revoke.click();
+      await page.getByRole('dialog').getByRole('button', { name: 'Revocar', exact: true }).click();
+      await expect(member).toHaveCount(0);
+      await student.goto('/#/settings');
+      await expect(student.getByRole('button', { name: 'Pedir acceso completo' })).toBeVisible();
+      await student.goto('/#/planificacion');
+      await expect(student).toHaveURL(/#\/home$/);
+      await student.goto('/#/settings');
+      await student.getByRole('button', { name: 'Pedir acceso completo' }).click();
+      await expect(member.getByRole('button', { name: 'Rechazar', exact: true })).toBeVisible();
+      await member.getByRole('button', { name: 'Rechazar', exact: true }).click();
+      await page.getByRole('dialog').getByRole('button', { name: 'Rechazar', exact: true }).click();
+      await expect(member).toHaveCount(0);
+      await expect(student.getByRole('button', { name: 'Pedir acceso completo' })).toBeVisible();
+      await student.reload();
+      await expect(student.getByText('Acceso completo aprobado.')).toHaveCount(0);
+      await expect(student.getByRole('button', { name: 'Pedir acceso completo' })).toBeVisible();
+      await page.screenshot({ path: test.info().outputPath('access-owner-after-rejection.png'), fullPage: true });
+      await student.screenshot({ path: test.info().outputPath('access-student-restricted.png'), fullPage: true });
+    } finally {
+      await studentContext.close();
+    }
+  });
   for (const role of ['normal', 'restricted', 'pending', 'anonymous'] as const) {
     test(`${role}: navegación directa respeta permisos`, async ({ page }) => {
       test.setTimeout(90_000);
