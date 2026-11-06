@@ -168,3 +168,5 @@ Check de integración: 1.016 aprobadas/29 omitidas; primer arranque de design-fl
 - ATE-012 cerrado: recorrido de configuración/persistencia **2/2** Chromium/WebKit tras actualizar el localizador; Auth **2/2** Chromium después del guard de puerto. ATE-013: montaje React dentro de act, check **1.016/29 omitidas** y tres ejecuciones completas posteriores **1.016/29 cada una**, sin fallo de arranque. Logs conservados. No se elevó timeout.
 
 - Referencias visuales revisadas verificadas: **12/12** Chromium/WebKit, tres rutas × dos temas. Los 14 fallos del E2E inicial quedan cubiertos por reejecuciones posteriores **2/2 + 12/12**, con los otros 292 ya aprobados. No se presenta como una única pasada global verde. Siguiente paso: commit de integración y referencia visual consolidada, push a PR110 y verificar CI remota.
+
+- Referencia visual consolidada: `60a2263a7829164c6d90130bcf95d2b575529130`. Integra las pantallas ya revisadas de main con foco visible y regresiones de auditoría. La referencia anterior 282f692 queda en Git; no se cambian tolerancias ni aserciones funcionales.
