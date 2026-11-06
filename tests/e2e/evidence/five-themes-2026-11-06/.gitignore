@@ -1,0 +1,5 @@
+# Raw reproducible captures remain local; CI stores them in test-results.
+*.png
+*.json
+!preview-*.png
+!coverage.json

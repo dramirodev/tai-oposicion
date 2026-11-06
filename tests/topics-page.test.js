@@ -215,43 +215,18 @@ it('cierra el paso de contenido nuevo al marcar el tema estudiado y vuelve a Pla
   expect(await screen.findByTestId('current-path')).toHaveTextContent('/planificacion');
 });
 
-it('ignora el cierre pendiente si cambia la cuenta y bloquea un doble envío', async () => {
-  Element.prototype.scrollIntoView = () => {};
-  let resolveOverview;
-  const pendingOverview = new Promise(resolve => { resolveOverview = resolve; });
-  const loadOverview = vi.fn(() => pendingOverview);
-  const harness = sectionRecallHarness({ loadOverview });
-  renderApp(createElement(TopicsPage), { services:{ topics:harness.topics, home:harness.home, academyStudyProgress:harness.academyStudyProgress }, initialEntries:[harness.route] });
-  const finish = await screen.findByRole('button', { name:'Terminar comprobación y volver a la sesión' });
-  fireEvent.click(finish);
-  fireEvent.click(finish);
-  expect(loadOverview).toHaveBeenCalledTimes(1);
-
-  harness.setAccount('account-b');
-  resolveOverview({ trainingSession:null });
-  await waitFor(() => expect(harness.notify).toHaveBeenCalledWith(expect.stringContaining('La cuenta cambió durante la comprobación.')));
-  expect(harness.loadProgressOverview).not.toHaveBeenCalled();
+it('redirige una comprobación antigua a preguntas sin escribir ni cerrar su historial', async () => {
+  const harness = sectionRecallHarness();
+  renderApp(createElement('div', null, createElement(TopicsPage), createElement(CurrentPath)), {
+    services: { topics: harness.topics, home: harness.home, academyStudyProgress: harness.academyStudyProgress }, initialEntries: [harness.route],
+  });
+  await waitFor(() => expect(screen.getByTestId('current-path')).toHaveTextContent('/test?'));
+  const path = screen.getByTestId('current-path').textContent;
+  expect(path).toContain('topic=T1.01');
+  expect(path).toContain('trainingSessionId=training-session-123');
+  expect(path).toContain('trainingActivityId=training-activity-123');
+  expect(screen.queryByRole('button', { name: 'Terminar comprobación y volver a la sesión' })).not.toBeInTheDocument();
   expect(harness.record).not.toHaveBeenCalled();
+  expect(harness.completeTrainingActivity).not.toHaveBeenCalled();
   expect(harness.setWeeklyStudyAgendaItemStatus).not.toHaveBeenCalled();
-  expect(harness.completeTrainingActivity).not.toHaveBeenCalled();
-});
-
-it('reanuda el cierre tras un guardado parcial sin duplicar el evento de seguimiento', async () => {
-  Element.prototype.scrollIntoView = () => {};
-  const harness = sectionRecallHarness({ failAgendaOnce:true });
-  renderApp(createElement(TopicsPage), { services:{ topics:harness.topics, home:harness.home, academyStudyProgress:harness.academyStudyProgress }, initialEntries:[harness.route] });
-  const finish = await screen.findByRole('button', { name:'Terminar comprobación y volver a la sesión' });
-
-  fireEvent.click(finish);
-  await waitFor(() => expect(harness.loadSessionOverview).toHaveBeenCalledTimes(1));
-  await waitFor(() => expect(harness.setWeeklyStudyAgendaItemStatus).toHaveBeenCalledTimes(1));
-  expect(harness.notify).toHaveBeenCalledWith(expect.stringContaining('La comprobación quedó guardada, pero no se pudo cerrar su actividad semanal.'));
-  expect(harness.record).toHaveBeenCalledTimes(1);
-  expect(harness.completeTrainingActivity).not.toHaveBeenCalled();
-
-  fireEvent.click(finish);
-  await waitFor(() => expect(harness.completeTrainingActivity).toHaveBeenCalledTimes(1));
-  expect(harness.record).toHaveBeenCalledTimes(1);
-  expect(harness.setWeeklyStudyAgendaItemStatus).toHaveBeenCalledTimes(2);
-  expect(harness.completeTrainingActivity).toHaveBeenCalledWith('activeRecall', { sessionId:'training-session-123', activityId:'training-activity-123' });
 });

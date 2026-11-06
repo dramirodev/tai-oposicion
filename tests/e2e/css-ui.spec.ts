@@ -324,10 +324,10 @@ test('el tema automático sigue los cambios del sistema sin recargar', async ({ 
   await page.emulateMedia({ colorScheme: 'light' });
   await page.goto('/#/home');
   await expect(page.locator('#quick')).toBeVisible();
-  await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(245, 246, 247)');
+  await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(255, 249, 237)');
   await page.emulateMedia({ colorScheme: 'dark' });
-  await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(17, 17, 19)');
-  await expect.poll(() => page.locator('meta[name="theme-color"]').getAttribute('content')).toBe('#111113');
+  await expect(page.locator('body')).toHaveCSS('background-color', 'rgb(28, 26, 22)');
+  await expect.poll(() => page.locator('meta[name="theme-color"]').getAttribute('content')).toBe('#1c1a16');
 });
 
 test('saltar al contenido conserva la ruta y ofrece un destino de teclado', async ({ page }) => {
@@ -424,7 +424,7 @@ test('la pausa de foco se guarda, sobrevive a recarga y continúa el mismo paso'
   await expect(page.locator('#app h1')).toContainText('pregunta 1');
 });
 
-test('registra el recuerdo del tema en papel y prioriza su comprobación el día siguiente', async ({ page }) => {
+test('el estudio inicial continúa sin exigir autoevaluación y no escribe recall', async ({ page }) => {
   await prepare(page, 'light', 0, true);
   await selectIntroductionTopic(page, 'T1.02');
   await page.clock.setFixedTime(new Date('2026-10-29T12:00:00+02:00'));
@@ -433,56 +433,22 @@ test('registra el recuerdo del tema en papel y prioriza su comprobación el día
   await expect(page).toHaveURL(/#\/temario\?topic=T1\.02&dailyTraining=newContent/);
   await page.locator('[data-t="T1.02"]').click({ noWaitAfter:true });
   await expect(page).toHaveURL(/#\/planificacion$/);
-
-  const assessment = page.getByRole('group', { name:'Después de estudiar en papel y cerrar los apuntes, ¿cuánto recordaste?' });
-  await expect(assessment).toBeVisible();
-  await assessment.getByRole('button', { name:'Parcialmente' }).click();
-  await expect(assessment.getByRole('button', { name:'Parcialmente' })).toHaveAttribute('aria-pressed', 'true');
-  await expect(assessment.getByText(/Autoevaluación guardada/)).toBeVisible();
-  expect(await page.evaluate(() => JSON.parse(localStorage.getItem('tai.paper-recall.v1.guest') || '[]'))).toMatchObject([
-    { topicId:'T1.02', rating:'partial', dateKey:'2026-10-29' },
-  ]);
-
-  await page.clock.setFixedTime(new Date('2026-10-30T12:00:00+02:00'));
+  await expect(page.getByRole('button', { name:'Lo recordé', exact:true })).toHaveCount(0);
+  expect(await page.evaluate(() => localStorage.getItem('tai.paper-recall.v1.guest'))).toBeNull();
   await page.reload();
   await expect(page.locator('#app h1')).toHaveText('Planificación de estudio');
-  await expect(page.getByText(/2 de \d+ temas marcados como vistos/)).toBeVisible();
-  const nextDayActivities = page.locator('.planning-activity');
-  const priorityActivity = nextDayActivities.filter({ hasText:'Preguntas del tema prioritario' });
-  await expect(priorityActivity).toHaveCount(1);
-  await expect(priorityActivity).toContainText('T1.02');
-  await priorityActivity.getByText('Instrucciones y motivo').click();
-  await expect(priorityActivity).toContainText('Tu autoevaluación de recuerdo en papel fue «Parcialmente» el 29 de octubre de 2026');
+  await expect(page.getByRole('button', { name:'Lo recordé', exact:true })).toHaveCount(0);
 });
 
-test('una autoevaluación de recuerdo completo no activa refuerzo prioritario al día siguiente', async ({ page, browserName }) => {
+test('las autoevaluaciones antiguas permanecen legibles sin generar controles de recuerdo', async ({ page }) => {
   await prepare(page, 'light', 0, true);
-  await selectIntroductionTopic(page, 'T1.02');
-  await page.clock.setFixedTime(new Date('2026-10-29T12:00:00+02:00'));
+  await page.goto('/#/home');
+  const stored = JSON.stringify([{ topicId:'T1.01', rating:'partial', dateKey:'2026-10-29', ratedAt:1793268000000 }]);
+  await page.evaluate(stored => localStorage.setItem('tai.paper-recall.v1.guest',stored), stored);
   await page.goto('/#/planificacion');
-  await page.getByRole('button', { name:'Comenzar sesión' }).click();
-  await expect(page).toHaveURL(/#\/temario\?topic=T1\.02&dailyTraining=newContent/);
-  await page.locator('[data-t="T1.02"]').click({ noWaitAfter:true });
-  await expect(page).toHaveURL(/#\/planificacion$/);
-
-  const assessment = page.getByRole('group', { name:'Después de estudiar en papel y cerrar los apuntes, ¿cuánto recordaste?' });
-  await assessment.getByRole('button', { name:'Parcialmente', exact:true }).click();
-  await expect(assessment.getByRole('button', { name:'Parcialmente', exact:true })).toHaveAttribute('aria-pressed', 'true');
-  await assessment.getByRole('button', { name:'Lo recordé', exact:true }).click();
-  await expect(assessment.getByRole('button', { name:'Lo recordé', exact:true })).toHaveAttribute('aria-pressed', 'true');
-  await expect(assessment.getByText(/Autoevaluación guardada/)).toBeVisible();
-  const assessments = await page.evaluate(() => JSON.parse(localStorage.getItem('tai.paper-recall.v1.guest') || '[]'));
-  expect(assessments).toHaveLength(1);
-  expect(assessments).toMatchObject([
-    { topicId:'T1.02', rating:'remembered', dateKey:'2026-10-29' },
-  ]);
-
-  await page.clock.setFixedTime(new Date('2026-10-30T12:00:00+02:00'));
+  await expect(page.getByRole('button', { name:'Lo recordé', exact:true })).toHaveCount(0);
   await page.reload();
-  await expect(page.locator('#app h1')).toHaveText('Planificación de estudio');
-  const topicPriority = page.locator('.planning-activity').filter({ hasText:'Preguntas del tema prioritario' }).filter({ hasText:'T1.02' });
-  await expect(topicPriority).toHaveCount(0);
-  await page.screenshot({ path:`tests/e2e/evidence/accessibility-2026-11-05/paper-recall-remembered-next-day-${browserName}.png`, fullPage:true });
+  expect(await page.evaluate(() => localStorage.getItem('tai.paper-recall.v1.guest'))).toBe(stored);
 });
 
 test('un día de consolidación sin temas vistos muestra tiempo disponible, no una duración de sesión inventada', async ({ page }) => {
@@ -661,10 +627,10 @@ test('la sidebar conserva los destinos y el área de estudio al ampliar texto', 
   const sidebar = page.locator('.workspace-sidebar');
   await expect(sidebar).toBeVisible();
   await expect(page.locator('nav[aria-label="Principal"]')).toBeHidden();
-  await sidebar.getByRole('link', { name: 'Test por tema', exact: true }).click();
+  await sidebar.getByRole('link', { name: 'Practicar', exact: true }).click();
   await expect(page.locator('#app h1')).toHaveText('Test por tema');
-  await expect(sidebar.getByRole('link', { name: 'Test por tema', exact: true })).toHaveAttribute('aria-current', 'page');
-  await sidebar.getByRole('link', { name: 'Inicio', exact: true }).click();
+  await expect(sidebar.getByRole('link', { name: 'Practicar', exact: true })).toHaveAttribute('aria-current', 'page');
+  await sidebar.getByRole('link', { name: 'Hoy', exact: true }).click();
   await page.locator('#quick').click();
   await expect(page.locator('.opt').first()).toBeVisible();
   await expect.poll(() => page.evaluate(() => {
@@ -690,7 +656,7 @@ test('el menú móvil conserva la iconografía de navegación y funciona con tec
   await page.keyboard.press('Escape');
   await expect(menu).toBeFocused();
   await menu.click();
-  const menuTestIcon = page.locator('#menuov .lrow').filter({ hasText: 'Test por tema' }).locator('svg');
+  const menuTestIcon = page.locator('#menuov .lrow').filter({ hasText: 'Practicar' }).locator('svg');
   const navigationTestIcon = page.locator('.workspace-sidebar a[href="#/test"] svg');
   await expect(menuTestIcon).toBeVisible();
   expect(await menuTestIcon.evaluate(icon => icon.innerHTML)).toBe(await navigationTestIcon.evaluate(icon => icon.innerHTML));
@@ -719,7 +685,7 @@ for (const theme of ['light', 'dark']) {
     const navigationIconColors = await page.locator('.workspace-sidebar').evaluate(sidebar => {
       const active = sidebar.querySelector<HTMLAnchorElement>('a[aria-current="page"] svg');
       const inactive = [...sidebar.querySelectorAll<HTMLAnchorElement>('a')]
-        .find(link => link.textContent?.includes('Test por tema'))?.querySelector('svg');
+        .find(link => link.textContent?.includes('Practicar'))?.querySelector('svg');
       return {
         active: active ? getComputedStyle(active).color : null,
         inactive: inactive ? getComputedStyle(inactive).color : null,

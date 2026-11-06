@@ -23,7 +23,7 @@ const copyDefaults = (defaults: Record<string, unknown>): Record<string, unknown
   Object.fromEntries(Object.entries(defaults).map(([key, value]) => [key, Array.isArray(value) ? [...value] : value]));
 type Check = (value: unknown) => boolean;
 const schemas: Record<string, { defaults: Record<string, unknown>; fields: Record<string, Check> }> = {
-  ui: { defaults: {}, fields: { theme: oneOf(['auto', 'light', 'dark']), size: integer(0, 3), lectura: integer(0, 2) } },
+  ui: { defaults: {}, fields: { visualTheme: oneOf(['soft-brutalism', 'living-notebook', 'momentum', 'tai-lab', 'classic', 'precision']), theme: oneOf(['auto', 'light', 'dark']), size: integer(0, 3), lectura: integer(0, 2) } },
   test: { defaults: { sel: [], n: 15, mode: 'nuevas', o: ['O', 'A', 'G'] }, fields: {
     all: bool, sel: temas, n: integer(1, 80), mode: oneOf(['nuevas', 'aleatorio', 'falladas', 'dudosas', 'trampas']), o: origins, pt: integer(0, 1), min: integer(1, 180),
   } },

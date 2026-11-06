@@ -1,3 +1,4 @@
+import { verifySyntheticBrowserIsolation } from './synthetic-auth';
 import { expect, test, type Page } from '@playwright/test';
 import { initializeTestEnvironment } from '@firebase/rules-unit-testing';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
@@ -12,10 +13,10 @@ test('Firebase Auth Emulator aísla el estudio al cambiar de cuenta y de día en
   });
   await page.clock.setFixedTime(new Date('2026-10-29T12:00:00+02:00'));
   const firebaseRequests: string[] = [];
-  await page.route('**/*', route => {
+  await page.context().route('**/*', route => {
     const url = new URL(route.request().url());
     const isLoopback = ['localhost', '127.0.0.1', '::1'].includes(url.hostname);
-    const isAppOrEmulatorPort = ['4187', '4195', '9099', '8080'].includes(url.port);
+    const isAppOrEmulatorPort = ['4187', '9099', '8080'].includes(url.port);
     const isStaticGoogleAuthAsset = url.origin === 'https://apis.google.com' && route.request().method() === 'GET'
       && (url.pathname === '/js/api.js' || url.pathname.startsWith('/_/scs/'));
     if ((!isLoopback || !isAppOrEmulatorPort) && !isStaticGoogleAuthAsset) return route.abort('blockedbyclient');
@@ -82,6 +83,7 @@ test('Firebase Auth Emulator aísla el estudio al cambiar de cuenta y de día en
     return result;
   };
 
+  await verifySyntheticBrowserIsolation(page);
   await emulator.clearFirestore();
   let firstUid = '';
   let secondUid = '';
@@ -98,9 +100,14 @@ test('Firebase Auth Emulator aísla el estudio al cambiar de cuenta y de día en
   expect(firstTopic).toBeTruthy();
   await page.locator(`[data-t="${firstTopic}"]`).click({ noWaitAfter:true });
   await expect(page).toHaveURL(/#\/planificacion$/);
-  const rating = page.getByRole('group', { name:'Después de estudiar en papel y cerrar los apuntes, ¿cuánto recordaste?' });
-  await rating.getByRole('button', { name:'Parcialmente' }).click();
-  await expect(rating.getByText(/Autoevaluación guardada/)).toBeVisible();
+  await expect(page.getByRole('button', { name:'Lo recordé', exact:true })).toHaveCount(0);
+  // Historical fixture only, written to the isolated emulator after observed Auth traffic.
+  expect(firebaseRequests.some(endpoint => endpoint.endsWith(':9099'))).toBe(true);
+  await emulator.withSecurityRulesDisabled(async context => {
+    await setDoc(doc(context.firestore(), `users/${firstUid}/cfg/trainingRecall`), { schemaVersion:1, updatedAt:1793268000000,
+      assessments:[{ id:`2026-10-29:${firstTopic}`, topicId:firstTopic, dateKey:'2026-10-29', ratedAt:1793268000000, rating:'partial' }] });
+  });
+  await expect.poll(() => page.evaluate(() => Object.keys(localStorage).some(key => key.startsWith('tai.paper-recall.v1.') && key !== 'tai.paper-recall.v1.guest'))).toBe(true);
   const ownerKey = await page.evaluate(() => Object.keys(localStorage).find(key => key.startsWith('tai.paper-recall.v1.') && key !== 'tai.paper-recall.v1.guest'));
   expect(ownerKey).toBeTruthy();
   expect(await page.evaluate(key => JSON.parse(localStorage.getItem(key!) || '[]'), ownerKey)).toHaveLength(1);
@@ -119,14 +126,17 @@ test('Firebase Auth Emulator aísla el estudio al cambiar de cuenta y de día en
   await expect(priority).toHaveCount(1);
   await expect(priority).toContainText(firstTopic!);
   await priority.getByText('Instrucciones y motivo').click();
-  await expect(priority).toContainText('Tu autoevaluación de recuerdo en papel fue «Parcialmente» el 29 de octubre de 2026');
+  await expect(priority).not.toContainText('Tu autoevaluación de recuerdo en papel fue');
+  await expect(page.getByRole('button', { name:'Lo recordé', exact:true })).toHaveCount(0);
 
   await page.goto('/#/settings');
+  await page.getByRole('radio', { name:/Cuaderno vivo/ }).check();
   await page.getByRole('button', { name:'Cerrar sesión' }).click();
   await expect(page).toHaveURL(/#\/home$/);
   await page.goto('/#/settings');
   await expect(page.getByRole('button', { name:'Entrar con Google' })).toBeVisible();
   secondUid = await signIn('student@example.test');
+  await expect(page.locator('html')).toHaveAttribute('data-visual-theme','soft-brutalism');
   await page.goto('/#/home');
   await expect(page.locator('dl').getByText('0 / 36')).toBeVisible();
   expect(await page.evaluate(key => localStorage.getItem(key!), ownerKey)).not.toBeNull();
@@ -139,6 +149,7 @@ test('Firebase Auth Emulator aísla el estudio al cambiar de cuenta y de día en
   await expect(page.getByRole('button', { name:'Entrar con Google' })).toBeVisible({ timeout:15_000 });
   const ownerAgainUid = await signIn('study-owner@example.test');
   expect(ownerAgainUid).toBe(firstUid);
+  await expect(page.locator('html')).toHaveAttribute('data-visual-theme','living-notebook');
   await page.goto('/#/planificacion');
   const restoredPriority = page.locator('.planning-activity').filter({ hasText:'Preguntas del tema prioritario' });
   await expect(restoredPriority).toHaveCount(1);
@@ -147,7 +158,7 @@ test('Firebase Auth Emulator aísla el estudio al cambiar de cuenta y de día en
   await peerPage.route('**/*', route => {
     const url = new URL(route.request().url());
     const isLoopback = ['localhost', '127.0.0.1', '::1'].includes(url.hostname);
-    const isAppOrEmulatorPort = ['4187', '4195', '9099', '8080'].includes(url.port);
+    const isAppOrEmulatorPort = ['4187', '9099', '8080'].includes(url.port);
     const isStaticGoogleAuthAsset = url.origin === 'https://apis.google.com' && route.request().method() === 'GET'
       && (url.pathname === '/js/api.js' || url.pathname.startsWith('/_/scs/'));
     if ((!isLoopback || !isAppOrEmulatorPort) && !isStaticGoogleAuthAsset) return route.abort('blockedbyclient');

@@ -455,29 +455,12 @@ test('práctica permite volver a pendientes, bloquea respondidas y conserva cons
   await page.locator('#prev').click();
   await expect(page.locator('#app h1')).toContainText('pregunta 1');
   await page.locator('.opt').first().click();
-  await page.evaluate(() => {
-    const original = Storage.prototype.setItem;
-    Object.defineProperty(window, '__taiOriginalStorageSetItem', { value: original, configurable: true });
-    Storage.prototype.setItem = function (key: string, value: string) {
-      if (key === 'tai.run:guest') throw new DOMException('quota', 'QuotaExceededError');
-      return original.call(this, key, value);
-    };
-  });
-  await page.getByRole('button', { name: 'Pude explicarlo' }).click();
-  await expect(page.getByRole('button', { name: 'Pude explicarlo' })).toHaveAttribute('aria-pressed', 'true');
-  await expect.poll(async () => (await savedAttemptHistory(page)).events.filter(type => type === 'self-assess')).toHaveLength(1);
-  await expect(page.locator('p[role="status"]').filter({ hasText: 'No se pudo guardar el progreso de la sesión' })).toBeVisible();
-  await page.evaluate(() => {
-    const host = window as Window & { __taiOriginalStorageSetItem?: Storage['setItem'] };
-    if (host.__taiOriginalStorageSetItem) Storage.prototype.setItem = host.__taiOriginalStorageSetItem;
-    delete host.__taiOriginalStorageSetItem;
-  });
-  await page.getByRole('button', { name: 'Reintentar guardado' }).click();
-  await expect(page.locator('p[role="status"]').filter({ hasText: 'Autoevaluación guardada' })).toBeVisible();
+  await expect(page.getByRole('button', { name:'Pude explicarlo' })).toHaveCount(0);
+  await expect(page.getByRole('button', { name:'Aún necesito ayuda' })).toHaveCount(0);
+  expect((await savedAttemptHistory(page)).events.filter(type => type === 'self-assess')).toHaveLength(0);
   await page.reload();
   await expect(page.locator('#askm')).toContainText('¿Continuar donde lo dejaste?');
   await page.locator('.overlay [data-v="1"]').click();
-  await expect(page.getByRole('button', { name: 'Pude explicarlo' })).toHaveAttribute('aria-pressed', 'true');
   await expect(page.locator('.opt:disabled')).toHaveCount(4);
   await expect.poll(() => page.evaluate(() => Object.keys(JSON.parse(localStorage.getItem('tai.v1:guest') || '{}').stats || {}))).toHaveLength(1);
   await page.locator('.question-map summary').click();

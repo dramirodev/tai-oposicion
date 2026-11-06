@@ -75,6 +75,13 @@ for (const width of [320, 1440]) {
     expect(savedProgress.sessions).toHaveLength(1);
     expect(Object.keys(savedProgress.stats)).toEqual(expect.arrayContaining(questionIds));
     await page.screenshot({ path: `${evidenceDir}/stats-to-topic-test-result-${width}px.png` });
+    const detailed = await page.evaluate(async () => {
+      const db = await new Promise<IDBDatabase>((resolve,reject) => { const request = indexedDB.open('tai-attempts',2); request.onsuccess = () => resolve(request.result); request.onerror = () => reject(request.error); });
+      const rows = await new Promise<Array<{ value:{ questionId:string; state:string } }>>((resolve,reject) => { const request = db.transaction('attempts').objectStore('attempts').getAll(); request.onsuccess = () => resolve(request.result); request.onerror = () => reject(request.error); });
+      db.close(); return rows.map(row => ({ id:row.value.questionId,state:row.value.state }));
+    });
+    expect(detailed).toHaveLength(questionIds.length);
+    expect(detailed.every(row => row.state === 'answered')).toBe(true);
     await page.goto('/#/stats');
     await expect(page.getByRole('heading', { name: 'Progreso' })).toBeVisible();
     await expect(page.getByRole('region', { name: 'Métricas del periodo', exact: true })).toContainText(`Acierto ordinario · ${questionIds.length} respuestas`);

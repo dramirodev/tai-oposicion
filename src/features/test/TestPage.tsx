@@ -108,7 +108,7 @@ export function TestPage() {
       if (result === 'account-changed') setMessage('La cuenta cambió mientras se preparaba el test. Vuelve a intentarlo.');
     } catch { setMessage('No se pudo preparar el test. Comprueba la conexión e inténtalo de nuevo.'); }
     finally { setStarting(false); }
-  }, [configuration, test, trainingTopicSet, trainingTopicIds, trainingTopicsValue, trainingActivityReference]);
+  }, [configuration, test, trainingTopicSet, trainingTopicIds, trainingTopicsValue, trainingActivityReference, setMessage, setStarting]);
 
   useEffect(() => {
     if (!dailyTraining || loading || autoStarted.current) return;
@@ -117,7 +117,7 @@ export function TestPage() {
   }, [dailyTraining, dailyTrainingActivity, loading, start]);
 
   if (dailyTraining && (loading || starting || !message)) return <PageLoading variant="legacy" />;
-  if (dailyTraining && message) return <><h1>Entrenamiento de hoy</h1><div className="note" role="alert">{message}</div><Link className="btn sec" to="/planificacion">Volver al plan de hoy</Link></>;
+  if (dailyTraining && message) return <><h1>Entrenamiento de hoy</h1><div className="note" role="alert">{message}</div><Link className="btn" to="/test">Elegir otra práctica</Link>{suggestedTopicId && isStudyTopicId(suggestedTopicId) && <Link className="btn sec" to={`/temario?topic=${encodeURIComponent(suggestedTopicId)}`}>Consultar tema y revisar su marca de estudio</Link>}<Link className="btn sec" to="/planificacion">Volver al plan de hoy</Link></>;
 
   const selected = new Set(configuration.selected);
   return <>
@@ -139,12 +139,13 @@ export function TestPage() {
         {(['nuevas', 'aleatorio', 'falladas', 'dudosas', 'trampas'] as const).map(mode => <button key={mode} className={configuration.mode === mode ? 'on' : ''} aria-pressed={configuration.mode === mode} onClick={() => update({ mode })}>{({ nuevas: 'Nuevas primero', aleatorio: 'Aleatorio', falladas: 'Falladas', dudosas: 'Dudosas', trampas: 'Mis trampas' })[mode]}</button>)}
       </div>
       {configuration.mode === 'trampas' && <p className="sub sm">Usa tus 3 trampas con más fallos (mínimo 5 respuestas por trampa): primero las que fallaste y luego las que no has visto.</p>}
-      <h2 className="h3">Origen</h2>
+      <details><summary className="min-h-11 cursor-pointer content-center">Opciones avanzadas · origen</summary><h2 className="h3">Origen</h2>
       <div className="seg multi" role="group" aria-label="Origen de las preguntas">
         {([['G', 'Generadas'], ['O', 'Oficiales'], ['A', 'Academia']] as const).map(([origin, label]) => <button key={origin} className={configuration.origins.includes(origin) ? 'on' : ''} aria-pressed={configuration.origins.includes(origin)} onClick={() => {
           const origins = new Set(configuration.origins); if (origins.has(origin)) origins.delete(origin); else origins.add(origin); if (!origins.size) origins.add(origin); update({ origins: [...origins] });
         }}>{label}</button>)}
       </div>
+      </details>
     </section>
     <section className="card" aria-label="Selección de temas">
       <h2 className="h3">Temas <small>({configuration.all ? 'Todo el temario' : `${selected.size} elegidos`})</small></h2>

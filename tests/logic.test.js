@@ -266,9 +266,9 @@ describe('motivos de error', () => { it('hay una lista cerrada de motivos', () =
 
 describe('comodidad', () => {
   it('normUi sanea valores inválidos', () => {
-    expect(normUi(null)).toEqual({ theme: 'auto', size: 0, lectura: 0 });
-    expect(normUi({ theme: 'x', size: 99 })).toEqual({ theme: 'auto', size: 0, lectura: 0 });
-    expect(normUi({ theme: 'dark', size: 2, lectura: 0 })).toEqual({ theme: 'dark', size: 2, lectura: 0 });
+    expect(normUi(null)).toEqual({ visualTheme: 'soft-brutalism', theme: 'auto', size: 0, lectura: 0 });
+    expect(normUi({ theme: 'x', size: 99 })).toEqual({ visualTheme: 'soft-brutalism', theme: 'auto', size: 0, lectura: 0 });
+    expect(normUi({ theme: 'dark', size: 2, lectura: 0 })).toEqual({ visualTheme: 'soft-brutalism', theme: 'dark', size: 2, lectura: 0 });
     expect(ZOOMS.length).toBe(4);
   });
   it('swipeDir exige gesto horizontal claro', () => {

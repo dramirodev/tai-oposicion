@@ -8,6 +8,7 @@ export function initializeUiPreferences(): () => void {
   const apply = () => {
     const ui = normalizeUiPreferences(localStudyProgressGateway.getPreferences().ui);
     const root = document.documentElement;
+    root.dataset.visualTheme = ui.visualTheme;
     if (ui.theme === 'auto') root.removeAttribute('data-theme');
     else root.setAttribute('data-theme', ui.theme);
     root.style.setProperty('--z', String(UI_ZOOMS[ui.size]));
@@ -15,7 +16,7 @@ export function initializeUiPreferences(): () => void {
     const dark = ui.theme === 'dark' || (ui.theme === 'auto' && systemTheme.matches);
     root.dataset.colorScheme = dark ? 'dark' : 'light';
     const themeColor = document.querySelector<HTMLMetaElement>('meta[name=theme-color]');
-    if (themeColor) themeColor.content = dark ? '#111113' : '#f5f6f7';
+    if (themeColor) themeColor.content = getComputedStyle(root).getPropertyValue('--bg').trim();
   };
 
   apply();

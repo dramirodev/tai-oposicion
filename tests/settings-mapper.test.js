@@ -17,7 +17,7 @@ function input(overrides = {}) {
 it('maps current settings and normalizes the stored training and UI preferences', () => {
   const snapshot = toSettingsSnapshot(input());
 
-  expect(snapshot.ui).toEqual({ theme: 'dark', size: 2, lectura: 1 });
+  expect(snapshot.ui).toEqual({ visualTheme: 'soft-brutalism', theme: 'dark', size: 2, lectura: 1 });
   expect(snapshot.training).toEqual({
     minutesByDay: [0, 10, 20, 30, 40, 50, 60],
     focusByDay: ['rest', 'new-content', 'new-content', 'consolidation', 'new-content', 'new-content', 'consolidation'],
@@ -31,7 +31,7 @@ it('maps current settings and normalizes the stored training and UI preferences'
 it('provides safe defaults for old or malformed preferences and exam values', () => {
   const snapshot = toSettingsSnapshot(input({ uiPreferences: { theme: 'blue', size: 99, lectura: -1 }, trainingPreferences: null, exam: null }));
 
-  expect(snapshot.ui).toEqual({ theme: 'auto', size: 0, lectura: 0 });
+  expect(snapshot.ui).toEqual({ visualTheme: 'soft-brutalism', theme: 'auto', size: 0, lectura: 0 });
   expect(snapshot.training).toEqual({
     minutesByDay: [0, 120, 120, 120, 120, 120, 120],
     focusByDay: ['rest', 'new-content', 'new-content', 'consolidation', 'new-content', 'new-content', 'consolidation'],

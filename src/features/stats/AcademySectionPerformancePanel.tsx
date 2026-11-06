@@ -24,7 +24,7 @@ function Result({ value, onPractice }: { value: AcademySectionPerformanceResult;
         <li>{outcomeSummary('Simulacro', row.simulation)}</li>
       </ul>
       <p className="m-0 text-sm">Confianza en el último intento ordinario: práctica {row.practice.confidence.sure} segura, {row.practice.confidence.betweenTwo} entre dos, {row.practice.confidence.guess} al azar; simulacro {row.simulation.confidence.sure} segura, {row.simulation.confidence.betweenTwo} entre dos, {row.simulation.confidence.guess} al azar.</p>
-      <p className="my-1 text-sm">Autoevaluación (señal subjetiva, separada): práctica {row.practice.selfAssessment.couldExplain} “pude explicar”, {row.practice.selfAssessment.needsHelp} “necesito ayuda”; simulacro {row.simulation.selfAssessment.couldExplain} “pude explicar”, {row.simulation.selfAssessment.needsHelp} “necesito ayuda”.</p>
+      <p className="my-1 text-sm">Autoevaluación histórica (señal subjetiva, separada): práctica {row.practice.selfAssessment.couldExplain} “pude explicar”, {row.practice.selfAssessment.needsHelp} “necesito ayuda”; simulacro {row.simulation.selfAssessment.couldExplain} “pude explicar”, {row.simulation.selfAssessment.needsHelp} “necesito ayuda”.</p>
       <p className="m-0 text-xs text-muted">Último resultado ordinario por pregunta vinculada; no es porcentaje de dominio ni mide recuerdo diferido.</p>
     </article>)}
   </div>;

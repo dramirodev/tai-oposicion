@@ -262,7 +262,7 @@ export type QuizFinishResult = 'finished' | 'cancelled' | 'empty';
 export interface QuizServices { getSnapshot(): QuizSnapshot | null; subscribe(listener: () => void): () => void; startCurrentQuestion(): void; persist(): boolean; tick(): void; setIndex(index: number): void; answer(index: number): void; toggleReview(): void; setConfidence(value: 'sure' | 'betweenTwo' | 'guess'): void; setSelfAssessment(value: SelfAssessment, retryHistory?: boolean): Promise<{ historySaved: boolean; checkpointSaved: boolean }>; toggleDiscard(index: number): void; reveal(): boolean; markBlank(): void; toggleBlank(): void; setPaused(paused: boolean): void; finish(reason?: 'complete' | 'interrupted' | 'timeout'): Promise<QuizFinishResult>; exit(): Promise<void>; cancelConfirmation(): void; toggleFlag(): void; setFailureReason(reason: number): void; markDoubt(): void; markLuck(): void; toggleCard(): void; addHighlight(anchor: { field: 'statement' | `option:${number}`; sourceText: string; start: number; end: number }, category: 'key' | 'doubt'): boolean; removeHighlight(id: string): void; saveReport(reason: string, note: string): void; loadExplanation(): Promise<ExplanationLookup> }
 export interface SettingsSnapshot {
   sync: { state: string; user: { name: string; email: string } | null; configured: boolean; lastSync: number; error: string; detail: string; host: string; authDomain: string; accessError: string; requests: readonly AccessMember[] };
-  full: boolean; level: string; devMode: string | null; devRevealed: boolean; ui: { theme: string; size: number; lectura: number }; training: TrainingPreferences;
+  full: boolean; level: string; devMode: string | null; devRevealed: boolean; ui: { visualTheme?: string; theme: string; size: number; lectura: number }; training: TrainingPreferences;
   progress: { questions: number; topics: number; sessions: number; openReports: number }; exam: string; version: string; build: string; update: string | null;
   offline: { complete: boolean; missing: readonly string[]; total: number; completedAt: number | null } | null; index: { questions: number; scenarios: number; topics?: readonly { id: string; name: string }[] } | null;
 }
@@ -271,7 +271,7 @@ export interface SettingsServices {
   getSnapshot(): SettingsSnapshot;
   subscribe(listener: () => void): () => void;
   load(): Promise<void>;
-  setPreference(key: 'theme' | 'size' | 'lectura', value: string | number): void;
+  setPreference(key: 'visualTheme' | 'theme' | 'size' | 'lectura', value: string | number): void;
   setTrainingPreferences(value: TrainingPreferences): void;
   createTrainingCalendarEvent(input: Omit<TrainingCalendarEvent, 'id' | 'createdAt' | 'updatedAt'>): TrainingCalendarEvent | null;
   setExam(value: string): void;

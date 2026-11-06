@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useState } from 'react';
-import { Activity, CalendarClock, ClipboardCheck, House, Settings2 } from 'lucide-react';
+import { Activity, CalendarClock, ClipboardCheck, House, BookOpen, Settings2 } from 'lucide-react';
 import { createPortal } from 'react-dom';
 import { Outlet, useLocation, useNavigate } from 'react-router';
 import { observeFixedLayout } from '../../shared/ui/layout-metrics.js';
@@ -26,11 +26,11 @@ function NetworkBanner() {
   return <div id="net" role="status" aria-live="polite" className={status}>{status === 'off' ? 'Sin conexión · solo lo descargado' : status === 'on' ? 'De nuevo en línea' : ''}</div>;
 }
 const tabs = [
-  ['home', 'Inicio', House],
-  ['test', 'Test', ClipboardCheck],
+  ['home', 'Hoy', House],
+  ['temario', 'Temario', BookOpen],
+  ['test', 'Practicar', ClipboardCheck],
   ['sim', 'Simulacros', CalendarClock],
   ['stats', 'Progreso', Activity],
-  ['settings', 'Ajustes', Settings2],
 ] as const;
 export function Layout() {
   useLayoutEffect(observeFixedLayout, []);
@@ -55,7 +55,7 @@ export function Layout() {
     {createPortal(<>
       <div id="live" className="sr" role="status" aria-live="polite" />
       <nav aria-label="Principal">
-        {tabs.map(([route, label, Icon]) => <a key={route} href={hashSegment(route)} data-r={route}
+        {(full ? tabs : [['home', 'Hoy', House], ['settings', 'Ajustes', Settings2]] as const).map(([route, label, Icon]) => <a key={route} href={hashSegment(route)} data-r={route}
           className={section === route ? 'on' : ''} aria-current={section === route ? 'page' : undefined}
           style={{ display: full || isGuestNavigationRoute(route) ? '' : 'none' }}>
           <i aria-hidden="true"><Icon size="1.125rem" strokeWidth={1.7} /></i>{label}

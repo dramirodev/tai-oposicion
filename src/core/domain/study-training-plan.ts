@@ -31,7 +31,7 @@ export function normalizeTrainingPreferences(value: unknown): TrainingPreference
     ? [...focus] as NonNullable<TrainingPreferences['focusByDay']>
     : [...DEFAULT_TRAINING_PREFERENCES.focusByDay!];
   const storedActivities = Array.isArray(candidate.activities)
-    ? [...new Set(candidate.activities.filter((activity): activity is TrainingActivity => supportedActivities.has(activity as TrainingActivity)))]
+    ? [...new Set(candidate.activities.filter((activity): activity is TrainingActivity => supportedActivities.has(activity as TrainingActivity) && activity !== 'activeRecall'))]
     : [...DEFAULT_TRAINING_PREFERENCES.activities];
   const configuredActivities = storedActivities.length ? storedActivities : [...DEFAULT_TRAINING_PREFERENCES.activities];
   const activities = candidate.activityVersion === 3

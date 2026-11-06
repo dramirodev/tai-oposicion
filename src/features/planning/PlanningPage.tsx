@@ -3,13 +3,10 @@ import { Link, useNavigate } from 'react-router';
 import { CalendarDays, Check, CircleHelp, Clock3, Pause, Play } from 'lucide-react';
 import type { TrainingActivity } from '../../core/domain/entities.js';
 import type { DailyTrainingSession, TrainingSessionStep } from '../../core/domain/study-training-session.js';
-import { needsPaperRecallFollowUp, type PaperRecallAssessment, type PaperRecallRating } from '../../core/domain/paper-recall-assessment.js';
 import type { DailyTrainingPlan } from '../../core/domain/study-training-plan.js';
 import type { PaperTestAttemptSegment, PaperTestCorrectionStatus, PaperTestSelfRating } from '../../core/domain/paper-test-attempt.js';
 import type { ScheduledStudyActivity, ScheduledStudyActivityKind } from '../../core/domain/study-training-calendar.js';
-import { addSectionRecallFollowUpsToWeeklyProposal, dailyTrainingPlanFromAgenda, proposeWeeklyAgendaPlan, type WeeklyAgendaItem, type WeeklyAgendaPlanProposal, type WeeklyAgendaRecoveryProposal } from '../../core/domain/study-weekly-agenda.js';
-import { academyCurriculumMaterialIndex } from '../../core/domain/academy-curriculum.generated.js';
-import { hasLinkedDelayedFollowUpCheck, sectionFollowUps, sectionFollowUpCompletionEventId, type AcademySectionStudyEvent } from '../../core/domain/academy-study-progress.js';
+import { dailyTrainingPlanFromAgenda, proposeWeeklyAgendaPlan, type WeeklyAgendaItem, type WeeklyAgendaPlanProposal, type WeeklyAgendaRecoveryProposal } from '../../core/domain/study-weekly-agenda.js';
 import { useStudyService, type HomeOverview, type HomeServices, type SettingsSnapshot } from '../../shared/ui/study-services.js';
 import { useAccountResource } from '../../shared/ui/use-account-resource.js';
 import { useActionLifetime } from '../../shared/ui/use-action-lifetime.js';
@@ -26,10 +23,10 @@ import { buildStudyHorizonSummary } from '../../core/domain/study-planning-horiz
 const activityPresentation: Record<TrainingActivity, { title: string; objective: string; instruction: string; resource: string }> = {
   newContent: {
     title: 'Estudio de tema nuevo', objective: 'Avanzar en el temario sin perder el hilo.',
-    instruction: 'Abre el temario del tema y empieza por comprender un apartado con el material disponible; si no se entiende, consulta la explicación de ese material y trabaja un ejemplo. Después cierra el material, explica la idea con tus palabras y registra solo la cobertura que hayas hecho. TAI no aporta una explicación verificada cuando el material no la contiene.', resource: 'Temario y material de academia',
+    instruction: 'Abre el temario del tema y empieza por comprender un apartado con el material disponible; si no se entiende, consulta la explicación de ese material y trabaja un ejemplo. Registra solo la cobertura que hayas hecho; después comprueba el tema con un test. TAI no aporta una explicación verificada cuando el material no la contiene.', resource: 'Temario y material de academia',
   },
   activeRecall: {
-    title: 'Recuperación activa', objective: 'Recordar antes de volver a mirar la respuesta.',
+    title: 'Test de práctica', objective: 'Practicar preguntas y revisar su corrección.',
     instruction: 'Responde preguntas de los temas que ya has visto y revisa cada corrección.', resource: 'Test por tema',
   },
   topicTest: {
@@ -51,10 +48,10 @@ const activityPresentation: Record<TrainingActivity, { title: string; objective:
 };
 
 const reasonText: Record<DailyTrainingPlan['activities'][number]['reason'], string> = {
-  'active-recall': 'Practica recordar el contenido antes de consultar la respuesta.',
+  'active-recall': 'Actividad antigua: continúa mediante un test del tema; el historial se conserva.',
   'new-content-day': 'El enfoque de hoy reserva tiempo para el siguiente tema sin marcar como visto.',
   'new-topic-day': 'Hoy coincide con el día semanal configurado para introducir temas.',
-  'weak-topics': 'Prioridad basada en resultados de preguntas y en la última autoevaluación de tests en papel de temas vistos; esta señal personal dura hasta 30 días y no es una medida de dominio.',
+  'weak-topics': 'Prioridad basada en los resultados de preguntas de temas vistos.',
   coverage: 'Amplía la práctica de los temas que has marcado como vistos.',
   'recurring-failures': 'Hay preguntas falladas de temas vistos que aún requieren repaso.',
   'due-reviews': 'Hay preguntas de temas vistos con repaso pendiente.',
@@ -73,9 +70,7 @@ const reviewModeLabels: Record<NonNullable<TrainingSessionStep['reviewMode']>, s
   'selective-reading': 'revisión selectiva',
   'broad-reading': 'revisión amplia',
 };
-const recallRatingLabels: Record<PaperRecallRating, string> = {
-  remembered: 'Lo recordé', partial: 'Parcialmente', 'not-remembered': 'No lo recordé',
-};
+
 
 function activityState(session: DailyTrainingSession | null, index: number) {
   const completed = !!session && index < session.currentIndex;
@@ -89,7 +84,7 @@ function activityState(session: DailyTrainingSession | null, index: number) {
 }
 
 function activityResourcePath(step: TrainingSessionStep): string {
-  if (step.sectionRecall) return `/temario?topic=${encodeURIComponent(step.topicId ?? '')}&sectionId=${encodeURIComponent(step.sectionRecall.sectionId)}`;
+  if (step.sectionRecall) return `/test?topic=${encodeURIComponent(step.topicId ?? '')}`;
   if (step.activity === 'newContent') return `/temario?topic=${encodeURIComponent(step.topicId ?? '')}&dailyTraining=newContent`;
   if (step.activity === 'activeRecall' || step.activity === 'spacedReviews') return '/test';
   if (step.activity === 'topicTest' || step.activity === 'mixedTopicTest') return '/test';
@@ -109,36 +104,18 @@ function useSettingsSnapshot() {
   return snapshot;
 }
 
-function PaperRecallPriorityNote({ step, assessment, now }: { step: TrainingSessionStep; assessment?: PaperRecallAssessment; now: number }) {
-  if (step.reason !== 'weak-topics' || !assessment || assessment.rating === 'remembered' || !needsPaperRecallFollowUp(assessment, now)) return null;
-  return <p className="planning-reason max-w-[76ch] mt-[.35rem] mb-[.6rem] text-muted">Tu autoevaluación de recuerdo en papel fue «{recallRatingLabels[assessment.rating]}» el {historyDateFormatter.format(new Date(assessment.ratedAt))}. Es una señal personal; por eso hoy se propone comprobar este tema con preguntas.</p>;
-}
-
-function PaperRecallAssessmentControl({ topicId, assessment, onRecord }: {
-  topicId: string; assessment?: PaperRecallAssessment; onRecord(topicId: string, rating: PaperRecallRating): void;
-}) {
-  return <fieldset className="planning-recall-assessment my-3 min-w-0 rounded-[var(--r-m)] border border-line p-3">
-    <legend className="max-w-full px-1 font-[650]">Después de estudiar en papel y cerrar los apuntes, ¿cuánto recordaste?</legend>
-    <div className="flex flex-wrap gap-2">{([
-      ['remembered', 'Lo recordé'], ['partial', 'Parcialmente'], ['not-remembered', 'No lo recordé'],
-    ] as const).map(([rating, label]) => <button key={rating} className={`btn sec${assessment?.rating === rating ? ' border-brand text-brand [box-shadow:inset_0_0_0_1px_var(--brand)]' : ''}`} aria-pressed={assessment?.rating === rating} onClick={() => onRecord(topicId, rating)}>{label}</button>)}</div>
-    <small className="mt-2 block text-muted">{assessment ? `Autoevaluación guardada · ${historyDateFormatter.format(assessment.ratedAt)}` : 'Es una valoración personal; no se mezcla con tus notas de test.'}</small>
-  </fieldset>;
-}
-
-function PlanningActivity({ step, index, session, topicName, elapsedSeconds, running, now, recallAssessment, onRecallAssessment }: {
+function PlanningActivity({ step, index, session, topicName, elapsedSeconds, running }: {
   step: TrainingSessionStep; index: number; session: DailyTrainingSession | null; topicName?: string;
-  elapsedSeconds: number; running: boolean; now: number; recallAssessment?: PaperRecallAssessment;
-  onRecallAssessment?(topicId: string, rating: PaperRecallRating): void;
+  elapsedSeconds: number; running: boolean;
 }) {
   const presentation = step.sectionRecall ? {
-    title:'Comprobación de apartado', objective:`Recupera lo que sabes de ${step.sectionRecall.sectionTitle ?? 'este apartado'} antes de consultar el material.`,
-    instruction:'Intenta explicar la idea con tus palabras o resolver un ejemplo. Consulta solo la laguna y, al acabar, cierra la actividad desde el apartado.', resource:'Apartado del temario seleccionado',
+    title:'Test del tema · actividad antigua', objective:'Continúa con preguntas del tema. La autoevaluación antigua se conserva sin convertirla en aciertos.',
+    instruction:'Responde un test válido y revisa la corrección. Si no hay preguntas disponibles, elige otra práctica.', resource:'Test por tema',
   } : activityPresentation[step.activity];
   const state = activityState(session, index);
   const topic = topicName ? `${step.topicId} · ${topicName}` : step.topicId;
   return <li className={`${state.className} relative grid min-w-0 grid-cols-[2rem_minmax(0,1fr)] gap-3.5 pb-4 max-[520px]:grid-cols-[1.75rem_minmax(0,1fr)] max-[520px]:gap-2.5`} aria-current={state.current ? 'step' : undefined}>
-    <span className={`planning-activity-marker relative z-[1] grid h-8 w-8 place-items-center rounded-full border border-[var(--line-strong,var(--line))] text-muted [background:var(--card)] text-[length:var(--fs-s)] [font-variant-numeric:tabular-nums] max-[600px]:h-7 max-[600px]:w-7${state.completed ? ' border-brand bg-brand text-[var(--on-brand)]' : state.current ? ' border-2 border-brand text-brand' : ''}`} aria-hidden="true">{state.completed ? <Check size="1rem" /> : index + 1}</span>
+    <span className={`planning-activity-marker relative z-[1] grid h-8 w-8 place-items-center rounded-full border border-[var(--line-strong,var(--line))] text-muted [background:var(--card)] text-[length:var(--fs-s)] [font-variant-numeric:tabular-nums] max-[600px]:h-7 max-[600px]:w-7${state.completed ? ' border-brand bg-brand text-[var(--on-brand)]' : state.current ? ' border-2 border-brand text-accent' : ''}`} aria-hidden="true">{state.completed ? <Check size="1rem" /> : index + 1}</span>
     <article className="planning-activity-content min-w-0 pt-0.5 pb-4">
       <div className="planning-activity-heading flex items-start justify-between gap-3"><div><p className="planning-activity-type mb-[.15rem] text-muted text-[length:var(--fs-xs)]">{state.label}</p><h3 className="m-0 text-lg leading-[1.35]">{presentation.title}</h3></div><span className="planning-duration flex-none text-muted [font-variant-numeric:tabular-nums]">{step.minutes} min</span></div>
       {topic && <p className="planning-topic my-2 text-muted text-[length:var(--fs-s)]">{topic}</p>}
@@ -146,10 +123,8 @@ function PlanningActivity({ step, index, session, topicName, elapsedSeconds, run
       <details className="text-[length:var(--fs-s)]"><summary className="min-h-11 inline-flex items-center text-link cursor-pointer underline underline-offset-[.15em]">Instrucciones y motivo</summary><p className="max-w-[76ch] mt-[.35rem] mb-[.6rem]">{presentation.instruction}</p>
         {step.reviewMode && <p className="max-w-[76ch] mt-[.35rem] mb-[.6rem]">Modalidad recomendada: {reviewModeLabels[step.reviewMode]}.</p>}
         <p className="planning-reason max-w-[76ch] mt-[.35rem] mb-[.6rem] text-muted">{step.reviewMode ? 'La intervención se conserva desde la recomendación de hoy. ' : ''}{reasonText[step.reason]}</p>
-        <PaperRecallPriorityNote step={step} assessment={recallAssessment} now={now} />
       </details>
       {state.current && <div className="planning-activity-timer my-2 flex items-center gap-[.4rem] text-[length:var(--fs-s)] [font-variant-numeric:tabular-nums]" role="status" aria-live="off"><Clock3 size="1rem" aria-hidden="true" /> Tiempo en esta actividad: {formatMinutes(elapsedSeconds)} {running ? '· contando' : '· en pausa'}</div>}
-      {state.completed && step.activity === 'newContent' && step.topicId && onRecallAssessment && <PaperRecallAssessmentControl topicId={step.topicId} assessment={recallAssessment} onRecord={onRecallAssessment} />}
       <p className="planning-resource my-2 text-muted">Recurso de TAI: <Link to={activityResourcePath(step)}>{presentation.resource}</Link></p>
     </article>
   </li>;
@@ -254,12 +229,7 @@ function usePlanningSessionActions(services: HomeServices, overview: HomeOvervie
   const pauseSession = () => { services.pauseTrainingActivity(); refresh(); };
   const beginBreak = () => { services.beginTrainingBreak(5); refresh(); };
   const endBreak = () => { services.endTrainingBreak(); refresh(); };
-  const recordRecallAssessment = (topicId: string, rating: PaperRecallRating) => {
-    if (!services.recordPaperRecall) return;
-    if (services.recordPaperRecall(topicId, rating)) refresh();
-    else services.notify('No se pudo guardar la autoevaluación en este dispositivo. Comprueba el espacio disponible e inténtalo de nuevo.');
-  };
-  return { startSession, pauseSession, beginBreak, endBreak, recordRecallAssessment };
+  return { startSession, pauseSession, beginBreak, endBreak };
 }
 
 function SessionActionArea({ model, activeStudy, onStart, onPause, onBeginBreak, onEndBreak, focusBlockMinutes }: {
@@ -303,15 +273,11 @@ function PlanningTodayCard({ model, overview, activeStudy, onStart, onPause, onB
   </section>;
 }
 
-function PlanningActivityList({ model, assessments, now, onRecallAssessment }: {
-  model: PlanningViewModel; assessments: readonly PaperRecallAssessment[];
-  now: number;
-  onRecallAssessment(topicId: string, rating: PaperRecallRating): void;
-}) {
+function PlanningActivityList({ model }: { model: PlanningViewModel }) {
   if (!model.activities.length) return null;
   return <section className="planning-activities my-5 min-w-0 rounded-[var(--r-xl)] border border-line py-5 px-[clamp(1rem,3vw,1.75rem)] max-[520px]:p-4 [background:var(--card)]" aria-labelledby="planning-activities-title">
     <div className="planning-section-heading flex flex-wrap items-end justify-between gap-x-5 gap-y-3"><div><p className="planning-kicker mb-1 text-muted text-[length:var(--fs-s)]">Orden de trabajo</p><h2 className="m-0 text-[clamp(1.25rem,3vw,1.65rem)] tracking-[-.02em]" id="planning-activities-title">Pasos de la sesión</h2></div><span>{model.completedCount} de {model.activities.length} completadas</span></div>
-    <ol className="mt-5 mb-0 grid gap-0 p-0 list-none">{model.activities.map((step, index) => <PlanningActivity key={step.activity} step={step} index={index} session={model.session} topicName={step.topicId ? model.topicNames.get(step.topicId) : undefined} elapsedSeconds={index === model.activeIndex ? model.activeSeconds : model.session?.elapsedSecondsByActivity?.[index] ?? 0} running={index === model.activeIndex && model.session?.currentStartedAt !== null && model.session?.currentStartedAt !== undefined} now={now} recallAssessment={assessments.find(item => item.topicId === step.topicId)} onRecallAssessment={onRecallAssessment} />)}</ol>
+    <ol className="mt-5 mb-0 grid gap-0 p-0 list-none">{model.activities.map((step, index) => <PlanningActivity key={step.activity} step={step} index={index} session={model.session} topicName={step.topicId ? model.topicNames.get(step.topicId) : undefined} elapsedSeconds={index === model.activeIndex ? model.activeSeconds : model.session?.elapsedSecondsByActivity?.[index] ?? 0} running={index === model.activeIndex && model.session?.currentStartedAt !== null && model.session?.currentStartedAt !== undefined} />)}</ol>
   </section>;
 }
 
@@ -321,11 +287,11 @@ function PlanningEvidence({ overview }: { overview: HomeOverview }) {
     <div className="planning-evidence-grid mt-4 grid grid-cols-4 gap-x-5 gap-y-3 max-[760px]:grid-cols-2 max-[520px]:grid-cols-1">{[
       ['Cobertura', `${overview.studiedTopics} de ${overview.topicCount} temas marcados como vistos.`],
       ['Resultados de preguntas', `${overview.assessedTopics} temas tienen actividad evaluada; los aciertos no prueban por sí solos recuerdo libre.`],
-      ['Recuerdo en papel', `${overview.paperRecallAssessments?.length ?? 0} autoevaluaciones. Son una señal personal, separada de los resultados objetivos.`],
+      ['Autoevaluaciones históricas', `${overview.paperRecallAssessments?.length ?? 0} autoevaluaciones. Conservadas como historia personal; no intervienen en la recomendación de nuevos ejercicios.`],
       ['Comprensión', 'No se mide directamente todavía; TAI no infiere comprensión de una marca de lectura.'],
       ['Examen', 'Los resultados de test y simulacros se muestran por separado en Progreso.'],
     ].map(([label, detail]) => <p className="m-0 grid content-start gap-[.3rem] border-t border-line pt-3" key={label}><b>{label}</b><span className="text-muted text-[length:var(--fs-s)]">{detail}</span></p>)}</div>
-    <p className="planning-caveat mt-4 mb-0 flex items-start gap-2 text-muted text-[length:var(--fs-s)]"><CircleHelp className="mt-[.15rem] flex-none" size="1rem" aria-hidden="true" /> Para un tema nuevo, consulta primero el temario o material de academia disponible y declara solo la cobertura realizada; TAI no verifica la lectura ni añade explicaciones que no estén revisadas. En contenido ya estudiado, intenta recuperar antes de consultar para corregir una laguna.</p>
+    <p className="planning-caveat mt-4 mb-0 flex items-start gap-2 text-muted text-[length:var(--fs-s)]"><CircleHelp className="mt-[.15rem] flex-none" size="1rem" aria-hidden="true" /> Para un tema nuevo, consulta primero el temario o material de academia disponible y declara solo la cobertura realizada; TAI no verifica la lectura ni añade explicaciones que no estén revisadas. En contenido ya estudiado, practica con tests y consulta las explicaciones para corregir dudas.</p>
   </section>;
 }
 
@@ -401,7 +367,6 @@ function PaperTestLog({ overview, onRecord, onVoid }: { overview: HomeOverview; 
       <label className="grid min-w-0 gap-1">Duración aproximada en minutos<input className="input min-h-11 w-full min-w-0" type="number" min="1" max="360" inputMode="numeric" value={durationMinutes} onChange={event => setDurationMinutes(event.target.value)} placeholder="Opcional" /></label>
       {([['questionCount','Preguntas del tramo',questionCount,setQuestionCount],['answeredCount','Contestadas',answeredCount,setAnsweredCount],['correctCount','Correctas según plantilla',correctCount,setCorrectCount],['incorrectCount','Incorrectas según plantilla',incorrectCount,setIncorrectCount],['blankCount','En blanco',blankCount,setBlankCount],['doubtfulCount','Contestadas con duda',doubtfulCount,setDoubtfulCount]] as const).map(([name,label,value,set]) => <label className="grid min-w-0 gap-1" key={name}>{label}<input className="input min-h-11 w-full min-w-0" type="number" min="0" max="1000" inputMode="numeric" value={value} onChange={event => set(event.target.value)} /></label>)}
       <label className="grid min-w-0 gap-1">Corrección disponible<select className="input min-h-11 w-full min-w-0" value={correctionStatus} onChange={event => setCorrectionStatus(event.target.value as PaperTestCorrectionStatus)}><option value="unavailable">Sin plantilla</option><option value="answer-key-only">Solo opción correcta</option><option value="reviewed">Revisado y corregido</option></select></label>
-      <label className="grid min-w-0 gap-1">Recuerdo del tramo (autoevaluación)<select className="input min-h-11 w-full min-w-0" value={selfRating} onChange={event => setSelfRating(event.target.value as PaperTestSelfRating | '')}><option value="">Sin valorar</option><option value="remembered">Lo recordé</option><option value="partial">Parcialmente</option><option value="not-remembered">No lo recordé</option></select></label>
       {formError && <p role="alert" className="col-span-full m-0">{formError}</p>}
       {editingId && <p className="col-span-full m-0" role="status">Editando un tramo existente; se conserva su ID.</p>}
       <div className="col-span-full flex flex-wrap gap-2"><button className="btn min-h-11" type="submit">{editingId ? 'Guardar cambios' : 'Guardar tramo'}</button>{editingId && <button className="btn min-h-11" type="button" onClick={cancelEdit}>Cancelar edición</button>}</div>
@@ -503,9 +468,6 @@ export function PlanningPage() {
   };
   const generateWeeklyAgendaPlan = async (weekStart: string) => {
     if (!weeklyAgenda || !planningOverview) return null;
-    let currentProgress;
-    try { currentProgress = await academyProgressService.loadProgressOverview(); }
-    catch { services.notify('No se pudo leer el seguimiento por apartado. No se preparó la propuesta semanal.'); return null; }
     const proposal = proposeWeeklyAgendaPlan({
       agenda:weeklyAgenda, targetWeekStart:weekStart, todayKey, preferences:settings.training,
       catalogTopics:(settings.index?.topics ?? []).map(topic => ({ id:topic.id, name:topic.name })),
@@ -518,29 +480,10 @@ export function PlanningPage() {
         plannedNewContentItems:weeklyAgenda.items.filter(item => item.kind === 'newContent'),
       }).topicSessionGap,
     });
-    if (!proposal) return proposal;
-    return addSectionRecallFollowUpsToWeeklyProposal({
-      proposal, agenda:weeklyAgenda, todayKey, preferences:settings.training, scheduledActivities,
-      selections:currentProgress.selections, events:currentProgress.events, materialIndex:academyCurriculumMaterialIndex,
-    });
+    return proposal;
   };
   const addWeeklyAgendaPlan = async (proposal: WeeklyAgendaPlanProposal) => {
     if (!weeklyAgenda) return false;
-    let currentProgress;
-    try { currentProgress = await academyProgressService.loadProgressOverview(); }
-    catch { services.notify('No se pudo comprobar el progreso actual. No se guardó la propuesta; vuelve a intentarlo.'); return false; }
-    const proposalWithoutFollowUps: WeeklyAgendaPlanProposal = { ...proposal, items:proposal.items.filter(item => item.kind !== 'sectionRecall'), sectionRecallSummary:{ added:0, stale:0, noCapacity:0, alreadyIncluded:0 } };
-    const currentProposal = addSectionRecallFollowUpsToWeeklyProposal({
-      proposal:proposalWithoutFollowUps, agenda:weeklyAgenda, todayKey, preferences:settings.training, scheduledActivities,
-      selections:currentProgress.selections, events:currentProgress.events, materialIndex:academyCurriculumMaterialIndex,
-    });
-    const sectionPlan = (items: readonly WeeklyAgendaItem[]) => items.filter(item => item.kind === 'sectionRecall')
-      .map(item => ({ id:item.id, dateKey:item.dateKey, minutes:item.minutes, sectionRecall:item.sectionRecall }))
-      .sort((first, second) => first.id.localeCompare(second.id));
-    if (JSON.stringify(sectionPlan(proposal.items)) !== JSON.stringify(sectionPlan(currentProposal.items))) {
-      services.notify('Cambió una comprobación o la versión del material. Revisa una propuesta semanal nueva antes de confirmar.');
-      return false;
-    }
     const saved = services.addWeeklyStudyAgendaPlan?.(proposal);
     if (!saved) return false;
     setCalendarRevision(value => value + 1);
@@ -549,41 +492,7 @@ export function PlanningPage() {
   };
   const setWeeklyAgendaStatus = (id: string, status: 'completed' | 'skipped') => {
     const item = weeklyAgenda?.items.find(candidate => candidate.id === id);
-    if (status === 'completed' && item?.kind === 'sectionRecall' && item.sectionRecall) {
-      void academyProgressService.loadProgressOverview().then(snapshot => {
-        const followUp = sectionFollowUps(snapshot.events).find(candidate => candidate.followUpId === item.sectionRecall!.followUpId);
-        if (!followUp || followUp.status === 'cancelled') { services.notify('La comprobación ya no está pendiente. Actualiza la planificación antes de cerrar esta actividad.'); return; }
-        if (followUp?.status === 'scheduled') {
-          if (!hasLinkedDelayedFollowUpCheck(snapshot.events, followUp)) {
-            services.notify('Abre el apartado desde esta actividad y registra primero la comprobación de recuerdo diferido. No se marcará como realizada sin esa autoevaluación vinculada.'); return;
-          }
-          const selection = snapshot.selections.find(candidate => candidate.topicId === item.topicIds[0]);
-          const selected = selection?.materials.find(material => material.role === 'syllabus' && material.path === followUp.materialPath
-            && material.sourceHash === followUp.sourceHash && material.outlineFingerprint === followUp.outlineFingerprint);
-          const current = (academyCurriculumMaterialIndex[item.topicIds[0]] ?? []).find(material => material.path === followUp.materialPath && material.kind === 'syllabus');
-          if (!selected || !current || current.sha256 !== selected.sourceHash || current.outlineFingerprint !== selected.outlineFingerprint
-            || current.outlineStructureFingerprint !== selected.outlineStructureFingerprint || current.sha256 !== item.sectionRecall!.sourceHash
-            || current.outlineFingerprint !== item.sectionRecall!.outlineFingerprint) {
-            services.notify('Cambió la versión del temario. El seguimiento antiguo se conserva, pero esta actividad no se puede cerrar como actual.'); return;
-          }
-          const related = snapshot.events.filter(event => event.kind === 'follow-up' && event.followUpId === followUp.followUpId);
-          const next: AcademySectionStudyEvent = {
-            id:sectionFollowUpCompletionEventId(followUp.followUpId), topicId:item.topicIds[0], sectionId:item.sectionRecall!.sectionId,
-            materialPath:item.sectionRecall!.materialPath, sourceHash:item.sectionRecall!.sourceHash,
-            outlineFingerprint:item.sectionRecall!.outlineFingerprint,
-            occurredAt:Math.max(Date.now(), ...related.map(event => event.occurredAt + 1)), kind:'follow-up',
-            followUpId:followUp.followUpId, sourceSelfCheckEventId:followUp.sourceSelfCheckEventId,
-            dueDateKey:followUp.dueDateKey, status:'completed', ...(followUp.sectionTitle ? { sectionTitle:followUp.sectionTitle } : {}),
-            ...(followUp.printedPage !== undefined ? { printedPage:followUp.printedPage } : {}),
-          };
-          if (!academyProgressService.record(next)) { services.notify('La agenda quedó abierta porque no se pudo guardar la comprobación realizada.'); return; }
-        }
-        const saved = services.setWeeklyStudyAgendaItemStatus?.(id, status);
-        if (!saved) { services.notify('El seguimiento se guardó, pero no se pudo cerrar la actividad de agenda. Puedes reintentar el cierre.'); return; }
-        setCalendarRevision(value => value + 1);
-      }).catch(() => services.notify('No se pudo actualizar el seguimiento. Reintenta con conexión o más tarde.'));
-      return true;
-    }
+    if (status === 'completed' && item?.kind === 'sectionRecall') { services.notify('Este seguimiento antiguo no se completa mediante autoevaluación. Abre un test del tema o conserva el seguimiento.'); return false; }
     const saved = services.setWeeklyStudyAgendaItemStatus?.(id, status);
     if (!saved) return false;
     setCalendarRevision(value => value + 1);
@@ -599,27 +508,23 @@ export function PlanningPage() {
     void navigate(`/${scoped}`);
   };
   const openSectionRecall = (item: WeeklyAgendaItem) => {
-    if (!item.sectionRecall) return;
-    const topic = encodeURIComponent(item.topicIds[0]);
-    const section = encodeURIComponent(item.sectionRecall.sectionId);
-    const followUp = encodeURIComponent(item.sectionRecall.followUpId);
-    void navigate(`/temario?topic=${topic}&sectionId=${section}&followUpId=${followUp}&agendaItemId=${encodeURIComponent(item.id)}`);
+    void navigate(`/test?topic=${encodeURIComponent(item.topicIds[0])}`);
   };
   return <main className="planning-page mx-auto w-full max-w-[68rem] pt-6 pb-12 max-[520px]:pt-4">
     <header className="planning-header mb-6 flex items-start justify-between gap-4 max-[520px]:flex-col">
       <div><p className="planning-kicker mb-1 text-muted text-[length:var(--fs-s)]">TAI · Plan de estudio</p><h1 className="mt-0.5 mb-2 text-[clamp(1.5rem,3vw,2rem)] tracking-[-.035em]">Planificación de estudio</h1><p className="planning-date m-0 flex items-center gap-2 text-muted"><CalendarDays size="1rem" aria-hidden="true" />{localDate(now)}</p></div>
       <Link className="planning-settings-link min-h-11 inline-flex flex-none items-center max-[520px]:self-start" to="/settings">Configurar semana</Link>
     </header>
-    <PlanningHorizon targetDate={settings.exam} today={now} preferences={settings.training}
-      catalogTopicIds={settings.index?.topics?.map(topic => topic.id) ?? []} studiedTopicIds={seenTopicIds} weeklyItems={weeklyAgenda?.items ?? []}
-      sectionProgress={sectionProgress} sectionProgressError={!!sectionProgressError} onRetrySectionProgress={() => setSectionProgressRetry(value => value + 1)} />
     <PlanningTodayCard model={model} overview={planningOverview} activeStudy={!!services.getActiveStudy()} onStart={actions.startSession} onPause={actions.pauseSession}
       onBeginBreak={actions.beginBreak} onEndBreak={actions.endBreak} focusBlockMinutes={settings.training.focusBlockMinutes ?? 35} />
-    <PlanningActivityList model={model} assessments={planningOverview.paperRecallAssessments ?? []} now={now.getTime()} onRecallAssessment={actions.recordRecallAssessment} />
+    <PlanningActivityList model={model} />
     <StudyCalendar preferences={settings.training} now={now} history={planningOverview.trainingHistory ?? []} activeSession={planningOverview.trainingSession}
       topics={planningOverview.studiedTopicDetails ?? []} catalogTopics={settings.index?.topics?.map(topic => ({ id:topic.id, name:topic.name })) ?? []} seenTopicIds={seenTopicIds}
       activities={scheduledActivities} weeklyItems={weeklyAgenda?.items ?? []} weeklyAgenda={weeklyAgenda} onSchedule={scheduleActivity} onReschedule={rescheduleActivity} onOpenActivity={openScheduledActivity}
       onSaveWeeklyAgenda={saveWeeklyAgenda} onRecoverWeeklyAgenda={recoverWeeklyAgenda} onProposeWeeklyAgenda={generateWeeklyAgendaPlan} onAddWeeklyAgendaPlan={addWeeklyAgendaPlan} onSetWeeklyAgendaStatus={setWeeklyAgendaStatus} onOpenSectionRecall={openSectionRecall} />
+    <PlanningHorizon targetDate={settings.exam} today={now} preferences={settings.training}
+      catalogTopicIds={settings.index?.topics?.map(topic => topic.id) ?? []} studiedTopicIds={seenTopicIds} weeklyItems={weeklyAgenda?.items ?? []}
+      sectionProgress={sectionProgress} sectionProgressError={!!sectionProgressError} onRetrySectionProgress={() => setSectionProgressRetry(value => value + 1)} />
     <PlanningHistory overview={planningOverview} />
     <PaperTestLog overview={planningOverview} onRecord={recordPaperTestSegment} onVoid={voidPaperTestSegment} />
     <PlanningEvidence overview={planningOverview} />

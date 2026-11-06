@@ -31,7 +31,9 @@ it('prioriza retomar, repasar y falladas, agrupa entrenamientos y no presenta un
   expect(document.querySelector('#trampas').closest('details').querySelector('summary').textContent).toContain('Entrenamientos');
   expect(document.querySelector('#app').textContent).toContain('Configurar fecha objetivo');
   expect(document.querySelector('#app').textContent).not.toContain('al examen');
-  expect(document.querySelector('#quick')).not.toBeNull();
+  expect(document.querySelector('#quick')).toHaveClass('sec');
+  expect(rtl.screen.getByRole('button', { name: 'Empezar otra sesión rápida' })).toBeInTheDocument();
+  expect(document.querySelector('#continue').compareDocumentPosition(document.querySelector('.home-metrics')) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
 });
 it('busca temas sin perder marcas, bloque abierto ni foco al actualizar progreso', async()=> {
   await routes.temario();

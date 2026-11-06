@@ -55,20 +55,13 @@ function QuizReport({ snapshot }: { snapshot: QuizSnapshot }) {
   const [note, setNote] = useState(snapshot.report?.note || '');
   if (snapshot.report?.state === 'abierto' && !open) return <div className="repw"><span className="rep ok"><Check size="1em" aria-hidden="true" /> Error anotado <button className="ghost ghost-small" onClick={() => setOpen(true)}>editar</button></span></div>;
   if (!open) return <div className="repw"><button className="ghost ghost-compact" onClick={() => setOpen(true)}><TriangleAlert size="1em" aria-hidden="true" /> Avisar de error</button></div>;
-  return <div className="repw"><div className="repf"><label htmlFor="report-reason">Motivo del error</label><select id="report-reason" value={reason} onChange={event => setReason(event.target.value)}>{['Respuesta correcta mal marcada', 'Enunciado erróneo o confuso', 'Opciones repetidas o dos correctas', 'La cita del temario no coincide', 'Otro'].map(value => <option key={value}>{value}</option>)}</select>
+  return <div className="repw"><div className="repf"><label htmlFor="report-reason">Motivo del error</label><select className="w-full min-w-0 max-w-full" id="report-reason" value={reason} onChange={event => setReason(event.target.value)}>{['Respuesta correcta mal marcada', 'Enunciado erróneo o confuso', 'Opciones repetidas o dos correctas', 'La cita del temario no coincide', 'Otro'].map(value => <option key={value}>{value}</option>)}</select>
     <label htmlFor="report-note">Qué falla (opcional)</label><input id="report-note" maxLength={300} placeholder="Qué falla (opcional)" value={note} onChange={event => setNote(event.target.value)} />
     <div className="row"><button className="btn" onClick={() => { quiz.saveReport(reason, note); setOpen(false); }}>Guardar</button><button className="btn sec" onClick={() => setOpen(false)}>Cancelar</button></div></div></div>;
 }
 
 export function QuizFeedback({ snapshot, prompt, explanation }: { snapshot: QuizSnapshot; prompt: QuizPrompt; explanation: ExplanationLookup }) {
   const quiz = useStudyService('quiz');
-  const [assessmentStatus, setAssessmentStatus] = useState<{ value: 'could-explain' | 'needs-help'; saving: boolean; historySaved: boolean; checkpointSaved: boolean } | null>(null);
-  const saveAssessment = async (value: 'could-explain' | 'needs-help', retry = false) => {
-    setAssessmentStatus(current => ({ value, saving: true, historySaved: current?.value === value ? current.historySaved : false, checkpointSaved: current?.value === value ? current.checkpointSaved : false }));
-    const current = assessmentStatus?.value === value ? assessmentStatus : null;
-    const result = await quiz.setSelfAssessment(value, retry && current ? !current.historySaved : false);
-    setAssessmentStatus({ value, saving: false, ...result });
-  };
   const kind = snapshot.studyState === 'revealed' ? 'note' : snapshot.answer === prompt.correctIndex ? 'good' : 'wrong';
   return <StudyFeedback tone={kind}>
     <FeedbackMessage snapshot={snapshot} prompt={prompt} />
@@ -76,9 +69,6 @@ export function QuizFeedback({ snapshot, prompt, explanation }: { snapshot: Quiz
     <CorrectAnswerActions snapshot={snapshot} />
     <button className="ghost ghost-compact" id="flag" onClick={() => quiz.toggleFlag()}><Star size="1em" fill={snapshot.flagged ? 'currentColor' : 'none'} aria-hidden="true" /> {snapshot.flagged ? 'Dudosa' : 'Marcar como dudosa'}</button>
     <QuizReport snapshot={snapshot} />
-    {snapshot.feedback && (snapshot.studyState === 'answered' || snapshot.studyState === 'revealed') && <div className="mot" aria-label="Autoevaluación posterior a la corrección"><small>Intenta explicarlo con tus palabras antes de continuar. ¿Cómo te fue sin mirar?</small>{(['could-explain', 'needs-help'] as const).map(value => <button type="button" className={snapshot.selfAssessment === value ? 'on' : ''} aria-pressed={snapshot.selfAssessment === value} disabled={snapshot.paused || assessmentStatus?.saving} key={value} onClick={() => void saveAssessment(value)}>{value === 'could-explain' ? 'Pude explicarlo' : 'Aún necesito ayuda'}</button>)}
-      {assessmentStatus && !assessmentStatus.saving && (!assessmentStatus.historySaved || !assessmentStatus.checkpointSaved) && <p role="status">{!assessmentStatus.historySaved ? 'No se guardó la autoevaluación en el historial.' : 'No se pudo guardar el progreso de la sesión.'} <button type="button" className="ghost ghost-small" onClick={() => void saveAssessment(assessmentStatus.value, true)}>Reintentar guardado</button></p>}
-      {assessmentStatus && !assessmentStatus.saving && assessmentStatus.historySaved && assessmentStatus.checkpointSaved && <p role="status">Autoevaluación guardada.</p>}</div>}
     {explanation.status === 'current' && <div id="code-explanation-slot" aria-live="polite"><CodeExplanationView explanation={explanation.explanation} /></div>}
     {explanation.status === 'outdated' && <p className="sub" role="status">Hay una explicación de una revisión anterior; no se muestra para evitar información desactualizada.</p>}
     {explanation.status === 'loading' && <p className="sub" role="status" aria-live="polite">Consultando si hay una explicación editorial disponible…</p>}

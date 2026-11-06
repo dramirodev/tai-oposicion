@@ -13,16 +13,16 @@ describe('resolvePlannedActivityAction', () => {
       .toEqual({ type: 'navigate', path: '/temario?topic=T1.02&dailyTraining=newContent' });
   });
 
-  it('opens a scheduled section recall at its exact section without requiring cards or a generic test', () => {
+  it('resumes historical section recall with a topic test without writing an assessment', () => {
     const result = resolvePlannedActivityAction(session(step('activeRecall', { topicId:'T1.01', topicIds:['T1.01'], sectionRecall:{ agendaItemId:'agenda-section-01', followUpId:'follow-up-01', sectionId:'ci-0123456789abcdefabcd', materialPath:'T1.01/Temario.pdf', sourceHash:'a'.repeat(64), outlineFingerprint:'b'.repeat(64) } })), [], 0);
     expect(result.type).toBe('navigate');
     const url = new URL(result.path, 'https://tai.test');
-    expect(url.pathname).toBe('/temario');
-    expect(url.searchParams.get('dailyTraining')).toBe('sectionRecall');
+    expect(url.pathname).toBe('/test');
+    expect(url.searchParams.get('dailyTraining')).toBe('activeRecall');
     expect(url.searchParams.get('topic')).toBe('T1.01');
-    expect(url.searchParams.get('sectionId')).toBe('ci-0123456789abcdefabcd');
-    expect(url.searchParams.get('agendaItemId')).toBe('agenda-section-01');
-    expect(url.searchParams.get('followUpId')).toBe('follow-up-01');
+    expect(url.searchParams.has('sectionId')).toBe(false);
+    expect(url.searchParams.get('trainingTopics')).toBe('T1.01');
+    expect(url.searchParams.has('followUpId')).toBe(false);
   });
 
   it('refuses recovery activities when there are no studied topics', () => {

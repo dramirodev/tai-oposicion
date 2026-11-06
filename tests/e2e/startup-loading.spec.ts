@@ -26,8 +26,9 @@ test('aplica el tema guardado antes de terminar la comprobaciÃ³n de actualizaciÃ
     const loader = page.locator('#initial-loading');
     await expect(loader).toBeVisible();
     await expect(page.locator('html')).toHaveAttribute('data-color-scheme', 'dark');
-    await expect.poll(() => loader.evaluate(element => getComputedStyle(element).backgroundColor)).toBe('rgb(17, 17, 19)');
-    await expect.poll(() => loader.evaluate(element => getComputedStyle(element).color)).toBe('rgb(241, 241, 242)');
+    await expect(page.locator('html')).toHaveAttribute('data-visual-theme', 'soft-brutalism');
+    await expect.poll(() => loader.evaluate(element => getComputedStyle(element).backgroundColor)).toBe('rgb(28, 26, 22)');
+    await expect.poll(() => loader.evaluate(element => getComputedStyle(element).color)).toBe('rgb(255, 249, 237)');
   } finally {
     releaseVersionRequest();
   }

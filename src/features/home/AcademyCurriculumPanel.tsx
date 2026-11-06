@@ -1,10 +1,10 @@
-import { useEffect, useMemo, useRef, useState, useSyncExternalStore, type FormEvent } from 'react';
+import { useEffect, useMemo, useRef, useState, useSyncExternalStore } from 'react';
 import { Link, useSearchParams } from 'react-router';
 import type { AcademyCurriculumFile, AcademyCurriculumSection, AcademyCurriculumTopic } from '../../core/domain/academy-curriculum-types.js';
 import { academyCurriculumTopicLoaders } from '../../core/domain/academy-curriculum.generated.js';
 import { useStudyService } from '../../shared/ui/study-services.js';
 import { useAccountResource } from '../../shared/ui/use-account-resource.js';
-import { canScheduleSectionFollowUp, hasLinkedDelayedFollowUpCheck, isCurrentAcademyMaterialSelection, sectionCoverage, sectionFollowUps, sectionRecallHistory, type AcademyMaterialOpenEvent, type AcademySectionStudyEvent, type AcademyTopicProgressSnapshot } from '../../core/domain/academy-study-progress.js';
+import { isCurrentAcademyMaterialSelection, sectionCoverage, sectionFollowUps, sectionRecallHistory, type AcademyMaterialOpenEvent, type AcademySectionStudyEvent, type AcademyTopicProgressSnapshot } from '../../core/domain/academy-study-progress.js';
 import type { AcademyMaterialPdfCopy } from '../../core/domain/academy-material-copy.js';
 
 interface LoadedTopic {
@@ -57,139 +57,55 @@ async function sha256(bytes: ArrayBuffer): Promise<string> {
   return Array.from(new Uint8Array(digest), byte => byte.toString(16).padStart(2, '0')).join('');
 }
 
-function SectionStudyUnit({
-  section, events, materialOpenEvents, sessionId, activityId, followUpId, record, targetSectionId, onCompleteSectionRecall,
-}: {
-  section: AcademyCurriculumSection;
-  events: readonly AcademySectionStudyEvent[];
-  materialOpenEvents: readonly AcademyMaterialOpenEvent[];
-  sessionId?: string;
-  activityId?: string;
-  followUpId?: string;
-  record(event: AcademySectionStudyEvent): boolean;
-  targetSectionId?: string | null;
-  onCompleteSectionRecall?: () => Promise<void>;
+const historicalTimingLabels = { assisted:'Con ayuda', immediate:'Al terminar', delayed:'Diferido' };
+const historicalRatingLabels = { 'not-recalled':'No lo recordé', partial:'Parcialmente', recalled:'Lo recordé' };
+
+function coverageTimestamp(): number { return Date.now(); }
+
+function SectionStudyUnit({ section, events, materialOpenEvents, sessionId, activityId, record, targetSectionId }: {
+  section: AcademyCurriculumSection; events: readonly AcademySectionStudyEvent[];
+  materialOpenEvents: readonly AcademyMaterialOpenEvent[]; sessionId?: string; activityId?: string;
+  followUpId?: string; onCompleteSectionRecall?: () => Promise<void>;
+  record(event: AcademySectionStudyEvent): boolean; targetSectionId?: string | null;
 }) {
   const matching = events.filter(event => event.sectionId === section.id && event.sourceHash === section.sourceHash && event.materialPath === section.materialPath);
-  const matchingOpens = materialOpenEvents.filter(event => event.sectionId === section.id && event.sourceHash === section.sourceHash && event.materialPath === section.materialPath)
-    .sort((first, second) => first.occurredAt - second.occurredAt || first.id.localeCompare(second.id));
+  const opens = materialOpenEvents.filter(event => event.sectionId === section.id && event.sourceHash === section.sourceHash && event.materialPath === section.materialPath);
   const coverage = sectionCoverage(matching);
-  const linkedFollowUp = followUpId ? sectionFollowUps(matching).find(item => item.followUpId === followUpId
-    && item.status === 'scheduled' && item.topicId === section.topicId && item.sectionId === section.id
-    && item.materialPath === section.materialPath && item.sourceHash === section.sourceHash
-    && item.outlineFingerprint === section.outlineFingerprint) : undefined;
+  const history = sectionRecallHistory(matching);
+  const followUps = sectionFollowUps(matching);
   const [message, setMessage] = useState('');
-  const [dueDateKey, setDueDateKey] = useState(() => {
-    const tomorrow = new Date(); tomorrow.setDate(tomorrow.getDate() + 1);
-    return `${tomorrow.getFullYear()}-${String(tomorrow.getMonth() + 1).padStart(2, '0')}-${String(tomorrow.getDate()).padStart(2, '0')}`;
-  });
-  const saving = useRef(false);
   const sectionElement = useRef<HTMLDetailsElement>(null);
-  const [busy, setBusy] = useState(false);
   useEffect(() => {
     if (targetSectionId !== section.id || !sectionElement.current) return;
     sectionElement.current.open = true;
-    window.requestAnimationFrame(() => sectionElement.current?.scrollIntoView({ behavior:'smooth', block:'center' }));
+    window.requestAnimationFrame(() => sectionElement.current?.scrollIntoView({ behavior: 'instant', block: 'center' }));
   }, [targetSectionId, section.id]);
-  const base = () => ({
-    id: createEventId(), topicId: section.topicId, sectionId: section.id, materialPath: section.materialPath,
-    sourceHash: section.sourceHash, outlineFingerprint: section.outlineFingerprint, occurredAt: Math.max(Date.now(), ...matching.map(item => item.occurredAt + 1)),
-    ...(sessionId ? { trainingSessionId: sessionId } : {}), ...(activityId ? { trainingActivityId: activityId } : {}),
-  });
-  const addCoverage = (value: 'not-started' | 'partial' | 'covered') => {
-    if (saving.current) return;
-    saving.current = true; setBusy(true);
-    try {
-      const saved = record({ ...base(), kind: 'coverage', coverage: value });
-      setMessage(saved ? 'Cobertura guardada.' : 'No se pudo guardar la cobertura en este dispositivo.');
-    } finally { saving.current = false; setBusy(false); }
+  const addCoverage = (value: 'not-started' | 'partial' | 'covered', timestamp: number) => {
+    const saved = record({ id: createEventId(), topicId: section.topicId, sectionId: section.id,
+      materialPath: section.materialPath, sourceHash: section.sourceHash, outlineFingerprint: section.outlineFingerprint,
+      occurredAt: Math.max(timestamp, ...matching.map(item => item.occurredAt + 1)), kind: 'coverage', coverage: value,
+      ...(sessionId ? { trainingSessionId: sessionId } : {}), ...(activityId ? { trainingActivityId: activityId } : {}),
+    });
+    setMessage(saved ? 'Cobertura guardada.' : 'No se pudo guardar la cobertura en este dispositivo.');
   };
-  const addSelfCheck = (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    if (saving.current) return;
-    saving.current = true; setBusy(true);
-    const formElement = event.currentTarget;
-    try {
-      const form = new FormData(formElement);
-      const saved = record({
-        ...base(), kind: 'self-check',
-        timing: linkedFollowUp ? 'delayed' : form.get('timing') as 'assisted' | 'immediate' | 'delayed',
-        rating: form.get('rating') as 'not-recalled' | 'partial' | 'recalled',
-        ...(linkedFollowUp ? { followUpId:linkedFollowUp.followUpId } : {}),
-      });
-      setMessage(saved ? 'Autoevaluación guardada; no es una corrección objetiva.' : 'No se pudo guardar la autoevaluación en este dispositivo.');
-      formElement.reset();
-    } finally { saving.current = false; setBusy(false); }
-  };
-  const scheduleFollowUp = (sourceSelfCheckEventId: string) => {
-    if (saving.current || !canScheduleSectionFollowUp(matching, sourceSelfCheckEventId)) return;
-    saving.current = true; setBusy(true);
-    try {
-      const saved = record({ ...base(), kind: 'follow-up', followUpId: sourceSelfCheckEventId, sourceSelfCheckEventId, dueDateKey, status: 'scheduled', sectionTitle:section.title, printedPage:section.printedPage });
-      setMessage(saved ? `Comprobación programada para el ${dueDateKey}. La fecha es una elección tuya, no un intervalo automático.` : 'No se pudo guardar la comprobación en este dispositivo.');
-    } finally { saving.current = false; setBusy(false); }
-  };
-  const changeFollowUpStatus = (followUpId: string, status: 'completed' | 'cancelled') => {
-    if (saving.current) return;
-    const current = sectionFollowUps(matching).find(item => item.followUpId === followUpId && item.status === 'scheduled');
-    if (!current) return;
-    if (status === 'completed' && !hasLinkedDelayedFollowUpCheck(matching, current)) {
-      setMessage('Abre esta comprobación desde la agenda y registra primero el recuerdo diferido. La autoevaluación queda vinculada a este seguimiento.');
-      return;
-    }
-    saving.current = true; setBusy(true);
-    try {
-      const saved = record({ ...base(), kind: 'follow-up', followUpId, sourceSelfCheckEventId: current.sourceSelfCheckEventId, dueDateKey: current.dueDateKey, status, ...(current.sectionTitle ? { sectionTitle:current.sectionTitle } : {}), ...(current.printedPage !== undefined ? { printedPage:current.printedPage } : {}) });
-      setMessage(saved ? (status === 'completed' ? 'Comprobación marcada como realizada.' : 'Comprobación cancelada; el historial se conserva.') : 'No se pudo actualizar la comprobación.');
-    } finally { saving.current = false; setBusy(false); }
-  };
-  const history = sectionRecallHistory(matching);
-  const followUps = sectionFollowUps(matching);
-  const coverageLabel = coverage === 'covered' ? 'cubierto' : coverage === 'partial' ? 'parcial' : 'sin iniciar';
-  const timingLabel = { assisted: 'con ayuda', immediate: 'inmediato', delayed: 'diferido' };
-  const ratingLabel = { 'not-recalled': 'no lo recordé', partial: 'lo recordé parcialmente', recalled: 'lo recordé' };
   return <details ref={sectionElement} id={section.id} className="my-1 rounded-md border border-line px-2 py-1">
-    <summary className="min-h-10 cursor-pointer content-center">{section.title} <span className="text-muted">(p. {section.printedPage} · cobertura {coverageLabel})</span></summary>
+    <summary className="min-h-11 cursor-pointer content-center">{section.title} <span className="text-muted">(p. {section.printedPage} · cobertura {coverage === 'covered' ? 'cubierto' : coverage === 'partial' ? 'parcial' : 'sin iniciar'})</span></summary>
     <div className="pb-2 ps-1">
-      <p className="my-1 text-sm text-muted">Registra lo que has cubierto por tu cuenta. La cobertura no acredita comprensión ni recuerdo.</p>
-      {matchingOpens.length > 0 && <p className="my-1 text-xs text-muted">Aperturas solicitadas de este PDF: {matchingOpens.length}; última: {new Date(matchingOpens.at(-1)!.occurredAt).toLocaleString()}. Esto no confirma lectura.</p>}
+      <p className="my-2 text-sm text-muted">Registra el material consultado. Esta marca no acredita comprensión ni resultados de test.</p>
+      {opens.length > 0 && <p className="my-1 text-xs text-muted">Aperturas solicitadas de este PDF: {opens.length}. Esto no confirma lectura.</p>}
       <div className="flex flex-wrap gap-2">
-        <button className="btn sec" type="button" disabled={busy} onClick={() => addCoverage('partial')}>Marcar parcial</button>
-        <button className="btn sec" type="button" disabled={busy} onClick={() => addCoverage('covered')}>Marcar cubierto</button>
-        {coverage !== 'not-started' && <button className="btn sec" type="button" disabled={busy} onClick={() => addCoverage('not-started')}>Volver a sin iniciar</button>}
+        <button className="btn sec" type="button" onClick={() => addCoverage('partial', coverageTimestamp())}>Marcar parcial</button>
+        <button className="btn sec" type="button" onClick={() => addCoverage('covered', coverageTimestamp())}>Marcar cubierto</button>
+        {coverage !== 'not-started' && <button className="btn sec" type="button" onClick={() => addCoverage('not-started', coverageTimestamp())}>Volver a sin iniciar</button>}
       </div>
-      <form className="mt-2 flex flex-wrap items-end gap-2" onSubmit={addSelfCheck}>
-        {linkedFollowUp ? <p className="m-0 text-sm">Comprobación diferida programada · resultado autoevaluado, no objetivo</p>
-          : <label className="grid gap-1 text-sm">Comprobación
-            <select name="timing" defaultValue="immediate" className="min-h-10 rounded-md border border-line bg-surface px-2">
-              <option value="assisted">Con ayuda</option><option value="immediate">Al terminar</option><option value="delayed">Días después (ya comprobado)</option>
-            </select>
-          </label>}
-        <label className="grid gap-1 text-sm">Autoevaluación
-          <select name="rating" defaultValue="partial" className="min-h-10 rounded-md border border-line bg-surface px-2">
-            <option value="not-recalled">No lo recordé</option><option value="partial">Parcialmente</option><option value="recalled">Lo recordé</option>
-          </select>
-        </label>
-        <button className="btn" type="submit" disabled={busy}>Guardar comprobación</button>
-      </form>
-      <p className="my-1 text-xs text-muted">{linkedFollowUp ? 'Intenta recordar antes de consultar. Guarda tu valoración para vincularla a la comprobación programada; después podrás cerrar la actividad.' : '“Días después” describe una comprobación que ya hiciste. Para elegir cuándo volver, usa la fecha de próxima comprobación tras guardar.'}</p>
+      <Link className="mt-3 inline-flex min-h-11 items-center" to={`/test?topic=${encodeURIComponent(section.topicId)}`}>Practicar este tema con un test →</Link>
       {message && <p className="my-2 text-sm" role="status">{message}</p>}
-      {onCompleteSectionRecall && targetSectionId === section.id && sessionId && activityId && <div className="mt-3 rounded-md border border-brand/40 p-3">
-        <p className="my-1 text-sm">Primero intenta explicar este apartado sin mirar. Consulta el material solo para resolver dudas y cierra la comprobación al terminar.</p>
-        <button className="btn" type="button" disabled={busy} onClick={async () => { if (saving.current) return; saving.current = true; setBusy(true); try { await onCompleteSectionRecall(); } finally { saving.current = false; setBusy(false); } }}>Terminar comprobación y volver a la sesión</button>
-      </div>}
-      {followUps.length > 0 && <div className="mt-2 text-sm"><p className="my-1 font-semibold">Comprobaciones posteriores</p><ul className="my-1 list-disc ps-5">{followUps.map(item => <li key={item.followUpId}>{item.dueDateKey} · {item.status === 'scheduled' ? 'pendiente' : item.status === 'completed' ? 'realizada' : 'cancelada'}{item.status === 'scheduled' && <span className="ms-2 inline-flex flex-wrap gap-2"><button className="text-link underline" type="button" disabled={busy} onClick={() => changeFollowUpStatus(item.followUpId, 'completed')}>Marcar realizada</button><button className="text-link underline" type="button" disabled={busy} onClick={() => changeFollowUpStatus(item.followUpId, 'cancelled')}>Cancelar</button></span>}</li>)}</ul></div>}
-      {history.filter(item => canScheduleSectionFollowUp(matching, item.id)).at(-1) && <form className="mt-2 flex flex-wrap items-end gap-2" onSubmit={event => { event.preventDefault(); const latest = [...history].reverse().find(item => canScheduleSectionFollowUp(matching, item.id)); if (latest) scheduleFollowUp(latest.id); }}>
-        <label className="grid gap-1 text-sm">Próxima comprobación · fecha elegida
-          <input aria-label="Fecha de próxima comprobación" type="date" min={(() => { const tomorrow = new Date(); tomorrow.setDate(tomorrow.getDate() + 1); return `${tomorrow.getFullYear()}-${String(tomorrow.getMonth() + 1).padStart(2, '0')}-${String(tomorrow.getDate()).padStart(2, '0')}`; })()} value={dueDateKey} onChange={event => setDueDateKey(event.currentTarget.value)} className="min-h-10 rounded-md border border-line bg-surface px-2" />
-        </label>
-        <button className="btn sec" type="submit" disabled={busy || !dueDateKey}>Programar desde la última autoevaluación</button>
-      </form>}
-      <details className="mt-2">
-        <summary className="min-h-9 cursor-pointer content-center text-sm">Historial de autoevaluaciones · {history.length}</summary>
-        {history.length ? <ul className="my-1 list-disc ps-5 text-sm">{history.map(item => <li key={item.id}>{new Date(item.occurredAt).toLocaleString()} · {timingLabel[item.timing]} · {ratingLabel[item.rating]} · autoevaluación</li>)}</ul>
-          : <p className="my-1 text-sm text-muted">Todavía no hay comprobaciones registradas.</p>}
-      </details>
+      {(history.length > 0 || followUps.length > 0) && <details className="mt-2">
+        <summary className="min-h-11 cursor-pointer content-center text-sm">Historial de autoevaluaciones antiguas · {history.length}</summary>
+        <p className="text-sm text-muted">Se conserva como registro personal; no cuenta como tests, aciertos ni dominio.</p>
+        <ul className="my-1 list-disc ps-5 text-sm">{history.map(item => <li key={item.id}>{new Date(item.occurredAt).toLocaleString()} · {historicalTimingLabels[item.timing]} · {historicalRatingLabels[item.rating]}</li>)}</ul>
+        {followUps.length > 0 && <p className="text-sm">{followUps.length} seguimientos antiguos conservados. Puedes practicar el tema con el enlace de test.</p>}
+      </details>}
     </div>
   </details>;
 }

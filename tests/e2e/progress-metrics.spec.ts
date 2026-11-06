@@ -71,7 +71,8 @@ test('el periodo concilia muestra, reintentos, tiempos y filtros en 320/768/1440
   await page.screenshot({ path: `tests/e2e/evidence/progress-metrics-2026-11-06/populated-${testInfo.project.name}.png`, fullPage: true });
   await page.setViewportSize({ width: 1440, height: 900 });
   await page.evaluate(() => { document.documentElement.style.zoom = '2'; });
-  expect(await page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(1440);
+  const zoomLayout = await page.evaluate(() => ({ width:document.documentElement.scrollWidth, outside:[...document.querySelectorAll('body *')].filter(node => node.getBoundingClientRect().right > innerWidth + 1).map(node => ({ tag:node.tagName, class:node.getAttribute('class'), width:node.getBoundingClientRect().width, right:node.getBoundingClientRect().right, text:node.textContent?.slice(0,80) })).slice(0,25) }));
+  await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth), { message:JSON.stringify(zoomLayout) }).toBeLessThanOrEqual(1440);
   await panel.getByRole('combobox', { name: 'Periodo', exact: true }).focus();
   await expect(panel.getByRole('combobox', { name: 'Periodo', exact: true })).toBeFocused();
   await page.screenshot({ path: `tests/e2e/evidence/progress-metrics-2026-11-06/zoom-200-${testInfo.project.name}.png` });

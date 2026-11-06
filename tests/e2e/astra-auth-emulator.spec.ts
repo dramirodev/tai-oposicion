@@ -1,3 +1,4 @@
+import { verifySyntheticBrowserIsolation } from './synthetic-auth';
 import { expect, test } from '@playwright/test';
 import { initializeTestEnvironment } from '@firebase/rules-unit-testing';
 import { deleteApp, initializeApp } from 'firebase/app';
@@ -13,7 +14,7 @@ const firebaseConfig = {
 test('Auth local aprobado conserva los 100 ítems en recarga protegida y bloquea el simulacro tras cerrar sesión', async ({ page, context, browserName, baseURL }) => {
   test.skip(process.env.TAI_AUTH_EMULATOR !== '1' || browserName !== 'chromium');
   test.setTimeout(90_000);
-  expect(baseURL).toBe('http://127.0.0.1:4195');
+  expect(baseURL).toBe('http://127.0.0.1:4187');
   expect(process.env.FIREBASE_AUTH_EMULATOR_HOST).toMatch(/^(localhost|127\.0\.0\.1):9099$/);
   expect(process.env.FIRESTORE_EMULATOR_HOST).toMatch(/^(localhost|127\.0\.0\.1):8080$/);
   const app = initializeApp(firebaseConfig);
@@ -29,7 +30,7 @@ test('Auth local aprobado conserva los 100 ítems en recarga protegida y bloquea
   });
   await context.route('**/*', route => {
     const url = new URL(route.request().url());
-    if (url.protocol !== 'http:' || url.hostname !== '127.0.0.1' || !['4195', '9099', '8080'].includes(url.port)) return route.abort('blockedbyclient');
+    if (url.protocol !== 'http:' || url.hostname !== '127.0.0.1' || !['4187', '9099', '8080'].includes(url.port)) return route.abort('blockedbyclient');
     return route.continue();
   });
   let configGate: Promise<void> | undefined;
@@ -39,6 +40,8 @@ test('Auth local aprobado conserva los 100 ítems en recarga protegida y bloquea
   });
 
   try {
+    await verifySyntheticBrowserIsolation(page);
+    await page.goto('about:blank');
     // Sign in using the emulator SDK and hand its real persisted user to the browser SDK.
     // This exercises authenticated app startup without a Google popup or any off-device requests.
     const email = 'astra-ui-student@example.test';

@@ -6,7 +6,7 @@ import type { TrainingPreferences } from './entities.js';
 import type { ScheduledStudyActivity } from './study-training-calendar.js';
 import { resolveTrainingDay } from './study-training-events.js';
 import type { TopicReviewEvidence } from './study-review-intervention.js';
-import { sectionFollowUps, type AcademyMaterialSelection, type AcademySectionStudyEvent } from './academy-study-progress.js';
+import { type AcademyMaterialSelection, type AcademySectionStudyEvent } from './academy-study-progress.js';
 import type { AcademyCurriculumMaterialIdentity } from './academy-curriculum-types.js';
 
 export const WEEKLY_AGENDA_SCHEMA_VERSION = 1 as const;
@@ -325,72 +325,8 @@ export function addSectionRecallFollowUpsToWeeklyProposal(input: {
   events: readonly AcademySectionStudyEvent[];
   materialIndex: Readonly<Record<string, readonly AcademyCurriculumMaterialIdentity[]>>;
 }): WeeklyAgendaPlanProposal {
-  const { proposal, agenda } = input;
-  const weekEnd = addStudyDays(proposal.targetWeekStart, 6);
-  if (!weekEnd || !isStudyDateKey(input.todayKey)) return proposal;
-  const eventById = new Map(input.events.map(event => [event.id, event]));
-  const selectionByTopic = new Map(input.selections.map(selection => [selection.topicId, selection]));
-  const plannedFollowUpIds = new Set(agenda.items.flatMap(item => item.sectionRecall && (item.status === 'planned' || item.status === 'completed') ? [item.sectionRecall.followUpId] : []));
-  const occupied = new Map<string, number>();
-  const activitiesPerDay = new Map<string, number>();
-  for (const item of agenda.items) if (item.weekStart === proposal.targetWeekStart && item.status === 'planned') occupied.set(item.dateKey, (occupied.get(item.dateKey) ?? 0) + item.minutes);
-  for (const item of agenda.items) if (item.weekStart === proposal.targetWeekStart && item.status === 'planned') activitiesPerDay.set(item.dateKey, (activitiesPerDay.get(item.dateKey) ?? 0) + 1);
-  for (const item of proposal.items) occupied.set(item.dateKey, (occupied.get(item.dateKey) ?? 0) + item.minutes);
-  for (const item of proposal.items) activitiesPerDay.set(item.dateKey, (activitiesPerDay.get(item.dateKey) ?? 0) + 1);
-  for (const activity of input.scheduledActivities) occupied.set(activity.dateKey, (occupied.get(activity.dateKey) ?? 0) + activity.minutes);
-  let added = 0, stale = 0, noCapacity = 0, alreadyIncluded = 0;
-  const recallMinutes = input.preferences.focusBlockMinutes ?? 35;
-  const followUps = sectionFollowUps(input.events).filter(item => item.status === 'scheduled')
-    .sort((a, b) => a.dueDateKey.localeCompare(b.dueDateKey) || a.id.localeCompare(b.id));
-  const items = [...proposal.items];
-  for (const followUp of followUps) {
-    if (followUp.dueDateKey > weekEnd || (followUp.dueDateKey < proposal.targetWeekStart && followUp.dueDateKey > input.todayKey)) continue;
-    if (plannedFollowUpIds.has(followUp.followUpId)) { alreadyIncluded++; continue; }
-    const source = eventById.get(followUp.sourceSelfCheckEventId);
-    const selection = selectionByTopic.get(followUp.topicId);
-    const selectedMaterial = selection?.materials.find(material => material.role === 'syllabus' && material.path === followUp.materialPath
-      && material.sourceHash === followUp.sourceHash && material.outlineFingerprint === followUp.outlineFingerprint);
-    const currentMaterial = (input.materialIndex[followUp.topicId] ?? []).find(material => material.path === followUp.materialPath && material.kind === 'syllabus');
-    const selectionStillCurrent = !!selectedMaterial && !!currentMaterial && currentMaterial.sha256 === selectedMaterial.sourceHash
-      && currentMaterial.outlineFingerprint === selectedMaterial.outlineFingerprint
-      && currentMaterial.outlineStructureFingerprint === selectedMaterial.outlineStructureFingerprint;
-    if (!source || source.kind !== 'self-check' || source.topicId !== followUp.topicId || source.sectionId !== followUp.sectionId
-      || source.materialPath !== followUp.materialPath || source.sourceHash !== followUp.sourceHash || source.outlineFingerprint !== followUp.outlineFingerprint || !selectionStillCurrent
-      || currentMaterial?.sha256 !== followUp.sourceHash || currentMaterial.outlineFingerprint !== followUp.outlineFingerprint) { stale++; continue; }
-
-    let dateKey = followUp.dueDateKey;
-    if (dateKey < input.todayKey) {
-      dateKey = '';
-      for (let offset = 0; offset < 7; offset++) {
-        const candidate = addStudyDays(proposal.targetWeekStart, offset);
-        if (!candidate || candidate <= input.todayKey || candidate > weekEnd) continue;
-        const day = resolveTrainingDay({ dateKey:candidate, preferences:input.preferences });
-        if (day.minutes >= recallMinutes && (occupied.get(candidate) ?? 0) + recallMinutes <= day.minutes
-          && (activitiesPerDay.get(candidate) ?? 0) < MAX_DAILY_TRAINING_ACTIVITIES) { dateKey = candidate; break; }
-      }
-    }
-    const day = dateKey ? resolveTrainingDay({ dateKey, preferences:input.preferences }) : null;
-    if (!dateKey || !day?.minutes || day.focus === 'rest' || dateKey < input.todayKey
-      || (occupied.get(dateKey) ?? 0) + recallMinutes > day.minutes || items.length + agenda.items.length >= MAX_WEEKLY_AGENDA_ITEMS
-      || agenda.items.filter(item => item.weekStart === proposal.targetWeekStart).length + items.filter(item => item.weekStart === proposal.targetWeekStart).length >= 35
-      || (activitiesPerDay.get(dateKey) ?? 0) >= MAX_DAILY_TRAINING_ACTIVITIES) { noCapacity++; continue; }
-
-    const idBase = `section-follow-up:${followUp.followUpId}:${proposal.targetWeekStart}`;
-    let id = idBase;
-    let suffix = 1;
-    while (agenda.items.some(item => item.id === id) || items.some(item => item.id === id)) id = `${idBase}:${++suffix}`;
-    items.push({ id, weekStart:proposal.targetWeekStart, dateKey, kind:'sectionRecall', topicIds:[followUp.topicId], minutes:recallMinutes,
-      status:'planned', createdAt:agenda.updatedAt, updatedAt:agenda.updatedAt,
-      sectionRecall:{ followUpId:followUp.followUpId, sourceSelfCheckEventId:followUp.sourceSelfCheckEventId, sectionId:followUp.sectionId,
-        materialPath:followUp.materialPath, sourceHash:followUp.sourceHash, outlineFingerprint:followUp.outlineFingerprint,
-        dueDateKey:followUp.dueDateKey, ...(followUp.sectionTitle ? { sectionTitle:followUp.sectionTitle } : {}),
-        ...(followUp.printedPage !== undefined ? { printedPage:followUp.printedPage } : {}) } });
-    plannedFollowUpIds.add(followUp.followUpId);
-    occupied.set(dateKey, (occupied.get(dateKey) ?? 0) + recallMinutes);
-    activitiesPerDay.set(dateKey, (activitiesPerDay.get(dateKey) ?? 0) + 1);
-    added++;
-  }
-  return { ...proposal, items, sectionRecallSummary:{ added, stale, noCapacity, alreadyIncluded } };
+  // Legacy records remain readable; new practice is generated by the test planner only.
+  return { ...input.proposal, sectionRecallSummary: { added: 0, stale: 0, noCapacity: 0, alreadyIncluded: 0 } };
 }
 
 export function applyWeeklyAgendaPlan(current: WeeklyStudyAgenda, proposal: WeeklyAgendaPlanProposal, now: number): WeeklyStudyAgenda | null {

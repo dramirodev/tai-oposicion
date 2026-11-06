@@ -6,7 +6,7 @@ import type { MetricsQuery } from '../../../core/application/stats/metrics-query
 import { hasActiveRun } from '../study/study-engine-composition.js';
 import { loadDetailedMetrics } from '../../../core/application/stats/load-detailed-metrics.js';
 import { questionContentRevision } from '../../../core/domain/attempts/highlights.js';
-import { isQuestionEditoriallyQuarantined } from '../../../core/domain/question-review-overrides.js';
+import { questionReviewOverride, isQuestionEditoriallyQuarantined } from '../../../core/domain/question-review-overrides.js';
 import type { ProgressRepository } from '../../../core/ports/ProgressRepository.js';
 import type { StudyProgressGateway } from '../../../core/ports/StudyProgressGateway.js';
 import { createTopicMasteryComposition } from '../topics/topic-mastery-composition.js';
@@ -111,7 +111,15 @@ export function createStatsServices(actions: StatsActions, progressRepository: P
       const account = studyProgress.accountId();
       const metadata = await studyQuestionCatalog.getMetadataIndex();
       if (account !== studyProgress.accountId()) throw new Error('La cuenta cambió al cargar el catálogo.');
-      const entries = Object.entries(metadata).flatMap(([id, entry]) => Array.isArray(entry) && !entry[5] && !isQuestionEditoriallyQuarantined(id)
+      // Editorial approval belongs to the exact current content, never an ID hint
+      // left in memory by a previously opened question. Reload must give the same count.
+      const origins = new Set<QuestionRecord['o']>(query.origin === 'O' || query.origin === 'A' || query.origin === 'G' ? [query.origin] : ['O', 'A', 'G']);
+      const reviewedIds = Object.entries(metadata).flatMap(([id, entry]) => Array.isArray(entry) && !entry[5] && questionReviewOverride(id)
+        && (!query.topicId || query.topicId === entry[0]) && origins.has(entry[1]) ? [id] : []);
+      const verified = new Set(reviewedIds.length ? (await studyQuestionCatalog.getQuestions(reviewedIds))
+        .filter(question => isStudyQuestionEligible(question, origins, query.mode ?? 'practice')).map(question => question.i) : []);
+      if (account !== studyProgress.accountId()) throw new Error('La cuenta cambió al verificar el catálogo.');
+      const entries = Object.entries(metadata).flatMap(([id, entry]) => Array.isArray(entry) && !entry[5] && (!questionReviewOverride(id) || verified.has(id))
         ? [[id, { topicId: entry[0] as string, origin: entry[1] as string }] as const] : []);
       const metrics = await loadDetailedMetrics({ repository: localAttemptRepository, accountId: studyProgress.accountId, query,
         questions: new Map(entries), catalogueRevision: questionContentRevision(JSON.stringify(entries), []), now: studyQuestionCatalog.now() });
