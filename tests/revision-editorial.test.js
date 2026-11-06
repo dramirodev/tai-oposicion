@@ -194,3 +194,20 @@ it.each([
  expect(notice).toContain(source + ', página ' + page);
  expect(notice).toContain('Solo estudio');
 });
+
+
+it('mantiene fuera de puntuación las 50 correcciones factuales que aún no están publicadas', () => {
+ const previous = JSON.parse(readFileSync('scripts/bank-editorial/reviewed-19.json', 'utf8')).questions;
+ const followup = JSON.parse(readFileSync('scripts/bank-editorial/reviewed-followup.json', 'utf8')).questions.filter(q => q.priority === 'P0');
+ const entries = [...previous, ...followup];
+ expect(entries).toHaveLength(50);
+ for (const entry of entries) {
+  for (const version of [entry.before, entry.after]) {
+   expect(isQuestionEditoriallyQuarantined(version.i), version.i).toBe(true);
+   const safe = applyEditorialScoring(version);
+   expect(safe.np).toBe(1);
+   expect(filterScoringQuestions([safe], false, q => q.np)).toEqual([]);
+   expect(questionNotice(safe)).toContain('incorrección confirmada');
+  }
+ }
+});

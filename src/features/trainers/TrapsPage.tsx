@@ -63,7 +63,7 @@ function TrapQuestion({ run, selected, result, onToggle, onExit, onSubmit, onNex
   onToggle(id: number): void; onExit(): void; onSubmit(): void; onNext(): void;
 }) {
   const prompt = run.items[run.index];
-  const notice = questionNotice({ i: prompt.id, n: prompt.note, np: prompt.nonScoring });
+  const notice = (prompt.editorialNotice ?? questionNotice({ i: prompt.id, n: prompt.note, np: prompt.nonScoring }));
   const source = sourceHtml({ i: prompt.id, source: prompt.source, u: prompt.citation });
   const correctIds = new Set(result?.correctIds || prompt.trapIds);
   const resultSelectedIds = new Set(result?.selectedIds || []);

@@ -1,5 +1,11 @@
 # Registro de hallazgos TAI
 
+## Seguimiento técnico local 2026-11-06
+
+Corrección mínima de `StudyMarkup`: las ramas transparentes y los enlaces descartados devuelven `Fragment` con clave, evitando el aviso React observado en resultados sin cambiar texto, DOM ni política de URL. Regresión unitaria roja antes/verde después; `StudyMarkup` + `design-flow` 45/45 y build correctos. Sin cambios al timeout de `design-flow` ni a Firebase.
+
+Comprobaciones adicionales aisladas desde d3e29bf: Chromium sincroniza temas vistos entre dos contextos con el mismo UID, recupera una marca offline y conserva separación de una tercera cuenta; las reglas rechazan leer el documento del otro UID. Teclado/salto/foco de diálogo pasa en Chromium y WebKit. Batería local **3/4**: WebKit completa las aserciones de datos, pero su control de cero errores falla con dos errores de transporte del SDK al recargar (Write/Listen, 3,6 ms después de reload). Se conserva como limitación, sin silenciarlo ni extrapolar a Safari físico. Cuatro intentos del SDK Firebase 10.14.1 a apis.google.com se bloquearon; cero respuestas externas. OAuth real, VoiceOver, dispositivos físicos y los demás tipos de dato sincronizable siguen sin certificarse. Evidencias y configuración reproducible: `work/technical-followup/` del worktree aislado; el check global final queda a cargo de la integración.
+
 ## Implementación Astra 2026-11-05
 
 La auditoría original se conserva íntegra en `evidence/astra-implementation-2026-11-05/astra-original.zip`, junto a su SHA-256 en `provenance.json`. Contiene 16.078 dictámenes y 3.519 incidencias editoriales. `implementation-tasks.json` registra cada ID, prioridad, evidencia, dependencias, riesgo y aceptación. Sus decisiones editoriales requieren verificar las cuatro alternativas de cada pregunta. La publicación del banco en Firestore necesita autorización específica.

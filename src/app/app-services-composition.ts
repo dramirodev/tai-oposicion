@@ -21,7 +21,7 @@ import { showMenu } from '../shared/ui/dialog-actions.js';
 import { BLOQUES, LETRAS_OPCION, ORIGEN, TRAMPAS } from '../shared/presentation/labels.js';
 import { APP_VERSION, APP_BUILD } from './build-info.js';
 import { isFull, isOwner, accessLevel, devMode, setDevMode, devRevealed, revealDev } from './composition/access-composition.js';
-import { subscribe as subscribeEngine, configureSessionStateStore, getCurrentRun, getLastResult, createRun, resumeRun, startImmediateRetryFromLastResult, setAttemptTrackingVisible, flushAttemptTracking, quickItems, repasoItems, trapTest, falladasIds, dueQuestionIds, selectQuestionsForTopics, selectWeightedSimulationQuestions, studyQuestionCatalog } from './composition/study/study-engine-composition.js';
+import { subscribe as subscribeEngine, configureSessionStateStore, getCurrentRun, getLastResult, createRun, resumeRun, startImmediateRetryFromLastResult, setAttemptTrackingVisible, flushAttemptTracking, quickItems, repasoItems, trapTest, falladasIds, failedQuestionCandidateIds, dueQuestionIds, selectQuestionsForTopics, selectWeightedSimulationQuestions, studyQuestionCatalog } from './composition/study/study-engine-composition.js';
 import { sessionStatePort } from './session-state-store.js';
 import { clearRun, pendingRun, saveRun, watchPrivateRunAccess } from './composition/study/pending-run-composition.js';
 import { createTopicMasteryComposition } from './composition/topics/topic-mastery-composition.js';
@@ -367,7 +367,7 @@ const failuresServices = createFailuresComposition({
   loadQuestionMetadata: getMeta,
   loadQuestionIndex: getIndex,
   loadQuestionsById: ids => studyQuestionCatalog.getQuestions(ids),
-  failedQuestionIds: falladasIds,
+  failedQuestionIds: failedQuestionCandidateIds,
   seenTopics: localStudyProgressGateway.getSeenTopics,
   setReviewed: localStudyProgressGateway.setSyllabusReviewed,
   topicName: studyQuestionCatalog.getTopicName,

@@ -1,6 +1,6 @@
 // Motor de preguntas: estado de la sesión en curso, guardado y reanudación, registro de respuestas, cierre con nota
 // y selección de preguntas (sesión rápida, repaso, trampas). Sin DOM: la interfaz solo pinta y llama a estas funciones.
-import { applyEditorialScoring } from '../domain/question-review-overrides.js';
+import { applyEditorialScoring, isEditorialContentBlocked } from '../domain/question-review-overrides.js';
 import { officialExamSessionId, scoreOfficialExam } from '../domain/simulation-scenarios.js';
 import { calculateExamScore } from '../domain/scoring.js';
 import { calculateRubricScore } from '../domain/simulation-scoring.js';
@@ -444,7 +444,7 @@ export function answerQuestion(run: Run, question: Question, index: number, minL
   const activeRun = getSnapshot().run;
   if (!activeRun || activeRun.sessionKey !== run.sessionKey) return;
   const currentQuestion = activeRun.items[activeRun.idx];
-  if (question.i !== currentQuestion.i || currentQuestion.np === 1 || expiredOfficialExam(activeRun) || !canAnswerStudyQuestion(activeRun, index)) return;
+  if (question.i !== currentQuestion.i || isEditorialContentBlocked(currentQuestion) || expiredOfficialExam(activeRun) || !canAnswerStudyQuestion(activeRun, index)) return;
   updateActiveRun(nextRun => {
     if (!nextRun.feedback) saveUncorrectedAnswer(nextRun, currentQuestion, index, minLect);
     else if (index === -1) savePendingStudyAnswer(nextRun);
@@ -523,7 +523,7 @@ export function answerDeferred(run: Run, index: number): void {
   const activeRun = getSnapshot().run;
   if (!activeRun || activeRun.sessionKey !== run.sessionKey) return;
   updateActiveRun(nextRun => {
-    if (expiredOfficialExam(nextRun) || nextRun.items[nextRun.idx].np === 1) return;
+    if (expiredOfficialExam(nextRun) || isEditorialContentBlocked(nextRun.items[nextRun.idx])) return;
     nextRun.ans[nextRun.idx] = index;
     (nextRun.times ||= [])[nextRun.idx] = Math.max(1, nextRun.secs - (nextRun.q0 ?? 0));
     const question = nextRun.items[nextRun.idx];
@@ -573,7 +573,7 @@ function applyAnswerResult(run: Run, item: QuestionRecord, index: number, totals
 }
 
 function addAnswerToTotals(run: Run, item: QuestionRecord, index: number, totals: SessionBreakdown): void {
-  if (item.np === 1) return;
+  if (isEditorialContentBlocked(item)) return;
   const topic = totals.topics[item.t] ||= [0, 0];
   topic[1]++;
   const questionType = catalog().getMetadataSnapshot()?.[item.i]?.[2];

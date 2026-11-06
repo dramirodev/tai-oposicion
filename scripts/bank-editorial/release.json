@@ -7,7 +7,8 @@
     "scripts/bank-editorial/reviewed-web.json",
     "scripts/bank-editorial/reviewed-T4.07.json",
     "scripts/bank-editorial/reviewed-T3.08.json",
-    "scripts/bank-editorial/reviewed-19.json"
+    "scripts/bank-editorial/reviewed-19.json",
+    "scripts/bank-editorial/reviewed-followup.json"
   ],
   "files": {
     "T1.01.json": {
@@ -16,11 +17,11 @@
     },
     "T1.02.json": {
       "sourceBuildSha256": "863c79f79e54672d12bc9506b6d9a2db0e21451f31deb8055af443fec5871ac6",
-      "approvedSha256": "a49793862a2b8b519f7e5498d1bf359ce689ba73a7fc2da27b3f31715b7f4906"
+      "approvedSha256": "52113f643252cfcf08b885aa7db8237504dbe38b13005f884139badcf484b7a0"
     },
     "T1.03.json": {
       "sourceBuildSha256": "e87dc6d476279d12eaa5e89081adf151494a872442db94474bcf95e7e71c23ca",
-      "approvedSha256": "916193b07dd8b8c415ec6cfaa74e5a847a073cea8e83be5bb8f54749a2c797ed"
+      "approvedSha256": "239081818b78efc28828a40585a410ffbba83f03ffe58442e527843e2e396765"
     },
     "T1.04.json": {
       "sourceBuildSha256": "51eedd406cf7af0c9587cc91eeca0a0dccc59b4b766986fce3e27f7cd714eeef",
@@ -32,7 +33,7 @@
     },
     "T1.06.json": {
       "sourceBuildSha256": "9ab418a8f211cb7a27210d1c54d699162b1effbd42d7e3fea38e8e9dee8836d8",
-      "approvedSha256": "a0acd31f5b8406736b6c0d3a2b32e7a0db8d04925f61db593d6e8e1f602e4275"
+      "approvedSha256": "1c2639ba83ff46b86bb36b11ab15508e1e053365f4cf23140bddbe4290abc76e"
     },
     "T1.07.json": {
       "sourceBuildSha256": "72041beb46d8d26d512d39cc703152a3a02f6f3ed5aa657812e40d0b5b210d5c",
@@ -56,7 +57,7 @@
     },
     "T2.01.json": {
       "sourceBuildSha256": "4bde8eff389c02982ffabaef64dc3d5487c1e7c14ad0dfdb5aa7ae048ca50b7b",
-      "approvedSha256": "fb5753fa4824b626c014b42adcc03671fe0ae3537fec1d5f8af96b7c6b55bd39"
+      "approvedSha256": "4b4965443fc01de3c2cadf832ee1cb9f18a44db87facf51568826028bc5d24ba"
     },
     "T2.02.json": {
       "sourceBuildSha256": "3e3b6ee7d7915a633a1a7e30a73c6ec3fa0e87c6b42031a67d6da0a397f369f5",
@@ -64,11 +65,11 @@
     },
     "T2.03.json": {
       "sourceBuildSha256": "2aaac6432bf68d68c8e23da2a4063137940417f6929b1ba0ab76a3e762686fb7",
-      "approvedSha256": "f538b81e1605a62497b8f21e67fe02e353ce36e6ca0e0408a23c86c36d585e9e"
+      "approvedSha256": "cb14b8286918640c2148ceb9ccdd6e0016088490953c55cb08fd32741c94a3ae"
     },
     "T2.04.json": {
       "sourceBuildSha256": "ec168f362794a5a80954786b633028fff45dad3fc33ff96800f44479675e60a8",
-      "approvedSha256": "1a12bb65facaba2156eda49e14887976f4583e7afb7838065431d67a118a524c"
+      "approvedSha256": "011344d95b01ddb0188e64c732dee7478c152d38202f7e0ee382752052c4901b"
     },
     "T2.05.json": {
       "sourceBuildSha256": "e217af45f92cdcc7fd0598f17793c4d86d8e9932377d679c514ccb4c4873ee1f",
@@ -76,11 +77,11 @@
     },
     "T3.01.json": {
       "sourceBuildSha256": "36f9e07d0bcfc8578a6de202dede1fce16407f243c4fa39ed22175b7009ee4be",
-      "approvedSha256": "27e8b272f91ced721b8d4fc42e9af476ca52899d2ec6d20cff2ee00782b6447d"
+      "approvedSha256": "c94166ba86d03622846f8b6957a75d894e2f7b80a754f730be5a80e336ce4216"
     },
     "T3.02.json": {
       "sourceBuildSha256": "bbade058669eabf40aa46820a525e1a8c023133f799be97104ee410b87f0ac13",
-      "approvedSha256": "f8f37e6bd4c437d5a5186bcec118f97d0d9a64c2581037f855e741b6b4c59225"
+      "approvedSha256": "be3a2be9890ad0792471cae7d1896d0948f3d2172a227c435a5801d4c5d2c2c8"
     },
     "T3.03.json": {
       "sourceBuildSha256": "c872082add7e9ba79c29bc0ea3d17e35217350d5c0fafea44d28e8ffe539b544",
@@ -92,11 +93,11 @@
     },
     "T3.05.json": {
       "sourceBuildSha256": "26bdf8c50662598d60470edc1a3b97532d8034d69951c813f8c190e2254a6ded",
-      "approvedSha256": "9459dd1ee2aa39744e1477a42e07525247609e42837149186e1330efbd6e1b14"
+      "approvedSha256": "ee17e7b1ba6d6d33d74b49e563875f5352b999680be5c429bca7dfa8354915e0"
     },
     "T3.06.json": {
       "sourceBuildSha256": "2acbb6cc84034956e06fda7241297e19fdca38b48e75b7a568d84935c7e67c9e",
-      "approvedSha256": "69cf1099e32bb554e639c0b244458d128f932f87321b0f63c5fa73de26a70375"
+      "approvedSha256": "f02aad7d4a67c65d03c4a7008833107f3251fd845cdcec31be9fa9a5b4b46f29"
     },
     "T3.07.json": {
       "sourceBuildSha256": "02b0137e359ecbf35300ae60e152f65dac9f68af11c4815d5e9a7474bcbfd292",
@@ -144,7 +145,7 @@
     },
     "T4.08.json": {
       "sourceBuildSha256": "6cd1ea69186770bb23cf715923a847c69a3622665667104035ca0a3e6f54aab7",
-      "approvedSha256": "4950baf07755d2fe1b4b3d883151f3335619599b437a0ad3c6388a487ed888d5"
+      "approvedSha256": "99428e92ee9d6afe7eaf579729e16ec1560a09ffc10c0d864ef28cf58dfea438"
     },
     "T4.09.json": {
       "sourceBuildSha256": "dffbdfc74ac41a3453839169fe7e189058e1aec858557356586086ea297861b7",
@@ -160,7 +161,7 @@
     },
     "meta.json": {
       "sourceBuildSha256": "4fba68b338a59ab59c86c6e24da4b5b918c243c23ea5e69781532f0cd1b6ac2d",
-      "approvedSha256": "f8415041367a376b775009c6776c3bccf81c91c20bbd483d7ef4205c85fa7c7e"
+      "approvedSha256": "7fd767adb2580dbaf837b7f32d59ff01971af9db9a14870346f773b48255976e"
     },
     "supuestos.json": {
       "sourceBuildSha256": "8e38f2d07f8f00e08365b469d5dc9ea13131cbacd094fe09888f52714fb77dd2",

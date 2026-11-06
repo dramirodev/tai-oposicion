@@ -1,3 +1,5 @@
+import { webcrypto } from 'node:crypto';
+import { verifyQuestionContent } from '../../src/adapters/http/question-content-verification.js';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import 'fake-indexeddb/auto';
 import { readFileSync } from 'node:fs';
@@ -44,6 +46,28 @@ describe('integración del motor con el historial local', () => {
     store?.switchAccount(null);
     vi.unstubAllGlobals();
     localStorage.clear();
+  });
+
+  it('rechaza clave mutada aunque el ID aprobado ya se haya cargado, también al cerrar', async () => {
+    vi.stubGlobal('crypto', webcrypto);
+    const item = JSON.parse(readFileSync('scripts/bank-editorial/reviewed-19.json', 'utf8')).questions[0].after;
+    const verified = await verifyQuestionContent(item);
+    const run = engine.createRun({ kind: 'test', feedback: false, items: [verified] });
+    engine.startCurrentQuestion();
+    run.items[0].c = (item.c + 1) % 4;
+    engine.answerQuestion(run, run.items[0], run.items[0].c, 0);
+    engine.answerDeferred(run, run.items[0].c);
+    expect(run.ans[0]).toBeUndefined();
+    const result = engine.finishRun(run);
+    expect(result.ses.n).toBe(0);
+    expect(store.rec(item.i)).toBeUndefined();
+    const healthy = await verifyQuestionContent(item);
+    const approvedRun = engine.createRun({ kind: 'test', feedback: false, items: [healthy] });
+    engine.startCurrentQuestion();
+    engine.answerDeferred(approvedRun, healthy.c);
+    expect(engine.finishRun(approvedRun).ses).toMatchObject({ n: 1, a: 1, f: 0 });
+    expect(store.rec(item.i)[0]).toBe(1);
+    await tracker.flush();
   });
 
   it('registra un intento nuevo y cada respuesta exactamente una vez, sin inventar eventos antiguos', async () => {
@@ -125,11 +149,9 @@ describe('integración del motor con el historial local', () => {
     expect((await repository.getScopePage('guest')).attempts).toEqual([]);
   });
 
-  it('impide puntuar una figura ausente desde catálogo, constructor directo y checkpoint previo a la cuarentena', async () => {
+  it('impide puntuar una figura antigua ausente desde constructor y checkpoint aun si el catálogo ya está corregido', async () => {
     const id = 'AS09-P1-48';
-    const raw = JSON.parse(readFileSync('public/data/T3.05.json', 'utf8')).find(q => q.i === id);
-    const [fromCatalog] = await data.getQuestions([id]);
-    expect(fromCatalog.np).toBe(1);
+    const raw = JSON.parse(readFileSync('scripts/bank-editorial/reviewed-followup.json', 'utf8')).questions.find(q => q.id === id).before;
     expect(engine.createRun({ kind: 'sim', feedback: false, items: [raw] })).toBeNull();
     const saved = { kind: 'sim', feedback: false, ids: [id], idx: 0, ans: [0], gradingRevisions: [gradingRevision(raw)], savedAt: Date.now() };
     localStorage.setItem('tai.run:guest', JSON.stringify(saved));
