@@ -1,3 +1,4 @@
+import { hasApprovedQuestionContent, hasVerifiedEditorialId } from './question-content-proof.js';
 import type { QuestionRecord } from './question-record.js';
 
 /** Local editorial quarantine for documented risks in the externally authored bank. */
@@ -445,16 +446,39 @@ export const questionReviewOverrides: readonly QuestionReviewOverride[] = [
     source: 'T4.08 Internet - Temario.pdf',
     page: 14,
   },
+  {"id": "GEN-T3.08-57.v2", "status": "quarantined", "reason": "La versión anterior contiene una incorrección confirmada. Sólo el contenido exacto de la corrección revisada puede puntuar; una copia antigua permanece excluida.", "source": "T3.08 Aplicaciones Web - Temario.pdf", "page": 19},
+  {"id": "GEN-T3.08-316.v1", "status": "quarantined", "reason": "La versión anterior contiene una incorrección confirmada. Sólo el contenido exacto de la corrección revisada puede puntuar; una copia antigua permanece excluida.", "source": "T3.08 Aplicaciones Web - Temario - HTML.pdf", "page": 8},
+  {"id": "GEN-T3.08-351.v1", "status": "quarantined", "reason": "La versión anterior contiene una incorrección confirmada. Sólo el contenido exacto de la corrección revisada puede puntuar; una copia antigua permanece excluida.", "source": "T3.08 Aplicaciones Web - Temario - HTML.pdf", "page": 61},
+  {"id": "GEN-T3.08-416.v2", "status": "quarantined", "reason": "La versión anterior contiene una incorrección confirmada. Sólo el contenido exacto de la corrección revisada puede puntuar; una copia antigua permanece excluida.", "source": "T3.08 Aplicaciones Web - Temario - HTML.pdf", "page": 34},
+  {"id": "GEN-T3.08-540.v2", "status": "quarantined", "reason": "La versión anterior contiene una incorrección confirmada. Sólo el contenido exacto de la corrección revisada puede puntuar; una copia antigua permanece excluida.", "source": "T3.08 Aplicaciones Web - Temario - CSS.pdf", "page": 16},
+  {"id": "GEN-T3.08-545", "status": "quarantined", "reason": "La versión anterior contiene una incorrección confirmada. Sólo el contenido exacto de la corrección revisada puede puntuar; una copia antigua permanece excluida.", "source": "T3.08 Aplicaciones Web - Temario - CSS.pdf", "page": 18},
+  {"id": "GEN-T3.08-1104.v1", "status": "quarantined", "reason": "La versión anterior contiene una incorrección confirmada. Sólo el contenido exacto de la corrección revisada puede puntuar; una copia antigua permanece excluida.", "source": "T3.08 Aplicaciones Web - Temario - Python.pdf", "page": 5},
+  {"id": "GEN-T3.08-1104.v2", "status": "quarantined", "reason": "La versión anterior contiene una incorrección confirmada. Sólo el contenido exacto de la corrección revisada puede puntuar; una copia antigua permanece excluida.", "source": "T3.08 Aplicaciones Web - Temario - Python.pdf", "page": 5},
+  {"id": "GEN-T3.08-1121", "status": "quarantined", "reason": "La versión anterior contiene una incorrección confirmada. Sólo el contenido exacto de la corrección revisada puede puntuar; una copia antigua permanece excluida.", "source": "T3.08 Aplicaciones Web - Temario - Python.pdf", "page": 11},
+  {"id": "GEN-T3.08-1124", "status": "quarantined", "reason": "La versión anterior contiene una incorrección confirmada. Sólo el contenido exacto de la corrección revisada puede puntuar; una copia antigua permanece excluida.", "source": "T3.08 Aplicaciones Web - Temario - Python.pdf", "page": 13},
+  {"id": "GEN-T3.08-1131.v2", "status": "quarantined", "reason": "La versión anterior contiene una incorrección confirmada. Sólo el contenido exacto de la corrección revisada puede puntuar; una copia antigua permanece excluida.", "source": "T3.08 Aplicaciones Web - Temario - Python.pdf", "page": 17},
+  {"id": "AT407-P1-11", "status": "quarantined", "reason": "La versión anterior contiene una incorrección confirmada. Sólo el contenido exacto de la corrección revisada puede puntuar; una copia antigua permanece excluida.", "source": "T4.07 Modelo TCP y OSI - Temario.pdf", "page": 27},
+  {"id": "AT407-P1-14", "status": "quarantined", "reason": "La versión anterior contiene una incorrección confirmada. Sólo el contenido exacto de la corrección revisada puede puntuar; una copia antigua permanece excluida.", "source": "T4.07 Modelo TCP y OSI - Temario.pdf", "page": 34},
 ];
 
 const reviews = new Map(questionReviewOverrides.map((item) => [item.id, item]));
 export const questionReviewOverride = (id: string) => reviews.get(id);
 
 export function isQuestionEditoriallyQuarantined(questionId: string): boolean {
-  return reviews.has(questionId);
+  return reviews.has(questionId) && !hasVerifiedEditorialId(questionId);
+}
+
+/** Quarantine-only guard for study selectors that separately handle ordinary np records. */
+export function isEditorialQuarantineActive(question: QuestionRecord): boolean {
+  return reviews.has(question.i) && !hasApprovedQuestionContent(question);
+}
+
+/** Content-aware guard: ID hints alone must never authorize scoring or hide warnings. */
+export function isEditorialContentBlocked(question: QuestionRecord): boolean {
+  return question.np === 1 || isEditorialQuarantineActive(question);
 }
 
 /** Applies the local evidence to static, remote and restored questions without editing the source bank. */
 export function applyEditorialScoring(question: QuestionRecord): QuestionRecord {
-  return question.np !== 1 && reviews.has(question.i) ? { ...question, np: 1 } : question;
+  return question.np !== 1 && isEditorialContentBlocked(question) ? { ...question, np: 1 } : question;
 }

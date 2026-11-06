@@ -3,6 +3,7 @@ import { describe, expect, it, vi } from 'vitest';
 vi.mock('../../src/core/domain/question-review-overrides.js', () => ({
   questionReviewOverrides: [],
   isQuestionEditoriallyQuarantined: id => id === 'blocked',
+  isEditorialQuarantineActive: question => question.i === 'blocked',
 }));
 const { createStudyQuestionSelection } = await import('../../src/core/application/study-question-selection.js');
 

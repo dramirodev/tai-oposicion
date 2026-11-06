@@ -1,3 +1,5 @@
+import { hasApprovedQuestionContent } from '../../core/domain/question-content-proof.js';
+import type { QuestionRecord } from '../../core/domain/question-record.js';
 import { questionReviewOverride } from '../../core/domain/question-review-overrides.js';
 import { escapeHtml } from './format.js';
 import { missingVisualQuestionIds } from './missing-visual-resources.js';
@@ -10,8 +12,9 @@ interface SourceQuestion { source?: QuestionSource; i?: string; u?: string }
 export function questionNotice(question: NoticeQuestion): string {
   const questionId = question.i || question.id || '';
   const review = questionReviewOverride(questionId);
-  if (review) return `<aside class="question-notice warning" aria-label="Revisión editorial de la pregunta"><b>Solo estudio · no puntuable</b><p>${escapeHtml(review.reason)} Consulta ${escapeHtml(review.source)}, página ${review.page}.</p></aside>`;
-  const hasMissingVisual = missingVisualQuestionIds.has(questionId);
+  const approved = hasApprovedQuestionContent(question as QuestionRecord);
+  if (review && !approved) return `<aside class="question-notice warning" aria-label="Revisión editorial de la pregunta"><b>Solo estudio · no puntuable</b><p>${escapeHtml(review.reason)} Consulta ${escapeHtml(review.source)}, página ${review.page}.</p></aside>`;
+  const hasMissingVisual = missingVisualQuestionIds.has(questionId) && !approved;
   if (!question.n && question.np !== 1 && !hasMissingVisual) return '';
   const visualNotice = hasMissingVisual
     ? '<aside class="question-notice warning" aria-label="Material visual pendiente"><b>Esquema o imagen pendiente</b><p>Esta pregunta cita un recurso visual que no está incluido.</p></aside>'

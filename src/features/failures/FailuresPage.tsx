@@ -15,7 +15,7 @@ const EMPTY_FILTER: FailureFilter = { query: '', topicId: '', syllabus: '', stre
 const dateLabel = (timestamp: number) => new Date(timestamp).toLocaleDateString('es-ES', { day: 'numeric', month: 'short' });
 
 function FailureDetails({ question, streak, reviewed }: { question: FailureQuestion; streak: number; reviewed: boolean }) {
-  const markup = questionNotice({ i: question.id, n: question.note, np: question.nonScoring }) + sourceHtml({ i: question.id, source: question.source, u: question.citation });
+  const markup = (question.editorialNotice ?? questionNotice({ i: question.id, n: question.note, np: question.nonScoring })) + sourceHtml({ i: question.id, source: question.source, u: question.citation });
   return <details className="rv f block border-0 py-2 text-[length:var(--fs-b)] [&>summary>i]:bg-[var(--bad)]"><summary className="flex cursor-pointer items-start gap-2 pt-3"><i className="mt-[.4375rem] size-2.5 shrink-0 rounded-full bg-muted" /><span className="pre"><StudyMarkup html={richHtml(question.statement)} languageContext={question.statement} /><br /><small className="sub">Aciertos seguidos: {streak}/3 · {reviewed ? 'Temario repasado' : 'Pendiente de temario'}</small></span></summary>
     {markup && <StudyMarkup html={markup} languageContext={question.statement} />}
     {question.assumptionText && <details className="sup"><summary>Enunciado del supuesto</summary><div className="pre"><StudyMarkup html={richHtml(question.assumptionText)} languageContext={question.statement} /></div></details>}
