@@ -958,3 +958,12 @@ Las PR120/121 están fusionadas y la122 fue absorbida por121. Esta continuación
 **Quince citas COMPLETADO Y VERIFICADO en producción.** Banco v19, tres archivos cambiados, quince registros completos cotejados, cero omisiones/borrados. Lectura posterior verifica sus tres SHA y los77 hashes de inventario. Recibo: `editorial/citas-por-tema/publicacion-2026-11-06-lote-15.json`. Total publicado confirmado:778 citas. La corrección de reflujo y estas quince citas se integraron mediante47622d3; CI/despliegue automáticos quedan a GitHub sin esperarlos.
 
 **Siete citas adicionales de T4.01 COMPLETADO Y VERIFICADO localmente; publicación PENDIENTE.** Se cotejaron ocho candidatos del desarrollo completo:cron, lsb_release, consulta RPM, Intune, /proc/swaps e Insider reciben citas; Honolulu permanece pendiente porque el propio material lo relaciona con varias versiones. El pasaje de la duda se conserva en el expediente y no se incorpora a la pregunta. Se amplía el mismo overlay, preservando sus hashes de base y las cuatro citas del lote anterior.34 pruebas focales de renderizado y2 de guardas de overlay pasan; sin repetir CI completa. Se mantienen las demás preguntas sin cotejo individual pendientes.
+
+
+### Cierre de publicación v20 — 2026-11-06
+
+**Siete citas de SO COMPLETADO Y VERIFICADO en producción.** Banco v20: un tema actualizado, siete citas añadidas y cuatro previas reconocidas; cero omisiones y borrados. SHA256 remoto y los77 hashes del inventario verificados porGET. Recibo: `editorial/citas-por-tema/publicacion-2026-11-06-lote-7.json`. Total confirmado publicado por esta tarea:785 citas (496+267+15+7).
+
+El incremento de código4d2c1ae está en main. CI y despliegues automáticos quedan gestionados por GitHub; no se han lanzado manualmente ni se ha esperado su resultado en esta continuación. No se han creado PRs adicionales. La revisión global permanece PARCIALMENTE COMPLETADA: el banco local conserva3818 preguntas sin cita, entre dudas concretas, registros que requieren revisión conjunta de su prueba editorial y preguntas aún no cotejadas. No se presenta esa cifra como dudas ya adjudicadas ni como cobertura semántica completada.
+
+Próximo trabajo: continuar el cotejo individual de T4.01 con el material completo y fuentes complementarias claramente identificadas; la cola siguiente empieza por comandos Windows/apt, PSO/AD DS, monitorización y gestión de dispositivos. Conservar los overlays de base, no modificar claves y publicar solo evidencia clara con preflight atómico.

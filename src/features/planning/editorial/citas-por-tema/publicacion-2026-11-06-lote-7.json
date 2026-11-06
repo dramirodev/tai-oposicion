@@ -1,0 +1,34 @@
+{
+  "project": "tai-oposicion",
+  "version": 19,
+  "updateTime": "2026-11-06T22:09:00.849574Z",
+  "topics": [
+    "T4.01"
+  ],
+  "added": 7,
+  "already": 4,
+  "skipped": [],
+  "edits": [
+    {
+      "topic": "T4.01",
+      "ids": [
+        "L2025A-P1-61",
+        "L2018-P1-71",
+        "AT401-P1-07",
+        "AT401-P1-20",
+        "AT401-P1-35",
+        "AT401-P1-44",
+        "AS08-P1-44"
+      ],
+      "before": "df40bb95af86c5b89c75e3d86eb11b9dffd086bfbd1ba4ffa41f579f5e280e81",
+      "after": "78d57b8dbf20ba902ed03c549e489f6db7af69acec13b1967b0e23eb09431c44"
+    }
+  ],
+  "allFiles": 77,
+  "backup": "/tmp/tai-citations-live-backup-19",
+  "afterVersion": 20,
+  "afterUpdateTime": "2026-11-06T22:13:33.647339Z",
+  "verifiedAt": "2026-11-06T22:13:34.452Z",
+  "inventoryVerifiedAt": "2026-11-06T22:13:54.233Z",
+  "verification": "All changed resource SHA-256 values and all inventory hashes verified by remote GET; no deletions."
+}
