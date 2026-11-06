@@ -4,13 +4,13 @@
   "files": {
     "T1.02.json": {
       "beforeSha256": "a49793862a2b8b519f7e5498d1bf359ce689ba73a7fc2da27b3f31715b7f4906",
-      "afterSha256": "073db563ea8d1635cfd54eebf7ecda363f8952c58c391096ca5120cbcc20b5bb",
+      "afterSha256": "52113f643252cfcf08b885aa7db8237504dbe38b13005f884139badcf484b7a0",
       "count": 300,
       "changed": 3
     },
     "T1.03.json": {
       "beforeSha256": "916193b07dd8b8c415ec6cfaa74e5a847a073cea8e83be5bb8f54749a2c797ed",
-      "afterSha256": "1a15e2ac27ce4cecb79d3eb908340f17e4f30e6fa5c98c7b87f955575b939c0f",
+      "afterSha256": "239081818b78efc28828a40585a410ffbba83f03ffe58442e527843e2e396765",
       "count": 313,
       "changed": 2
     },
@@ -28,57 +28,64 @@
     },
     "T2.03.json": {
       "beforeSha256": "f538b81e1605a62497b8f21e67fe02e353ce36e6ca0e0408a23c86c36d585e9e",
-      "afterSha256": "22ebbf15f32b3cdc649812d9dc18b18a32b4f911abecd35e66f8692016abdcb6",
+      "afterSha256": "cb14b8286918640c2148ceb9ccdd6e0016088490953c55cb08fd32741c94a3ae",
       "count": 479,
       "changed": 7
     },
     "T2.04.json": {
       "beforeSha256": "1a12bb65facaba2156eda49e14887976f4583e7afb7838065431d67a118a524c",
-      "afterSha256": "9b957401de6e3a72bf206b664d27f717b20f7bbcb34557461713d37286ac7dd5",
+      "afterSha256": "011344d95b01ddb0188e64c732dee7478c152d38202f7e0ee382752052c4901b",
       "count": 621,
       "changed": 8
     },
     "T3.01.json": {
       "beforeSha256": "27e8b272f91ced721b8d4fc42e9af476ca52899d2ec6d20cff2ee00782b6447d",
-      "afterSha256": "9394a0bbf2dc964f6375c17a881366d0019b623aede03e802640f438fdd07fdb",
+      "afterSha256": "c94166ba86d03622846f8b6957a75d894e2f7b80a754f730be5a80e336ce4216",
       "count": 221,
       "changed": 3
     },
     "T3.02.json": {
       "beforeSha256": "f8f37e6bd4c437d5a5186bcec118f97d0d9a64c2581037f855e741b6b4c59225",
-      "afterSha256": "109c46e828fe7ea7b8e8caa35879eb3cfb382bc4e521bcdc2bcb8f8b65a1cf1c",
+      "afterSha256": "be3a2be9890ad0792471cae7d1896d0948f3d2172a227c435a5801d4c5d2c2c8",
       "count": 389,
       "changed": 4
     },
     "T3.05.json": {
       "beforeSha256": "9459dd1ee2aa39744e1477a42e07525247609e42837149186e1330efbd6e1b14",
-      "afterSha256": "955dc0ef4234a15e8d5ab95d96a03daba66ace9e8773332550d281362e4a9e0a",
+      "afterSha256": "ee17e7b1ba6d6d33d74b49e563875f5352b999680be5c429bca7dfa8354915e0",
       "count": 519,
       "changed": 5
     },
     "T3.06.json": {
       "beforeSha256": "69cf1099e32bb554e639c0b244458d128f932f87321b0f63c5fa73de26a70375",
-      "afterSha256": "c94d861bcd56726c8840ef402bc0576279138b322ce9ea14af4b09c6143fde73",
+      "afterSha256": "f02aad7d4a67c65d03c4a7008833107f3251fd845cdcec31be9fa9a5b4b46f29",
       "count": 1558,
       "changed": 1
     },
     "T4.08.json": {
       "beforeSha256": "4950baf07755d2fe1b4b3d883151f3335619599b437a0ad3c6388a487ed888d5",
-      "afterSha256": "5de4121bf23d918d79c749d9a531f8d3117994441f74478c271b09816da4609c",
+      "afterSha256": "99428e92ee9d6afe7eaf579729e16ec1560a09ffc10c0d864ef28cf58dfea438",
       "count": 244,
       "changed": 1
+    },
+    "meta.json": {
+      "beforeSha256": "f8415041367a376b775009c6776c3bccf81c91c20bbd483d7ef4205c85fa7c7e",
+      "afterSha256": "7fd767adb2580dbaf837b7f32d59ff01971af9db9a14870346f773b48255976e",
+      "count": 15666,
+      "changed": 28,
+      "kind": "catalog-metadata"
     }
   },
   "sampleFiles": {
     "T1.02.json": {
       "beforeSha256": "846fbfcb683bf198f893af5c908cce24d3f79a66c7a9b8629558a158eb12bfbd",
-      "afterSha256": "ccf5c3129f4b7f3727391896fc3a26be9c3159e3feae9f672de399c646edd751",
+      "afterSha256": "d1f4cb6dc046079308efdb26b6525914995b7e80040b2ffc41efe6f51e2e1ed0",
       "count": 10,
       "changed": 1
     },
     "T3.02.json": {
       "beforeSha256": "a93d895758bb58fcdfc8701fb6ce81706c11a4c1d26a3146d7c4b205b5c1ce45",
-      "afterSha256": "21d5f53de91adf8c6ee7af989e9a19e033183da43747da99f434b12eafea6b36",
+      "afterSha256": "8d6883af732f1fde7378e79d89b533037e55b4d067f9946aabf86e764c8c8fe8",
       "count": 10,
       "changed": 1
     }
@@ -140,7 +147,12 @@
       "primary": "https://www.boe.es/buscar/act.php?id=BOE-A-1978-31229#a78",
       "risk": "Requiere revisión independiente de la propuesta.",
       "inSample": false,
-      "priorIssue": "Veintiuno es el mínimo constitucional; la pregunta pide la cifra efectiva como si fuera fija. Ninguna opción enuncia el mínimo o especifica una legislatura."
+      "priorIssue": "Veintiuno es el mínimo constitucional; la pregunta pide la cifra efectiva como si fuera fija. Ninguna opción enuncia el mínimo o especifica una legislatura.",
+      "typeReview": {
+        "type": "D",
+        "reason": "Interrogativa explícita sobre un número normativo, sin cálculo.",
+        "reviewer": "banco; root independently confirmed mapping from labels.ts"
+      }
     },
     {
       "id": "AT102-P1-64",
@@ -175,14 +187,14 @@
           "Entre los 60 y los 90 días."
         ],
         "c": 2,
-        "k": "C",
+        "k": "D",
         "x": [],
         "d": null,
         "n": "El artículo 68.6 establece los límites de 30 y 60 días. No ordena celebrarlas necesariamente al cumplirse un único día del intervalo.",
         "u": "entre los 30 y los 60 [p. 10]"
       },
       "beforeSha256": "23d19f3519750ce654a901e4000b09996238b30cb536795b135b187927c41f61",
-      "afterSha256": "cd2d8f4375cce7ebdcc13703352767604a7f435a3e67ac947ab49fb591c556a5",
+      "afterSha256": "6e50e94a8eec712a5caa39e3c5bdaae6d0fdc4005b0d35ef3aafbe2f41c647a0",
       "reviewedOptions": [
         "Adelanta los límites del intervalo constitucional.",
         "No reproduce sus límites.",
@@ -198,7 +210,12 @@
       "primary": "https://www.boe.es/buscar/act.php?id=BOE-A-1978-31229#a68",
       "risk": "Requiere revisión independiente de la propuesta.",
       "inSample": false,
-      "priorIssue": "La CE exige elecciones entre 30 y 60 días. Ninguna alternativa expresa el intervalo completo. C omite el límite máximo y permite fechas contrarias a la Constitución."
+      "priorIssue": "La CE exige elecciones entre 30 y 60 días. Ninguna alternativa expresa el intervalo completo. C omite el límite máximo y permite fechas contrarias a la Constitución.",
+      "typeReview": {
+        "type": "D",
+        "reason": "Interrogativa explícita sobre intervalo normativo.",
+        "reviewer": "banco; root independently confirmed mapping from labels.ts"
+      }
     },
     {
       "id": "AT102-P1-65",
@@ -233,14 +250,14 @@
           "La de cualquier grupo parlamentario por sí solo."
         ],
         "c": 0,
-        "k": "C",
+        "k": "D",
         "x": [],
         "d": null,
         "n": "La petición puede proceder de la mayoría absoluta de cualquiera de las dos Cámaras. El mismo precepto también legitima al Gobierno y a la Diputación Permanente.",
         "u": "De la mayoría absoluta de los miembros de cualquiera de las Cámaras. [p. 5]"
       },
       "beforeSha256": "b26b19f05ec2f732759ba1726eccc1b12542dd3a204ee652278232c5a4d509ba",
-      "afterSha256": "a933e1effc933019feb6029adceb61d55c9d21883c2549aa19817b07ea3a752f",
+      "afterSha256": "e74e9cfb75a8ca9fe212ec28a95a62aabbd9f915ee568e860c0c20debbfe22a0",
       "reviewedOptions": [
         "Es la legitimación que reconoce el artículo 73.2.",
         "La norma exige mayoría absoluta de miembros.",
@@ -256,7 +273,12 @@
       "primary": "https://www.boe.es/buscar/act.php?id=BOE-A-1978-31229#a73",
       "risk": "Requiere revisión independiente de la propuesta.",
       "inSample": true,
-      "priorIssue": "Basta la mayoría absoluta de cualquiera de las Cámaras, no de cada una como dice la clave. Ninguna opción reproduce la legitimación individual del art. 73.2."
+      "priorIssue": "Basta la mayoría absoluta de cualquiera de las Cámaras, no de cada una como dice la clave. Ninguna opción reproduce la legitimación individual del art. 73.2.",
+      "typeReview": {
+        "type": "D",
+        "reason": "Interrogativa explícita sobre la petición habilitante.",
+        "reviewer": "banco; root independently confirmed mapping from labels.ts"
+      }
     },
     {
       "id": "AT103-P1-41",
@@ -314,7 +336,12 @@
       "primary": "https://www.boe.es/buscar/act.php?id=BOE-A-1978-31229#a100",
       "risk": "Requiere revisión independiente de la propuesta.",
       "inSample": false,
-      "priorIssue": "B es correcta: el Rey separa a los vicepresidentes a propuesta del presidente del Gobierno, art. 100 CE. La clave A confunde propuesta y competencia formal."
+      "priorIssue": "B es correcta: el Rey separa a los vicepresidentes a propuesta del presidente del Gobierno, art. 100 CE. La clave A confunde propuesta y competencia formal.",
+      "typeReview": {
+        "type": "D",
+        "reason": "Pregunta quién acuerda la separación.",
+        "reviewer": "banco; root independently confirmed mapping from labels.ts"
+      }
     },
     {
       "id": "AT106-P1-31",
@@ -372,7 +399,12 @@
       "primary": "https://www.boe.es/buscar/act.php?id=BOE-A-1978-31229#a11",
       "risk": "Requiere revisión independiente de la propuesta.",
       "inSample": false,
-      "priorIssue": "El art. 11.2 protege de privación a españoles DE ORIGEN. La clave extiende la prohibición a cualquier español; falta la salvedad y no hay opción enteramente correcta."
+      "priorIssue": "El art. 11.2 protege de privación a españoles DE ORIGEN. La clave extiende la prohibición a cualquier español; falta la salvedad y no hay opción enteramente correcta.",
+      "typeReview": {
+        "type": "C",
+        "reason": "Las opciones completan la frase «puede ser privado de su nacionalidad:».",
+        "reviewer": "banco; root independently confirmed mapping from labels.ts"
+      }
     },
     {
       "id": "GEN-T1.03-52.v1",
@@ -414,7 +446,7 @@
           "La presencia de los Consejeros de Estado."
         ],
         "c": 2,
-        "k": "D",
+        "k": "C",
         "x": [
           3,
           7
@@ -427,7 +459,7 @@
         "n": "El artículo 110.1 permite reclamar la presencia de los miembros del Gobierno. El 109 regula la información y ayuda que pueden recabar las Cámaras y sus Comisiones."
       },
       "beforeSha256": "a4182227200d1b92c14aa1209bd60c19934c3ad589ce9997d4a8ce2b40282353",
-      "afterSha256": "47ba19692353fb8a391f306ccea80c0343904c8ab95afb47514bc06b0fa39d94",
+      "afterSha256": "d5274afccbaf7acd0decbe4c947089c22b83eb6c1753248ab7a03b26641669a7",
       "reviewedOptions": [
         "El Rey no es el destinatario de la potestad del artículo 110.1.",
         "El precepto regula comparecencia, no reclamación de dimisión.",
@@ -443,7 +475,12 @@
       "primary": "https://www.boe.es/buscar/act.php?id=BOE-A-1978-31229#a110",
       "risk": "Requiere revisión independiente de la propuesta.",
       "inSample": false,
-      "priorIssue": "La comparecencia está prevista en el artículo 110.1 CE; el 109 invocado regula información y ayuda, por lo que la atribución normativa es falsa."
+      "priorIssue": "La comparecencia está prevista en el artículo 110.1 CE; el 109 invocado regula información y ayuda, por lo que la atribución normativa es falsa.",
+      "typeReview": {
+        "type": "C",
+        "reason": "Las opciones completan el objeto de «pueden reclamar:».",
+        "reviewer": "banco; root independently confirmed mapping from labels.ts"
+      }
     },
     {
       "id": "AT204-P1-22",
@@ -479,7 +516,7 @@
           "1-III, 2-IV, 3-I y 4-II."
         ],
         "c": 1,
-        "k": "C",
+        "k": "D",
         "x": [],
         "d": null,
         "w": 1,
@@ -487,7 +524,7 @@
         "u": "pwd (Print Working Directory) [p. 66]"
       },
       "beforeSha256": "849f6e9fa6b50172afae87345b2c0c8e3278135e2183a14ce66f0fd49f2caf1c",
-      "afterSha256": "6b45382f26d45101a99dc8f25444e61a334de1fd649e5de7b4b58a69db7c959d",
+      "afterSha256": "ce5447a69c2c4c8151779e17ac41bd833b482e6a3814b5327745719741f67951",
       "reviewedOptions": [
         "Asigna paginación a pwd y ruta a cat.",
         "Relaciona correctamente las cuatro funciones.",
@@ -503,7 +540,12 @@
       "primary": "https://www.gnu.org/software/coreutils/manual/html_node/Directory-listing.html",
       "risk": "La página 66 cubre pwd. La revisión de ls, cat y more debe considerar las páginas de comandos y los manuales del sistema.",
       "inSample": false,
-      "priorIssue": "B emparejaría correctamente ls/listar, pwd/ruta, cat/mostrar y more/paginar, pero el banco escribe Is con i mayúscula en vez de ls con ele. En UNIX son comandos distintos."
+      "priorIssue": "B emparejaría correctamente ls/listar, pwd/ruta, cat/mostrar y more/paginar, pero el banco escribe Is con i mayúscula en vez de ls con ele. En UNIX son comandos distintos.",
+      "typeReview": {
+        "type": "D",
+        "reason": "Solicita relacionar comandos y funciones; no completar una frase ni ejecutar código.",
+        "reviewer": "banco; root independently confirmed mapping from labels.ts"
+      }
     },
     {
       "id": "AT204-P1-29",
@@ -538,14 +580,14 @@
           "Filespace."
         ],
         "c": 2,
-        "k": "C",
+        "k": "D",
         "x": [],
         "d": null,
         "n": "La denominación documentada por Linux es extent. El temario escribe «extends» en este pasaje, una errata terminológica.",
         "u": "conjunto de bloques físicos contiguos [p. 32]"
       },
       "beforeSha256": "850596fb2be2a83e25a942cb907f0f6084b98d040146d907b229b444d35990f9",
-      "afterSha256": "3ff04dcdd73e2bb832f1efe975d92c3f050751d0ff4c15d93ae8ed025154de36",
+      "afterSha256": "0618f581f019aab19502619a970503e2d63ee739cd8cb6f1316cd0ba8b17d69a",
       "reviewedOptions": [
         "Una página no nombra la estructura ext4_extent.",
         "No es el nombre del descriptor de ext4.",
@@ -561,7 +603,12 @@
       "primary": "https://www.kernel.org/doc/html/latest/filesystems/ext4/ifork.html",
       "risk": "El PDF contiene la errata extends. La fuente del kernel confirma extents y se hace explícita la corrección en n.",
       "inSample": false,
-      "priorIssue": "El concepto es extents: intervalos contiguos de bloques físicos. La clave C reproduce «extends», denominación errónea. Pages, segments y filespaces tampoco nombran ese rasgo."
+      "priorIssue": "El concepto es extents: intervalos contiguos de bloques físicos. La clave C reproduce «extends», denominación errónea. Pages, segments y filespaces tampoco nombran ese rasgo.",
+      "typeReview": {
+        "type": "D",
+        "reason": "Interrogativa conceptual «cómo se denomina».",
+        "reviewer": "banco; root independently confirmed mapping from labels.ts"
+      }
     },
     {
       "id": "AT204-P1-55",
@@ -619,7 +666,12 @@
       "primary": null,
       "risk": "Requiere revisión independiente de la propuesta.",
       "inSample": false,
-      "priorIssue": "La instancia es un proceso. La clave B añade «o thread», pero el hilo es una unidad de ejecución del proceso. Ninguna alternativa expresa la definición sin introducir error o restricción."
+      "priorIssue": "La instancia es un proceso. La clave B añade «o thread», pero el hilo es una unidad de ejecución del proceso. Ninguna alternativa expresa la definición sin introducir error o restricción.",
+      "typeReview": {
+        "type": "D",
+        "reason": "Interrogativa conceptual «cómo se denomina».",
+        "reviewer": "banco; root independently confirmed mapping from labels.ts"
+      }
     },
     {
       "id": "AT204-P1-41",
@@ -654,14 +706,14 @@
           "umask 713."
         ],
         "c": 1,
-        "k": "C",
+        "k": "K",
         "x": [],
         "d": null,
         "n": "Se aplica la máscara al modo solicitado: 0777 & ~0036 = 0741. Es necesario fijar 0777; los ficheros ordinarios suelen solicitar 0666.",
         "u": "umask [mascara] [p. 76]"
       },
       "beforeSha256": "be38ae7bd48d56c98bbb57da7180311447af692000771788bf7608b2df63627d",
-      "afterSha256": "40c282950ac2d64b5b63d275f49f6991db26bafa7662caae9ab6aed190602012",
+      "afterSha256": "a637c580f22d26cca0121e6cf071a6f115b5d99d5ac8c48de8fdd23ee6086ea5",
       "reviewedOptions": [
         "0777 & ~0741 produce 0036.",
         "0777 & ~0036 produce 0741.",
@@ -677,7 +729,12 @@
       "primary": "https://man7.org/linux/man-pages/man2/umask.2.html",
       "risk": "Se explicita el objeto directorio, el modo de creación y la ausencia de ACL para conservar la clave B sin sugerir ejecución por defecto en ficheros ordinarios.",
       "inSample": false,
-      "priorIssue": "El fichero ordinario creado con 0666 y máscaras A/B/C/D resulta respectivamente en 026, 640, 644 y 064. Ninguna opción produce 741 en ese caso; B solo funciona con base 0777. El test omite ese requisito y pide permisos ejecutables por defecto."
+      "priorIssue": "El fichero ordinario creado con 0666 y máscaras A/B/C/D resulta respectivamente en 026, 640, 644 y 064. Ninguna opción produce 741 en ese caso; B solo funciona con base 0777. El test omite ese requisito y pide permisos ejecutables por defecto.",
+      "typeReview": {
+        "type": "K",
+        "reason": "Exige calcular permisos mediante máscara umask sobre0777.",
+        "reviewer": "banco; root independently confirmed mapping from labels.ts"
+      }
     },
     {
       "id": "GEN-T2.03-07.v2",
@@ -719,7 +776,7 @@
           "5."
         ],
         "c": 1,
-        "k": "C",
+        "k": "D",
         "x": [
           7,
           8
@@ -732,7 +789,7 @@
         "n": "La indexación desde cero asigna a los cinco elementos los índices 0, 1, 2, 3 y 4."
       },
       "beforeSha256": "fd2a8ad5366951f1849186887b69c370678d0af5dc12888f597320a4408f276e",
-      "afterSha256": "23e925cbef3b98483a41fa60b1d15ecd9de9a9f5c38a5abc9034428f4de32aa1",
+      "afterSha256": "fd48eeff26089f8a9cf05c7edefe8d6de8aa1f8e3dc175118242ed99c9454f8d",
       "reviewedOptions": [
         "Selecciona el segundo elemento.",
         "La primera posición tiene índice cero.",
@@ -748,7 +805,12 @@
       "primary": null,
       "risk": "El enunciado se acota a un caso numérico para evitar la definición errónea de entero positivo de p.5. La p.6 sí explicita el inicio en cero.",
       "inSample": false,
-      "priorIssue": "Clave registrada B. B exige entero positivo y excluye el índice 0 que la familia usa. Además el índice puede ser una constante/expresión, no necesariamente una variable. Ninguna alternativa completa es correcta."
+      "priorIssue": "Clave registrada B. B exige entero positivo y excluye el índice 0 que la familia usa. Además el índice puede ser una constante/expresión, no necesariamente una variable. Ninguna alternativa completa es correcta.",
+      "typeReview": {
+        "type": "D",
+        "reason": "Identifica la convención de indexación desde cero, sin operación aritmética.",
+        "reviewer": "banco; root independently confirmed mapping from labels.ts"
+      }
     },
     {
       "id": "GEN-T2.03-25.v1",
@@ -790,7 +852,7 @@
           "Identifica la entrada a la que se asocia un valor."
         ],
         "c": 3,
-        "k": "C",
+        "k": "D",
         "x": [
           7,
           8
@@ -803,7 +865,7 @@
         "n": "El diccionario asocia claves con valores. La página 15 también describe una tabla hash como contenedor asociativo y aclara la unicidad de sus claves."
       },
       "beforeSha256": "5c0672b2618448c0bc4ea70a21584f64b36cefdbea1ef14391b3e2a7a3ad6600",
-      "afterSha256": "957d0e6c7cb203d3c40e89cab7bab87abca7c06d5646c534ced635546886e19d",
+      "afterSha256": "7f5c55065940b26ee2631db11fea78318c9636363b120b7133e05f50a51b9999",
       "reviewedOptions": [
         "Eso corresponde a una cola con prioridad.",
         "El TAD general no impone un orden total de claves.",
@@ -819,7 +881,12 @@
       "primary": "https://docs.python.org/3/library/stdtypes.html#mapping-types-dict",
       "risk": "La sección Diccionarios impone un orden, pero la misma página define la tabla hash como diccionario. Precisar el TAD general requiere revisión de la terminología del temario.",
       "inSample": false,
-      "priorIssue": "Clave registrada D. D añade una exigencia de orden ausente en el TAD diccionario general: también se implementa con tabla hash. Ninguna opción describe el diccionario sin imponer condición ajena."
+      "priorIssue": "Clave registrada D. D añade una exigencia de orden ausente en el TAD diccionario general: también se implementa con tabla hash. Ninguna opción describe el diccionario sin imponer condición ajena.",
+      "typeReview": {
+        "type": "D",
+        "reason": "Pregunta explícitamente por el papel conceptual de una clave.",
+        "reviewer": "banco; root independently confirmed mapping from labels.ts"
+      }
     },
     {
       "id": "GEN-T2.03-62.v2",
@@ -861,7 +928,7 @@
           "9 operaciones."
         ],
         "c": 1,
-        "k": "C",
+        "k": "K",
         "x": [
           7,
           8
@@ -874,7 +941,7 @@
         "n": "El promedio pondera todas las entradas: (1+4+9)/3 = 14/3. En este caso no basta promediar el mejor y el peor."
       },
       "beforeSha256": "4fdb5dd7c4e5e92931593ac790514b1da8ee755101aca2094394c54397502790",
-      "afterSha256": "53e497c97b2a5c2efa2dfed669ef6afef5edeb096df732bef16edb3dbbd6a3b6",
+      "afterSha256": "c3da349140a9c07f10ea4cff073c7cf3d76b15e4913a70ce311b553ccd99a42e",
       "reviewedOptions": [
         "Es la media de los extremos y omite el caso de coste 4.",
         "Suma los tres costes y divide por tres.",
@@ -890,7 +957,12 @@
       "primary": null,
       "risk": "Se reemplaza la definición defectuosa por un caso autocontenido de esperanza matemática que incluye un coste intermedio.",
       "inSample": false,
-      "priorIssue": "Clave registrada B. B afirma que basta ponderar solo peor y mejor. El promedio pondera todos los costes o entradas posibles; si hay costes intermedios no basta la información de extremos."
+      "priorIssue": "Clave registrada B. B afirma que basta ponderar solo peor y mejor. El promedio pondera todos los costes o entradas posibles; si hay costes intermedios no basta la información de extremos.",
+      "typeReview": {
+        "type": "K",
+        "reason": "Exige calcular la media equiprobable de1,4y9.",
+        "reviewer": "banco; root independently confirmed mapping from labels.ts"
+      }
     },
     {
       "id": "GEN-T2.03-70",
@@ -932,7 +1004,7 @@
           "Guarda obligatoriamente una tabla de soluciones."
         ],
         "c": 2,
-        "k": "C",
+        "k": "K",
         "x": [
           7,
           8
@@ -945,7 +1017,7 @@
         "n": "El ejemplo utiliza recursión y un caso base. Esta propiedad no exige dividir en varios subproblemas ni guardar sus resultados."
       },
       "beforeSha256": "4fb8a657ce2d968c5e5987e64e00d837434ea93a7373ae5f0f26e004df699ca0",
-      "afterSha256": "19da1d02077a2bb187ced86ca99c9ece51b7d2dcc7ff657fec88b76de87fca63",
+      "afterSha256": "6fd0f50ece9d8d871672f2a0628d9867805f0ad2dccd733c0355bc3c898e9bc6",
       "reviewedOptions": [
         "No elige una alternativa local entre varias.",
         "No enumera permutaciones.",
@@ -961,7 +1033,12 @@
       "primary": null,
       "risk": "La p.33 presenta recursividad y divide y vencerás como sinónimos. La propuesta evita esa equivalencia mediante un ejemplo explícito.",
       "inSample": false,
-      "priorIssue": "Clave registrada C. C no es un sinónimo. La recursión puede usar un solo subproblema (p. ej. factorial) y divide y vencerás combina subproblemas. Ninguna opción nombra la recursividad."
+      "priorIssue": "Clave registrada C. C no es un sinónimo. La recursión puede usar un solo subproblema (p. ej. factorial) y divide y vencerás combina subproblemas. Ninguna opción nombra la recursividad.",
+      "typeReview": {
+        "type": "K",
+        "reason": "Interpreta una función descrita mediante la expresión recursiva n*factorial(n-1) y su caso base.",
+        "reviewer": "banco; root independently confirmed mapping from labels.ts"
+      }
     },
     {
       "id": "GEN-T2.04-30.v1",
@@ -1032,7 +1109,12 @@
       "primary": "https://www.kernel.org/doc/html/latest/locking/spinlocks.html",
       "risk": "La p.16 mezcla espera ocupada y no apropiación. Se explicita el bucle de consulta para fijar el concepto y se requiere segunda revisión.",
       "inSample": false,
-      "priorIssue": "Clave registrada B. B describe no expropiación (liberación voluntaria), no espera ocupada. Se puede dormir hasta liberación sin consumir CPU. Falta la opción «consulta repetidamente sin bloquearse»."
+      "priorIssue": "Clave registrada B. B describe no expropiación (liberación voluntaria), no espera ocupada. Se puede dormir hasta liberación sin consumir CPU. Falta la opción «consulta repetidamente sin bloquearse».",
+      "typeReview": {
+        "type": "C",
+        "reason": "Las opciones completan «Esta forma de esperar se denomina:».",
+        "reviewer": "banco; root independently confirmed mapping from labels.ts"
+      }
     },
     {
       "id": "GEN-T2.04-117.v2",
@@ -1103,7 +1185,12 @@
       "primary": "https://man7.org/linux/man-pages/man2/wait.2.html",
       "risk": "La p.61 atribuye Z a terminación incorrecta. El manual de wait confirma que basta haber terminado sin recogida de su estado.",
       "inSample": false,
-      "priorIssue": "Clave registrada C. Z no implica error al terminar. Un proceso que sale correctamente también figura como zombi mientras nadie recoge su estado."
+      "priorIssue": "Clave registrada C. Z no implica error al terminar. Un proceso que sale correctamente también figura como zombi mientras nadie recoge su estado.",
+      "typeReview": {
+        "type": "C",
+        "reason": "Las opciones completan «identifica un proceso que:».",
+        "reviewer": "banco; root independently confirmed mapping from labels.ts"
+      }
     },
     {
       "id": "AT201-P1-13",
@@ -1161,7 +1248,12 @@
       "primary": null,
       "risk": "Requiere revisión independiente de la propuesta.",
       "inSample": false,
-      "priorIssue": "Un procesador de dos núcleos integra dos núcleos de ejecución, que pueden compartir un chip. A afirma necesariamente dos chips físicos y ninguna otra opción define esta arquitectura."
+      "priorIssue": "Un procesador de dos núcleos integra dos núcleos de ejecución, que pueden compartir un chip. A afirma necesariamente dos chips físicos y ninguna otra opción define esta arquitectura.",
+      "typeReview": {
+        "type": "C",
+        "reason": "Las opciones completan «Un procesador de dos núcleos contiene:».",
+        "reviewer": "banco; root independently confirmed mapping from labels.ts"
+      }
     },
     {
       "id": "AT204-P1-44",
@@ -1196,14 +1288,14 @@
           "FIFO."
         ],
         "c": 2,
-        "k": "I",
+        "k": "D",
         "x": [],
         "d": null,
         "n": "NFU incrementa acumulativamente un contador por página a partir del bit de referencia muestreado. Escoge un contador mínimo; no equivale a considerar solo el ciclo anterior.",
         "u": "La no usada frecuentemente (NFU) [p. 23]"
       },
       "beforeSha256": "72c0c776f4f8f57a08c12ea99519bf21832481ebbb7098ed3a5874df1305c99d",
-      "afterSha256": "b1f3aaecad452b724f9ae6747e791692f0028b9c1c3070e8fea8a9c6bb679f35",
+      "afterSha256": "7d3a301431eefdf9ca66a74113d8e864bfb9cb41167d9aa2f16f7b1b59ecdf6c",
       "reviewedOptions": [
         "Clasifica por bits de referencia y modificación.",
         "Se basa en la recencia del último uso.",
@@ -1220,7 +1312,12 @@
       "risk": "La descripción se acota al algoritmo NFU clásico sin envejecimiento. Se sustituye el distractor LFU para evitar solapamiento terminológico.",
       "inSample": false,
       "priorIssue": "NFU acumula referencias periódicamente y escoge el contador menor; no selecciona por definición la página no referenciada en el ciclo anterior. NRU se aproxima mejor a la condición, pero también usa bit de modificación.",
-      "independentReview": "root; comparación de cuatro alternativas y cotejo del temario p23 + material docente de Loyola University"
+      "independentReview": "root; comparación de cuatro alternativas y cotejo del temario p23 + material docente de Loyola University",
+      "typeReview": {
+        "type": "D",
+        "reason": "Pregunta qué algoritmo cumple una descripción; no solicita excepción ni cálculo.",
+        "reviewer": "banco; root independently confirmed mapping from labels.ts"
+      }
     },
     {
       "id": "GEN-T2.03-99.v1",
@@ -1262,7 +1359,7 @@
           "PNG solo admite imágenes de 256 colores."
         ],
         "c": 0,
-        "k": "C",
+        "k": "D",
         "x": [
           7,
           2
@@ -1275,7 +1372,7 @@
         "n": "La propia página enumera TIFF entre los formatos sin pérdida. Debe eliminarse la oposición que afirma que TIFF no puede comprimir."
       },
       "beforeSha256": "8baab352c39772797497f24c2a0cbbd61138c95fd5eccf1657b3e6bf3298dff7",
-      "afterSha256": "cebbe06461bdbbd65257bcdb70ffca4eb5cd4cea2ffd8437f987667825f9cba5",
+      "afterSha256": "bdf52e64448f31fd64128c924aba7f4c46a7cea2f401a6356909c7f3b612bf84",
       "reviewedOptions": [
         "Ambos pueden conservar los datos de imagen sin pérdida.",
         "PNG utiliza compresión sin pérdida.",
@@ -1291,7 +1388,12 @@
       "primary": "https://helpx.adobe.com/photoshop/desktop/save-and-export/save-files/save-in-tiff-format.html",
       "risk": "La p.50 se contradice en dos párrafos. La propuesta sigue su enumeración y el soporte de TIFF para compresión sin pérdida confirmado por Adobe; pendiente de segunda revisión.",
       "inSample": false,
-      "priorIssue": "Clave registrada A. A dice que PNG puede comprimir sin pérdida «al contrario que TIFF», pero TIFF con LZW o Deflate también lo permite. El propio 99.v2 da el contraejemplo."
+      "priorIssue": "Clave registrada A. A dice que PNG puede comprimir sin pérdida «al contrario que TIFF», pero TIFF con LZW o Deflate también lo permite. El propio 99.v2 da el contraejemplo.",
+      "typeReview": {
+        "type": "D",
+        "reason": "Selección afirmativa explícita «qué afirmación...es correcta».",
+        "reviewer": "banco; root independently confirmed mapping from labels.ts"
+      }
     },
     {
       "id": "GEN-T2.04-75.v2",
@@ -1333,7 +1435,7 @@
           "2^64."
         ],
         "c": 1,
-        "k": "C",
+        "k": "K",
         "x": [
           2,
           7
@@ -1346,7 +1448,7 @@
         "n": "Un campo de dirección de 32 bits representa 2^32 direcciones. La pregunta fija ese campo; la anchura de registros de una ISA no determina por sí sola el espacio físico implementado."
       },
       "beforeSha256": "2262b35fd8b02e7538be2bf6be5eb9fd05434649c4c7fcea767d9d79666087bd",
-      "afterSha256": "a9dda1cd90ba3eda1327a12a81cf0bbe19bb8e96ea6693d66c34019383991996",
+      "afterSha256": "eac4a65ec2e3cfd7625a1f35161311dab13ff04c64412d23d74d373825c10ddb",
       "reviewedOptions": [
         "Es el número de combinaciones de 16 bits.",
         "Cada uno de los 32 bits aporta dos posibilidades.",
@@ -1362,7 +1464,12 @@
       "primary": null,
       "risk": "Acotación explícita al espacio de direcciones. El original equipara indebidamente bits de arquitectura y bus de direcciones.",
       "inSample": false,
-      "priorIssue": "Clave registrada B. Los bits de la ISA describen, entre otras cosas, registros y operaciones. El bus de direcciones puede tener otra anchura."
+      "priorIssue": "Clave registrada B. Los bits de la ISA describen, entre otras cosas, registros y operaciones. El bus de direcciones puede tener otra anchura.",
+      "typeReview": {
+        "type": "K",
+        "reason": "Deriva la cantidad de direcciones a partir de32bits:2^32.",
+        "reviewer": "banco; root independently confirmed mapping from labels.ts"
+      }
     },
     {
       "id": "GEN-T3.01-05.v1",
@@ -1401,7 +1508,7 @@
           "Aportar al modelo una mayor capacidad expresiva."
         ],
         "c": 3,
-        "k": "C",
+        "k": "D",
         "x": [
           7,
           8
@@ -1428,9 +1535,14 @@
       "priority": "P0",
       "independentReview": "oficial; revision-diez.json and alternatives.json",
       "beforeSha256": "03620373ee60596d0864f735fb89148d36d3c2f72a119f74635395021d5e6e2d",
-      "afterSha256": "5fc5e7104b2d988d8e9faeadb6a8e00e2cb8133070657adb3556382a1acf1678",
+      "afterSha256": "7a9fcc0ee5e15388b18541ba0907353b5dfd1e176ff39d1dcd00f3ea0c8cff3e",
       "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
-      "inSample": false
+      "inSample": false,
+      "typeReview": {
+        "type": "D",
+        "reason": "Interrogativa explícita sobre finalidad.",
+        "reviewer": "banco; root independently confirmed mapping from labels.ts"
+      }
     },
     {
       "id": "GEN-T3.01-10.v1",
@@ -1469,7 +1581,7 @@
           "Atributo compuesto no necesariamente identificador."
         ],
         "c": 1,
-        "k": "C",
+        "k": "D",
         "x": [
           7,
           2
@@ -1496,9 +1608,14 @@
       "priority": "P0",
       "independentReview": "oficial; revision-diez.json and alternatives.json",
       "beforeSha256": "41f3f3722ec004c1aeea4ba78befb4ac8ad80d138f34c227c9d3303ea88a42a5",
-      "afterSha256": "8e93347eff22f7fcd4a46ceb5384e5465e8d678f9702d6d542c8412ac880e6fc",
+      "afterSha256": "e613d0aa57c23414e9295aec47455f4952d0f635d1f9295b12bb5160b4d43b5a",
       "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
-      "inSample": false
+      "inSample": false,
+      "typeReview": {
+        "type": "D",
+        "reason": "Interrogativa explícita de denominación.",
+        "reviewer": "banco; root independently confirmed mapping from labels.ts"
+      }
     },
     {
       "id": "GEN-T3.01-22.v1",
@@ -1537,7 +1654,7 @@
           "No existen ocurrencias relacionadas."
         ],
         "c": 2,
-        "k": "C",
+        "k": "D",
         "x": [
           7,
           8
@@ -1564,9 +1681,14 @@
       "priority": "P0",
       "independentReview": "oficial; revision-diez.json and alternatives.json",
       "beforeSha256": "b76c948f48c79c3e05c161fd5359eb6aef1c5a6d77058a1272773cab5578f32b",
-      "afterSha256": "6e1651d6781747fb339eb31a336f4d5da9700866588322eb8b91d2cc0fb8282c",
+      "afterSha256": "7f02ed4e221eb0f4b865e0216b3ff2d1918e0f572edd6c677e29129e8782c99a",
       "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
-      "inSample": false
+      "inSample": false,
+      "typeReview": {
+        "type": "D",
+        "reason": "Interrogativa explícita sobre las consecuencias de participación obligatoria.",
+        "reviewer": "banco; root independently confirmed mapping from labels.ts"
+      }
     },
     {
       "id": "GEN-T3.02-20.v2",
@@ -1605,7 +1727,7 @@
           "Crear obligatoriamente una tabla intermedia para toda relación 1:1."
         ],
         "c": 2,
-        "k": "C",
+        "k": "D",
         "x": [
           7,
           8
@@ -1632,9 +1754,14 @@
       "priority": "P0",
       "independentReview": "oficial; revision-diez.json and alternatives.json",
       "beforeSha256": "5649bd0c448aa06d3b588e05d22eb345ec8fbc9574094d7396c4c28af8c96c38",
-      "afterSha256": "cf4073a846fedf40c4eb57dd935fec459cfaf285413698624c0b6164901db480",
+      "afterSha256": "5427e9dc873eb01a715410528861b49014f6b343b3b92f2ba1d83b9f089f391f",
       "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
-      "inSample": false
+      "inSample": false,
+      "typeReview": {
+        "type": "D",
+        "reason": "Pregunta explícitamente qué transformación contempla el temario.",
+        "reviewer": "banco; root independently confirmed mapping from labels.ts"
+      }
     },
     {
       "id": "GEN-T3.02-21.v1",
@@ -1673,7 +1800,7 @@
           "En PLAZA, referenciando al empleado y exigiendo que nunca sea nula."
         ],
         "c": 2,
-        "k": "C",
+        "k": "D",
         "x": [
           7,
           8
@@ -1700,9 +1827,14 @@
       "priority": "P0",
       "independentReview": "oficial; revision-diez.json and alternatives.json",
       "beforeSha256": "9ff73c2ce8088d253d73f3224b9b7355ddfc746e4de58605d1c2064ed57b08ab",
-      "afterSha256": "f0e3c07bc4f4e7e85cd4d3e7144863e038dad468f214ad565d1d2d31e847be15",
+      "afterSha256": "e2451926d9749a1cc9426cc832792776eb94f1ca1c2edef66fef90570a74a481",
       "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
-      "inSample": true
+      "inSample": true,
+      "typeReview": {
+        "type": "D",
+        "reason": "Pregunta dónde situar una clave ajena según cardinalidades; no hay código ni cálculo.",
+        "reviewer": "banco; root independently confirmed mapping from labels.ts"
+      }
     },
     {
       "id": "GEN-T3.02-55.v2",
@@ -1741,7 +1873,7 @@
           "Que ambas relaciones contengan el mismo número de filas."
         ],
         "c": 1,
-        "k": "C",
+        "k": "D",
         "x": [
           7,
           2
@@ -1768,9 +1900,14 @@
       "priority": "P0",
       "independentReview": "oficial; revision-diez.json and alternatives.json",
       "beforeSha256": "26c6f02ee49668c2b43bccd000b970b07202e88a624fd23e33eb3ac30f72e305",
-      "afterSha256": "d65970f1f84e4c3cd6b90f9f4a702fde8164328d51b80b47a33e247f8d4271a8",
+      "afterSha256": "cabd79d096c1ed4db76581d61e9412e8049a86a2d6d507235955bbc6c9050b95",
       "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
-      "inSample": false
+      "inSample": false,
+      "typeReview": {
+        "type": "D",
+        "reason": "Pregunta por la condición conceptual de igualdad en concatenación.",
+        "reviewer": "banco; root independently confirmed mapping from labels.ts"
+      }
     },
     {
       "id": "GEN-T3.02-66.v2",
@@ -1809,7 +1946,7 @@
           "R1(ONG, Proyecto), R2(ONG, Lugar)."
         ],
         "c": 1,
-        "k": "C",
+        "k": "D",
         "x": [
           7,
           8
@@ -1836,9 +1973,14 @@
       "priority": "P0",
       "independentReview": "oficial; revision-diez.json and alternatives.json",
       "beforeSha256": "e14287deb0772c7504d600a9b0d071b8943b2faadf7000c2692529d5858da19d",
-      "afterSha256": "d4d9e2493ec280afbdd4d7c642b7ab0506bc50182284b6875b7a611681289e75",
+      "afterSha256": "0f278a2ef71f20b618944250c6c196b4a010b5ce523567c885816ea01f0b4609",
       "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
-      "inSample": false
+      "inSample": false,
+      "typeReview": {
+        "type": "D",
+        "reason": "Identifica el conjunto de proyecciones de un ejemplo nombrado; no proporciona tuplas para ejecutar una reunión.",
+        "reviewer": "banco; root independently confirmed mapping from labels.ts"
+      }
     },
     {
       "id": "GEN-T3.05-21",
@@ -1878,7 +2020,7 @@
           "Ninguna, porque aún no existen instancias."
         ],
         "c": 1,
-        "k": "C",
+        "k": "K",
         "x": [
           7,
           8
@@ -1908,9 +2050,14 @@
       "priority": "P0",
       "independentReview": "oficial; revision-diez.json and alternatives.json",
       "beforeSha256": "64e1929decd9aec2412989b50e1fcd65e0b7f793b75777969625e7889328e9a4",
-      "afterSha256": "233aaa67e8c978206c0c6d2324c56f3a1b7821e3e931c06697fede61829238a5",
+      "afterSha256": "d250faf5e71baecf3e9cf4cd8f208495a925b8e178fdf536ac37810751035af6",
       "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
-      "inSample": false
+      "inSample": false,
+      "typeReview": {
+        "type": "K",
+        "reason": "Evalúa expresiones new a partir de dos declaraciones Java; validez de código.",
+        "reviewer": "banco; root independently confirmed mapping from labels.ts"
+      }
     },
     {
       "id": "GEN-T3.05-23.v1",
@@ -1950,7 +2097,7 @@
           "Se produce un error de compilación."
         ],
         "c": 1,
-        "k": "C",
+        "k": "K",
         "x": [
           7,
           8
@@ -1978,9 +2125,14 @@
       "priority": "P0",
       "independentReview": "oficial; revision-diez.json and alternatives.json",
       "beforeSha256": "45475ec4d046db8da1e1a1914470b98176cf4a10c044c4d5188bca195e10ebad",
-      "afterSha256": "959e7207b366bb0f2c939d614c2fbcb3f56d891174fd196c7feeaf83eea1622e",
+      "afterSha256": "d678350b2c3652208a54c9cf3c5b30f32b0e835a3e10bb00fd92a0e212004446",
       "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
-      "inSample": false
+      "inSample": false,
+      "typeReview": {
+        "type": "K",
+        "reason": "Exige ejecutar mentalmente instrucciones Java y determinar su salida.",
+        "reviewer": "banco; root independently confirmed mapping from labels.ts"
+      }
     },
     {
       "id": "GEN-T3.05-45.v2",
@@ -2020,7 +2172,7 @@
           "El Cliente, como definición de las interfaces de todas las factorías."
         ],
         "c": 2,
-        "k": "C",
+        "k": "D",
         "x": [
           7,
           8
@@ -2048,9 +2200,14 @@
       "priority": "P0",
       "independentReview": "oficial; revision-diez.json and alternatives.json",
       "beforeSha256": "542b5967abd0f8ab7409cfc4c7aaccdb2ba17b5cf935490d08ebfa6a60fb8252",
-      "afterSha256": "2d47fd1b0550d26d70e8f62449aec0b93e28a80224b2ede99db5be0eb2758acd",
+      "afterSha256": "4572f64bd23f1c828d66c1991c03134511efa3d76c89a8f6b455e00fe792e137",
       "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
-      "inSample": false
+      "inSample": false,
+      "typeReview": {
+        "type": "D",
+        "reason": "Interrogativa conceptual sobre participante de un patrón.",
+        "reviewer": "banco; root independently confirmed mapping from labels.ts"
+      }
     },
     {
       "id": "AS09-P1-48",
@@ -2083,7 +2240,7 @@
           "IconoArbitrario y BotónOK."
         ],
         "c": 0,
-        "k": "C",
+        "k": "D",
         "x": [],
         "d": null,
         "n": "En la notación de clases UML del temario, un nombre de clase en cursiva representa una clase abstracta. Los nombres Icono, IconoRectangular e IconoArbitrario aparecen en cursiva y forman el conjunto A. Botón y BotónOK aparecen en letra redonda como clases concretas del diagrama.",
@@ -2113,9 +2270,14 @@
       "sourceDiscrepancy": "Material original transcrito de forma accesible; no se redistribuye la imagen.",
       "independentReview": "banco; revision-independiente-banco.md (48 has separate review if included)",
       "beforeSha256": "7afa45a92a3327738e4091c7d3a08ee08a90d6cb10a82842cdc6f044c1beee65",
-      "afterSha256": "2aa05441550bad09df83afbed842f035a9b934d56b48152164eb3c7cec575e46",
+      "afterSha256": "cbbf64853f68353de55f7452cc207b9627889367e26f514ed7d9635fb5ff9370",
       "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
-      "inSample": false
+      "inSample": false,
+      "typeReview": {
+        "type": "D",
+        "reason": "Clasifica nombres de clases por notación tipográfica UML; no ejecuta código.",
+        "reviewer": "banco; root independently confirmed mapping from labels.ts"
+      }
     },
     {
       "id": "AS10B-P1-63",
@@ -2180,7 +2342,12 @@
       "beforeSha256": "a94a533359277f48a26abba210b276cceff25aafc50ee73b274168b98a469d54",
       "afterSha256": "876a2ba0aeab440c66a46a6b783f6a4410e2bde2ef9d1e733545aa462bd2b960",
       "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
-      "inSample": false
+      "inSample": false,
+      "typeReview": {
+        "type": "D",
+        "reason": "Identifica el tipo de diagrama mediante su notación.",
+        "reviewer": "banco; root independently confirmed mapping from labels.ts"
+      }
     },
     {
       "id": "AS09-P1-52",
@@ -2213,7 +2380,7 @@
           "null."
         ],
         "c": 0,
-        "k": "C",
+        "k": "K",
         "x": [],
         "d": null,
         "n": "i vale 3. El postincremento entrega el valor previo a println y después incrementa i a 4. La salida es 3, opción A, corroborada por la plantilla.",
@@ -2243,9 +2410,14 @@
       "sourceDiscrepancy": "Material original transcrito de forma accesible; no se redistribuye la imagen.",
       "independentReview": "banco; revision-independiente-banco.md (48 has separate review if included)",
       "beforeSha256": "38cda0ce2434aa29a83b87b02bc86dd476d59b44a08dd85e9d589431892c56d5",
-      "afterSha256": "c33438e5b92a4039295dc33108e8fae57f970e374cb4fbc0720aea2b99a21e4e",
+      "afterSha256": "69b0403b1b2426ebac77abadcbe67f6c19977b840ad1c8a037668cb8e387d698",
       "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
-      "inSample": false
+      "inSample": false,
+      "typeReview": {
+        "type": "K",
+        "reason": "Exige determinar la salida de un fragmento Java.",
+        "reviewer": "banco; root independently confirmed mapping from labels.ts"
+      }
     },
     {
       "id": "AS08B-P1-37",
@@ -2279,7 +2451,7 @@
           "8, 3, 1, 6, 4, 7, 10, 14, 13."
         ],
         "c": 2,
-        "k": "C",
+        "k": "K",
         "x": [],
         "d": null,
         "z": 1,
@@ -2310,9 +2482,14 @@
       "sourceDiscrepancy": "Material original transcrito de forma accesible; no se redistribuye la imagen.",
       "independentReview": "banco; revision-independiente-banco.md (48 has separate review if included)",
       "beforeSha256": "060d4f6641993d8f5adc5cea7bee482e36a453e9d6be989b6aeaf797b753c16b",
-      "afterSha256": "660a34e7f8c93bf8694411676ec4dc0ac6422ff5ba77384a5f850df1678feed7",
+      "afterSha256": "f4b7b23315390280b0319db9e8f3798b4bef3d3fa1b9e9fa34f1fae464bf710f",
       "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
-      "inSample": false
+      "inSample": false,
+      "typeReview": {
+        "type": "K",
+        "reason": "Exige aplicar postorden a un árbol concreto y obtener una secuencia.",
+        "reviewer": "banco; root independently confirmed mapping from labels.ts"
+      }
     },
     {
       "id": "AS10B-P1-40",
@@ -2346,7 +2523,7 @@
           "A C F L B D E K J G I H"
         ],
         "c": 2,
-        "k": "C",
+        "k": "K",
         "x": [],
         "d": null,
         "z": 1,
@@ -2377,9 +2554,14 @@
       "sourceDiscrepancy": "Material original transcrito de forma accesible; no se redistribuye la imagen.",
       "independentReview": "banco; revision-independiente-banco.md (48 has separate review if included)",
       "beforeSha256": "ea40398fb98a5525cd8c9f99f550643caa1284f09dbf861209e98798ddc62db7",
-      "afterSha256": "09d93e7be4bc28326c7f2e26e404dc4d9b29258716ac6b5641b386af5554d5e8",
+      "afterSha256": "16d0d0a73e206a104086f5baa45095aef9966e3b9c7478059adafdaef71fa8da",
       "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
-      "inSample": false
+      "inSample": false,
+      "typeReview": {
+        "type": "K",
+        "reason": "Exige aplicar BFS a un grafo concreto y evaluar secuencias.",
+        "reviewer": "banco; root independently confirmed mapping from labels.ts"
+      }
     },
     {
       "id": "GEN-T4.08-20.v1",
@@ -2419,7 +2601,7 @@
           "63 caracteres."
         ],
         "c": 3,
-        "k": "C",
+        "k": "D",
         "x": [
           2,
           7
@@ -2455,9 +2637,684 @@
       "sourceDiscrepancy": "La página 14 sí afirma 255 caracteres incluyendo puntos. RFC1035 limita el nombre codificado a 255 octetos. En una notación ASCII ordinaria sin escapes, 253 caracteres sin el punto final o 254 incluyéndolo consumen 255 octetos en el protocolo. 63.63.63.61 caracteres de etiquetas más 3 puntos =253; cuatro longitudes y raíz añaden 5 octetos a los 250 caracteres de etiquetas.",
       "independentReview": "banco; revision-independiente-banco.md (48 has separate review if included)",
       "beforeSha256": "541658f62e25ea50a170dc2b0e0389d62a8f53b8dcb83ded324b28e731928fb4",
-      "afterSha256": "0a8a4129d128aa9b5c5fe2c7b7e3f48b4bfc4db8a890dde964750a0d1504bd75",
+      "afterSha256": "b6eaad338138231a6eca9ef4b0c0e39efac51848ffc2844b0ce90de85f3943cf",
       "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
-      "inSample": false
+      "inSample": false,
+      "typeReview": {
+        "type": "D",
+        "reason": "Pregunta un límite normativo de DNS, sin cálculo ni frase incompleta.",
+        "reviewer": "banco; root independently confirmed mapping from labels.ts"
+      }
+    }
+  ],
+  "metadataEdits": [
+    {
+      "id": "AT102-P1-64",
+      "topic": "T1.02",
+      "before": [
+        "T1.02",
+        "A",
+        "C",
+        [],
+        0
+      ],
+      "after": [
+        "T1.02",
+        "A",
+        "D",
+        [],
+        0
+      ],
+      "beforeSha256": "35ef7528c063b77797b6042575dcb4fc117cf644a43f8fcc4b2cb168a57943f4",
+      "afterSha256": "023e7688409d41595ac89aee30f79247faf967bd295a191d189604e02cef2ef5"
+    },
+    {
+      "id": "AT102-P1-65",
+      "topic": "T1.02",
+      "before": [
+        "T1.02",
+        "A",
+        "C",
+        [],
+        0
+      ],
+      "after": [
+        "T1.02",
+        "A",
+        "D",
+        [],
+        0
+      ],
+      "beforeSha256": "35ef7528c063b77797b6042575dcb4fc117cf644a43f8fcc4b2cb168a57943f4",
+      "afterSha256": "023e7688409d41595ac89aee30f79247faf967bd295a191d189604e02cef2ef5"
+    },
+    {
+      "id": "GEN-T1.03-52.v1",
+      "topic": "T1.03",
+      "before": [
+        "T1.03",
+        "G",
+        "D",
+        [
+          3,
+          7
+        ],
+        2
+      ],
+      "after": [
+        "T1.03",
+        "G",
+        "C",
+        [
+          3,
+          7
+        ],
+        2
+      ],
+      "beforeSha256": "931ce0c7fbe656222830e31f377c8f031e5ffba45661ff8f72400483028ed9c7",
+      "afterSha256": "cbe6f01ee88c2fe0cd17013d9fc216fa02c6044964ce2c0deb2de35ec2c3ba43"
+    },
+    {
+      "id": "AT204-P1-22",
+      "topic": "T2.04",
+      "before": [
+        "T2.04",
+        "A",
+        "C",
+        [],
+        0
+      ],
+      "after": [
+        "T2.04",
+        "A",
+        "D",
+        [],
+        0
+      ],
+      "beforeSha256": "97a2a41e553a3ce7dfe7d2a0ba3f0293cc9cf8a0e8abc4dd09625477c04c6c02",
+      "afterSha256": "85e9beb9c2040bd366c01ba6ab95e79e67c3994a0d517b3de86c196d274f750d"
+    },
+    {
+      "id": "AT204-P1-29",
+      "topic": "T2.04",
+      "before": [
+        "T2.04",
+        "A",
+        "C",
+        [],
+        0
+      ],
+      "after": [
+        "T2.04",
+        "A",
+        "D",
+        [],
+        0
+      ],
+      "beforeSha256": "97a2a41e553a3ce7dfe7d2a0ba3f0293cc9cf8a0e8abc4dd09625477c04c6c02",
+      "afterSha256": "85e9beb9c2040bd366c01ba6ab95e79e67c3994a0d517b3de86c196d274f750d"
+    },
+    {
+      "id": "AT204-P1-41",
+      "topic": "T2.04",
+      "before": [
+        "T2.04",
+        "A",
+        "C",
+        [],
+        0
+      ],
+      "after": [
+        "T2.04",
+        "A",
+        "K",
+        [],
+        0
+      ],
+      "beforeSha256": "97a2a41e553a3ce7dfe7d2a0ba3f0293cc9cf8a0e8abc4dd09625477c04c6c02",
+      "afterSha256": "7537104d1f36404c357f2ae88aad7b6c1327b4281ccf25f5a1b8ea35382631db"
+    },
+    {
+      "id": "GEN-T2.03-07.v2",
+      "topic": "T2.03",
+      "before": [
+        "T2.03",
+        "G",
+        "C",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "after": [
+        "T2.03",
+        "G",
+        "D",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "beforeSha256": "d817273e2c0f598a2c2c4a3941eda515b2cf8c410de48235c4b6b694e92c2aab",
+      "afterSha256": "0879b1f78f653427a8df7dbad1a791ce7f8b0bf4f36219e218193fbf716c7f92"
+    },
+    {
+      "id": "GEN-T2.03-25.v1",
+      "topic": "T2.03",
+      "before": [
+        "T2.03",
+        "G",
+        "C",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "after": [
+        "T2.03",
+        "G",
+        "D",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "beforeSha256": "d817273e2c0f598a2c2c4a3941eda515b2cf8c410de48235c4b6b694e92c2aab",
+      "afterSha256": "0879b1f78f653427a8df7dbad1a791ce7f8b0bf4f36219e218193fbf716c7f92"
+    },
+    {
+      "id": "GEN-T2.03-62.v2",
+      "topic": "T2.03",
+      "before": [
+        "T2.03",
+        "G",
+        "C",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "after": [
+        "T2.03",
+        "G",
+        "K",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "beforeSha256": "d817273e2c0f598a2c2c4a3941eda515b2cf8c410de48235c4b6b694e92c2aab",
+      "afterSha256": "1c961057445d255ca50ad72d89ccf4ab1968a16dde52565dceda1163834c8a9f"
+    },
+    {
+      "id": "GEN-T2.03-70",
+      "topic": "T2.03",
+      "before": [
+        "T2.03",
+        "G",
+        "C",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "after": [
+        "T2.03",
+        "G",
+        "K",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "beforeSha256": "d817273e2c0f598a2c2c4a3941eda515b2cf8c410de48235c4b6b694e92c2aab",
+      "afterSha256": "1c961057445d255ca50ad72d89ccf4ab1968a16dde52565dceda1163834c8a9f"
+    },
+    {
+      "id": "AT204-P1-44",
+      "topic": "T2.04",
+      "before": [
+        "T2.04",
+        "A",
+        "I",
+        [],
+        0
+      ],
+      "after": [
+        "T2.04",
+        "A",
+        "D",
+        [],
+        0
+      ],
+      "beforeSha256": "43bcc70391def5e0b5da06ddb97d7e22ec13200df712c4e5f6e7383236dd9c51",
+      "afterSha256": "85e9beb9c2040bd366c01ba6ab95e79e67c3994a0d517b3de86c196d274f750d"
+    },
+    {
+      "id": "GEN-T2.03-99.v1",
+      "topic": "T2.03",
+      "before": [
+        "T2.03",
+        "G",
+        "C",
+        [
+          7,
+          2
+        ],
+        3
+      ],
+      "after": [
+        "T2.03",
+        "G",
+        "D",
+        [
+          7,
+          2
+        ],
+        3
+      ],
+      "beforeSha256": "735714e00395712423531f8d3b6ad8e57adf6c2d25a84e3e646cdb67e8bdf13c",
+      "afterSha256": "6b38dbfe79d1b55fce0f12c606e12a5faa7e97db3feafed2c5d87bbb4f4304cb"
+    },
+    {
+      "id": "GEN-T2.04-75.v2",
+      "topic": "T2.04",
+      "before": [
+        "T2.04",
+        "G",
+        "C",
+        [
+          2,
+          7
+        ],
+        3
+      ],
+      "after": [
+        "T2.04",
+        "G",
+        "K",
+        [
+          2,
+          7
+        ],
+        3
+      ],
+      "beforeSha256": "a3f2b04a1e3603a8744e3e4a873eb45f1af476c392bc0955647c80ad6d7fa770",
+      "afterSha256": "fd87f48f636696c484a72a20ebbd90274d853a3a89f8ee04ad0b8383fc86a152"
+    },
+    {
+      "id": "GEN-T3.01-05.v1",
+      "topic": "T3.01",
+      "before": [
+        "T3.01",
+        "G",
+        "C",
+        [
+          7,
+          8
+        ],
+        2
+      ],
+      "after": [
+        "T3.01",
+        "G",
+        "D",
+        [
+          7,
+          8
+        ],
+        2
+      ],
+      "beforeSha256": "ae0a0cf59d0db0f0f4d4b09bf4faf831a2f4a593855d2bfd4100f5e3da792c57",
+      "afterSha256": "5a7748273fe79f10a91df14d58d485251d3796ab9a627d2549e3e8b3b265f403"
+    },
+    {
+      "id": "GEN-T3.01-10.v1",
+      "topic": "T3.01",
+      "before": [
+        "T3.01",
+        "G",
+        "C",
+        [
+          7,
+          2
+        ],
+        3
+      ],
+      "after": [
+        "T3.01",
+        "G",
+        "D",
+        [
+          7,
+          2
+        ],
+        3
+      ],
+      "beforeSha256": "b926532dc9d8bc07b2ce413189b9f0642bf337a24f5ce6306bf4a11a725bd20d",
+      "afterSha256": "8930a90ea5e9503b55c3c0ca40174cc88877eeef662a6ce825ae37dbc9f8fe2b"
+    },
+    {
+      "id": "GEN-T3.01-22.v1",
+      "topic": "T3.01",
+      "before": [
+        "T3.01",
+        "G",
+        "C",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "after": [
+        "T3.01",
+        "G",
+        "D",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "beforeSha256": "4d008ae16b0f813660d412939989312cef3374279489760a98a17ee5d817a1e5",
+      "afterSha256": "308c4e5e722a5c1b078eb06f29dc23ef1d99739f8f22fd8413dfe66cdb2ee726"
+    },
+    {
+      "id": "GEN-T3.02-20.v2",
+      "topic": "T3.02",
+      "before": [
+        "T3.02",
+        "G",
+        "C",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "after": [
+        "T3.02",
+        "G",
+        "D",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "beforeSha256": "05f760562514de39f093fb2538f979b60c9b7f555d6513857b5c6e190b4c6d5c",
+      "afterSha256": "5ad740c18793843e4968c9e97f26e9cdd8be58714fee223e20ee1cbec865ce1e"
+    },
+    {
+      "id": "GEN-T3.02-21.v1",
+      "topic": "T3.02",
+      "before": [
+        "T3.02",
+        "G",
+        "C",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "after": [
+        "T3.02",
+        "G",
+        "D",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "beforeSha256": "05f760562514de39f093fb2538f979b60c9b7f555d6513857b5c6e190b4c6d5c",
+      "afterSha256": "5ad740c18793843e4968c9e97f26e9cdd8be58714fee223e20ee1cbec865ce1e"
+    },
+    {
+      "id": "GEN-T3.02-55.v2",
+      "topic": "T3.02",
+      "before": [
+        "T3.02",
+        "G",
+        "C",
+        [
+          7,
+          2
+        ],
+        3
+      ],
+      "after": [
+        "T3.02",
+        "G",
+        "D",
+        [
+          7,
+          2
+        ],
+        3
+      ],
+      "beforeSha256": "a4668742440c0cbf4cd7b08946ec093a69a76b9a57f4a02dc467121e73e3d32b",
+      "afterSha256": "e6b7ce101406ed3985c2c75ac492d9e87872ff5f0651bee6f3c922704f61fc9e"
+    },
+    {
+      "id": "GEN-T3.02-66.v2",
+      "topic": "T3.02",
+      "before": [
+        "T3.02",
+        "G",
+        "C",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "after": [
+        "T3.02",
+        "G",
+        "D",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "beforeSha256": "05f760562514de39f093fb2538f979b60c9b7f555d6513857b5c6e190b4c6d5c",
+      "afterSha256": "5ad740c18793843e4968c9e97f26e9cdd8be58714fee223e20ee1cbec865ce1e"
+    },
+    {
+      "id": "GEN-T3.05-21",
+      "topic": "T3.05",
+      "before": [
+        "T3.05",
+        "G",
+        "C",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "after": [
+        "T3.05",
+        "G",
+        "K",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "beforeSha256": "0b8aee4d84496b60a035ed665cd6ea8249bc3e5cb0451542dfa0c2f3ab3bbefc",
+      "afterSha256": "5f36712a9f81a75b2cb9a31842e678af0a41e30bfa8c093ca00b4cf1e3787e45"
+    },
+    {
+      "id": "GEN-T3.05-23.v1",
+      "topic": "T3.05",
+      "before": [
+        "T3.05",
+        "G",
+        "C",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "after": [
+        "T3.05",
+        "G",
+        "K",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "beforeSha256": "0b8aee4d84496b60a035ed665cd6ea8249bc3e5cb0451542dfa0c2f3ab3bbefc",
+      "afterSha256": "5f36712a9f81a75b2cb9a31842e678af0a41e30bfa8c093ca00b4cf1e3787e45"
+    },
+    {
+      "id": "GEN-T3.05-45.v2",
+      "topic": "T3.05",
+      "before": [
+        "T3.05",
+        "G",
+        "C",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "after": [
+        "T3.05",
+        "G",
+        "D",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "beforeSha256": "0b8aee4d84496b60a035ed665cd6ea8249bc3e5cb0451542dfa0c2f3ab3bbefc",
+      "afterSha256": "514b4076380a68fc2fe0fee379a32df6ac7582a25b8a8ea0b462b020fc426f94"
+    },
+    {
+      "id": "AS09-P1-48",
+      "topic": "T3.05",
+      "before": [
+        "T3.05",
+        "A",
+        "C",
+        [],
+        0
+      ],
+      "after": [
+        "T3.05",
+        "A",
+        "D",
+        [],
+        0
+      ],
+      "beforeSha256": "f6ec01e86402da2be81ec94b08a8ab02d3b5382dfa66da4cd041b13d5349b60f",
+      "afterSha256": "995ef27083004c3c9694bc80efa27202d94debcd0d2056c43e14518cf25994e1"
+    },
+    {
+      "id": "AS09-P1-52",
+      "topic": "T3.06",
+      "before": [
+        "T3.06",
+        "A",
+        "C",
+        [],
+        0
+      ],
+      "after": [
+        "T3.06",
+        "A",
+        "K",
+        [],
+        0
+      ],
+      "beforeSha256": "792a9cf7696cdbe7734016e4c3c976e8652a7b97d9b6af324d63d688917215cf",
+      "afterSha256": "0f7e73493c31954862a8e2d21511e44e10c0b4c3dc4ed4d1705ea4f6230c1f92"
+    },
+    {
+      "id": "AS08B-P1-37",
+      "topic": "T2.03",
+      "before": [
+        "T2.03",
+        "A",
+        "C",
+        [],
+        0
+      ],
+      "after": [
+        "T2.03",
+        "A",
+        "K",
+        [],
+        0
+      ],
+      "beforeSha256": "089b5e8644a899a22deaa446a712934caa3ecee3c5d10186c49647f52e50daf1",
+      "afterSha256": "f209be981f5465a0e08fe153c9cb8f35e432fa95fb54654c0efeb17485ef8f85"
+    },
+    {
+      "id": "AS10B-P1-40",
+      "topic": "T2.03",
+      "before": [
+        "T2.03",
+        "A",
+        "C",
+        [],
+        0
+      ],
+      "after": [
+        "T2.03",
+        "A",
+        "K",
+        [],
+        0
+      ],
+      "beforeSha256": "089b5e8644a899a22deaa446a712934caa3ecee3c5d10186c49647f52e50daf1",
+      "afterSha256": "f209be981f5465a0e08fe153c9cb8f35e432fa95fb54654c0efeb17485ef8f85"
+    },
+    {
+      "id": "GEN-T4.08-20.v1",
+      "topic": "T4.08",
+      "before": [
+        "T4.08",
+        "G",
+        "C",
+        [
+          2,
+          7
+        ],
+        1
+      ],
+      "after": [
+        "T4.08",
+        "G",
+        "D",
+        [
+          2,
+          7
+        ],
+        1
+      ],
+      "beforeSha256": "2d5ed69bdd6a9585a23230b852366325a82e6f4db5d879e4f01c15aff300e6b7",
+      "afterSha256": "c05bc848e42411585f74756cb11e5dd3d2ab85d68466e55b9690359e12ea9ba5"
     }
   ]
 }

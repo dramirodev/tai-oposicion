@@ -39,7 +39,8 @@ def prepare(topic, edits, directory, reverse, fingerprints=None):
             fingerprints[source + 'Sha256'], fingerprints[destination + 'Sha256']):
         raise ValueError(f'Deriva externa en {topic}.')
     rows = json.loads(original)
-    by_id = {row['i']: index for index, row in enumerate(rows)}
+    metadata = topic == 'meta.json' and isinstance(rows, dict)
+    by_id = {key: key for key in rows} if metadata else {row['i']: index for index, row in enumerate(rows)}
     if len(by_id) != len(rows):
         raise ValueError('El tema contiene IDs duplicados.')
     changed = 0
@@ -56,7 +57,10 @@ def prepare(topic, edits, directory, reverse, fingerprints=None):
         if fingerprints:
             # Reviewed ledgers contain complete rows, including missing/nullable fields.
             row = edit[destination]
-            if row['i'] != edit['id'] or row['t'] + '.json' != topic:
+            if metadata:
+                if not isinstance(row, list) or len(row) < 5 or row[0] != edit['topic']:
+                    raise ValueError(f"Metadatos inesperados: {edit['id']}.")
+            elif row['i'] != edit['id'] or row['t'] + '.json' != topic:
                 raise ValueError(f"ID o tema inesperado: {edit['id']}.")
             rows[index] = row
         else:
@@ -84,7 +88,8 @@ def replay(directory, reverse, batch, include_sample=False):
         fcntl.flock(lock, fcntl.LOCK_EX)
         if batch in REVIEWED_BATCHES:
             ledger = json.loads((HERE / REVIEWED_BATCHES[batch]).read_text(encoding='utf-8'))
-            prepared = [prepare(topic, [q for q in ledger['questions'] if q['topic'] + '.json' == topic],
+            prepared = [prepare(topic, ledger['metadataEdits'] if topic == 'meta.json' else
+                                [q for q in ledger['questions'] if q['topic'] + '.json' == topic],
                                 directory, reverse, fingerprints)
                         for topic, fingerprints in ledger['files'].items()]
             if include_sample:
@@ -110,7 +115,7 @@ def replay(directory, reverse, batch, include_sample=False):
             for index, (target, _, count) in enumerate(prepared):
                 if count:
                     (Path(staging) / str(index)).replace(target)
-        return sum(count for _, _, count in prepared)
+        return sum(count for target, _, count in prepared if target.name != 'meta.json')
     finally:
         os.close(lock)
 

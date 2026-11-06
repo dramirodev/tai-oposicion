@@ -25,16 +25,707 @@
     "T3.08",
     "T4.08"
   ],
+  "changedFiles": [
+    "T1.02",
+    "T1.03",
+    "T1.06",
+    "T2.01",
+    "T2.03",
+    "T2.04",
+    "T3.01",
+    "T3.02",
+    "T3.03",
+    "T3.04",
+    "T3.05",
+    "T3.06",
+    "T3.07",
+    "T3.08",
+    "T4.08",
+    "meta"
+  ],
+  "catalogMetadata": {
+    "file": "meta",
+    "updates": [
+      {
+        "id": "AT102-P1-64",
+        "topic": "T1.02",
+        "before": [
+          "T1.02",
+          "A",
+          "C",
+          [],
+          0
+        ],
+        "after": [
+          "T1.02",
+          "A",
+          "D",
+          [],
+          0
+        ],
+        "beforeSha256": "35ef7528c063b77797b6042575dcb4fc117cf644a43f8fcc4b2cb168a57943f4",
+        "afterSha256": "023e7688409d41595ac89aee30f79247faf967bd295a191d189604e02cef2ef5"
+      },
+      {
+        "id": "AT102-P1-65",
+        "topic": "T1.02",
+        "before": [
+          "T1.02",
+          "A",
+          "C",
+          [],
+          0
+        ],
+        "after": [
+          "T1.02",
+          "A",
+          "D",
+          [],
+          0
+        ],
+        "beforeSha256": "35ef7528c063b77797b6042575dcb4fc117cf644a43f8fcc4b2cb168a57943f4",
+        "afterSha256": "023e7688409d41595ac89aee30f79247faf967bd295a191d189604e02cef2ef5"
+      },
+      {
+        "id": "GEN-T1.03-52.v1",
+        "topic": "T1.03",
+        "before": [
+          "T1.03",
+          "G",
+          "D",
+          [
+            3,
+            7
+          ],
+          2
+        ],
+        "after": [
+          "T1.03",
+          "G",
+          "C",
+          [
+            3,
+            7
+          ],
+          2
+        ],
+        "beforeSha256": "931ce0c7fbe656222830e31f377c8f031e5ffba45661ff8f72400483028ed9c7",
+        "afterSha256": "cbe6f01ee88c2fe0cd17013d9fc216fa02c6044964ce2c0deb2de35ec2c3ba43"
+      },
+      {
+        "id": "AT204-P1-22",
+        "topic": "T2.04",
+        "before": [
+          "T2.04",
+          "A",
+          "C",
+          [],
+          0
+        ],
+        "after": [
+          "T2.04",
+          "A",
+          "D",
+          [],
+          0
+        ],
+        "beforeSha256": "97a2a41e553a3ce7dfe7d2a0ba3f0293cc9cf8a0e8abc4dd09625477c04c6c02",
+        "afterSha256": "85e9beb9c2040bd366c01ba6ab95e79e67c3994a0d517b3de86c196d274f750d"
+      },
+      {
+        "id": "AT204-P1-29",
+        "topic": "T2.04",
+        "before": [
+          "T2.04",
+          "A",
+          "C",
+          [],
+          0
+        ],
+        "after": [
+          "T2.04",
+          "A",
+          "D",
+          [],
+          0
+        ],
+        "beforeSha256": "97a2a41e553a3ce7dfe7d2a0ba3f0293cc9cf8a0e8abc4dd09625477c04c6c02",
+        "afterSha256": "85e9beb9c2040bd366c01ba6ab95e79e67c3994a0d517b3de86c196d274f750d"
+      },
+      {
+        "id": "AT204-P1-41",
+        "topic": "T2.04",
+        "before": [
+          "T2.04",
+          "A",
+          "C",
+          [],
+          0
+        ],
+        "after": [
+          "T2.04",
+          "A",
+          "K",
+          [],
+          0
+        ],
+        "beforeSha256": "97a2a41e553a3ce7dfe7d2a0ba3f0293cc9cf8a0e8abc4dd09625477c04c6c02",
+        "afterSha256": "7537104d1f36404c357f2ae88aad7b6c1327b4281ccf25f5a1b8ea35382631db"
+      },
+      {
+        "id": "GEN-T2.03-07.v2",
+        "topic": "T2.03",
+        "before": [
+          "T2.03",
+          "G",
+          "C",
+          [
+            7,
+            8
+          ],
+          3
+        ],
+        "after": [
+          "T2.03",
+          "G",
+          "D",
+          [
+            7,
+            8
+          ],
+          3
+        ],
+        "beforeSha256": "d817273e2c0f598a2c2c4a3941eda515b2cf8c410de48235c4b6b694e92c2aab",
+        "afterSha256": "0879b1f78f653427a8df7dbad1a791ce7f8b0bf4f36219e218193fbf716c7f92"
+      },
+      {
+        "id": "GEN-T2.03-25.v1",
+        "topic": "T2.03",
+        "before": [
+          "T2.03",
+          "G",
+          "C",
+          [
+            7,
+            8
+          ],
+          3
+        ],
+        "after": [
+          "T2.03",
+          "G",
+          "D",
+          [
+            7,
+            8
+          ],
+          3
+        ],
+        "beforeSha256": "d817273e2c0f598a2c2c4a3941eda515b2cf8c410de48235c4b6b694e92c2aab",
+        "afterSha256": "0879b1f78f653427a8df7dbad1a791ce7f8b0bf4f36219e218193fbf716c7f92"
+      },
+      {
+        "id": "GEN-T2.03-62.v2",
+        "topic": "T2.03",
+        "before": [
+          "T2.03",
+          "G",
+          "C",
+          [
+            7,
+            8
+          ],
+          3
+        ],
+        "after": [
+          "T2.03",
+          "G",
+          "K",
+          [
+            7,
+            8
+          ],
+          3
+        ],
+        "beforeSha256": "d817273e2c0f598a2c2c4a3941eda515b2cf8c410de48235c4b6b694e92c2aab",
+        "afterSha256": "1c961057445d255ca50ad72d89ccf4ab1968a16dde52565dceda1163834c8a9f"
+      },
+      {
+        "id": "GEN-T2.03-70",
+        "topic": "T2.03",
+        "before": [
+          "T2.03",
+          "G",
+          "C",
+          [
+            7,
+            8
+          ],
+          3
+        ],
+        "after": [
+          "T2.03",
+          "G",
+          "K",
+          [
+            7,
+            8
+          ],
+          3
+        ],
+        "beforeSha256": "d817273e2c0f598a2c2c4a3941eda515b2cf8c410de48235c4b6b694e92c2aab",
+        "afterSha256": "1c961057445d255ca50ad72d89ccf4ab1968a16dde52565dceda1163834c8a9f"
+      },
+      {
+        "id": "AT204-P1-44",
+        "topic": "T2.04",
+        "before": [
+          "T2.04",
+          "A",
+          "I",
+          [],
+          0
+        ],
+        "after": [
+          "T2.04",
+          "A",
+          "D",
+          [],
+          0
+        ],
+        "beforeSha256": "43bcc70391def5e0b5da06ddb97d7e22ec13200df712c4e5f6e7383236dd9c51",
+        "afterSha256": "85e9beb9c2040bd366c01ba6ab95e79e67c3994a0d517b3de86c196d274f750d"
+      },
+      {
+        "id": "GEN-T2.03-99.v1",
+        "topic": "T2.03",
+        "before": [
+          "T2.03",
+          "G",
+          "C",
+          [
+            7,
+            2
+          ],
+          3
+        ],
+        "after": [
+          "T2.03",
+          "G",
+          "D",
+          [
+            7,
+            2
+          ],
+          3
+        ],
+        "beforeSha256": "735714e00395712423531f8d3b6ad8e57adf6c2d25a84e3e646cdb67e8bdf13c",
+        "afterSha256": "6b38dbfe79d1b55fce0f12c606e12a5faa7e97db3feafed2c5d87bbb4f4304cb"
+      },
+      {
+        "id": "GEN-T2.04-75.v2",
+        "topic": "T2.04",
+        "before": [
+          "T2.04",
+          "G",
+          "C",
+          [
+            2,
+            7
+          ],
+          3
+        ],
+        "after": [
+          "T2.04",
+          "G",
+          "K",
+          [
+            2,
+            7
+          ],
+          3
+        ],
+        "beforeSha256": "a3f2b04a1e3603a8744e3e4a873eb45f1af476c392bc0955647c80ad6d7fa770",
+        "afterSha256": "fd87f48f636696c484a72a20ebbd90274d853a3a89f8ee04ad0b8383fc86a152"
+      },
+      {
+        "id": "GEN-T3.01-05.v1",
+        "topic": "T3.01",
+        "before": [
+          "T3.01",
+          "G",
+          "C",
+          [
+            7,
+            8
+          ],
+          2
+        ],
+        "after": [
+          "T3.01",
+          "G",
+          "D",
+          [
+            7,
+            8
+          ],
+          2
+        ],
+        "beforeSha256": "ae0a0cf59d0db0f0f4d4b09bf4faf831a2f4a593855d2bfd4100f5e3da792c57",
+        "afterSha256": "5a7748273fe79f10a91df14d58d485251d3796ab9a627d2549e3e8b3b265f403"
+      },
+      {
+        "id": "GEN-T3.01-10.v1",
+        "topic": "T3.01",
+        "before": [
+          "T3.01",
+          "G",
+          "C",
+          [
+            7,
+            2
+          ],
+          3
+        ],
+        "after": [
+          "T3.01",
+          "G",
+          "D",
+          [
+            7,
+            2
+          ],
+          3
+        ],
+        "beforeSha256": "b926532dc9d8bc07b2ce413189b9f0642bf337a24f5ce6306bf4a11a725bd20d",
+        "afterSha256": "8930a90ea5e9503b55c3c0ca40174cc88877eeef662a6ce825ae37dbc9f8fe2b"
+      },
+      {
+        "id": "GEN-T3.01-22.v1",
+        "topic": "T3.01",
+        "before": [
+          "T3.01",
+          "G",
+          "C",
+          [
+            7,
+            8
+          ],
+          3
+        ],
+        "after": [
+          "T3.01",
+          "G",
+          "D",
+          [
+            7,
+            8
+          ],
+          3
+        ],
+        "beforeSha256": "4d008ae16b0f813660d412939989312cef3374279489760a98a17ee5d817a1e5",
+        "afterSha256": "308c4e5e722a5c1b078eb06f29dc23ef1d99739f8f22fd8413dfe66cdb2ee726"
+      },
+      {
+        "id": "GEN-T3.02-20.v2",
+        "topic": "T3.02",
+        "before": [
+          "T3.02",
+          "G",
+          "C",
+          [
+            7,
+            8
+          ],
+          3
+        ],
+        "after": [
+          "T3.02",
+          "G",
+          "D",
+          [
+            7,
+            8
+          ],
+          3
+        ],
+        "beforeSha256": "05f760562514de39f093fb2538f979b60c9b7f555d6513857b5c6e190b4c6d5c",
+        "afterSha256": "5ad740c18793843e4968c9e97f26e9cdd8be58714fee223e20ee1cbec865ce1e"
+      },
+      {
+        "id": "GEN-T3.02-21.v1",
+        "topic": "T3.02",
+        "before": [
+          "T3.02",
+          "G",
+          "C",
+          [
+            7,
+            8
+          ],
+          3
+        ],
+        "after": [
+          "T3.02",
+          "G",
+          "D",
+          [
+            7,
+            8
+          ],
+          3
+        ],
+        "beforeSha256": "05f760562514de39f093fb2538f979b60c9b7f555d6513857b5c6e190b4c6d5c",
+        "afterSha256": "5ad740c18793843e4968c9e97f26e9cdd8be58714fee223e20ee1cbec865ce1e"
+      },
+      {
+        "id": "GEN-T3.02-55.v2",
+        "topic": "T3.02",
+        "before": [
+          "T3.02",
+          "G",
+          "C",
+          [
+            7,
+            2
+          ],
+          3
+        ],
+        "after": [
+          "T3.02",
+          "G",
+          "D",
+          [
+            7,
+            2
+          ],
+          3
+        ],
+        "beforeSha256": "a4668742440c0cbf4cd7b08946ec093a69a76b9a57f4a02dc467121e73e3d32b",
+        "afterSha256": "e6b7ce101406ed3985c2c75ac492d9e87872ff5f0651bee6f3c922704f61fc9e"
+      },
+      {
+        "id": "GEN-T3.02-66.v2",
+        "topic": "T3.02",
+        "before": [
+          "T3.02",
+          "G",
+          "C",
+          [
+            7,
+            8
+          ],
+          3
+        ],
+        "after": [
+          "T3.02",
+          "G",
+          "D",
+          [
+            7,
+            8
+          ],
+          3
+        ],
+        "beforeSha256": "05f760562514de39f093fb2538f979b60c9b7f555d6513857b5c6e190b4c6d5c",
+        "afterSha256": "5ad740c18793843e4968c9e97f26e9cdd8be58714fee223e20ee1cbec865ce1e"
+      },
+      {
+        "id": "GEN-T3.05-21",
+        "topic": "T3.05",
+        "before": [
+          "T3.05",
+          "G",
+          "C",
+          [
+            7,
+            8
+          ],
+          3
+        ],
+        "after": [
+          "T3.05",
+          "G",
+          "K",
+          [
+            7,
+            8
+          ],
+          3
+        ],
+        "beforeSha256": "0b8aee4d84496b60a035ed665cd6ea8249bc3e5cb0451542dfa0c2f3ab3bbefc",
+        "afterSha256": "5f36712a9f81a75b2cb9a31842e678af0a41e30bfa8c093ca00b4cf1e3787e45"
+      },
+      {
+        "id": "GEN-T3.05-23.v1",
+        "topic": "T3.05",
+        "before": [
+          "T3.05",
+          "G",
+          "C",
+          [
+            7,
+            8
+          ],
+          3
+        ],
+        "after": [
+          "T3.05",
+          "G",
+          "K",
+          [
+            7,
+            8
+          ],
+          3
+        ],
+        "beforeSha256": "0b8aee4d84496b60a035ed665cd6ea8249bc3e5cb0451542dfa0c2f3ab3bbefc",
+        "afterSha256": "5f36712a9f81a75b2cb9a31842e678af0a41e30bfa8c093ca00b4cf1e3787e45"
+      },
+      {
+        "id": "GEN-T3.05-45.v2",
+        "topic": "T3.05",
+        "before": [
+          "T3.05",
+          "G",
+          "C",
+          [
+            7,
+            8
+          ],
+          3
+        ],
+        "after": [
+          "T3.05",
+          "G",
+          "D",
+          [
+            7,
+            8
+          ],
+          3
+        ],
+        "beforeSha256": "0b8aee4d84496b60a035ed665cd6ea8249bc3e5cb0451542dfa0c2f3ab3bbefc",
+        "afterSha256": "514b4076380a68fc2fe0fee379a32df6ac7582a25b8a8ea0b462b020fc426f94"
+      },
+      {
+        "id": "AS09-P1-48",
+        "topic": "T3.05",
+        "before": [
+          "T3.05",
+          "A",
+          "C",
+          [],
+          0
+        ],
+        "after": [
+          "T3.05",
+          "A",
+          "D",
+          [],
+          0
+        ],
+        "beforeSha256": "f6ec01e86402da2be81ec94b08a8ab02d3b5382dfa66da4cd041b13d5349b60f",
+        "afterSha256": "995ef27083004c3c9694bc80efa27202d94debcd0d2056c43e14518cf25994e1"
+      },
+      {
+        "id": "AS09-P1-52",
+        "topic": "T3.06",
+        "before": [
+          "T3.06",
+          "A",
+          "C",
+          [],
+          0
+        ],
+        "after": [
+          "T3.06",
+          "A",
+          "K",
+          [],
+          0
+        ],
+        "beforeSha256": "792a9cf7696cdbe7734016e4c3c976e8652a7b97d9b6af324d63d688917215cf",
+        "afterSha256": "0f7e73493c31954862a8e2d21511e44e10c0b4c3dc4ed4d1705ea4f6230c1f92"
+      },
+      {
+        "id": "AS08B-P1-37",
+        "topic": "T2.03",
+        "before": [
+          "T2.03",
+          "A",
+          "C",
+          [],
+          0
+        ],
+        "after": [
+          "T2.03",
+          "A",
+          "K",
+          [],
+          0
+        ],
+        "beforeSha256": "089b5e8644a899a22deaa446a712934caa3ecee3c5d10186c49647f52e50daf1",
+        "afterSha256": "f209be981f5465a0e08fe153c9cb8f35e432fa95fb54654c0efeb17485ef8f85"
+      },
+      {
+        "id": "AS10B-P1-40",
+        "topic": "T2.03",
+        "before": [
+          "T2.03",
+          "A",
+          "C",
+          [],
+          0
+        ],
+        "after": [
+          "T2.03",
+          "A",
+          "K",
+          [],
+          0
+        ],
+        "beforeSha256": "089b5e8644a899a22deaa446a712934caa3ecee3c5d10186c49647f52e50daf1",
+        "afterSha256": "f209be981f5465a0e08fe153c9cb8f35e432fa95fb54654c0efeb17485ef8f85"
+      },
+      {
+        "id": "GEN-T4.08-20.v1",
+        "topic": "T4.08",
+        "before": [
+          "T4.08",
+          "G",
+          "C",
+          [
+            2,
+            7
+          ],
+          1
+        ],
+        "after": [
+          "T4.08",
+          "G",
+          "D",
+          [
+            2,
+            7
+          ],
+          1
+        ],
+        "beforeSha256": "2d5ed69bdd6a9585a23230b852366325a82e6f4db5d879e4f01c15aff300e6b7",
+        "afterSha256": "c05bc848e42411585f74756cb11e5dd3d2ab85d68466e55b9690359e12ea9ba5"
+      }
+    ]
+  },
   "metaUpdateTime": "2026-11-05T23:36:37.120349Z",
   "files": {
     "T1.02": {
       "beforeSha256": "a49793862a2b8b519f7e5498d1bf359ce689ba73a7fc2da27b3f31715b7f4906",
-      "afterSha256": "073db563ea8d1635cfd54eebf7ecda363f8952c58c391096ca5120cbcc20b5bb",
+      "afterSha256": "52113f643252cfcf08b885aa7db8237504dbe38b13005f884139badcf484b7a0",
       "updateTime": "2026-10-30T07:12:53.766068Z"
     },
     "T1.03": {
       "beforeSha256": "916193b07dd8b8c415ec6cfaa74e5a847a073cea8e83be5bb8f54749a2c797ed",
-      "afterSha256": "1a15e2ac27ce4cecb79d3eb908340f17e4f30e6fa5c98c7b87f955575b939c0f",
+      "afterSha256": "239081818b78efc28828a40585a410ffbba83f03ffe58442e527843e2e396765",
       "updateTime": "2026-10-28T15:13:54.159635Z"
     },
     "T1.06": {
@@ -49,22 +740,22 @@
     },
     "T2.03": {
       "beforeSha256": "f538b81e1605a62497b8f21e67fe02e353ce36e6ca0e0408a23c86c36d585e9e",
-      "afterSha256": "22ebbf15f32b3cdc649812d9dc18b18a32b4f911abecd35e66f8692016abdcb6",
+      "afterSha256": "cb14b8286918640c2148ceb9ccdd6e0016088490953c55cb08fd32741c94a3ae",
       "updateTime": "2026-10-28T19:03:55.875757Z"
     },
     "T2.04": {
       "beforeSha256": "1a12bb65facaba2156eda49e14887976f4583e7afb7838065431d67a118a524c",
-      "afterSha256": "9b957401de6e3a72bf206b664d27f717b20f7bbcb34557461713d37286ac7dd5",
+      "afterSha256": "011344d95b01ddb0188e64c732dee7478c152d38202f7e0ee382752052c4901b",
       "updateTime": "2026-10-30T07:12:54.398651Z"
     },
     "T3.01": {
       "beforeSha256": "27e8b272f91ced721b8d4fc42e9af476ca52899d2ec6d20cff2ee00782b6447d",
-      "afterSha256": "9394a0bbf2dc964f6375c17a881366d0019b623aede03e802640f438fdd07fdb",
+      "afterSha256": "c94166ba86d03622846f8b6957a75d894e2f7b80a754f730be5a80e336ce4216",
       "updateTime": "2026-10-28T15:14:00.412559Z"
     },
     "T3.02": {
       "beforeSha256": "f8f37e6bd4c437d5a5186bcec118f97d0d9a64c2581037f855e741b6b4c59225",
-      "afterSha256": "109c46e828fe7ea7b8e8caa35879eb3cfb382bc4e521bcdc2bcb8f8b65a1cf1c",
+      "afterSha256": "be3a2be9890ad0792471cae7d1896d0948f3d2172a227c435a5801d4c5d2c2c8",
       "updateTime": "2026-10-28T19:55:31.275863Z"
     },
     "T3.03": {
@@ -79,12 +770,12 @@
     },
     "T3.05": {
       "beforeSha256": "9459dd1ee2aa39744e1477a42e07525247609e42837149186e1330efbd6e1b14",
-      "afterSha256": "955dc0ef4234a15e8d5ab95d96a03daba66ace9e8773332550d281362e4a9e0a",
+      "afterSha256": "ee17e7b1ba6d6d33d74b49e563875f5352b999680be5c429bca7dfa8354915e0",
       "updateTime": "2026-10-28T19:03:56.978178Z"
     },
     "T3.06": {
       "beforeSha256": "69cf1099e32bb554e639c0b244458d128f932f87321b0f63c5fa73de26a70375",
-      "afterSha256": "c94d861bcd56726c8840ef402bc0576279138b322ce9ea14af4b09c6143fde73",
+      "afterSha256": "f02aad7d4a67c65d03c4a7008833107f3251fd845cdcec31be9fa9a5b4b46f29",
       "updateTime": "2026-10-28T19:20:10.804506Z"
     },
     "T3.07": {
@@ -99,8 +790,13 @@
     },
     "T4.08": {
       "beforeSha256": "2c1745be700df4c711503d34f703cf458c6ee90ca53cae412effbdef09afc4d3",
-      "afterSha256": "5de4121bf23d918d79c749d9a531f8d3117994441f74478c271b09816da4609c",
+      "afterSha256": "99428e92ee9d6afe7eaf579729e16ec1560a09ffc10c0d864ef28cf58dfea438",
       "updateTime": "2026-10-28T19:04:01.193913Z"
+    },
+    "meta": {
+      "beforeSha256": "f8415041367a376b775009c6776c3bccf81c91c20bbd483d7ef4205c85fa7c7e",
+      "afterSha256": "7fd767adb2580dbaf837b7f32d59ff01971af9db9a14870346f773b48255976e",
+      "updateTime": "2026-10-30T07:12:55.471958Z"
     }
   },
   "changes": [
@@ -173,7 +869,7 @@
           "Entre los 60 y los 90 días."
         ],
         "c": 2,
-        "k": "C",
+        "k": "D",
         "x": [],
         "d": null,
         "n": "El artículo 68.6 establece los límites de 30 y 60 días. No ordena celebrarlas necesariamente al cumplirse un único día del intervalo.",
@@ -211,7 +907,7 @@
           "La de cualquier grupo parlamentario por sí solo."
         ],
         "c": 0,
-        "k": "C",
+        "k": "D",
         "x": [],
         "d": null,
         "n": "La petición puede proceder de la mayoría absoluta de cualquiera de las dos Cámaras. El mismo precepto también legitima al Gobierno y a la Diputación Permanente.",
@@ -294,7 +990,7 @@
           "La presencia de los Consejeros de Estado."
         ],
         "c": 2,
-        "k": "D",
+        "k": "C",
         "x": [
           3,
           7
@@ -415,7 +1111,7 @@
           "8, 3, 1, 6, 4, 7, 10, 14, 13."
         ],
         "c": 2,
-        "k": "C",
+        "k": "K",
         "x": [],
         "d": null,
         "z": 1,
@@ -455,7 +1151,7 @@
           "A C F L B D E K J G I H"
         ],
         "c": 2,
-        "k": "C",
+        "k": "K",
         "x": [],
         "d": null,
         "z": 1,
@@ -501,7 +1197,7 @@
           "5."
         ],
         "c": 1,
-        "k": "C",
+        "k": "D",
         "x": [
           7,
           8
@@ -552,7 +1248,7 @@
           "Identifica la entrada a la que se asocia un valor."
         ],
         "c": 3,
-        "k": "C",
+        "k": "D",
         "x": [
           7,
           8
@@ -603,7 +1299,7 @@
           "9 operaciones."
         ],
         "c": 1,
-        "k": "C",
+        "k": "K",
         "x": [
           7,
           8
@@ -654,7 +1350,7 @@
           "Guarda obligatoriamente una tabla de soluciones."
         ],
         "c": 2,
-        "k": "C",
+        "k": "K",
         "x": [
           7,
           8
@@ -705,7 +1401,7 @@
           "PNG solo admite imágenes de 256 colores."
         ],
         "c": 0,
-        "k": "C",
+        "k": "D",
         "x": [
           7,
           2
@@ -750,7 +1446,7 @@
           "1-III, 2-IV, 3-I y 4-II."
         ],
         "c": 1,
-        "k": "C",
+        "k": "D",
         "x": [],
         "d": null,
         "w": 1,
@@ -789,7 +1485,7 @@
           "Filespace."
         ],
         "c": 2,
-        "k": "C",
+        "k": "D",
         "x": [],
         "d": null,
         "n": "La denominación documentada por Linux es extent. El temario escribe «extends» en este pasaje, una errata terminológica.",
@@ -827,7 +1523,7 @@
           "umask 713."
         ],
         "c": 1,
-        "k": "C",
+        "k": "K",
         "x": [],
         "d": null,
         "n": "Se aplica la máscara al modo solicitado: 0777 & ~0036 = 0741. Es necesario fijar 0777; los ficheros ordinarios suelen solicitar 0666.",
@@ -865,7 +1561,7 @@
           "FIFO."
         ],
         "c": 2,
-        "k": "I",
+        "k": "D",
         "x": [],
         "d": null,
         "n": "NFU incrementa acumulativamente un contador por página a partir del bit de referencia muestreado. Escoge un contador mínimo; no equivale a considerar solo el ciclo anterior.",
@@ -999,7 +1695,7 @@
           "2^64."
         ],
         "c": 1,
-        "k": "C",
+        "k": "K",
         "x": [
           2,
           7
@@ -1100,7 +1796,7 @@
           "Aportar al modelo una mayor capacidad expresiva."
         ],
         "c": 3,
-        "k": "C",
+        "k": "D",
         "x": [
           7,
           8
@@ -1149,7 +1845,7 @@
           "Atributo compuesto no necesariamente identificador."
         ],
         "c": 1,
-        "k": "C",
+        "k": "D",
         "x": [
           7,
           2
@@ -1198,7 +1894,7 @@
           "No existen ocurrencias relacionadas."
         ],
         "c": 2,
-        "k": "C",
+        "k": "D",
         "x": [
           7,
           8
@@ -1247,7 +1943,7 @@
           "Crear obligatoriamente una tabla intermedia para toda relación 1:1."
         ],
         "c": 2,
-        "k": "C",
+        "k": "D",
         "x": [
           7,
           8
@@ -1296,7 +1992,7 @@
           "En PLAZA, referenciando al empleado y exigiendo que nunca sea nula."
         ],
         "c": 2,
-        "k": "C",
+        "k": "D",
         "x": [
           7,
           8
@@ -1345,7 +2041,7 @@
           "Que ambas relaciones contengan el mismo número de filas."
         ],
         "c": 1,
-        "k": "C",
+        "k": "D",
         "x": [
           7,
           2
@@ -1394,7 +2090,7 @@
           "R1(ONG, Proyecto), R2(ONG, Lugar)."
         ],
         "c": 1,
-        "k": "C",
+        "k": "D",
         "x": [
           7,
           8
@@ -1887,7 +2583,7 @@
           "IconoArbitrario y BotónOK."
         ],
         "c": 0,
-        "k": "C",
+        "k": "D",
         "x": [],
         "d": null,
         "n": "En la notación de clases UML del temario, un nombre de clase en cursiva representa una clase abstracta. Los nombres Icono, IconoRectangular e IconoArbitrario aparecen en cursiva y forman el conjunto A. Botón y BotónOK aparecen en letra redonda como clases concretas del diagrama.",
@@ -1970,7 +2666,7 @@
           "Ninguna, porque aún no existen instancias."
         ],
         "c": 1,
-        "k": "C",
+        "k": "K",
         "x": [
           7,
           8
@@ -2021,7 +2717,7 @@
           "Se produce un error de compilación."
         ],
         "c": 1,
-        "k": "C",
+        "k": "K",
         "x": [
           7,
           8
@@ -2072,7 +2768,7 @@
           "El Cliente, como definición de las interfaces de todas las factorías."
         ],
         "c": 2,
-        "k": "C",
+        "k": "D",
         "x": [
           7,
           8
@@ -2116,7 +2812,7 @@
           "null."
         ],
         "c": 0,
-        "k": "C",
+        "k": "K",
         "x": [],
         "d": null,
         "n": "i vale 3. El postincremento entrega el valor previo a println y después incrementa i a 4. La salida es 3, opción A, corroborada por la plantilla.",
@@ -2588,7 +3284,7 @@
           "63 caracteres."
         ],
         "c": 3,
-        "k": "C",
+        "k": "D",
         "x": [
           2,
           7
@@ -2603,7 +3299,7 @@
     }
   ],
   "authorization": "PENDIENTE_AUTORIZACION_LITERAL_55",
-  "preparedAt": "2026-11-06T06:30:13.174Z",
-  "reads": 16,
+  "preparedAt": "2026-11-06T06:48:53.106Z",
+  "reads": 17,
   "writes": 0
 }

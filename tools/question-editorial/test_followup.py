@@ -28,14 +28,22 @@ class FollowupTests(unittest.TestCase):
             raw=(ROOT/'public/data'/name).read_bytes()
             self.assertEqual(sha(raw),info['afterSha256'])
             after=json.loads(raw);before=json.loads(raw)
-            by_id={q['i']:i for i,q in enumerate(after)}
-            self.assertEqual(len(by_id),len(after))
-            for q in LEDGER['questions']:
-                if q['topic']+'.json' != name:continue
-                self.assertEqual(after[by_id[q['id']]],q['after'])
-                before[by_id[q['id']]]=q['before']
+            if name == 'meta.json':
+                self.assertEqual(set(after),set(before))
+                for edit in LEDGER['metadataEdits']:
+                    self.assertEqual(after[edit['id']],edit['after'])
+                    self.assertEqual(edit['before'][:2]+edit['before'][3:],edit['after'][:2]+edit['after'][3:])
+                    before[edit['id']]=edit['before']
+                self.assertEqual(after.get('_by'),before.get('_by'))
+            else:
+                by_id={q['i']:i for i,q in enumerate(after)}
+                self.assertEqual(len(by_id),len(after))
+                for q in LEDGER['questions']:
+                    if q['topic']+'.json' != name:continue
+                    self.assertEqual(after[by_id[q['id']]],q['after'])
+                    before[by_id[q['id']]]=q['before']
+                self.assertEqual([q['i'] for q in after],[q['i'] for q in before])
             self.assertEqual(sha(encode(before)+raw[len(raw.rstrip()):]),info['beforeSha256'])
-            self.assertEqual([q['i'] for q in after],[q['i'] for q in before])
         for q in LEDGER['questions']:
             with self.subTest(q=q['id']):
                 self.assertEqual(sha(encode(q['before'])),q['beforeSha256'])
@@ -45,6 +53,8 @@ class FollowupTests(unittest.TestCase):
                 self.assertIn(q['after']['c'],range(4))
                 self.assertEqual(len(q['reviewedOptions']),4)
                 self.assertTrue(all(q['reviewedOptions']))
+                metadata=json.loads((ROOT/'public/data/meta.json').read_text())
+                self.assertEqual(metadata[q['id']][2],q['after']['k'])
                 ref=q['reference'];self.assertRegex(ref['sha256'],r'^[a-f0-9]{64}$')
                 self.assertTrue(ref['page']>0 and ref['quote'])
                 self.assertEqual(q['after']['u'],f"{ref['quote']} [p. {ref['page']}]")
