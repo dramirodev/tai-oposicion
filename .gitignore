@@ -29,3 +29,13 @@ auditoria-temario-*/
 
 .eslintcache
 *.tsbuildinfo
+
+# Isolated synthetic emulator E2E artifacts
+/test-results-supertest/
+/test-results-extreme/
+/test-results-firefox/
+/test-results-integration-focal/
+/test-results-integration-visual/
+
+# Isolated Agentic Test Explorer runs (synthetic sessions and reports)
+/test-results-explorer/

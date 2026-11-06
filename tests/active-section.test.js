@@ -27,6 +27,8 @@ it('actualiza la pestaña activa desde la suscripción del motor', async () => {
   expect(renders).toBe(rendersAfterKindChange);
   await act(async () => { engine.finishCurrentRun(); view.rerender(React.createElement(Probe, { path: '/result' })); });
   expect(screen.getByRole('status').textContent).toBe('test');
+  view.rerender(React.createElement(Probe, { path: '/falladas' }));
+  expect(screen.getByRole('status').textContent).toBe('stats');
   view.unmount();
   vi.unstubAllGlobals();
 });

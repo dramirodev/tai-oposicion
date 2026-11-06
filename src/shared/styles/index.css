@@ -270,7 +270,7 @@ a {
    globally; buttons, navigation and card links opt out in their own rules. */
 /* Destinos programáticos de lectura; los controles conservan :focus-visible. */
 
-#app:focus,#app h1:focus {
+#app:focus,#app h1:focus:not(:focus-visible) {
   outline: none;
 }
 
@@ -686,7 +686,7 @@ ul.tips li {
 }
 
 @utility code-explanation { margin-top: 1rem; border-inline-start: 4px solid var(--selb); & .explanation-status { line-height: 1.6; } }
-@utility inline-feature-icon { margin-inline-end: .35em; vertical-align: -.12em; }
+@utility inline-feature-icon { display: inline-block; margin-inline-end: .35em; vertical-align: -.12em; }
 
 /* ===== inicio ===== */
 
@@ -1539,8 +1539,24 @@ main:has([data-screen=quiz]) .bar2,main:has([data-screen=lectura]) .bar2,main:ha
   padding: 1rem;
   border: 1px solid var(--line);
   border-radius: var(--r-m);
-  & label { display: flex; align-items: center; gap: 0.625rem; min-height: 2.75rem; }
-  & input { width: 1.25rem; height: 1.25rem; flex: 0 0 auto; }
+  & label:has(input[type=checkbox]) { display: flex; align-items: center; gap: 0.625rem; min-height: 2.75rem; }
+  & input[type=checkbox] { width: 1.25rem; height: 1.25rem; flex: 0 0 auto; }
+}
+@utility training-event-fields {
+  & > label { min-width: 0; }
+  & input:not([type=checkbox]) {
+    width: 100%;
+    min-width: 0;
+    min-height: var(--control-height);
+    padding: 0.625rem 0.75rem;
+    border: 1.5px solid var(--control-line);
+    border-radius: var(--r-m);
+    background: var(--card);
+    color: var(--ink);
+    font: inherit;
+    font-size: var(--fs-b);
+    line-height: 1.4;
+  }
 }
 
 @utility note {

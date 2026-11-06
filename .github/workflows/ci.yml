@@ -9,6 +9,7 @@ concurrency:
 jobs:
   validate:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
         with:
@@ -31,8 +32,53 @@ jobs:
           ARCHITECTURE_BASE_REF: ${{ github.event.pull_request.base.sha }}
       - run: npm run build
       - run: node scripts/validate_cards.mjs
-      - run: npx playwright install --with-deps chromium webkit
+      - name: Preparar mirrors oficiales de Ubuntu
+        run: |
+          if [ -f /etc/apt/apt-mirrors.txt ]; then
+            printf '%s\n' 'https://archive.ubuntu.com/ubuntu' | sudo tee /etc/apt/apt-mirrors.txt > /dev/null
+          fi
+          if [ -f /etc/apt/apt-mirrors-security.txt ]; then
+            printf '%s\n' 'https://security.ubuntu.com/ubuntu' | sudo tee /etc/apt/apt-mirrors-security.txt > /dev/null
+          fi
+      - name: Instalar dependencias de los navegadores
+        timeout-minutes: 15
+        run: npx playwright install-deps chromium webkit
+      - name: Instalar Chromium y WebKit
+        timeout-minutes: 10
+        run: npx playwright install chromium webkit
+      - name: QUICK autenticado con Firebase Emulator
+        id: quick
+        run: npm run test:e2e:supertest
+      - name: Conservar evidencias del QUICK autenticado
+        if: always() && steps.quick.outcome != 'skipped' && steps.quick.outcome != ''
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: tai-quick-emulator-${{ github.run_id }}
+          path: |
+            test-results-supertest/
+            tests/e2e/evidence/accessibility-2026-11-05/
+          if-no-files-found: warn
+          retention-days: 14
+
       - name: Recarga, permisos y cambio de cuenta con Auth real en emuladores
+        id: auth
         run: npx --yes firebase-tools@13.35.1 emulators:exec --only auth,firestore --project demo-tai-auth "TAI_AUTH_EMULATOR=1 npx playwright test --config=playwright.astra-auth.config.ts"
+      - name: Conservar evidencias del cambio de cuenta
+        if: always() && steps.auth.outcome != 'skipped' && steps.auth.outcome != ''
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: tai-auth-${{ github.run_id }}
+          path: test-results/astra-auth/
+          if-no-files-found: warn
+          retention-days: 14
       - name: Reconstruir referencia visual y verificar Chromium y WebKit
+        id: regression
         run: npm run test:e2e:ci
+      - name: Conservar evidencias de la regresión integral
+        if: always() && steps.regression.outcome != 'skipped' && steps.regression.outcome != ''
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: tai-regression-${{ github.run_id }}
+          path: test-results/
+          if-no-files-found: warn
+          retention-days: 14

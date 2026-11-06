@@ -28,7 +28,7 @@ it('creates a local reviewed link when the Drive test topic differs from the que
   const user = userEvent.setup();
   window.localStorage.clear();
   const configured = services();
-  renderApp(createElement(AcademyQuestionSectionMapPage), { services:configured, initialEntries:['/curar-contenido'] });
+  const view = renderApp(createElement(AcademyQuestionSectionMapPage), { services:configured, initialEntries:['/curar-contenido'] });
   await user.selectOptions(await screen.findByLabelText('Tema de la pregunta'), 'T3.01');
   await user.selectOptions(await screen.findByLabelText('Tema del PDF de origen'), 'T1.04');
   await user.selectOptions(await screen.findByLabelText('Tema del epígrafe de destino'), 'T3.01');
@@ -53,6 +53,13 @@ it('creates a local reviewed link when the Drive test topic differs from the que
   expect(saved.links[0].testEvidence).toMatchObject({ page:2, sourceHash:expect.any(String), path:'T1.04 Transparencia/T1.04 Transparencia - Test 1.pdf' });
   expect(saved.links[0].sectionEvidence).toMatchObject({ page:expect.any(Number), sourceHash:expect.any(String), outlineFingerprint:expect.any(String) });
   expect(await screen.findByText(/Se guarda solo en este dispositivo y cuenta/)).toBeInTheDocument();
+  await user.click(screen.getByRole('button', { name:'Retirar del borrador local' }));
+  expect(JSON.parse(window.localStorage.getItem('tai.academy-question-section-map:v2:curator')).links).toHaveLength(0);
+  expect(await screen.findByText('Vínculo retirado del borrador local.')).toBeInTheDocument();
+  expect(screen.getByText('Aún no hay vínculos para este tema.')).toBeInTheDocument();
+  view.unmount();
+  renderApp(createElement(AcademyQuestionSectionMapPage), { services:configured, initialEntries:['/curar-contenido'] });
+  expect(await screen.findByText('Borrador local · 0 vínculos')).toBeInTheDocument();
 });
 
 it('reads v1 local drafts as same-topic v2 links without deleting the legacy key', async () => {
@@ -68,9 +75,68 @@ it('reads v1 local drafts as same-topic v2 links without deleting the legacy key
   window.localStorage.setItem('tai.academy-question-section-map:v1:curator', JSON.stringify(legacy));
   window.localStorage.setItem('tai.academy-question-section-map:v2:curator', '{invalid-json');
   renderApp(createElement(AcademyQuestionSectionMapPage), { services:services(), initialEntries:['/curar-contenido'] });
-  expect(await screen.findByText('Borrador local · 1 vínculos')).toBeInTheDocument();
+  expect(await screen.findByText('Borrador local · 1 vínculo')).toBeInTheDocument();
   expect(JSON.parse(window.localStorage.getItem('tai.academy-question-section-map:v1:curator'))).toEqual(legacy);
   expect(window.localStorage.getItem('tai.academy-question-section-map:v2:curator')).toBe('{invalid-json');
+});
+
+it('keeps editorial drafts isolated when the active account changes', async () => {
+  window.localStorage.clear();
+  const otherManifest = {
+    schemaVersion:2, revision:'other-account-draft', links:[{
+      status:'approved', questionId:'academy-q1', contentRevision:'fnv1a-12345678',
+      questionTopicId:'T3.01', testMaterialTopicId:'T1.04', sectionTopicId:'T3.01', sectionId:'ci-0123456789abcdefabcd',
+      testEvidence:{ path:'test.pdf', sourceHash:'a'.repeat(64), page:1 },
+      sectionEvidence:{ path:'section.pdf', sourceHash:'b'.repeat(64), outlineFingerprint:'c'.repeat(64), page:1 },
+      rationale:'Vínculo sintético de otra cuenta para verificar aislamiento.', reviewedAt:1, reviewer:'fixture',
+    }],
+  };
+  window.localStorage.setItem('tai.academy-question-section-map:v2:other', JSON.stringify(otherManifest));
+  const configured = services();
+  const activeAccount = { id:'curator' };
+  configured.access.accountId = () => activeAccount.id;
+  const listeners = new Set();
+  configured.access.subscribe = listener => { listeners.add(listener); return () => listeners.delete(listener); };
+  const changeAccount = id => { activeAccount.id = id; listeners.forEach(listener => listener()); };
+  renderApp(createElement(AcademyQuestionSectionMapPage), { services:configured, initialEntries:['/curar-contenido'] });
+  expect(await screen.findByText('Borrador local · 0 vínculos')).toBeInTheDocument();
+
+  changeAccount('other');
+  expect(await screen.findByText('Borrador local · 1 vínculo')).toBeInTheDocument();
+  await userEvent.setup().selectOptions(await screen.findByLabelText('Tema de la pregunta'), 'T3.01');
+  expect(screen.getByRole('article')).toHaveTextContent('academy-q1 · pregunta T3.01');
+
+  changeAccount('curator');
+  expect(await screen.findByText('Borrador local · 0 vínculos')).toBeInTheDocument();
+  expect(screen.queryByRole('article')).not.toBeInTheDocument();
+});
+
+it('imports a valid local manifest and preserves it after rejecting malformed JSON', async () => {
+  window.localStorage.clear();
+  const imported = {
+    schemaVersion:2, revision:'imported-manifest', links:[{
+      status:'approved', questionId:'academy-q1', contentRevision:'fnv1a-12345678',
+      questionTopicId:'T3.01', testMaterialTopicId:'T1.04', sectionTopicId:'T3.01', sectionId:'ci-0123456789abcdefabcd',
+      testEvidence:{ path:'test.pdf', sourceHash:'a'.repeat(64), page:1 },
+      sectionEvidence:{ path:'section.pdf', sourceHash:'b'.repeat(64), outlineFingerprint:'c'.repeat(64), page:1 },
+      rationale:'Vínculo sintético importado desde un archivo local.', reviewedAt:1, reviewer:'fixture',
+    }],
+  };
+  renderApp(createElement(AcademyQuestionSectionMapPage), { services:services(), initialEntries:['/curar-contenido'] });
+  const user = userEvent.setup();
+  const fileInput = await screen.findByLabelText('Importar manifiesto');
+  const jsonFile = (text, name) => {
+    const file = new File([text], name, { type:'application/json' });
+    Object.defineProperty(file, 'text', { value:async () => text });
+    return file;
+  };
+  await user.upload(fileInput, jsonFile(JSON.stringify(imported), 'draft.json'));
+  expect(await screen.findByText('Manifiesto v2 importado. Comprueba vigencia al abrir los temas.')).toBeInTheDocument();
+  expect(JSON.parse(window.localStorage.getItem('tai.academy-question-section-map:v2:curator'))).toEqual(imported);
+
+  await user.upload(fileInput, jsonFile('{invalid json', 'broken.json'));
+  expect(await screen.findByText('No se pudo leer el JSON seleccionado.')).toBeInTheDocument();
+  expect(JSON.parse(window.localStorage.getItem('tai.academy-question-section-map:v2:curator'))).toEqual(imported);
 });
 
 it('preselects only the exact current source candidate and leaves section approval manual', async () => {

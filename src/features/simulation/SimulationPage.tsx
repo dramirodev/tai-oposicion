@@ -64,7 +64,7 @@ function ExamBrowser({ tab, loading, starting, filteredGroups, visibleSelection,
       <span><b>{exam.name}</b><small>{exam.questionCount} preguntas{exam.attempts > 1 ? ` · ${exam.attempts} intentos · mejor ${exam.best?.toFixed(1).replace('.', ',')}` : ''}</small></span>
       <em className={`nt ${exam.latest === null ? '' : exam.latest >= 50 ? 'ok' : 'mid'}`}>{exam.latest === null ? 'Sin hacer' : exam.latest.toFixed(1).replace('.', ',')}</em>
     </button>)}</div></section>)}
-    {!loading && !exams.length && <p className="note">No hay exámenes con estos filtros. Prueba con otro año o turno.</p>}
+    {!loading && !exams.length && <p className="note">No hay exámenes con estos filtros. Cambia alguno de los filtros para ver otros exámenes.</p>}
     <div className="bar2"><button className="btn sec" disabled={starting || !visibleSelection} onClick={onStudy}>Estudiar</button><button className="btn" disabled={starting || !visibleSelection} onClick={onExam}>{starting ? 'Preparando…' : 'Examen · 90 min'}</button></div>
   </>;
 }

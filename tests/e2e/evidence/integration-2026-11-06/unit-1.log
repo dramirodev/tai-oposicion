@@ -1,0 +1,28 @@
+
+> tai-pwa@1.1.14 test
+> vitest run
+
+
+ RUN  v5.0.5 /private/tmp/tai-audit-integration
+
+Error: Not implemented: window.scrollTo
+    at module.exports (/Volumes/SSD/develop/tai-oposicion/node_modules/jsdom/lib/jsdom/browser/not-implemented.js:9:17)
+    at /Volumes/SSD/develop/tai-oposicion/node_modules/jsdom/lib/jsdom/browser/Window.js:960:7
+    at grade (/private/tmp/tai-audit-integration/src/features/cards/CardsPage.tsx:156:57)
+    at onClick (/private/tmp/tai-audit-integration/src/features/cards/CardsPage.tsx:124:219)
+    at executeDispatch (/Volumes/SSD/develop/tai-oposicion/node_modules/react-dom/cjs/react-dom-client.development.js:20804:9)
+    at runWithFiberInDEV (/Volumes/SSD/develop/tai-oposicion/node_modules/react-dom/cjs/react-dom-client.development.js:1048:13)
+    at processDispatchQueue (/Volumes/SSD/develop/tai-oposicion/node_modules/react-dom/cjs/react-dom-client.development.js:20854:19)
+    at /Volumes/SSD/develop/tai-oposicion/node_modules/react-dom/cjs/react-dom-client.development.js:21423:9
+    at batchedUpdates$1 (/Volumes/SSD/develop/tai-oposicion/node_modules/react-dom/cjs/react-dom-client.development.js:3437:40)
+    at dispatchEventForPluginEventSystem (/Volumes/SSD/develop/tai-oposicion/node_modules/react-dom/cjs/react-dom-client.development.js:21008:7) undefined
+
+ Test Files  193 passed | 3 skipped (196)
+      Tests  1016 passed | 29 skipped (1045)
+   Start at  08:26:48
+   Duration  13.47s (environment 47%, tests 31%, setup 15%, import 4%, transform 2%, worker 1%)
+
+Environment  jsdom was created 196 times · 47.50s total, 47% of tracked time
+             create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
+             learn more: https://vitest.dev/guide/improving-performance#test-environments
+

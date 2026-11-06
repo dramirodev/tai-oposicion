@@ -1,0 +1,74 @@
+[
+  {
+    "snapshot": "tests/e2e/snapshots/chromium-darwin/sim-light.png",
+    "oldSha256": "7b2d54589fb95baa35115705f68c32c4b9a197a623e3b136faa40169281a440d",
+    "newSha256": "970270eb1b288fe71c0cb2c3501c7697fac7485ce0490af1d17e91dded4b187d",
+    "reason": "Main tabs Configurable/Oficial2025 plus audit visible heading focus"
+  },
+  {
+    "snapshot": "tests/e2e/snapshots/chromium-darwin/sim-dark.png",
+    "oldSha256": "14c70f6b6c796956df2c0898687f503ca3b8748f7a4f323a23049291484939c5",
+    "newSha256": "3c48fa1e37c2f9a52f87f805b961afce789088e2aff3570df641e36e1f31079e",
+    "reason": "Main tabs Configurable/Oficial2025 plus audit visible heading focus"
+  },
+  {
+    "snapshot": "tests/e2e/snapshots/chromium-darwin/sim2-light.png",
+    "oldSha256": "c4ba2dde383c61feae0edc599add8e952da8eef2ef9abb823bd105995a669483",
+    "newSha256": "27ab2e9362f1da18bfdb8f198574f86194209213f648200ea143d996c43c8015",
+    "reason": "Main real official paired scenarios replace previous synthetic selection"
+  },
+  {
+    "snapshot": "tests/e2e/snapshots/chromium-darwin/sim2-dark.png",
+    "oldSha256": "3af65c5294ef93c79491f7b16e18a83dd742e500c628cd35222245097725cadb",
+    "newSha256": "14bb1a1fbc18b4554ed4424f3e164fe58717d336e863d003e5b713a095b1ee19",
+    "reason": "Main real official paired scenarios replace previous synthetic selection"
+  },
+  {
+    "snapshot": "tests/e2e/snapshots/chromium-darwin/examenes-light.png",
+    "oldSha256": "59fff07b0d5e24a99dfa686e7bb884961d6ecf230946e6ee2bd2c28124a806a9",
+    "newSha256": "4462a57f5288cdc63b7eb9a638b3571b36d8acf4d94e2adb68a090b151ed7629",
+    "reason": "Main four tabs wrap in two rows; audit focus preserved"
+  },
+  {
+    "snapshot": "tests/e2e/snapshots/chromium-darwin/examenes-dark.png",
+    "oldSha256": "11cd3cea41d202af7cf512e682feadcdab49b181a1d691ecf5e188697872608c",
+    "newSha256": "9cfe7ff1d9d7164405aef148cb5529ae14b22200ef801b19d409e56d8981ab96",
+    "reason": "Main four tabs wrap in two rows; audit focus preserved"
+  },
+  {
+    "snapshot": "tests/e2e/snapshots/webkit-darwin/sim-light.png",
+    "oldSha256": "3f236e9a727fa4f2ca1af1398b6a495ca37d0578e201ffb3fd70b1a72bb17465",
+    "newSha256": "a57157643ff637fe5c13532246afe154a75f928369f873df349c85f4e8f7dc38",
+    "reason": "Main tabs Configurable/Oficial2025 plus audit visible heading focus"
+  },
+  {
+    "snapshot": "tests/e2e/snapshots/webkit-darwin/sim-dark.png",
+    "oldSha256": "17a34e4355967ec4af352907a165260a0b3ceae8e624ec1a6a8ff78f4d266345",
+    "newSha256": "207bf312ee5cf0f1765350bc7494390e8acdf8dfc9f4d5b6dc81bce18ae108e3",
+    "reason": "Main tabs Configurable/Oficial2025 plus audit visible heading focus"
+  },
+  {
+    "snapshot": "tests/e2e/snapshots/webkit-darwin/sim2-light.png",
+    "oldSha256": "8ca1e8daee42ac97da2508e4c7208f5529ce37cd4b3a82b2a6d66ebe47f8d301",
+    "newSha256": "399dd9d224dbf826ce589237ef38f18505edcf7d3462271139a4f7b499e8d19b",
+    "reason": "Main real official paired scenarios replace previous synthetic selection"
+  },
+  {
+    "snapshot": "tests/e2e/snapshots/webkit-darwin/sim2-dark.png",
+    "oldSha256": "4a466aa02d38c7e29dccdb186934ca32e558cd533cbbbe25c6785cd09c666312",
+    "newSha256": "d5346b04372f68fa3a215dc58279df21f9e7dda907cd974e2c3af9643e27f7db",
+    "reason": "Main real official paired scenarios replace previous synthetic selection"
+  },
+  {
+    "snapshot": "tests/e2e/snapshots/webkit-darwin/examenes-light.png",
+    "oldSha256": "6cb7db1d067f69f45ae6b8ebe9f6cc4ad7ca19c5cbd007309508333779917e8d",
+    "newSha256": "84bffbed32982aeba5d6d3bfdf1524f9571ec9a4264380064fbc763546a484eb",
+    "reason": "Main four tabs wrap in two rows; audit focus preserved"
+  },
+  {
+    "snapshot": "tests/e2e/snapshots/webkit-darwin/examenes-dark.png",
+    "oldSha256": "48235fa084051c9612ab7b0cffae2f50083713b6473788d03386094e784cf2d2",
+    "newSha256": "c3c6a8d2a0352f3834b70b857d435521943399b200f4d6e9138880bb9c675941",
+    "reason": "Main four tabs wrap in two rows; audit focus preserved"
+  }
+]

@@ -1,0 +1,94 @@
+name: Auditoría E2E por perfiles
+
+on:
+  schedule:
+    - cron: '0 6 * * 1'
+  workflow_dispatch:
+    inputs:
+      profile:
+        description: Perfil determinista de Playwright
+        type: choice
+        options: [quick, intensive, extreme]
+        default: intensive
+        required: true
+
+permissions:
+  contents: read
+
+concurrency:
+  group: e2e-audit-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38 # v6
+        with:
+          node-version: 24
+          cache: npm
+
+      - run: npm ci
+
+      - name: Resolver perfil
+        id: profile
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          INPUT_PROFILE: ${{ inputs.profile }}
+        run: |
+          if [[ "$EVENT_NAME" == "schedule" ]]; then
+            echo "name=intensive" >> "$GITHUB_OUTPUT"
+          else
+            echo "name=$INPUT_PROFILE" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Preparar mirrors oficiales de Ubuntu
+        run: |
+          if [ -f /etc/apt/apt-mirrors.txt ]; then
+            printf '%s\n' 'https://archive.ubuntu.com/ubuntu' | sudo tee /etc/apt/apt-mirrors.txt > /dev/null
+          fi
+          if [ -f /etc/apt/apt-mirrors-security.txt ]; then
+            printf '%s\n' 'https://security.ubuntu.com/ubuntu' | sudo tee /etc/apt/apt-mirrors-security.txt > /dev/null
+          fi
+
+      - name: Instalar dependencias de los navegadores
+        timeout-minutes: 15
+        run: npx playwright install-deps chromium webkit
+
+      - name: Instalar Chromium y WebKit
+        timeout-minutes: 10
+        run: npx playwright install chromium webkit
+
+      - name: QUICK · journeys y permisos en Firebase Emulator
+        id: quick
+        timeout-minutes: 15
+        run: npm run test:e2e:supertest
+
+      - name: INTENSIVE · suite determinista Chromium y WebKit
+        timeout-minutes: 45
+        run: npm run test:e2e:ci
+        if: steps.profile.outputs.name == 'intensive' || steps.profile.outputs.name == 'extreme'
+
+      - name: EXTREME · 1.000 acciones deterministas, sin Gemini
+        timeout-minutes: 10
+        run: npm run test:e2e:extreme
+        if: steps.profile.outputs.name == 'extreme'
+
+      - name: Conservar informes, trazas y capturas
+        if: always() && steps.quick.outcome != 'skipped' && steps.quick.outcome != ''
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: tai-e2e-${{ steps.profile.outputs.name }}-${{ github.run_id }}
+          path: |
+            test-results/
+            test-results-supertest/
+            test-results-extreme/
+            tests/e2e/evidence/accessibility-2026-11-05/
+            tests/e2e/evidence/extreme-2026-11-05/
+          if-no-files-found: warn
+          retention-days: 14

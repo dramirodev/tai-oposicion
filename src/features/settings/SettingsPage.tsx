@@ -267,7 +267,7 @@ function TrainingScheduleSection({ settings, snapshot }: { settings: SettingsSer
     </fieldset>
     <fieldset className="training-activities" aria-describedby="training-calendar-events-help"><legend>Eventos y excepciones</legend>
       <p id="training-calendar-events-help" className="sm">Afectan solo a las fechas indicadas. Una ausencia fuerza 0 minutos; una disponibilidad sustituye el tiempo diario de estudio. El horario 08:00–15:00 incluye pausas: indica aparte los minutos de estudio enfocado. Clases e hitos son informativos. Si varias ventanas se solapan, prevalece la guardada más recientemente; una ausencia siempre prevalece. Los eventos pasados se conservan como historial. La procedencia es una nota personal, no una verificación oficial.</p>
-      <div className="grid min-w-0 grid-cols-2 items-end gap-3 max-[520px]:grid-cols-1">
+      <div className="training-event-fields grid min-w-0 grid-cols-2 items-end gap-3 max-[520px]:grid-cols-1">
         <label className="grid min-w-0 gap-1">Tipo<select aria-label="Tipo de evento" value={eventKind} onChange={event => setEventKind(event.target.value as TrainingCalendarEventKind)}>
           <option value="unavailable">Ausencia o vacaciones</option><option value="study-window">Disponibilidad especial</option><option value="class">Clase</option><option value="milestone">Hito o simulacro</option>
         </select></label>
@@ -348,7 +348,7 @@ function useAiStudyExport(settings: SettingsServices) {
       const result = await settings.findAiSessions(range.from, range.to, selectedModes);
       if (settings.accountId() !== account) return;
       setChoices(result); setSelectedIds(new Set(result.map(choice => choice.id)));
-      setMessage(`${count(result.length, 'sesión completada', 'sesiones completadas')} disponibles.`);
+      setMessage(`${count(result.length, 'sesión completada', 'sesiones completadas')} ${result.length === 1 ? 'disponible' : 'disponibles'}.`);
     } catch (error) { setMessage(error instanceof Error ? error.message : 'No se pudieron buscar las sesiones.'); }
   };
   const buildExport = async () => {
@@ -383,7 +383,7 @@ function AiStudyExportSection({ settings }: { settings: SettingsServices }) {
     <AiModes value={ai.modes} onChange={ai.setModes} />
     <button className="btn sec" onClick={() => void ai.findSessions()}>Buscar sesiones completadas</button>
     <AiSessionChoices choices={ai.choices} selectedIds={ai.selectedIds} onChange={ai.setSelectedIds} />
-    <button className="btn" disabled={!ai.choices?.length} onClick={() => void ai.buildExport()}>Preparar análisis para descargar</button><p role="status" aria-live="polite">{ai.message}</p>
+    <button className="btn" disabled={!ai.choices?.length || !ai.selectedIds.size} onClick={() => void ai.buildExport()}>Preparar análisis para descargar</button><p role="status" aria-live="polite">{ai.message}</p>
     {ai.artifact && <AiExportPreview artifact={ai.artifact} />}
     <hr /><p>El borrado afecta al historial detallado de este ámbito en el dispositivo y crea una marca para que las copias antiguas no lo restauren. Conserva estadísticas agregadas, falladas, sesiones históricas y el progreso de estudio. Las copias ya descargadas no se borran.</p><button className="btn danger" onClick={() => void ai.deleteHistory()}>Borrar historial detallado</button>
   </section>;
@@ -431,12 +431,13 @@ function BackupSection({ settings }: { settings: SettingsServices }) {
 }
 
 function ResetSection({ settings }: { settings: SettingsServices }) {
-  const reset = async () => {
+  const reset = async (trigger: HTMLButtonElement) => {
     const account = settings.accountId();
     const approved = await ask('¿Borrar TODO el progreso de este dispositivo? (Si hay sesión iniciada, lo sincronizado en la nube se volverá a descargar.)', 'Borrar todo', true);
     if (approved && settings.accountId() === account) { settings.resetAll(); toast('Borrado'); }
+    if (trigger.isConnected) trigger.focus({ preventScroll: true });
   };
-  return <section className="card"><h2 className="h3">Zona delicada</h2><button className="btn danger" onClick={() => void reset()}>Borrar progreso de este dispositivo</button></section>;
+  return <section className="card"><h2 className="h3">Zona delicada</h2><button className="btn danger" onClick={event => void reset(event.currentTarget)}>Borrar progreso de este dispositivo</button></section>;
 }
 
 function DiagnosticsSection({ snapshot }: { snapshot: SettingsSnapshot }) {

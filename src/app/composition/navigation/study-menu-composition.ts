@@ -29,10 +29,12 @@ export function createStudyMenuGroups(input: StudyMenuInput): MenuGroup[] {
     [navigationIcons.reading, 'Lectura atenta', input.readingSpeedFailures ? `${input.readingSpeedFailures} fallos por velocidad` : 'Qué piden, palabras clave y respuesta', hashPath('reading')],
     [navigationIcons.lightning, 'Pregunta relámpago', 'Una sola pregunta', hashPath('lightning')],
   ]];
-  const tracking: MenuGroup = ['Seguimiento', [
+  const planning: MenuGroup = ['Planificar', [
     [navigationIcons.planning, 'Planificación de estudio', 'Sesión de hoy y calendario semanal', hashPath('planning')],
-    [navigationIcons.stats, 'Progreso', 'Mapa de dominio, simulacros y evolución', hashPath('stats')],
     [navigationIcons.topics, 'Temas vistos', `${input.seenTopics} temas marcados`, hashPath('topics')],
+  ]];
+  const tracking: MenuGroup = ['Seguimiento', [
+    [navigationIcons.stats, 'Progreso', 'Mapa de dominio, simulacros y evolución', hashPath('stats')],
     [navigationIcons.failures, 'Preguntas falladas', `${input.failedQuestions} para buscar y releer`, hashPath('failures')],
     [menuActionIcons.errors, 'Errores del banco', input.openReports ? `${input.openReports} por revisar` : 'Nada por revisar', hashPath('errors')],
   ]];
@@ -43,5 +45,5 @@ export function createStudyMenuGroups(input: StudyMenuInput): MenuGroup[] {
   ];
   if (input.owner) appItems.splice(1, 0, [navigationIcons.access, 'Accesos', input.accessRequests ? `${input.accessRequests} solicitudes por revisar` : 'Quién puede usar la app', hashPath('access')]);
   const app: MenuGroup = ['La app', appItems];
-  return input.fullAccess ? [study, habits, tracking, app] : [['Estudiar', [study[1][0]]], app];
+  return input.fullAccess ? [study, habits, planning, tracking, app] : [['Estudiar', [study[1][0]]], app];
 }

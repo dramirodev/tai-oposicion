@@ -58,7 +58,7 @@ test('Planificación enlaza el intento al checkpoint y conserva la referencia al
     localStorage.setItem(`tai.training-session.v1.${encodeURIComponent('guest')}`, JSON.stringify({
       schemaVersion:2, id:sessionId, dateKey,
       activities:[{ id:activityId, activity:'topicTest', minutes:30, reason:'coverage', topicId:'T1.01', topicIds:['T1.01'] }],
-      currentIndex:0, currentStartedAt:null, elapsedSecondsByActivity:[0], updatedAt:Date.now(), startedAt:Date.now(), completedAt:null,
+      currentIndex:0, currentStartedAt:null, elapsedSecondsByActivity:[0], updatedAt:date.getTime(), startedAt:date.getTime(), completedAt:null,
     }));
     return { sessionId, activityId };
   });
@@ -117,7 +117,7 @@ test('la sesión diaria avanza dos actividades de test en viewport móvil', asyn
     ];
     localStorage.setItem(`tai.training-session.v1.${encodeURIComponent('guest')}`, JSON.stringify({
       schemaVersion:2, id:sessionId, dateKey, activities, currentIndex:0, currentStartedAt:null,
-      elapsedSecondsByActivity:[0, 0], updatedAt:Date.now(), startedAt:Date.now(), completedAt:null,
+      elapsedSecondsByActivity:[0, 0], updatedAt:date.getTime(), startedAt:date.getTime(), completedAt:null,
     }));
     return { sessionId, activityIds:activities.map(activity => activity.id) };
   });
@@ -734,6 +734,111 @@ test.describe('explicaciones offline con el service worker real', () => {
     expect(failedRequests.filter(url => !allowedOfflineRequests.some(prefix => url.startsWith(prefix)) && !url.endsWith('/explanations/index.json') && !url.endsWith('/version.json'))).toEqual([]);
   });
 });
+test('la configuración del simulacro conserva selecciones válidas tras recargar', async ({ page, browserName }) => {
+  const errors = await start(page);
+  await page.setViewportSize({ width: 320, height: 844 });
+  await page.goto('/#/sim');
+  await page.getByRole('tab', { name: 'Configurable' }).click();
+
+  const count = page.getByRole('group', { name: 'Número de preguntas' });
+  const duration = page.getByRole('group', { name: 'Duración' });
+  await count.getByRole('button', { name: '40 preguntas' }).click();
+  await expect(count.getByRole('button', { name: '40 preguntas' })).toHaveAttribute('aria-pressed', 'true');
+  await expect(duration.getByRole('button', { name: '45', exact: true })).toHaveAttribute('aria-pressed', 'true');
+  await duration.getByRole('button', { name: '60', exact: true }).click();
+  await count.getByRole('button', { name: '80 preguntas' }).click();
+  await expect(duration.getByRole('button', { name: '90', exact: true })).toHaveAttribute('aria-pressed', 'true');
+  await count.getByRole('button', { name: '40 preguntas' }).click();
+
+  const scope = page.getByRole('group', { name: 'Alcance de temas' });
+  await scope.getByRole('button', { name: 'Todo el temario' }).click();
+  await expect(scope.getByRole('button', { name: 'Todo el temario' })).toHaveAttribute('aria-pressed', 'true');
+  await scope.getByRole('button', { name: /Mis temas vistos/ }).click();
+  await expect(page.getByText('No has marcado ningún tema: se usará todo el temario.')).toBeVisible();
+
+  const origins = page.getByRole('group', { name: 'Origen de las preguntas' });
+  await origins.getByRole('button', { name: 'Generadas' }).click();
+  await origins.getByRole('button', { name: 'Academia' }).click();
+  await expect(origins.getByRole('button', { name: 'Academia' })).toHaveAttribute('aria-pressed', 'true');
+  await expect(origins.getByRole('button', { name: 'Generadas' })).toHaveAttribute('aria-pressed', 'false');
+  await expect(origins.getByRole('button', { name: 'Oficiales' })).toHaveAttribute('aria-pressed', 'true');
+  await origins.getByRole('button', { name: 'Oficiales' }).click();
+  await origins.getByRole('button', { name: 'Academia' }).click();
+  await expect(origins.getByRole('button', { name: 'Academia' })).toHaveAttribute('aria-pressed', 'true');
+
+  const secondPart = page.getByRole('checkbox', { name: 'Después, parte 2: elegir 1 de 2 supuestos prácticos (20 preguntas)' });
+  await secondPart.uncheck();
+  await expect(secondPart).not.toBeChecked();
+  await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
+  await page.screenshot({
+    path: `tests/e2e/evidence/accessibility-2026-11-05/simulation-config-320px-${browserName}.png`,
+  });
+  await page.reload();
+
+  await expect(page.getByRole('tab', { name: 'Configurable' })).toHaveAttribute('aria-selected', 'true');
+  await expect(count.getByRole('button', { name: '40 preguntas' })).toHaveAttribute('aria-pressed', 'true');
+  await expect(duration.getByRole('button', { name: '45', exact: true })).toHaveAttribute('aria-pressed', 'true');
+  await expect(scope.getByRole('button', { name: /Mis temas vistos/ })).toHaveAttribute('aria-pressed', 'true');
+  await expect(origins.getByRole('button', { name: 'Academia' })).toHaveAttribute('aria-pressed', 'true');
+  await expect(origins.getByRole('button', { name: 'Generadas' })).toHaveAttribute('aria-pressed', 'false');
+  await expect(page.getByRole('checkbox', { name: 'Después, parte 2: elegir 1 de 2 supuestos prácticos (20 preguntas)' })).not.toBeChecked();
+  await expect.poll(() => page.evaluate(() => document.documentElement.scrollWidth)).toBeLessThanOrEqual(320);
+  await page.screenshot({
+    path: `tests/e2e/evidence/accessibility-2026-11-05/simulation-config-restored-320px-${browserName}.png`,
+  });
+  expect(errors).toEqual([]);
+});
+
+test('Simulacros por examen permite filtrar, seleccionar y recuperarse de una lista vacía', async ({ page, browserName }) => {
+  const errors = await start(page);
+  await page.setViewportSize({ width: 320, height: 844 });
+  await page.goto('/#/sim');
+  await page.getByRole('tab', { name: 'Por examen' }).click();
+
+  const exams = page.locator('[data-exam-id]');
+  const origin = page.getByLabel('Origen');
+  const turn = page.getByLabel('Turno');
+  const year = page.getByLabel('Año en la referencia');
+  await expect.poll(() => exams.count()).toBeGreaterThan(0);
+  await origin.selectOption('official');
+  await turn.selectOption('libre');
+  await expect.poll(() => exams.count()).toBeGreaterThan(0);
+  const freeExams = await exams.allTextContents();
+  expect(freeExams.every(name => name.includes('Ingreso libre'))).toBe(true);
+
+  const yearOptions = await year.locator('option').evaluateAll(options => options.map(option => (option as HTMLOptionElement).value));
+  expect(yearOptions.length).toBeGreaterThan(1);
+  const selectedYear = yearOptions[1];
+  await year.selectOption(selectedYear);
+  await expect.poll(() => exams.count()).toBeGreaterThan(0);
+  expect((await exams.allTextContents()).every(name => name.includes(selectedYear))).toBe(true);
+
+  const selectedExam = exams.first();
+  await selectedExam.click();
+  await expect(selectedExam).toHaveAttribute('aria-pressed', 'true');
+  await expect(page.getByRole('button', { name: 'Estudiar', exact: true })).toBeEnabled();
+  await expect(page.getByRole('button', { name: 'Examen · 90 min' })).toBeEnabled();
+  await page.screenshot({
+    path: `tests/e2e/evidence/accessibility-2026-11-05/simulation-exam-filtered-320px-${browserName}.png`,
+  });
+
+  await origin.selectOption('academy');
+  await expect(exams).toHaveCount(0);
+  await expect(page.getByText('No hay exámenes con estos filtros. Cambia alguno de los filtros para ver otros exámenes.')).toBeVisible();
+  await expect(page.getByRole('button', { name: 'Estudiar', exact: true })).toBeDisabled();
+  await expect(page.getByRole('button', { name: 'Examen · 90 min' })).toBeDisabled();
+  await page.screenshot({
+    path: `tests/e2e/evidence/accessibility-2026-11-05/simulation-exam-empty-320px-${browserName}.png`,
+  });
+
+  await turn.selectOption('all');
+  await year.selectOption('');
+  await expect.poll(() => exams.count()).toBeGreaterThan(0);
+  await expect(page.getByText('No hay exámenes con estos filtros. Cambia alguno de los filtros para ver otros exámenes.')).toHaveCount(0);
+  await expect(page.getByRole('button', { name: 'Estudiar', exact: true })).toBeEnabled();
+  expect(errors).toEqual([]);
+});
+
 test('el simulacro no presenta explicaciones ni corrección mientras sigue activo', async ({ page }) => {
   const errors = await start(page);
   await page.goto('/#/sim');

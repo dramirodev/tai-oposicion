@@ -1,7 +1,7 @@
 import { expect, it, vi } from 'vitest';
 import { createElement, Fragment } from 'react';
 import { renderApp } from './helpers/render-app.js';
-import { fireEvent, screen } from '@testing-library/react';
+import { fireEvent, screen, within } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useLocation } from 'react-router';
 import { PlanningPage } from '../src/features/planning/PlanningPage.tsx';
@@ -43,6 +43,35 @@ it('presenta el contenido nuevo del temario real sin simular un resumen que TAI 
   expect(screen.queryByText(/Antes de mirar los apuntes, intenta reconstruir/)).not.toBeInTheDocument();
   expect(screen.getByRole('button', { name:/Comenzar sesión/ })).toBeInTheDocument();
   expect(screen.getAllByText('120 min').length).toBeGreaterThan(0);
+});
+
+it('distingue las regiones semanales y permite volver a Esta semana mediante su nombre visible', async () => {
+  const user = userEvent.setup();
+  renderApp(createElement(PlanningPage), { services:servicesFor(overview(newTopicPlan, { studiedTopics:1, studiedTopicDetails:[{ id:'T1.01', name:'Constitución' }] })) });
+  const checkVisibleLabels = () => {
+    for (const control of document.querySelectorAll('.planning-week input[aria-label],.planning-week select[aria-label]')) {
+      const label = control.labels[0].cloneNode(true);
+      label.querySelectorAll('input,select,textarea').forEach(element => element.remove());
+      expect(control).toHaveAccessibleName(new RegExp(label.textContent.trim(), 'i'));
+    }
+  };
+  await screen.findByRole('heading', { name:'Planificación de estudio' });
+  expect(screen.getByRole('region', { name:'Semana habitual' })).toBeInTheDocument();
+  const calendar = within(screen.getByRole('region', { name:'Estudio, repaso y descanso' }));
+  expect(calendar.getByRole('heading', { level:3, name:'Preparar esta semana' })).toBeInTheDocument();
+  checkVisibleLabels();
+  const weekLabel = calendar.getByText(/^Semana del /).textContent;
+  await user.click(calendar.getByRole('button', { name:'Semana siguiente' }));
+  expect(calendar.getByText(/^Semana del /).textContent).not.toBe(weekLabel);
+  const currentWeek = calendar.getByRole('button', { name:'Esta semana', exact:true });
+  currentWeek.focus();
+  await user.keyboard('{Enter}');
+  expect(calendar.getByText(/^Semana del /)).toHaveTextContent(weekLabel);
+  await user.click(calendar.getByRole('button', { name:'Mes', exact:true }));
+  expect(calendar.getByRole('heading', { level:3, name:'Programar un repaso' })).toBeInTheDocument();
+  checkVisibleLabels();
+  const ids = [...document.querySelectorAll('[id]')].map(element => element.id);
+  expect(new Set(ids).size).toBe(ids.length);
 });
 
 it('describe las actividades que realmente incluye la sesión y no promete contenido nuevo ausente', async () => {
@@ -271,7 +300,10 @@ it('distingue el tiempo disponible del tiempo previsto cuando aún no hay activi
 
 it('pide elegir el tema semanal en Ajustes cuando no hay tema asignado', async () => {
   const emptyPlan = { weekday:1, minutes:120, restDay:false, activities:[] };
-  renderApp(createElement(PlanningPage), { services:servicesFor(overview(emptyPlan, { nextNewTopic:undefined })) });
+  // This scenario is a new-content day regardless of the real weekday.
+  const training = { ...DEFAULT_TRAINING_PREFERENCES, focusByDay:Array(7).fill('new-content') };
+  const settings = { getSnapshot:() => ({ training, exam:'', index:null }) };
+  renderApp(createElement(PlanningPage), { services:servicesFor(overview(emptyPlan, { nextNewTopic:undefined }), { settings }) });
   expect(await screen.findByRole('link', { name:'Ajustes' })).toHaveAttribute('href', '/settings#training-schedule');
   expect(screen.getByText(/Elige el tema que vas a introducir esta semana/)).toBeInTheDocument();
 });
@@ -315,7 +347,7 @@ it('integra en el horizonte la cobertura declarada de apartados de un temario vi
 
 it('no inventa fecha objetivo y explica cuando la secuencia configurada se agota', async () => {
   const emptyPlan = { weekday:1, minutes:120, restDay:false, activities:[] };
-  const training = { ...DEFAULT_TRAINING_PREFERENCES, academyTopicOrderIds:['T1.01'] };
+  const training = { ...DEFAULT_TRAINING_PREFERENCES, academyTopicOrderIds:['T1.01'], focusByDay:Array(7).fill('new-content') };
   const planned = overview(emptyPlan, { nextNewTopic:undefined, studiedTopics:1, studiedTopicDetails:[{ id:'T1.01', name:'Constitución' }] });
   const settings = { getSnapshot:() => ({ training, exam:'', index:{ topics:[{ id:'T1.01', name:'Constitución' }, { id:'T5.01', name:'Futuro' }] } }) };
   renderApp(createElement(PlanningPage), { services:servicesFor(planned, { settings }) });

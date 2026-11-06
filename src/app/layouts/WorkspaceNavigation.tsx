@@ -1,4 +1,5 @@
 import { BookText, type LucideIcon } from 'lucide-react';
+import type { MouseEvent } from 'react';
 import { showMenu, type MenuGroup } from '../../shared/ui/dialog-actions.js';
 import { hashPath, hashSegment } from '../router/paths.js';
 import { navigationIcons } from '../navigation-icons.js';
@@ -20,8 +21,9 @@ const destinations: Destination[] = [
   { route: 'acceso', label: 'Accesos', icon: navigationIcons.access },
 ];
 const groups = [
+  ['Planificar', ['planificacion', 'temario']],
   ['Practicar', ['test', 'sim']],
-  ['Afianzar', ['falladas', 'temario', 'planificacion', 'stats']],
+  ['Seguimiento', ['falladas', 'stats']],
   ['Entrenamientos', ['lectura', 'trampas', 'relampago']],
   ['Tu espacio', ['ayuda', 'settings', 'acceso']],
 ] as const;
@@ -32,12 +34,11 @@ export function WorkspaceNavigation({ full, owner, section, pathname, navigate }
   const current = pathname.split('/')[1] || 'home';
   const active = (route: string) => route === current || (['quiz', 'result', 'sim2', 'examenes'].includes(current) && section === route);
   const link = (destination: Destination) => { const Icon = destination.icon; return <a key={destination.route} href={hashSegment(destination.route)} className={`flex min-h-10 items-center gap-3 rounded-md px-3 py-2 text-muted no-underline motion-safe:transition-[background-color,color] motion-safe:duration-[var(--duration-fast)] ${active(destination.route) ? 'is-active bg-[var(--nav-active)] font-semibold !text-ink' : ''}`} aria-current={active(destination.route) ? 'page' : undefined}><Icon className="h-[1.125rem] w-[1.125rem] shrink-0 fill-none stroke-current stroke-[1.6] [stroke-linecap:round] [stroke-linejoin:round]" size="1.125rem" strokeWidth={1.7} aria-hidden="true" /><span>{destination.label}</span></a>; };
-  const openMenu = () => {
+  const openMenu = (event: MouseEvent<HTMLButtonElement>) => {
+    event.currentTarget.focus({ preventScroll:true });
     const menu: MenuGroup[] = [['Inicio', [[navigationIcons.home, 'Inicio', '', hashPath('home')]]]];
-    if (full) menu.push(['Planificación', [[navigationIcons.planning, 'Planificación de estudio', 'Sesión de hoy y calendario semanal', hashPath('planning')]]]);
     for (const [title, routes] of groups) {
-      const menuRoutes = full && title === 'Afianzar' ? routes.filter(route => route !== 'planificacion') : routes;
-      const items: MenuGroup[1] = destinations.filter(d => (menuRoutes as readonly string[]).includes(d.route) && visible(d.route)).map(d => [d.icon, d.label, '', hashSegment(d.route)]);
+      const items: MenuGroup[1] = destinations.filter(d => (routes as readonly string[]).includes(d.route) && visible(d.route)).map(d => [d.icon, d.label, '', hashSegment(d.route)]);
       if (items.length) menu.push([title, items]);
     }
     void showMenu(menu, hashSegment(current), path => navigate(path.slice(1)));

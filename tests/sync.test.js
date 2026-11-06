@@ -1,5 +1,5 @@
 import { beforeEach, afterEach, it, expect, vi } from 'vitest';
-const boundary = vi.hoisted(() => ({ auth: { currentUser: null }, authChanged: null, writes: [], snapshots: [] }));
+const boundary = vi.hoisted(() => ({ auth: { currentUser: null }, authChanged: null, writes: [], snapshots: [], holdSessions: false, sessionWrites: [] }));
 vi.mock('firebase/app', () => ({ initializeApp: () => ({}) }));
 vi.mock('firebase/auth', () => ({
   initializeAuth: () => boundary.auth,
@@ -21,14 +21,14 @@ vi.mock('firebase/firestore', () => ({
     boundary.snapshots.push({ ref, cb, onError });
     return () => {};
   },
-  setDoc: async (ref, value) => { boundary.writes.push({ path: ref.path, value }); },
+  setDoc: async (ref, value) => { boundary.writes.push({ path: ref.path, value }); if (boundary.holdSessions && ref.path.includes('/sessions/')) await new Promise((resolve, reject) => boundary.sessionWrites.push({ resolve, reject })); },
   deleteDoc: async ref => { boundary.writes.push({ path: ref.path, deleted: true }); },
 }));
 let sync, store, trainingStore, paperTestStore;
 const user = (uid, email = 'dramiro@gmail.com') => { const u = { uid, email, displayName: 'Persona', emailVerified: true }; boundary.auth.currentUser = u; boundary.authChanged(u); };
 beforeEach(async () => {
   vi.resetModules(); vi.useFakeTimers(); localStorage.clear();
-  boundary.writes.length = 0; boundary.snapshots.length = 0; boundary.auth.currentUser = null;
+  boundary.holdSessions = false; boundary.sessionWrites.length = 0; boundary.writes.length = 0; boundary.snapshots.length = 0; boundary.auth.currentUser = null;
   vi.stubGlobal('fetch', async () => ({ ok: true, json: async () => ({ apiKey: 'test', authDomain: 'localhost' }) }));
   store = await import('../src/adapters/local/local-progress-store.js'); sync = await import('../src/adapters/firebase/legacy-sync.js');
   await import('../src/app/composition/access-composition.js');
@@ -116,9 +116,10 @@ it('la solicitud pasa a pendiente y el aprobado empieza a sincronizar', async ()
 });
 
 it('sincroniza el checkpoint de planificación solo bajo la cuenta aprobada y lo combina al recibir cambios', async () => {
+  const timestamp = Date.now();
   const session = {
-    dateKey: new Date().toLocaleDateString('en-CA'), activities: [{ activity: 'activeRecall', minutes: 20, reason: 'active-recall', topicIds: ['T1.01'] }],
-    currentIndex: 0, currentStartedAt: null, elapsedSecondsByActivity: [0], updatedAt: Date.now(), startedAt: Date.now(), completedAt: null,
+    dateKey: new Date(timestamp).toLocaleDateString('en-CA'), activities: [{ activity: 'activeRecall', minutes: 20, reason: 'active-recall', topicIds: ['T1.01'] }],
+    currentIndex: 0, currentStartedAt: null, elapsedSecondsByActivity: [0], updatedAt: timestamp, startedAt: timestamp, completedAt: null,
   };
   trainingStore.getSession.mockReturnValue(session);
   const history = [{ id: session.dateKey, dateKey: session.dateKey, startedAt: session.startedAt, completedAt: session.startedAt + 2,
@@ -306,4 +307,39 @@ it('espera la concesión real cuando ni la caché ni la solicitud confirman el p
   expect(status.accessResolved).toBe(false);
   snap('access/student', { ok: true });
   expect(status).toMatchObject({ accessResolved: true, access: 'aprobado' });
+});
+
+it('deduplica una importación repetida mientras sus sesiones esperan confirmación remota', async () => {
+  boundary.holdSessions = true;
+  const sessions = Array.from({length:300}, (_, i) => ({id:`s-${i}`, ts:1700000000000+i, kind:'sim', n:1,a:1,f:0,b:0,secs:1,nota:100,fails:[],temas:{},tipos:{}}));
+  for (let pass=0; pass<3; pass++) for (const session of sessions) sync.pushSession({...session});
+  expect(boundary.writes.filter(w => w.path.includes('/sessions/'))).toHaveLength(300);
+  boundary.sessionWrites.forEach(w => w.resolve());
+  await vi.advanceTimersByTimeAsync(0);
+  sync.pushSession(sessions[0]);
+  expect(boundary.writes.filter(w => w.path.includes('/sessions/'))).toHaveLength(301);
+});
+it('conserva cambios de payload y separa cuentas durante escrituras pendientes', async () => {
+  boundary.holdSessions = true;
+  const session = {id:'same',ts:1700000000000,kind:'sim',n:1,a:1,f:0,b:0,secs:1,nota:100,fails:[],temas:{},tipos:{}};
+  sync.pushSession(session);
+  sync.pushSession({...session, nota:50});
+  sync.pushSession(session);
+  user('user2');
+  sync.pushSession(session);
+  expect(boundary.writes.filter(w => w.path.includes('/sessions/')).map(w => [w.path,w.value.nota])).toEqual([
+    ['users/user1/sessions/same',100], ['users/user1/sessions/same',50], ['users/user1/sessions/same',100], ['users/user2/sessions/same',100]
+  ]);
+  boundary.sessionWrites.forEach(w => w.resolve());
+});
+
+it('libera una sesión rechazada para permitir un reintento sin bloquear otras escrituras', async () => {
+  boundary.holdSessions = true;
+  const session = {id:'retry',ts:1700000000000,kind:'sim',n:1,a:1,f:0,b:0,secs:1,nota:100,fails:[],temas:{},tipos:{}};
+  sync.pushSession(session);
+  boundary.sessionWrites[0].reject({code:'unavailable',message:'synthetic failure'});
+  await vi.advanceTimersByTimeAsync(0);
+  sync.pushSession(session);
+  expect(boundary.writes.filter(w => w.path.endsWith('/sessions/retry'))).toHaveLength(2);
+  boundary.sessionWrites[1].resolve();
 });

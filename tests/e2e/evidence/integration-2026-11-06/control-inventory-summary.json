@@ -1,0 +1,115 @@
+{
+  "profile": "owner",
+  "note": "Controles observados, no porcentaje de controles accionados; fixtures owner en Firebase Emulator. Dos rutas se repiten en móvil.",
+  "routes": [
+    {
+      "route": "home",
+      "viewport": "1280x900",
+      "controls": 13,
+      "unnamed": 0
+    },
+    {
+      "route": "temario",
+      "viewport": "1280x900",
+      "controls": 44,
+      "unnamed": 0
+    },
+    {
+      "route": "planificacion",
+      "viewport": "1280x900",
+      "controls": 17,
+      "unnamed": 0
+    },
+    {
+      "route": "errores",
+      "viewport": "1280x900",
+      "controls": 4,
+      "unnamed": 0
+    },
+    {
+      "route": "falladas",
+      "viewport": "1280x900",
+      "controls": 1,
+      "unnamed": 0
+    },
+    {
+      "route": "relampago",
+      "viewport": "1280x900",
+      "controls": 5,
+      "unnamed": 0
+    },
+    {
+      "route": "trampas",
+      "viewport": "1280x900",
+      "controls": 10,
+      "unnamed": 0
+    },
+    {
+      "route": "lectura",
+      "viewport": "1280x900",
+      "controls": 3,
+      "unnamed": 0
+    },
+    {
+      "route": "curar-contenido",
+      "viewport": "1280x900",
+      "controls": 5,
+      "unnamed": 0
+    },
+    {
+      "route": "test",
+      "viewport": "1280x900",
+      "controls": 32,
+      "unnamed": 0
+    },
+    {
+      "route": "sim",
+      "viewport": "1280x900",
+      "controls": 19,
+      "unnamed": 0
+    },
+    {
+      "route": "sim2",
+      "viewport": "1280x900",
+      "controls": 3,
+      "unnamed": 0
+    },
+    {
+      "route": "stats",
+      "viewport": "1280x900",
+      "controls": 45,
+      "unnamed": 0
+    },
+    {
+      "route": "ayuda",
+      "viewport": "1280x900",
+      "controls": 19,
+      "unnamed": 0
+    },
+    {
+      "route": "settings",
+      "viewport": "1280x900",
+      "controls": 59,
+      "unnamed": 0
+    },
+    {
+      "route": "acceso",
+      "viewport": "1280x900",
+      "controls": 3,
+      "unnamed": 0
+    },
+    {
+      "route": "home",
+      "viewport": "375x812",
+      "controls": 14,
+      "unnamed": 0
+    },
+    {
+      "route": "planificacion",
+      "viewport": "375x812",
+      "controls": 17,
+      "unnamed": 0
+    }
+  ],
+  "observations": 313
+}

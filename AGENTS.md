@@ -63,3 +63,38 @@ Estas reglas se aplican a todo el repositorio y a cualquier tarea ejecutada por 
 - ¿Está documentada la decisión y actualizado el handoff?
 
 > **EVOLUCIONAR, NO RECONSTRUIR · REUTILIZAR, NO DUPLICAR · AMPLIAR, NO SUSTITUIR · PRESERVAR, NO DESTRUIR.**
+
+## Agentic Test Explorer y journeys adversariales
+
+- Mantén las pruebas autenticadas limitadas a Firebase Auth/Firestore Emulator (`demo-tai-auth`, `127.0.0.1:9099`, `127.0.0.1:8080`) y a la app local `127.0.0.1:4187`. Identidades ficticias deben usar `@example.test`; nunca reutilices credenciales reales.
+- Para recorridos repetibles usa el modo determinista `agent-explorer-batch --scenarios ...`; reserva Gemini para descubrir/generar escenarios nuevos. Conserva semillas, escenario validado, Action Tape, snapshots, capturas y resultado. No falsees aserciones para que pase un caso.
+- El perfil (`fast`, `intensive`, `extreme`) selecciona profundidad por `min_profile`; no debe reducir las comprobaciones de los escenarios incluidos. Tras agotarse cuota, reutiliza planes guardados y continúa con ejecuciones deterministas sin modelo.
+- Usa `TAI_AGENT_EMULATOR_ONLY=1` y la validación fail-closed del adaptador. No aceptes configuración de proyecto Firebase o endpoints que no sean los emuladores explícitos.
+
+## Política de ejecución continua, pruebas extremas y finalización verificable
+
+Esta sección complementa las reglas anteriores: terminar una iteración o una fase no significa terminar la tarea. Continúa con el siguiente trabajo ejecutable dentro del alcance y de los límites autorizados; no prometas ejecución indefinida ni continuación automática entre sesiones.
+
+- Al iniciar o retomar un objetivo, consulta este archivo, el README y el handoff existente; revisa el estado de Git, los criterios de aceptación y el trabajo ya verificado. Conserva cambios existentes y evita repetir verificaciones actuales sin motivo técnico.
+- Divide el objetivo en unidades comprobables, registra dependencias y avance en el mecanismo de seguimiento vigente, y usa estos estados: `PENDIENTE`, `EN PROGRESO`, `IMPLEMENTADO SIN VERIFICAR`, `COMPLETADO Y VERIFICADO` y `BLOQUEADO`.
+- Al cerrar cada unidad, ejecuta sus verificaciones pertinentes, corrige fallos nuevos, actualiza el handoff y continúa con la siguiente unidad pendiente que pueda ejecutarse. Un informe de progreso no sustituye la implementación ni la verificación.
+- No declares la tarea completa si quedan requisitos aplicables, pruebas pertinentes, defectos reproducibles, documentación, integración o verificaciones de aceptación pendientes. Solo marca `COMPLETADO Y VERIFICADO` cuando el handoff confirma que no queda trabajo ejecutable dentro del alcance.
+- Si existe una dependencia externa, decisión de negocio o autorización imprescindible, investiga alternativas seguras, documenta el bloqueo y continúa las tareas independientes. No eludas controles de seguridad ni realices acciones fuera de las autorizaciones recibidas.
+- Mantén el handoff como registro operativo: objetivo global, fases, estados, criterios, resultados reproducibles, errores, bloqueos, decisiones, archivos afectados y próximo paso exacto. Actualízalo tras hitos significativos y antes de cerrar una sesión de trabajo.
+- Si el entorno impide completar el objetivo, conserva los cambios válidos y resultados, actualiza el handoff y comunica `PARCIALMENTE COMPLETADO`, con límites y siguiente acción. No presentes una iteración parcial como finalización global.
+- Para pruebas prolongadas, exige aislamiento fail-closed verificado desde la configuración efectiva del cliente y el tráfico observado; que un emulador esté escuchando no basta. Si no se demuestra el aislamiento de Auth y Firestore, aborta sin ejecutar escrituras.
+- Separa la generación opcional asistida por IA de la reproducción determinista. Presupuesta llamadas, tokens, concurrencia y reintentos; ante cuota agotada, detén generación y continúa con escenarios deterministas ya validados cuando sea seguro.
+- No ejecutes ráfagas o estrés sin límites de acciones, tiempo, recursos y aserciones de integridad. Conserva semilla, secuencia, estado inicial y artefactos para reproducir fallos.
+
+## Política obligatoria de auditoría, registro y corrección
+
+Las auditorías de UX, accesibilidad, navegación, calidad y Agentic Test Explorer siguen el ciclo **DETECTAR → DOCUMENTAR → PRIORIZAR → CORREGIR → VERIFICAR → CERRAR**. Esta regla complementa las políticas de ejecución continua y no reemplaza las protecciones de negocio, datos o Firebase.
+
+- Usa `tests/e2e/audit-findings.md` como registro canónico compartido entre UX y Agentic Test Explorer. Conserva `journey-audit-report.md` para contexto/evidencias de UX y `extreme-platform-status.md` para requisitos/estado de plataforma; enlaza hallazgos por ID y evita duplicar el mismo problema en listas divergentes.
+- Cada hallazgo debe tener ID único, categoría/funcionalidad, descripción, evidencia, severidad/prioridad, causa identificada o probable, solución, archivos afectados, estado de implementación, pruebas y resultado final.
+- Utiliza exclusivamente estos estados en el registro: `DETECTADO`, `ANALIZADO`, `PRIORIZADO`, `EN CORRECCIÓN`, `CORREGIDO SIN VERIFICAR`, `CORREGIDO Y VERIFICADO`, `BLOQUEADO` o `DESCARTADO, CON JUSTIFICACIÓN`.
+- Documenta el comportamiento actual, el propuesto y sus consecuencias antes de cambios importantes de UX o arquitectura. No cambies reglas de negocio o pedagógicas sin requisitos verificados.
+- Al corregir un hallazgo, conserva su ID e historial; ejecuta pruebas pertinentes, revisa regresiones, adjunta evidencia, actualiza el estado y continúa con el siguiente hallazgo ejecutable. Registrar o cambiar código por sí solos no permiten cerrar un hallazgo.
+- Si una hipótesis no se confirma, conserva la evidencia y ciérrala como `DESCARTADO, CON JUSTIFICACIÓN`; no borres resultados anteriores ni rebajes aserciones para ocultar fallos.
+- Antes de editar un registro compartido, inspecciona `git status` y su contenido actual. Añade entradas sin sobrescribir cambios de otra sesión. Si ATE descubre un posible problema de producto, enlaza su Action Tape/reproducción al ID TAI; si el problema es del framework, mantenlo también en el handoff de ATE y referencia su ID aquí.
+- Actualiza este registro y el handoff pertinente tras cada hito. Al cerrar una iteración informa de hallazgos corregidos/verificados, pendientes y bloqueados, sin declarar completa una auditoría con flujos o pantallas no inspeccionados.

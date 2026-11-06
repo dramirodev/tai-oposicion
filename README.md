@@ -197,6 +197,30 @@ Las pruebas de navegador con Chromium y WebKit emulados no sustituyen una prueba
 
 Más detalles de la composición visual están en [src/shared/styles/README.md](src/shared/styles/README.md), y las reglas y límites del plan diario en [src/features/planning/README.md](src/features/planning/README.md).
 
+### Handoff de E2E autenticado (2026-11-04)
+
+`npm run test:e2e:firebase-auth` ya cubre el aislamiento entre dos cuentas del Auth Emulator y el uso de Firestore Emulator. El error observado era una expectativa ligada a `nth(1)`: la actividad prioritaria seguía presente, pero el test variado ocupaba esa posición. Se corrigió la búsqueda por título/tema y se cerró la salida de red del navegador salvo app/emuladores locales y recursos GET estáticos `apis.google.com` usados por el popup OAuth simulado. La prueba exige conexiones a `:9099` y `:8080`. Pasó en Chromium; WebKit se omite deliberadamente.
+
+La integración Agentic Test Explorer quedó preparada en `scripts/e2e/` y `tests/e2e/missions/`: crea sesión sintética del Auth Emulator preservando IndexedDB, bloquea destinos externos y service workers en el navegador explorador y ejecuta sólo Auth/Firestore Emulator con `demo-tai-auth`. La misión queda pendiente de ejecución: el entorno observado ofrece Python 3.9 frente al mínimo 3.11 del PoC y no tiene proveedor LLM configurado. No se realizaron llamadas al proveedor.
+
+El diagnóstico, los pasos de cuentas ficticias y la integración preparada con Agentic Test Explorer están en [tests/e2e/README.md](tests/e2e/README.md). Su misión no se ejecutó aquí porque el Python disponible es 3.9 y no hay credenciales de proveedor LLM configuradas.
+
+### Handoff de usuario sintético exclusivo de emuladores (2026-11-04)
+
+La preparación reutilizable, la matriz de permisos y los comandos autónomos están en [tests/e2e/README.md](tests/e2e/README.md#propietario-sintético-y-matriz-de-autorización-2026-11-04). `npm run test:e2e:supertest` ejecuta propietario, aprobado, restringido, pendiente y anónimo con `demo-tai-auth`; Explorer usa la misma preparación. No se añaden custom claims: el sistema usa propietario por correo verificado y aprobaciones por documento. Las reglas productivas se conservan; una copia temporal sustituye únicamente la identidad del propietario. El SDK Admin se limita a preparar/restablecer datos ficticios. Se preservan los cambios locales preexistentes y el informe de planificación sin versionar.
+
+Validación de esta fase: `npm run test:e2e:supertest` terminó con **6/6** en Chromium (incluye persistencia remota con token del navegador, gestión de accesos y matriz negativa de reglas); preparación de Explorer con `TAI_EXPLORER_PREPARE_ONLY=1` terminada correctamente sin invocar al proveedor. Arquitectura, lint, typecheck, build y diff-check correctos. `npx vitest run --maxWorkers=2`: **952 aprobadas, 27 omitidas**. `npm run check` con el paralelismo predeterminado mostró un fallo intermitente de `design-flow.test.js`; la suite completa con dos procesos pasó. Las dos expectativas de Planificación que dependían del día real se corrigieron declarando enfoque de contenido nuevo en sus fixtures. Continúan los avisos conocidos de Rollup/Zod y tamaño de chunks.
+
+Pendiente: ejecutar la misión autónoma con Gemini únicamente tras autorización explícita del envío de capturas/estado sintéticos. La revisión automática rechazó ese lanzamiento; no hubo llamada al proveedor. La preparación local y sesión exportada sí están verificadas. Las entradas a todos los módulos no equivalen a cobertura exhaustiva de sus operaciones; ampliar misiones y convertir hallazgos reproducibles en pruebas deterministas sigue siendo la siguiente fase. No se hizo commit, push ni despliegue. Los cambios concurrentes de `tests/e2e/css-ui.spec.ts` se dejaron intactos.
+
+### Handoff de Explorer ejecutado y hallazgos reproducidos (2026-11-04)
+
+El usuario autorizó expresamente el envío a Gemini de capturas/estado sintéticos y se ejecutó la exploración exclusivamente con `demo-tai-auth`. El [informe de misión y revisión](tests/e2e/explorer-mission-2026-11-04.md) distingue candidatos, evidencia y cobertura real. Se aislaron memoria/sesión/informes por pasada y se corrigió la duplicación de historial del adaptador del explorador. Dos candidatos de navegación resultaron ser selectores inventados; no se cambiaron las rutas de TAI para aceptarlos.
+
+Se reprodujeron y corrigieron dos defectos de TAI: espera circular entre la ruta protegida y el arranque de Auth al recargar, y navegación antigua del shell que cancelaba el retorno a Inicio durante logout. Las pruebas fallaron antes y pasan después. Se conservan los guardas y el contenido protegido permanece oculto hasta resolver permisos. Verificación final: `npm run check` **957/27 skip**, supertest **7/7 Chromium**, journey Auth **1 passed/1 WebKit skipped**, regresión offline Explorer **1/1** y contexto del clon **9/9**; build y diff-check correctos. Sin commit/push/deploy.
+
+La misión LLM quedó parcial tras tres rechazos 429 de Gemini; las cintas registran siete áreas en la última pasada y no se afirma exploración exhaustiva. Próximo paso: repetir al recuperarse cuota con la autorización ya concedida y revisar nuevos candidatos antes de modificar TAI. Los resultados previos sobre falta de autorización/entorno de Explorer son históricos y quedan actualizados por este corte.
+
 ### Implementación de la auditoría Astra
 
 La auditoría original conserva **16.078 dictámenes sobre 16.078 preguntas: cero IDs pendientes de revisión semántica**. Identificó3.519 incidencias editoriales. Los dictámenes originales permanecen inmutables; una pregunta auditada puede seguir pendiente de reparación.

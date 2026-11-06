@@ -166,3 +166,12 @@ test('el repaso rápido no deja Inicio seleccionado mientras se practica en móv
     await context.close();
   }
 });
+
+test('Preguntas falladas mantiene activo Seguimiento en la navegación móvil', async ({ page }) => {
+  await prepareOwner(page);
+  await page.setViewportSize({ width: 390, height: 844 });
+  await page.goto('/#/falladas');
+  const nav = page.locator('nav[aria-label="Principal"]');
+  await expect(nav.locator('[data-r="stats"]')).toHaveAttribute('aria-current', 'page');
+  await expect(nav.locator('[data-r="home"]')).not.toHaveAttribute('aria-current', 'page');
+});

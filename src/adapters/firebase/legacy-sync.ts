@@ -7,7 +7,7 @@ import {
 import type { Auth, User } from 'firebase/auth';
 import type { Firestore, FirestoreError, Unsubscribe } from 'firebase/firestore';
 import { loadFirebaseConfig } from './firebase-config-loader.js';
-import { configureFirebaseEmulatorRuntime } from './local-emulator-config.js';
+import { configureFirebaseEmulatorRuntime, EMULATOR_OWNER_EMAIL, isFirebaseEmulatorRuntime } from './local-emulator-config.js';
 import { decodeFirebaseDocumentId, encodeFirebaseDocumentId } from './firebase-document-id-mapper.js';
 import { OWNER_EMAIL } from './access-policy.js';
 import type { AttemptRepository } from '../../core/ports/AttemptRepository.js';
@@ -48,7 +48,7 @@ const accessControl = createFirebaseAccessControl({
   auth: () => auth,
   database: () => db,
   userId: () => uid,
-  ownerEmail: OWNER_EMAIL,
+  get ownerEmail() { return isFirebaseEmulatorRuntime() ? EMULATOR_OWNER_EMAIL : OWNER_EMAIL; },
   status,
   emit,
   startSync: () => start(),
@@ -110,7 +110,7 @@ export async function init(
     status.user = event ? { name: event.displayName || event.email || '', email: event.email || '', verified: !!event.emailVerified } : null;
     accessControl.stop(); stop(); uid = null;
     status.requested = false; status.reqs = []; status.grants = []; accessControl.setAccess('invitado');
-    getProgressStore().switchAccount(event?.uid || null, !!event && event.email === OWNER_EMAIL && event.emailVerified);
+    getProgressStore().switchAccount(event?.uid || null, !!event && event.email === (isFirebaseEmulatorRuntime() ? EMULATOR_OWNER_EMAIL : OWNER_EMAIL) && event.emailVerified);
     if (event) { uid = event.uid; accessControl.resolve(event); }
     else { uid = null; stop(); status.requested = false; status.reqs = []; status.grants = []; accessControl.setAccess('invitado'); status.state = 'sin sesión'; emit(); }
     const epoch = accessControl.getEpoch();
@@ -289,9 +289,18 @@ function flush(): void {
       .catch(writeErr);
   }
 }
+// Local snapshot notifications may arrive before earlier writes are acknowledged.
+// Keep the latest pending payload per account/document to avoid re-enqueuing it.
+const pendingSessions = new Map<string, { payload: string }>();
 export function pushSession(session: Session): void {
   if (!canSync() || !uid) return;
-  setDoc(doc(db, 'users', uid, 'sessions', session.id), session).catch(writeErr);
+  const targetUid = uid, key = `${targetUid}/${session.id}`;
+  const pending = { payload: JSON.stringify(session) };
+  if (pendingSessions.get(key)?.payload === pending.payload) return;
+  pendingSessions.set(key, pending);
+  void setDoc(doc(db, 'users', targetUid, 'sessions', session.id), session)
+    .catch(writeErr)
+    .finally(() => { if (pendingSessions.get(key) === pending) pendingSessions.delete(key); });
 }
 
 export function pushTrainingSession(session: DailyTrainingSession): void {

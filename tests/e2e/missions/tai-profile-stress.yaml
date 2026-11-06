@@ -1,0 +1,124 @@
+schema_version: 1
+title: TAI deterministic navigation stress profiles
+seed: 20261104
+scenarios:
+  - id: navigation-history-recovery
+    title: Recover a study route through browser history and reload
+    risk: high
+    min_profile: fast
+    steps:
+      - action: navigate
+        url: /#/home
+      - action: navigate
+        url: /#/planificacion
+      - action: wait_for
+        selector: '#app h1:has-text("Planificación de estudio")'
+      - action: assert_text
+        selector: '#app h1'
+        text: Planificación de estudio
+      - action: navigate
+        url: /#/temario
+      - action: wait_for
+        selector: '#app h1:has-text("Temas vistos")'
+      - action: assert_text
+        selector: '#app h1'
+        text: Temas vistos
+      - action: go_back
+      - action: wait_for
+        selector: '#app h1:has-text("Planificación de estudio")'
+      - action: assert_text
+        selector: '#app h1'
+        text: Planificación de estudio
+      - action: go_forward
+      - action: wait_for
+        selector: '#app h1:has-text("Temas vistos")'
+      - action: assert_text
+        selector: '#app h1'
+        text: Temas vistos
+      - action: reload
+      - action: wait_for
+        selector: '#app h1:has-text("Temas vistos")'
+      - action: assert_text
+        selector: '#app h1'
+        text: Temas vistos
+      - action: check_page_health
+  - id: quick-navigation-repeat
+    title: Repeat one real navigation action and confirm the destination
+    risk: medium
+    min_profile: fast
+    steps:
+      - action: navigate
+        url: /#/home
+      - action: repeat
+        count: 10
+        step:
+          action: click
+          selector: 'aside[aria-label="Espacio de estudio"] a[href="#/planificacion"]'
+      - action: assert_text
+        selector: '#app h1'
+        text: Planificación de estudio
+      - action: check_page_health
+  - id: intensive-navigation-repeat
+    title: Repeat navigation under a moderate action burst
+    risk: high
+    min_profile: intensive
+    steps:
+      - action: navigate
+        url: /#/home
+      - action: repeat
+        count: 100
+        step:
+          action: click
+          selector: 'aside[aria-label="Espacio de estudio"] a[href="#/planificacion"]'
+      - action: assert_text
+        selector: '#app h1'
+        text: Planificación de estudio
+      - action: check_page_health
+  - id: intensive-navigation-repeat-50
+    title: Repeat navigation through the 50-action boundary
+    risk: medium
+    min_profile: intensive
+    steps:
+      - action: navigate
+        url: /#/home
+      - action: repeat
+        count: 50
+        step:
+          action: click
+          selector: 'aside[aria-label="Espacio de estudio"] a[href="#/planificacion"]'
+      - action: assert_text
+        selector: '#app h1'
+        text: Planificación de estudio
+      - action: check_page_health
+  - id: extreme-navigation-repeat
+    title: Repeat navigation at the hard per-scenario action limit
+    risk: high
+    min_profile: extreme
+    steps:
+      - action: navigate
+        url: /#/home
+      - action: repeat
+        count: 997
+        step:
+          action: click
+          selector: 'aside[aria-label="Espacio de estudio"] a[href="#/planificacion"]'
+      - action: assert_text
+        selector: '#app h1'
+        text: Planificación de estudio
+      - action: check_page_health
+  - id: extreme-navigation-repeat-500
+    title: Repeat navigation through the 500-action boundary
+    risk: high
+    min_profile: extreme
+    steps:
+      - action: navigate
+        url: /#/home
+      - action: repeat
+        count: 500
+        step:
+          action: click
+          selector: 'aside[aria-label="Espacio de estudio"] a[href="#/planificacion"]'
+      - action: assert_text
+        selector: '#app h1'
+        text: Planificación de estudio
+      - action: check_page_health

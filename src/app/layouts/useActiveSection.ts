@@ -13,7 +13,7 @@ export function useActiveSection(pathname: string): string {
     sim2: 'sim',
     examenes: 'sim',
     errores: 'settings',
-    falladas: 'home',
+    falladas: 'stats',
     planificacion: 'planificacion',
   } as Record<string, string>)[name] || name;
 }

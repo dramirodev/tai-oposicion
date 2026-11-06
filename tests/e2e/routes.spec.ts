@@ -1,3 +1,4 @@
+import { mkdirSync } from 'node:fs';
 import { test, expect, type Page } from '@playwright/test';
 const routes = ['home', 'planificacion', 'quiz', 'result', 'test', 'sim', 'sim2', 'examenes', 'cards', 'stats', 'settings', 'temario', 'falladas', 'errores', 'lectura', 'relampago', 'trampas', 'acceso'];
 const headings: Record<string, string> = { home: 'Hola', planificacion: 'Planificación de estudio', quiz: 'pregunta 1', result: 'Resultado', test: 'Test por tema', sim: 'Simulacros', sim2: 'Parte 2', examenes: 'Simulacros', cards: 'Hola', stats: 'Progreso', settings: 'Ajustes', temario: 'Temas vistos', falladas: 'Falladas', errores: 'Errores del banco', lectura: 'Lectura atenta', relampago: 'Pregunta relámpago', trampas: 'Detective de trampas', acceso: 'Accesos' };
@@ -22,7 +23,7 @@ async function quick(page: Page) {
   await expect(page.locator('#app')).toContainText('pregunta 1');
 }
 for (const theme of ['light', 'dark']) {
-  for (const route of routes) test(`${route} · ${theme}`, async ({ page }) => {
+  for (const route of routes) test(`${route} · ${theme}`, async ({ page, browserName }) => {
     const errors = await setup(page, theme);
     if (route === 'quiz' || route === 'result') {
       await quick(page);
@@ -44,7 +45,17 @@ for (const theme of ['light', 'dark']) {
     await expect.poll(() => page.evaluate(() => document.querySelector('#app')?.textContent?.includes('Comprobando archivos guardados…'))).toBe(false);
     await page.waitForTimeout(400);
     await expect(page.locator('html')).toHaveAttribute('data-theme', theme);
-    await expect(page).toHaveScreenshot(`${route}-${theme}.png`, { fullPage: false, mask: [page.locator("#ver small")] });
+    if (route !== 'cards') await expect(page).toHaveScreenshot(`${route}-${theme}.png`, { fullPage: false, mask: [page.locator("#ver small")] });
+    for (const width of [320, 640]) {
+      await page.setViewportSize({ width, height: 900 });
+      const documentWidth = await page.evaluate(() => document.documentElement.scrollWidth);
+      expect(documentWidth, `${route} · ${theme} overflows at ${width}px`).toBeLessThanOrEqual(width);
+      if (route === 'planificacion' && theme === 'light') {
+        await page.screenshot({
+          path: `tests/e2e/evidence/accessibility-2026-11-05/planning-reflow-${width}px-${browserName}.png`,
+        });
+      }
+    }
     expect(errors).toEqual([]);
   });
   test(`invitado completa sesión rápida · ${theme}`, async ({ page }) => {
@@ -60,6 +71,26 @@ for (const theme of ['light', 'dark']) {
     expect(errors).toEqual([]);
   });
 }
+
+test('la navegación por teclado conserva una señal visible al cambiar de ruta', async ({ page, browserName }) => {
+  await setup(page, 'light');
+  await page.goto('/#/planificacion');
+  await expect(page.getByRole('heading', { name: 'Planificación de estudio' })).toBeFocused();
+
+  const dateSettingsLink = page.getByRole('link', { name: 'Ajustar fecha y horario' });
+  await dateSettingsLink.focus();
+  await page.keyboard.press('Enter');
+
+  const settingsHeading = page.getByRole('heading', { name: 'Ajustes', level: 1 });
+  await expect(settingsHeading).toBeFocused();
+  const focusStyle = await settingsHeading.evaluate(element => {
+    const style = getComputedStyle(element);
+    return { outlineStyle: style.outlineStyle, outlineWidth: style.outlineWidth };
+  });
+  expect(focusStyle.outlineStyle).not.toBe('none');
+  expect(Number.parseFloat(focusStyle.outlineWidth)).toBeGreaterThanOrEqual(2.5);
+  await page.screenshot({ path: `tests/e2e/evidence/accessibility-2026-11-05/planning-route-keyboard-focus-${browserName}.png` });
+});
 
 test('simulacros por tema deja el skeleton y muestra los tests disponibles', async ({ page }) => {
   await setup(page, 'light');
@@ -317,6 +348,45 @@ test.describe('service worker real', () => {
   expect(await page.evaluate(() => JSON.parse(localStorage.getItem('tai.run:guest') || 'null').highlights[0])).toHaveLength(1);
   expect(errors.filter(error => !error.includes('status of 503 (Offline)'))).toEqual([]);
 });
+
+ test('descarga sin conexión anuncia un fallo y permite reintentar', async ({ page, browserName }) => {
+  const errors = await setup(page, 'light');
+  await page.addInitScript(() => {
+    const offlineWindow = window as Window & { __failOfflineIndexOnce?: boolean };
+    offlineWindow.__failOfflineIndexOnce = false;
+    const nativeFetch = window.fetch.bind(window);
+    window.fetch = async (input: RequestInfo | URL, init?: RequestInit) => {
+      const requestUrl = typeof input === 'string' || input instanceof URL ? String(input) : input.url;
+      if (offlineWindow.__failOfflineIndexOnce && new URL(requestUrl, location.href).pathname.endsWith('/data/index.json')) {
+        offlineWindow.__failOfflineIndexOnce = false;
+        return new Response('fallo sintético de red', { status: 503 });
+      }
+      return nativeFetch(input, init);
+    };
+  });
+
+  await page.goto('/#/settings');
+  const offline = page.locator('section.card').filter({ has: page.getByRole('heading', { name: 'Uso sin conexión' }) });
+  const status = offline.getByRole('status');
+  const download = offline.getByRole('button', { name: 'Descargar para uso sin conexión' });
+  await expect(status).not.toContainText('Comprobando archivos guardados…');
+  await page.evaluate(() => {
+    (window as Window & { __failOfflineIndexOnce?: boolean }).__failOfflineIndexOnce = true;
+  });
+
+  await download.click();
+  await expect(page.locator('#toast')).toContainText('No se pudo descargar data/index.json. Reintenta cuando tengas conexión.');
+  await expect(download).toBeEnabled();
+  await expect(status).not.toContainText('disponibles sin conexión');
+  mkdirSync('tests/e2e/evidence/accessibility-2026-11-05', { recursive: true });
+  await page.screenshot({ path: `tests/e2e/evidence/accessibility-2026-11-05/offline-download-retry-${browserName}.png` });
+
+  await download.click();
+  await expect(page.locator('#toast')).toContainText('Descarga sin conexión completada.');
+  await expect(status).toContainText('disponibles sin conexión', { timeout: 20_000 });
+  await expect(download).toBeEnabled();
+  expect(errors).toEqual([]);
+ });
 
 test('Inicio no ofrece cambiar la fecha cuando ya tiene un objetivo', async ({ page }) => {
   const errors = await setup(page, 'light');
