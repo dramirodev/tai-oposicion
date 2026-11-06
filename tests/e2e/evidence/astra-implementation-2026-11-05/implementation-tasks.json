@@ -17610,9 +17610,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "La ejecución nativa no impone red, pero una aplicación puede necesitarla para su función. Ninguna alternativa admite esa dependencia del diseño.",
     "location": "public/data/T3.08.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación con cuatro alternativas y evidencia independiente; contenido exacto aprobado y contexto de supuesto vinculados cuando procede.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -17621,13 +17622,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.08-05.v1",
       "topic": "T3.08",
       "origin": "G",
       "family": "GEN-T3.08-05",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-web23.json",
+      "beforeSha256": "64d111be502318ba9f9a487f1497cfbf50efed53250ee072aede8e67250190cd",
+      "afterSha256": "d0ac5dfae28d058dcca6933485b57bcfee1ce939140697f7577e23668e6c18f2",
+      "source": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario.pdf",
+        "page": 4,
+        "quote": "No necesitan conexión a internet para funcionar.",
+        "sha256": "980aaf92d3f84a4a632d5324ef15fde8d6ce8c71f385ec2a57fb3d806c9c0bc5"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -17666,9 +17680,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Una base nativa puede compartir C/C++ o lógica común entre plataformas. Ninguna alternativa identifica un inconveniente universal como está escrito.",
     "location": "public/data/T3.08.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación con cuatro alternativas y evidencia independiente; contenido exacto aprobado y contexto de supuesto vinculados cuando procede.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -17677,13 +17692,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.08-06",
       "topic": "T3.08",
       "origin": "G",
       "family": "GEN-T3.08-06",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-web23.json",
+      "beforeSha256": "51445c57df05d074e4f88efcb63e04cffa77c6a86c44601666152f80bbd085a3",
+      "afterSha256": "3ea30205b1b46e881df954e3047864cd8bad17b0aa0e82518f103c70790aaf38",
+      "source": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario.pdf",
+        "page": 4,
+        "quote": "El código no es reutilizable entre las distintas plataformas.",
+        "sha256": "980aaf92d3f84a4a632d5324ef15fde8d6ce8c71f385ec2a57fb3d806c9c0bc5"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -17918,9 +17946,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "El temario niega todo acceso a recursos, pero la API getUserMedia permite cámara y micrófono con permiso. Ninguna opción representa correctamente la limitación de acceso.",
     "location": "public/data/T3.08.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación con cuatro alternativas y evidencia independiente; contenido exacto aprobado y contexto de supuesto vinculados cuando procede.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -17929,13 +17958,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.08-16",
       "topic": "T3.08",
       "origin": "G",
       "family": "GEN-T3.08-16",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-web23.json",
+      "beforeSha256": "d2ef9ff51a14ea02b720dc04d2aba1f3b6f6a7e547550b94b32d44b6c05153d0",
+      "afterSha256": "bd09c5a834bf1be82d5b6db760690b5269258a8c62bc46b82b9432907a42afbb",
+      "source": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario.pdf",
+        "page": 6,
+        "quote": "El gran inconveniente es que las webapp NO tienen acceso a los recursos del dispositivo.",
+        "sha256": "980aaf92d3f84a4a632d5324ef15fde8d6ce8c71f385ec2a57fb3d806c9c0bc5"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -17974,9 +18016,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Se pueden cargar recursos desde caché y utilizar un service worker sin Internet. Ninguna condición ofrecida es necesaria para toda webapp.",
     "location": "public/data/T3.08.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación con cuatro alternativas y evidencia independiente; contenido exacto aprobado y contexto de supuesto vinculados cuando procede.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -17985,13 +18028,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.08-16.v2",
       "topic": "T3.08",
       "origin": "G",
       "family": "GEN-T3.08-16",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-web23.json",
+      "beforeSha256": "0fa9c7f1696cfcc48e4a66d217743a5ffd8894194cd93a2b18e4ab64ad40e524",
+      "afterSha256": "7ebfd3d3b60ce32ef1f835f16643c1a753a56cc74af4bfd7beeca543e4ab2296",
+      "source": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario.pdf",
+        "page": 6,
+        "quote": "Necesita conexión a Internet.",
+        "sha256": "980aaf92d3f84a4a632d5324ef15fde8d6ce8c71f385ec2a57fb3d806c9c0bc5"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -18058,9 +18114,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Google Play exige Android App Bundle (.aab) para nuevas apps desde agosto de 2021 y genera los APK para cada dispositivo. Si se pide formato de publicación no hay respuesta actual.",
     "location": "public/data/T3.08.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación con cuatro alternativas y evidencia independiente; contenido exacto aprobado y contexto de supuesto vinculados cuando procede.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -18069,13 +18126,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.08-21",
       "topic": "T3.08",
       "origin": "G",
       "family": "GEN-T3.08-21",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-web23.json",
+      "beforeSha256": "b1582b959687cc168112adb0c43d833508076e2e19abc257346ed8c1a5016df6",
+      "afterSha256": "7ed7410f53cbf160342f7e9792fe0eff8e7dc515bf0c061d3860d6a63374b0c8",
+      "source": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario.pdf",
+        "page": 7,
+        "quote": "El formato de empaquetado de la app es .app (Apple Store) y .apk (Google Play).",
+        "sha256": "980aaf92d3f84a4a632d5324ef15fde8d6ce8c71f385ec2a57fb3d806c9c0bc5"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -18744,9 +18814,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Ser web no implica ser ligera. El peso depende de recursos, caché y código. Ninguna alternativa explica causalmente un tamaño garantizado.",
     "location": "public/data/T3.08.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación con cuatro alternativas y evidencia independiente; contenido exacto aprobado y contexto de supuesto vinculados cuando procede.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -18755,13 +18826,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.08-40.v1",
       "topic": "T3.08",
       "origin": "G",
       "family": "GEN-T3.08-40",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-web23.json",
+      "beforeSha256": "1e0f9492d2f2cc931c8792b1419750a5924deb769e0bffa231f1e029a8d07427",
+      "afterSha256": "089716043b97b50c1f28a2dfc7ee716cba00370861a7499f4e4e1bad5fc03ba9",
+      "source": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario.pdf",
+        "page": 12,
+        "quote": "Son ligeras ya que no dejan de ser webs.",
+        "sha256": "980aaf92d3f84a4a632d5324ef15fde8d6ce8c71f385ec2a57fb3d806c9c0bc5"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -18800,9 +18884,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "El consumo de batería depende de carga de trabajo, hardware y diseño. No hay penalización universal frente a nativas y las restantes opciones tampoco describen una limitación general.",
     "location": "public/data/T3.08.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación con cuatro alternativas y evidencia independiente; contenido exacto aprobado y contexto de supuesto vinculados cuando procede.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -18811,13 +18896,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.08-41",
       "topic": "T3.08",
       "origin": "G",
       "family": "GEN-T3.08-41",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-web23.json",
+      "beforeSha256": "66adb833241d1d5a9d3142f850e1a2124feef4de5ae714fce08d2bb991533158",
+      "afterSha256": "8862e36e3b7f2092bddff61f27961447aecde7a146d47e4fa0f44ff4f528ff6a",
+      "source": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario.pdf",
+        "page": 12,
+        "quote": "Mayor consumo de batería que una app nativa.",
+        "sha256": "980aaf92d3f84a4a632d5324ef15fde8d6ce8c71f385ec2a57fb3d806c9c0bc5"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -18828,9 +18926,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Una PWA puede distribuirse por tiendas, por ejemplo empaquetada como Trusted Web Activity para Google Play. No es exclusiva ni su presencia está garantizada.",
     "location": "public/data/T3.08.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación con cuatro alternativas y evidencia independiente; contenido exacto aprobado y contexto de supuesto vinculados cuando procede.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -18839,13 +18938,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.08-41.v2",
       "topic": "T3.08",
       "origin": "G",
       "family": "GEN-T3.08-41",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-web23.json",
+      "beforeSha256": "62e2f2b38146173d04d84e23728d33ffa4c9a6af520086b7898ca6be871652ee",
+      "afterSha256": "580482e5e4366e3e49e5dbe57e2a476e6ad75a8e150d3772e12ce7a21f8c4197",
+      "source": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario.pdf",
+        "page": 12,
+        "quote": "No disponibles en tiendas de aplicaciones.",
+        "sha256": "980aaf92d3f84a4a632d5324ef15fde8d6ce8c71f385ec2a57fb3d806c9c0bc5"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -18884,9 +18996,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Las PWA y las híbridas pueden publicarse en tiendas y ninguna categoría obliga siempre a ello. A establece una prohibición falsa para PWA.",
     "location": "public/data/T3.08.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación con cuatro alternativas y evidencia independiente; contenido exacto aprobado y contexto de supuesto vinculados cuando procede.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -18895,13 +19008,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.08-42.v1",
       "topic": "T3.08",
       "origin": "G",
       "family": "GEN-T3.08-42",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-web23.json",
+      "beforeSha256": "e46cae236f052f8c3f38e51c86ddfb7f51001513d4f13dd10f59ac94a7babba5",
+      "afterSha256": "98bd6a804f62a37cf286a85b70c920d3df06276783c202c29f9cc4bddf313789",
+      "source": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario.pdf",
+        "page": 12,
+        "quote": "Las PWA no están disponibles en las tiendas de aplicaciones, las híbridas sí.",
+        "sha256": "980aaf92d3f84a4a632d5324ef15fde8d6ce8c71f385ec2a57fb3d806c9c0bc5"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -19220,9 +19346,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "La etiqueta viewport configura el viewport de maquetación. Solo una directiva como width=device-width pide ajustarlo al ancho del dispositivo; la etiqueta por sí sola no informa necesariamente ese ancho.",
     "location": "public/data/T3.08.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación con cuatro alternativas y evidencia independiente; contenido exacto aprobado y contexto de supuesto vinculados cuando procede.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -19231,13 +19358,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.08-52.v1",
       "topic": "T3.08",
       "origin": "G",
       "family": "GEN-T3.08-52",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-web23.json",
+      "beforeSha256": "231b0917a072e566fdc2c03e0842ec571549550de02ad10b138dd7e61c31a4bf",
+      "afterSha256": "b05c9f045f587b8886629b4b9afacbe676e184e4fbd00026d63311a9f842beb2",
+      "source": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario.pdf",
+        "page": 17,
+        "quote": "indica a la página el ancho de la pantalla en píxeles independientemente del dispositivo.",
+        "sha256": "980aaf92d3f84a4a632d5324ef15fde8d6ce8c71f385ec2a57fb3d806c9c0bc5"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -19454,9 +19594,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "En una instancia XML se emplea schemaLocation en el espacio XMLSchema-instance, convencionalmente xsi, y contiene parejas namespace/ubicación orientativas. El prefijo habitual xs designa otro espacio.",
     "location": "public/data/T3.08.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación con cuatro alternativas y evidencia independiente; contenido exacto aprobado y contexto de supuesto vinculados cuando procede.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -19465,13 +19606,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.08-59",
       "topic": "T3.08",
       "origin": "G",
       "family": "GEN-T3.08-59",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-web23.json",
+      "beforeSha256": "397dee570fb2bb4f29988d5c2f3f98e1fd2dbed3b9098b4cc8086ea3f72b3450",
+      "afterSha256": "ddf88b8b7b78090ad0e1aa50b2a9da4eb9975360303dd56659b445a11d8435a7",
+      "source": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario.pdf",
+        "page": 19,
+        "quote": "xs:schemaLocation indica la ubicación del fichero XSD.",
+        "sha256": "980aaf92d3f84a4a632d5324ef15fde8d6ce8c71f385ec2a57fb3d806c9c0bc5"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -20021,9 +20175,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Los estándares favorecen interoperabilidad pero no obligan a producir los mismos píxeles en todos los navegadores. Fuentes, estilos de usuario y parámetros del dispositivo pueden diferir.",
     "location": "public/data/T3.08.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación con cuatro alternativas y evidencia independiente; contenido exacto aprobado y contexto de supuesto vinculados cuando procede.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -20032,13 +20187,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.08-89.v2",
       "topic": "T3.08",
       "origin": "G",
       "family": "GEN-T3.08-89",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-web23.json",
+      "beforeSha256": "919eec8e90c820fc823d85d2850b12fec111e5a18f9bb4025fb72016e4557b79",
+      "afterSha256": "c97b6844edfde25f6d5c392000280e9af9d0d4e674efd75be67e4f01b6bf6bc2",
+      "source": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario.pdf",
+        "page": 31,
+        "quote": "En teoría, los estándares web publicados por el W3C deberían permitir que las páginas fueran visualizadas exactamente igual en todos los navegadores.",
+        "sha256": "980aaf92d3f84a4a632d5324ef15fde8d6ce8c71f385ec2a57fb3d806c9c0bc5"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -20469,9 +20637,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "La especificación HTML Living Standard se desarrolla en WHATWG, según el acuerdo W3C/WHATWG de 2019. Ninguna opción identifica al editor actual.",
     "location": "public/data/T3.08.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación con cuatro alternativas y evidencia independiente; contenido exacto aprobado y contexto de supuesto vinculados cuando procede.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -20480,13 +20649,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.08-300",
       "topic": "T3.08",
       "origin": "G",
       "family": "GEN-T3.08-300",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-web23.json",
+      "beforeSha256": "b5cfa87482262d52e39a4df98f19883878ec2a91ea706760da80fc05266ceecd",
+      "afterSha256": "1c50ded83307b3c657d9243d33f4296238230fbf16fd6b8024ceaadb21160765",
+      "source": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - HTML.pdf",
+        "page": 3,
+        "quote": "Este lenguaje se rige por unas normas definidas por el World Wide Web Consortium (W3C)",
+        "sha256": "3481a610ced055ed9c38c313cd78ba950d6219498a7dbf38511046146c7ba5ba"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -20497,9 +20679,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "El CERN es el lugar, pero 1980 corresponde al antecedente ENQUIRE. Berners-Lee propuso la web en 1989 y desarrolló HTML hacia 1990; la premisa es falsa.",
     "location": "public/data/T3.08.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación con cuatro alternativas y evidencia independiente; contenido exacto aprobado y contexto de supuesto vinculados cuando procede.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -20508,13 +20691,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.08-301.v1",
       "topic": "T3.08",
       "origin": "G",
       "family": "GEN-T3.08-301",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-web23.json",
+      "beforeSha256": "6d52908767b3c27f696044a7888b58701dc346b2a0c8ee6afeb941159f9c50a2",
+      "afterSha256": "997be63b51982185c8e36f4e22a6a929d9872ceb46a5ca2fd663511ba0d33e3f",
+      "source": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - HTML.pdf",
+        "page": 3,
+        "quote": "El lenguaje HTML se crea en 1980 en el CERN como una propuesta para compartir y publicar documentación.",
+        "sha256": "3481a610ced055ed9c38c313cd78ba950d6219498a7dbf38511046146c7ba5ba"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -22270,9 +22466,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "u sí forma parte del HTML Living Standard para anotaciones no textuales. El temario lo excluye por error: b, em, u e i son todos elementos vigentes.",
     "location": "public/data/T3.08.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación con cuatro alternativas y evidencia independiente; contenido exacto aprobado y contexto de supuesto vinculados cuando procede.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -22281,13 +22478,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.08-418.v1",
       "topic": "T3.08",
       "origin": "G",
       "family": "GEN-T3.08-418",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-web23.json",
+      "beforeSha256": "6139ade103bfc68e7e6ee7cda08e8260c950f5d59f812392f8995ba67a420a19",
+      "afterSha256": "ebfd26266ecfb70e3af912b116a52b47177813e8a50265eb44f455fa9a6a3e1e",
+      "source": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - HTML.pdf",
+        "page": 36,
+        "quote": "<font> Fuente del texto No soportado en HTML5",
+        "sha256": "3481a610ced055ed9c38c313cd78ba950d6219498a7dbf38511046146c7ba5ba"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -22438,9 +22648,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "El valor correcto es chapters, en plural. C contiene chapter y ninguna alternativa reproduce la lista completa válida. WHATWG HTML, atributo kind de track.",
     "location": "public/data/T3.08.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación con cuatro alternativas y evidencia independiente; contenido exacto aprobado y contexto de supuesto vinculados cuando procede.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -22449,13 +22660,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.08-425.v2",
       "topic": "T3.08",
       "origin": "G",
       "family": "GEN-T3.08-425",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-web23.json",
+      "beforeSha256": "93a53804fbc23981f2b915dc4ebd7eb95fe26a33abaf2107c3b70bf9c0cb36aa",
+      "afterSha256": "402c1e388991895fe7ca46ffe3cf0b36801d0a5f99b002b018fafbd425bff284",
+      "source": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - HTML.pdf",
+        "page": 41,
+        "quote": "kind: tipo de pista. Valores: captions, chapter, descriptions, metadata o subtitles.",
+        "sha256": "3481a610ced055ed9c38c313cd78ba950d6219498a7dbf38511046146c7ba5ba"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -53658,9 +53882,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave A. WebKit nació a partir de KHTML/KJS del proyecto KDE para Konqueror. Un navegador llamado Konkeror no desarrolló WebKit.",
     "location": "public/data/T3.08.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación con cuatro alternativas y evidencia independiente; contenido exacto aprobado y contexto de supuesto vinculados cuando procede.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -53669,13 +53894,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.08-510.v2",
       "topic": "T3.08",
       "origin": "G",
       "family": "GEN-T3.08-510",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-web23.json",
+      "beforeSha256": "4abf5d001b264edf66b50d8e1e5b3a1ba98fd7a6927dafaa5cd5777223c904f9",
+      "afterSha256": "6025d3fa2dacb371a1bc8d80fd60aab959ca181a2d024cd3cee5ced09f9dc5a1",
+      "source": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - CSS.pdf",
+        "page": 5,
+        "quote": "Familia WebKit: basados en el motor de dibujo WebKit, desarrollado por el navegador Konkeror y mejorado por Safari de Apple.",
+        "sha256": "f871d3d81529d09b5ee8260e6c78a044df152e0b3a48155f5b54dea41fcf7fee"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -71936,9 +72174,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave B. .NET sí admite tipos y métodos genéricos. Ensamblado, JIT y CLS también pertenecen a .NET. Falta una opción ajena a la plataforma.",
     "location": "public/data/T3.06.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación con cuatro alternativas y evidencia independiente; contenido exacto aprobado y contexto de supuesto vinculados cuando procede.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -71947,13 +72186,27 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "AT306-P1-35",
       "topic": "T3.06",
       "origin": "A",
       "family": null,
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-languages17.json",
+      "beforeSha256": "4e4956f9d0d78ecf0c49c28bb9158eec1c22c28c9688725bde919c8077738ec0",
+      "afterSha256": "2b56a20fcaa03f655bd42b86c29d8538e51af5d30c29592522eadc75cf7190c9",
+      "source": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java y .NET subrayado.pdf",
+        "page": 58,
+        "quote": "Common Intermediate Language (CIL, antes MSIL o IL, Microsoft Intermediate Lenguaje), similar al bytecode de Java.",
+        "sha256": "958fd595e8074cf619116c4662a21e86ff492f6f46cc077292171661df440e8b",
+        "role": "Resumen, no temario principal"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -72696,9 +72949,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave no aplicable. Con List mayúscula, List.of se resuelve a través de la variable. javac 21 rechaza la llamada estática de interfaz mediante expresión. Solo al corregir el nombre a list se llega a add, que falla por inmutabilidad.",
     "location": "public/data/supuestos.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación con cuatro alternativas y evidencia independiente; contenido exacto aprobado y contexto de supuesto vinculados cuando procede.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -72707,13 +72961,48 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "AS12B-S1-04",
       "topic": "T3.06",
       "origin": "A",
       "family": null,
       "scenario": "AS12B-S1"
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-languages17.json",
+      "beforeSha256": "d6a707ec2c51a9033c0f58aa974bbb11091a9e5dab444b35fea00c06d862701b",
+      "afterSha256": "d79010c491234c319170151b935e0fcd09189fdc511ee728b59be8fc10a713e7",
+      "source": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java.pdf",
+        "page": 19,
+        "quote": "List (interfaz): colección ordenada",
+        "sha256": "e483f61444e926dc88182f2ea4f80e72943cb95f626cc55e665cd95b9714b620",
+        "role": "Resumen, no temario principal"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY",
+      "context": {
+        "scenarioId": "AS12B-S1",
+        "storageFile": "public/data/supuestos.json",
+        "supTexto": "",
+        "contextSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "hashContract": "SHA256 raw UTF-8 supTexto; contextual hashes = SHA256 JSON.stringify({scenarioId,supTexto,question}) in stated insertion order",
+        "beforeContextualSha256": "190c4913ed0d487bee121d7c8c65c9bde5a41a372d5e679d4641ade0142f1cc0",
+        "afterContextualSha256": "5804937e9098e2061c0560dbac8b9d13d54060978085282b41cec4759f83e443",
+        "sourcePDF": "RECURSOS/SIMULACROS/Simulacro 12 (bis).pdf",
+        "sourcePdfSha256": "05f942757c317f295ba81d922a95e924891a5956a67731e2b92c6ceb39a3da5b",
+        "questionPage": 13,
+        "keyPage": 22,
+        "key": "D",
+        "contextPagesRead": [
+          13,
+          14,
+          15,
+          16
+        ],
+        "assessment": "El supuesto comienza directamente en pregunta1 sin preámbulo compartido; q04 y q09 son ejercicios autónomos sin clases/imports externos. texto vacío no elimina contexto necesario para estos dos IDs. No se certifican restantes preguntas ni figuras del supuesto."
+      }
     }
   },
   {
@@ -72724,9 +73013,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave D. El orden natural lo define java.lang.Comparable. El nombre cualificado java.util.Comparable de la clave no existe. Comparator define un orden externo.",
     "location": "public/data/supuestos.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación con cuatro alternativas y evidencia independiente; contenido exacto aprobado y contexto de supuesto vinculados cuando procede.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -72735,13 +73025,48 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "AS12B-S1-09",
       "topic": "T3.06",
       "origin": "A",
       "family": null,
       "scenario": "AS12B-S1"
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-languages17.json",
+      "beforeSha256": "9691ed18b1e2458115ccdeb81559463b3576376ed0a9c9c7e16a880c82a04f6b",
+      "afterSha256": "0558ba118c495e7b99cb56489e777712a08e6c9d0bb2e6847e2d2562df6a941f",
+      "source": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java.pdf",
+        "page": 31,
+        "quote": "java.lang.Comparable, java.lang.CharSequence",
+        "sha256": "e483f61444e926dc88182f2ea4f80e72943cb95f626cc55e665cd95b9714b620",
+        "role": "Resumen, no temario principal"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY",
+      "context": {
+        "scenarioId": "AS12B-S1",
+        "storageFile": "public/data/supuestos.json",
+        "supTexto": "",
+        "contextSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "hashContract": "SHA256 raw UTF-8 supTexto; contextual hashes = SHA256 JSON.stringify({scenarioId,supTexto,question}) in stated insertion order",
+        "beforeContextualSha256": "f17bbb7dfa266210864e9e8bec3a057fd91d22c704c0995b4d150b4caec6a9d9",
+        "afterContextualSha256": "24fa9c0973accc1d650c325bb982eeb5a6a55dd68b903df0e74ac58a17da4748",
+        "sourcePDF": "RECURSOS/SIMULACROS/Simulacro 12 (bis).pdf",
+        "sourcePdfSha256": "05f942757c317f295ba81d922a95e924891a5956a67731e2b92c6ceb39a3da5b",
+        "questionPage": 16,
+        "keyPage": 22,
+        "key": "D",
+        "contextPagesRead": [
+          13,
+          14,
+          15,
+          16
+        ],
+        "assessment": "El supuesto comienza directamente en pregunta1 sin preámbulo compartido; q04 y q09 son ejercicios autónomos sin clases/imports externos. texto vacío no elimina contexto necesario para estos dos IDs. No se certifican restantes preguntas ni figuras del supuesto."
+      }
     }
   },
   {
@@ -89251,9 +89576,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada C. Una variable local o un parámetro sin static tampoco es variable de instancia. Tiene que tratarse de un campo de instancia.",
     "location": "public/data/T3.06.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación con cuatro alternativas y evidencia independiente; contenido exacto aprobado y contexto de supuesto vinculados cuando procede.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -89262,13 +89588,27 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.06-98.v1",
       "topic": "T3.06",
       "origin": "G",
       "family": "GEN-T3.06-98",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-languages17.json",
+      "beforeSha256": "42294b400d8250807819bd4361624c080997226adb78aa7a42ff3ea745cb4f9f",
+      "afterSha256": "05115358501285607d1b4fb4384f5e938b54dabb7cc8eb9f2048b90853f0dc5f",
+      "source": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - C sharp.pdf",
+        "page": 6,
+        "quote": "Variables de instancia: cualquier variable sin el modificador static.",
+        "sha256": "563da7491d1e448f1e37bd58ed145ff1c6dd9539c9abb619e203ef333b593d78",
+        "role": "Resumen, no temario principal"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -89307,9 +89647,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada B. Las conversiones implícitas de long a double o de int a float pueden perder precisión. La ausencia de cast no implica conservar toda la información.",
     "location": "public/data/T3.06.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación con cuatro alternativas y evidencia independiente; contenido exacto aprobado y contexto de supuesto vinculados cuando procede.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -89318,13 +89659,27 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.06-101.v1",
       "topic": "T3.06",
       "origin": "G",
       "family": "GEN-T3.06-101",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-languages17.json",
+      "beforeSha256": "dcaeb6d3168f3ce2d397df26864219e5802983415d3067058ae9470ab73f6f76",
+      "afterSha256": "d131f14e7b56b5bb2cba32ac5805dff86a79b4857d4ced03b81b0dbbba75e904",
+      "source": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - C sharp.pdf",
+        "page": 7,
+        "quote": "La conversión implícita se considera segura, no ocasionando pérdida de información.",
+        "sha256": "563da7491d1e448f1e37bd58ed145ff1c6dd9539c9abb619e203ef333b593d78",
+        "role": "Resumen, no temario principal"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -89587,9 +89942,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada A. throw lanza o relanza; no construye el objeto de excepción. En throw new Exception() el objeto se crea con new.",
     "location": "public/data/T3.06.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación con cuatro alternativas y evidencia independiente; contenido exacto aprobado y contexto de supuesto vinculados cuando procede.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -89598,13 +89954,27 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.06-141.v2",
       "topic": "T3.06",
       "origin": "G",
       "family": "GEN-T3.06-141",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-languages17.json",
+      "beforeSha256": "fbe64662964785cde5be479322ad9db1d1a2205ebc93392a79edc95ca178bd94",
+      "afterSha256": "7ee77640a91f61223ca90aa551b239e1e16122fe62e8ce02be4a6c619ae10b7c",
+      "source": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - C sharp.pdf",
+        "page": 35,
+        "quote": "Las excepciones se crean mediante el uso de la palabra clave throw.",
+        "sha256": "563da7491d1e448f1e37bd58ed145ff1c6dd9539c9abb619e203ef333b593d78",
+        "role": "Resumen, no temario principal"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -89643,9 +90013,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada A. El primer catch textual puede ser incompatible o su filtro falso. La opción omite la condición decisiva de coincidencia.",
     "location": "public/data/T3.06.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación con cuatro alternativas y evidencia independiente; contenido exacto aprobado y contexto de supuesto vinculados cuando procede.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -89654,13 +90025,27 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.06-142.v2",
       "topic": "T3.06",
       "origin": "G",
       "family": "GEN-T3.06-142",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-languages17.json",
+      "beforeSha256": "3582702a64c906f975d90aa5745a3923d29d9138f8f3d4d1cad54f6403a5cff1",
+      "afterSha256": "ff82902d5b823222408b9d9769685544796e6b12a54091e5545c1a5cb9bd43bf",
+      "source": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - C sharp.pdf",
+        "page": 35,
+        "quote": "busca un método con un bloque catch para el tipo de excepción específico y ejecuta el primer bloque catch que encuentra.",
+        "sha256": "563da7491d1e448f1e37bd58ed145ff1c6dd9539c9abb619e203ef333b593d78",
+        "role": "Resumen, no temario principal"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -91561,9 +91946,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada C. El JCP no fue renombrado. Sigue existiendo; Eclipse constituyó un proceso/grupo separado para Jakarta EE.",
     "location": "public/data/T3.06.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación con cuatro alternativas y evidencia independiente; contenido exacto aprobado y contexto de supuesto vinculados cuando procede.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -91572,13 +91958,27 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.06-236.v2",
       "topic": "T3.06",
       "origin": "G",
       "family": "GEN-T3.06-236",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-languages17.json",
+      "beforeSha256": "e608f64e39704c75bc39406e587d65156bf32e5e3dfb370474a739c26091832d",
+      "afterSha256": "d563c87206b234b83ce8dc8decb088776d53dade44fe3909bf421e33fdb5ac12",
+      "source": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java y .NET subrayado.pdf",
+        "page": 4,
+        "quote": "Jakarta EE modifica el nombre de los JCP a Eclipse EE.next Working Group (EE.next).",
+        "sha256": "958fd595e8074cf619116c4662a21e86ff492f6f46cc077292171661df440e8b",
+        "role": "Resumen, no temario principal"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -91701,9 +92101,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada C. El contenedor puede decidir retirar una instancia, pero no hay obligación de descargarla al transcurrir un tiempo de inactividad configurable.",
     "location": "public/data/T3.06.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación con cuatro alternativas y evidencia independiente; contenido exacto aprobado y contexto de supuesto vinculados cuando procede.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -91712,13 +92113,27 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.06-269.v2",
       "topic": "T3.06",
       "origin": "G",
       "family": "GEN-T3.06-269",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-languages17.json",
+      "beforeSha256": "edba3a5ff4639aa896b5b6e17b153dff520e0a71cb280577debbdf2f2c099789",
+      "afterSha256": "5cf106ea8ff9496843d35615eff724ccfbb546eb6a6ecfcaf7545fcc7ba9ffaf",
+      "source": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java y .NET subrayado.pdf",
+        "page": 13,
+        "quote": "Destrucción: si durante un tiempo (configurable) el servlet no recibe peticiones, es descargado de memoria.",
+        "sha256": "958fd595e8074cf619116c4662a21e86ff492f6f46cc077292171661df440e8b",
+        "role": "Resumen, no temario principal"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -92463,9 +92878,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada C. La extensión JCE añadió criptografía al diseño original JCA y después se integró en la plataforma. Describir JCA como reemplazo que amplió JCE invierte la relación histórica.",
     "location": "public/data/T3.06.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación con cuatro alternativas y evidencia independiente; contenido exacto aprobado y contexto de supuesto vinculados cuando procede.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -92474,13 +92890,27 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.06-350.v1",
       "topic": "T3.06",
       "origin": "G",
       "family": "GEN-T3.06-350",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-languages17.json",
+      "beforeSha256": "6eb124702eb29833b044cd90938e4d1af17da9a435b7b9e488f0089555c913b3",
+      "afterSha256": "659cf595cf3c5a41815daab607e260c11ffbc71f99c7e5e8cb0505c9b59cf6f8",
+      "source": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java y .NET subrayado.pdf",
+        "page": 48,
+        "quote": "Reemplaza y amplia al API Java Cryptography Extension (JCE).",
+        "sha256": "958fd595e8074cf619116c4662a21e86ff492f6f46cc077292171661df440e8b",
+        "role": "Resumen, no temario principal"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -92857,9 +93287,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada D. Multi-targeting permite generar artefactos para varios frameworks objetivo. Una biblioteca binaria portable gracias a una versión común del estándar es un concepto distinto.",
     "location": "public/data/T3.06.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación con cuatro alternativas y evidencia independiente; contenido exacto aprobado y contexto de supuesto vinculados cuando procede.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -92868,13 +93299,27 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.06-388.v2",
       "topic": "T3.06",
       "origin": "G",
       "family": "GEN-T3.06-388",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-languages17.json",
+      "beforeSha256": "6f7b5c343be339afc7e39742052e52ae052c22444b785c3daec4545fba486b01",
+      "afterSha256": "0554e8a8febcf13a4585a6804711c91c5670fa42951f44aa646b2b7dd2b2b5b3",
+      "source": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java y .NET subrayado.pdf",
+        "page": 57,
+        "quote": "Compatibilidad con múltiples versiones (multi-targeting).",
+        "sha256": "958fd595e8074cf619116c4662a21e86ff492f6f46cc077292171661df440e8b",
+        "role": "Resumen, no temario principal"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -92885,9 +93330,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada B. CLS es el subconjunto de reglas de tipos/miembros para interoperabilidad entre lenguajes. El CLR puede ejecutar código que no es CLS-compliant.",
     "location": "public/data/T3.06.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación con cuatro alternativas y evidencia independiente; contenido exacto aprobado y contexto de supuesto vinculados cuando procede.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -92896,13 +93342,27 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.06-389.v1",
       "topic": "T3.06",
       "origin": "G",
       "family": "GEN-T3.06-389",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-languages17.json",
+      "beforeSha256": "5fd9731d0da10e63829115864ea7041b8d9d17da7abc7614a79fdc14dfda1cc1",
+      "afterSha256": "650a9b90037a6f0b87c8b7b3d4f48803c6aec483bf26dff0b7c4e8152e93172f",
+      "source": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java y .NET subrayado.pdf",
+        "page": 58,
+        "quote": "Common Language Specification (CLS) que determina las reglas necesarias para crear ese código CIL compatible con el CLR.",
+        "sha256": "958fd595e8074cf619116c4662a21e86ff492f6f46cc077292171661df440e8b",
+        "role": "Resumen, no temario principal"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -92913,9 +93373,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada C. JIT compila métodos según su uso y puede recompilarlos por niveles; el recuento no coincide con el número de instancias de aplicación.",
     "location": "public/data/T3.06.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación con cuatro alternativas y evidencia independiente; contenido exacto aprobado y contexto de supuesto vinculados cuando procede.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -92924,13 +93385,27 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.06-390.v2",
       "topic": "T3.06",
       "origin": "G",
       "family": "GEN-T3.06-390",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-languages17.json",
+      "beforeSha256": "909b23552cc8f6dafab7f12d75f32124e817776880d736413627c417a1725686",
+      "afterSha256": "cce1a2fa03c15d8b5fd7f35eed93762f7e9c10262174f2f9435104d37d90bd06",
+      "source": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java y .NET subrayado.pdf",
+        "page": 58,
+        "quote": "Se requieren tantas compilaciones JIT como instancias de la aplicación se estén ejecutando.",
+        "sha256": "958fd595e8074cf619116c4662a21e86ff492f6f46cc077292171661df440e8b",
+        "role": "Resumen, no temario principal"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -92969,9 +93444,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada D. También existen en .NET moderno y Mono, por lo que «específico de .NET Framework» es demasiado estrecho.",
     "location": "public/data/T3.06.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación con cuatro alternativas y evidencia independiente; contenido exacto aprobado y contexto de supuesto vinculados cuando procede.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -92980,13 +93456,27 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.06-394.v2",
       "topic": "T3.06",
       "origin": "G",
       "family": "GEN-T3.06-394",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-languages17.json",
+      "beforeSha256": "2363a21f71c0ef62edf2fe893c7e55880be46e2076b3409301f6bc94bf26753c",
+      "afterSha256": "eb3f7eadf480edadd5315ad8d156d7c8b745645a362f560602a059ddcca81232",
+      "source": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java y .NET subrayado.pdf",
+        "page": 59,
+        "quote": "Los ensamblados son las unidades de creación de las aplicaciones .NET Framework (concepto específico de este framework).",
+        "sha256": "958fd595e8074cf619116c4662a21e86ff492f6f46cc077292171661df440e8b",
+        "role": "Resumen, no temario principal"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -93221,9 +93711,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada B. El compañero .cshtml.cs con PageModel y handlers es la convención de Razor Pages en Core. En Web Pages clásico el código se escribe en .cshtml.",
     "location": "public/data/T3.06.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación con cuatro alternativas y evidencia independiente; contenido exacto aprobado y contexto de supuesto vinculados cuando procede.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -93232,13 +93723,27 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.06-407.v1",
       "topic": "T3.06",
       "origin": "G",
       "family": "GEN-T3.06-407",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-languages17.json",
+      "beforeSha256": "14bfb7ded39f7536b023f6ee1e0aeaeec38fc2236682cccdc80266c107a16c5e",
+      "afterSha256": "404ba410a888014b27eb6cbaee67e5a8ae65a65d4c8171bb1ef043f51eceffc4",
+      "source": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java y .NET subrayado.pdf",
+        "page": 65,
+        "quote": ".cshtml: contiene el marcado HTML con código C# que usa la sintaxis Razor.",
+        "sha256": "958fd595e8074cf619116c4662a21e86ff492f6f46cc077292171661df440e8b",
+        "role": "Resumen, no temario principal"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -93445,9 +93950,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada D. Entity SQL es lenguaje de entrada del proveedor conceptual. El proveedor de almacén recibe un árbol/comando traducido a su dialecto, no Entity SQL directamente.",
     "location": "public/data/T3.06.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación con cuatro alternativas y evidencia independiente; contenido exacto aprobado y contexto de supuesto vinculados cuando procede.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -93456,13 +93962,27 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.06-432.v2",
       "topic": "T3.06",
       "origin": "G",
       "family": "GEN-T3.06-432",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-languages17.json",
+      "beforeSha256": "f16d3e47c37667b7a8443f39505b023fc4f3cffb56c58675746e8ee54c32d840",
+      "afterSha256": "377276d779ad2fdd53b83a105b2f18a5221c86e92b71607b0c0c62067b7da452",
+      "source": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java y .NET subrayado.pdf",
+        "page": 72,
+        "quote": "En su lugar, usa Entity SQL para comunicarse con el proveedor de datos subyacente.",
+        "sha256": "958fd595e8074cf619116c4662a21e86ff492f6f46cc077292171661df440e8b",
+        "role": "Resumen, no temario principal"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -93781,9 +94301,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada B. nuget list enumera paquetes de los orígenes configurados, no los instalados en el proyecto. Ninguna opción ofrece el listado de referencias instaladas.",
     "location": "public/data/T3.06.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación con cuatro alternativas y evidencia independiente; contenido exacto aprobado y contexto de supuesto vinculados cuando procede.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -93792,13 +94313,27 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.06-464.v2",
       "topic": "T3.06",
       "origin": "G",
       "family": "GEN-T3.06-464",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-languages17.json",
+      "beforeSha256": "4163ffbbe7fba22c18e25c4fbd552d86347057569b07e856eb3b294228201f0b",
+      "afterSha256": "73565b611fe3ce8fd94f1c5e3eb6d16a415c7ec9bb1502f26ff8b772cd26197a",
+      "source": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java y .NET subrayado.pdf",
+        "page": 84,
+        "quote": "nuget list: lista los paquetes instalados del proyecto.",
+        "sha256": "958fd595e8074cf619116c4662a21e86ff492f6f46cc077292171661df440e8b",
+        "role": "Resumen, no temario principal"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -96518,9 +97053,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada A. Device-width mide la anchura de la superficie de salida en CSS px, no la resolución o densidad.",
     "location": "public/data/T3.08.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación con cuatro alternativas y evidencia independiente; contenido exacto aprobado y contexto de supuesto vinculados cuando procede.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -96529,13 +97065,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.08-577.v1",
       "topic": "T3.08",
       "origin": "G",
       "family": "GEN-T3.08-577",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-web23.json",
+      "beforeSha256": "17db3a75be2427665740a1190351d16e2068a91ff0f9c4dadd105c853b783eb1",
+      "afterSha256": "b0ff385bcce6158355b3257b56ae3d1aae47b7048b58a4d46384e2323fd66a76",
+      "source": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - CSS.pdf",
+        "page": 30,
+        "quote": "con device-width hace referencia a la resolución del dispositivo.",
+        "sha256": "f871d3d81529d09b5ee8260e6c78a044df152e0b3a48155f5b54dea41fcf7fee"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -96882,9 +97431,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada D. El nombre histórico es European Computer Manufacturers Association, en plural. La opción marcada omite la s.",
     "location": "public/data/T3.08.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación con cuatro alternativas y evidencia independiente; contenido exacto aprobado y contexto de supuesto vinculados cuando procede.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -96893,13 +97443,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.08-703.v1",
       "topic": "T3.08",
       "origin": "G",
       "family": "GEN-T3.08-703",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-web23.json",
+      "beforeSha256": "2e62137e16f905eb31a7f7c87690123b64e7dbb6688dc96b84b35fb639a95e61",
+      "afterSha256": "afc5d0b2cd5260cabd719dea2503bbb46b3396691d182204ffdba50b96a8829d",
+      "source": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - JavaScript.pdf",
+        "page": 4,
+        "quote": "European Computer Manufacturer Association",
+        "sha256": "1c05b0864e61ae0c2424e1f4d955a400e9260ddce455fba99a0337d56988f8cc"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -96910,9 +97473,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada A. ES5 procedía del trabajo ES3.1. Harmony designó el esfuerzo sucesor, asociado al desarrollo que culminó en ES2015.",
     "location": "public/data/T3.08.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación con cuatro alternativas y evidencia independiente; contenido exacto aprobado y contexto de supuesto vinculados cuando procede.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -96921,13 +97485,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.08-707.v2",
       "topic": "T3.08",
       "origin": "G",
       "family": "GEN-T3.08-707",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-web23.json",
+      "beforeSha256": "921bf12d075d968ebba81ca0956ff6e0c24b24efb0770e5c05b19573298b19da",
+      "afterSha256": "e4003c432a7d0ad755f1ec8049da485db698380a6d883484b65b89865dcdb7a7",
+      "source": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - JavaScript.pdf",
+        "page": 4,
+        "quote": "A esta versión se la conoce también como Harmony, que es el nombre en clave que se le daba mientras estaba en desarrollo.",
+        "sha256": "1c05b0864e61ae0c2424e1f4d955a400e9260ddce455fba99a0337d56988f8cc"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -98002,9 +98579,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada C. Generaliza uniformidad y equipara charCode a no definido; la propiedad heredada puede valer cero.",
     "location": "public/data/T3.08.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación con cuatro alternativas y evidencia independiente; contenido exacto aprobado y contexto de supuesto vinculados cuando procede.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -98013,13 +98591,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.08-785.v2",
       "topic": "T3.08",
       "origin": "G",
       "family": "GEN-T3.08-785",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-web23.json",
+      "beforeSha256": "42f9a881360210061bcb4a60be72be23b1db7578933cd806e42791dd26066ab6",
+      "afterSha256": "592ad02a442136cbe7999c950f121ca8818e296e334e2c53af589560ab1b6cf1",
+      "source": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - JavaScript.pdf",
+        "page": 24,
+        "quote": "Propiedad charCode: no definido.",
+        "sha256": "1c05b0864e61ae0c2424e1f4d955a400e9260ddce455fba99a0337d56988f8cc"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -98058,9 +98649,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada C. Se puede obtener keyCode como propiedad numérica heredada. No hay garantía de que no esté definido.",
     "location": "public/data/T3.08.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación con cuatro alternativas y evidencia independiente; contenido exacto aprobado y contexto de supuesto vinculados cuando procede.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -98069,13 +98661,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.08-786.v1",
       "topic": "T3.08",
       "origin": "G",
       "family": "GEN-T3.08-786",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-web23.json",
+      "beforeSha256": "5f2b8a7371ff945a542384a1da5c5990126ee18c525dc78dc2fa92744dbfcdf0",
+      "afterSha256": "c3a2a62554ad74737448de894a03499f57f84a877fc98ca2a4465103e4a0a915",
+      "source": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - JavaScript.pdf",
+        "page": 24,
+        "quote": "Propiedad keyCode: para las teclas normales, no definido. Para las teclas especiales, el código interno de la tecla.",
+        "sha256": "1c05b0864e61ae0c2424e1f4d955a400e9260ddce455fba99a0337d56988f8cc"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -100229,9 +100834,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada D. La Ruby License no es una licencia creada por la FSF. La distribución ofrece condiciones Ruby o BSD de dos cláusulas, lo que vuelve defendible BSD.",
     "location": "public/data/T3.08.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación con cuatro alternativas y evidencia independiente; contenido exacto aprobado y contexto de supuesto vinculados cuando procede.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -100240,13 +100846,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.08-1302.v1",
       "topic": "T3.08",
       "origin": "G",
       "family": "GEN-T3.08-1302",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-web23.json",
+      "beforeSha256": "8ddeec2035ea5c02423b87435d257d0cb18f4dc74dccc78ee15f8c010a657a31",
+      "afterSha256": "6367b921a99ca0c847d7d099c3c717f669b93ed6b5d9dea372860d5daa5b4050",
+      "source": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - Ruby.pdf",
+        "page": 3,
+        "quote": "Es un lenguaje de código abierto bajo Licencia Ruby de la Free Software Foundation.",
+        "sha256": "fbe6f76b90a113b58fad5c55666315bb3376145e070b352b718cec6fd1d4871f"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {

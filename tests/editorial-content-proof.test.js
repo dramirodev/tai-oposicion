@@ -7,7 +7,8 @@ import { approvedQuestionHashes } from '../src/core/domain/approved-question-has
 import { applyEditorialScoring, isEditorialContentBlocked } from '../src/core/domain/question-review-overrides.js';
 import { questionNotice } from '../src/shared/presentation/study-content.js';
 const read = file => JSON.parse(readFileSync(file, 'utf8'));
-const recent = ['reviewed-19','reviewed-followup','reviewed-wave2','reviewed-admin20','reviewed-legal19','reviewed-programming20','reviewed-web25','reviewed-architecture20'].flatMap(f => read(`scripts/bank-editorial/${f}.json`).questions.filter(q=>q.after.np!==1));
+import { readReviewedRecord } from '../scripts/bank-editorial/reviewed-record.mjs';
+const recent = ['reviewed-19','reviewed-followup','reviewed-wave2','reviewed-admin20','reviewed-legal19','reviewed-programming20','reviewed-web25','reviewed-architecture20','reviewed-languages17','reviewed-web23'].flatMap(f => read(`scripts/bank-editorial/${f}.json`).questions.filter(q=>q.after.np!==1));
 const published = ['reviewed-web','reviewed-T3.08','reviewed-T4.07'].flatMap(f => read(`scripts/bank-editorial/${f}.json`).map(entry => {
  const topic=f==='reviewed-T4.07'?'T4.07':'T3.08';
  const after=read(`public/data/${topic}.json`).find(q=>q.i===entry.id);
@@ -15,13 +16,14 @@ const published = ['reviewed-web','reviewed-T3.08','reviewed-T4.07'].flatMap(f =
  for(const [key,value] of Object.entries(entry.before)) { if(value===null) delete before[key]; else before[key]=value; }
  return {...entry,topic,before,after};
 }));
-const proposals=[...recent,...published];
+const proposals=[...recent,...published].map(q=>q.scenarioId ? {...q,transport:q,before:{...q.before,supTexto:q.context.supTexto},after:{...q.after,supTexto:q.context.supTexto}} : q);
 afterEach(() => vi.unstubAllGlobals());
 const crypto = () => vi.stubGlobal('crypto', webcrypto);
-it('binds exactly300 reviewed records and rejects300 actual prior records, including after a newer sameID', async () => {
- crypto(); expect(Object.keys(approvedQuestionHashes)).toHaveLength(300);
- for(const {id,before,after,topic} of proposals) {
-   expect(read(`public/data/${topic}.json`).find(q=>q.i===id),id).toEqual(after);
+it('binds exactly340 reviewed records and rejects340 actual prior records, including after a newer sameID', async () => {
+ crypto(); expect(Object.keys(approvedQuestionHashes)).toHaveLength(340);
+ for(const entry of proposals) {
+   const {id,before,after}=entry;
+   expect(readReviewedRecord(entry.transport||entry),id).toEqual(after);
    const fresh=await verifyQuestionContent(after);
    expect(hasApprovedQuestionContent(fresh),id).toBe(true);
    expect(applyEditorialScoring(fresh).np,id).not.toBe(1);
