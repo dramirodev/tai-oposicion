@@ -1,5 +1,5 @@
 import { verifyQuestionContent } from './question-content-verification.js';
-import { applyEditorialScoring } from '../../core/domain/question-review-overrides.js';
+import { applyEditorialScoring, questionReviewOverride } from '../../core/domain/question-review-overrides.js';
 import { diagnoseQuestionDtos } from './question-diagnostics.js';
 import type { StudyCatalogIndex as Index, StudyQuestionMetadata as Meta } from '../../core/domain/study-catalog.js';
 import type { QuestionRecord as Question } from '../../core/domain/question-record.js';
@@ -65,12 +65,24 @@ export const getAllQuestionIdsForTopic = (topicId: string): string[] => [...getQ
 export async function getTopicQuestions(topicId: string): Promise<Question[]> { const key = topicCacheKey(topicId); if (!cache.has(key)) cache.set(key, fetchJson<Question[]>(`data/${topicId}.json`).then(async questionRows => { diagnoseQuestionDtos(questionRows); return (await Promise.all(questionRows.map(verifyQuestionContent))).map(applyEditorialScoring); }).catch(error => { cache.delete(key); throw error; })); return cache.get(key)!; }
 export async function getScenarios(): Promise<Record<string, ScenarioEntry>> {
   if (scenarios) return scenarios;
-  if (!scenariosLoading) scenariosLoading = fetchJson<Record<string, ScenarioEntry>>('data/supuestos.json').then(data => {
-    scenarios = data;
-    for (const scenario of Object.values(data)) {
-      for (const question of scenario.q) supQuestions.set(question.i, { ...question, supTexto: scenario.texto });
-    }
-    return data;
+  if (!scenariosLoading) scenariosLoading = fetchJson<Record<string, ScenarioEntry>>('data/supuestos.json').then(async data => {
+    const entries = await Promise.all(Object.entries(data).map(async ([id, scenario]) => {
+      // Bind the exact context before verification, including the empty string.
+      const texto = scenario.texto;
+      const contextual = await Promise.all(scenario.q.map(question =>
+        verifyQuestionContent({ ...question, supTexto: texto }).then(applyEditorialScoring)));
+      return { id, scenario, contextual };
+    }));
+    scenarios = Object.fromEntries(entries.map(({ id, scenario, contextual }) => {
+      // Check again after all digests: a changed context cannot reuse a captured proof.
+      const current = contextual.map(question => question.supTexto === scenario.texto ? question
+        : applyEditorialScoring({ ...question, supTexto: scenario.texto }));
+      current.forEach(question => supQuestions.set(question.i, question));
+      // Keep unrelated historical rows unchanged; reviewed rows carry their contextual proof.
+      const q = scenario.q.map((question, index) => questionReviewOverride(question.i) ? current[index] : question);
+      return [id, { ...scenario, q }];
+    }));
+    return scenarios;
   }).finally(() => { scenariosLoading = undefined; });
   return scenariosLoading;
 }
@@ -86,7 +98,10 @@ export async function getQuestions(ids: string[]): Promise<Question[]> {
   for (const topicQuestions of await Promise.all([...requiredTopics].map(getTopicQuestions))) for (const question of topicQuestions) questionsById.set(question.i, question);
   return canonicalIds.flatMap((canonicalId, index) => {
     const question = questionsById.get(canonicalId);
-    return question ? [applyEditorialScoring({ ...question, i: ids[index] })] : [];
+    if (!question) return [];
+    const renamedReview = canonicalId !== ids[index] && questionReviewOverride(canonicalId);
+    // A proof binds its ID as well as its content; an alias cannot inherit approval.
+    return [applyEditorialScoring({ ...question, i: ids[index], ...(renamedReview ? { np: 1 } : {}) })];
   });
 }
 

@@ -1,0 +1,2816 @@
+{
+  "schemaVersion": 1,
+  "baseCommit": "398718893b74508a528669d30bd127474659ad56",
+  "previousBatch": "reviewed-architecture20",
+  "status": "LOCAL_PENDING_CI_AND_PUBLICATION",
+  "sourceCandidateSha256": "e31e365f506a94be57f42b0792f22a32a9f204a50162b57ee81ee05809988b3f",
+  "fingerprintEncoding": "SHA256 UTF8 JSON.stringify Node insertion-order, no sorted keys; scenario envelope is separate from canonical runtime proof",
+  "questions": [
+    {
+      "id": "AT306-P1-35",
+      "topic": "T3.06",
+      "location": "public/data/T3.06.json",
+      "scenario": null,
+      "priority": "P0",
+      "before": {
+        "i": "AT306-P1-35",
+        "t": "T3.06",
+        "o": "A",
+        "q": "¿Cuál de los siguientes NO es un término asociado a .NET?",
+        "a": [
+          "Ensamblado.",
+          "Código genérico.",
+          "JIT.",
+          "CLS."
+        ],
+        "c": 1,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT306-P1-35",
+        "t": "T3.06",
+        "o": "A",
+        "q": "¿Cuál de los siguientes términos designa la máquina virtual de Java, en lugar de un componente o concepto propio de .NET?",
+        "a": [
+          "Ensamblado.",
+          "JVM.",
+          "JIT de .NET.",
+          "CLS."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "Common Intermediate Language (CIL, antes MSIL o IL, Microsoft Intermediate Lenguaje), similar al bytecode de Java. [p. 58]",
+        "n": "Código genérico también existe en .NET; se sustituye ese distractor inválido por JVM. A: Ensamblado es una unidad .NET. B: JVM designa Java Virtual Machine. C: El JIT forma parte de la ejecución .NET. D: CLS define interoperabilidad entre lenguajes. Fuente primaria: https://learn.microsoft.com/en-us/dotnet/standard/managed-execution-process"
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java y .NET subrayado.pdf",
+        "page": 58,
+        "quote": "Common Intermediate Language (CIL, antes MSIL o IL, Microsoft Intermediate Lenguaje), similar al bytecode de Java.",
+        "sha256": "958fd595e8074cf619116c4662a21e86ff492f6f46cc077292171661df440e8b",
+        "role": "Resumen, no temario principal"
+      },
+      "reviewedOptions": [
+        "Ensamblado es una unidad .NET.",
+        "JVM designa Java Virtual Machine.",
+        "El JIT forma parte de la ejecución .NET.",
+        "CLS define interoperabilidad entre lenguajes."
+      ],
+      "primary": [
+        {
+          "url": "https://learn.microsoft.com/en-us/dotnet/standard/managed-execution-process",
+          "checked": "2026-11-06"
+        },
+        {
+          "url": "https://docs.oracle.com/javase/specs/jvms/se21/html/jvms-1.html#jvms-1.2",
+          "checked": "2026-11-06",
+          "purpose": "Definición primaria de Java Virtual Machine; complementa conceptos .NET."
+        }
+      ],
+      "sourceDiscrepancy": "Código genérico también existe en .NET; se sustituye ese distractor inválido por JVM.",
+      "objectiveChange": "Mismo concepto; se corrige premisa falsa o alternativa errónea.",
+      "status": "independently-reviewed-local-not-applied",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "originalTask": {
+        "id": "ITEM-AT306-P1-35",
+        "finding": "AT306-P1-35",
+        "evidence": "T3.06 Java y .NET - Test.pdf (plantilla p. 16); T3.06 Java y .NET - Resumen - C plus.pdf p. 18 (pasaje localizado: genéricos)",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave B. .NET sí admite tipos y métodos genéricos. Ensamblado, JIT y CLS también pertenecen a .NET. Falta una opción ajena a la plataforma.",
+        "location": "public/data/T3.06.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "AT306-P1-35",
+          "topic": "T3.06",
+          "origin": "A",
+          "family": null,
+          "scenario": null
+        }
+      },
+      "beforeSha256": "4e4956f9d0d78ecf0c49c28bb9158eec1c22c28c9688725bde919c8077738ec0",
+      "afterSha256": "2b56a20fcaa03f655bd42b86c29d8538e51af5d30c29592522eadc75cf7190c9",
+      "inSample": false,
+      "storageFile": "public/data/T3.06.json",
+      "scenarioId": null,
+      "questionSha256": "e7a34989fcd61228181c994fd97e79ef28845747bb4ba021d402af5473828956",
+      "independentReview": {
+        "verdict": "APPROVE_SCOPED",
+        "keyUnique": true,
+        "reviewedOptions": [
+          "Ensamblado es una unidad .NET.",
+          "JVM designa Java Virtual Machine.",
+          "El JIT forma parte de la ejecución .NET.",
+          "CLS define interoperabilidad entre lenguajes."
+        ],
+        "k": "D",
+        "scope": "Contenido de las cuatro alternativas, referencia y alcance contrastados. No certifica ejecución .NET.",
+        "reviewer": "oficial",
+        "date": "2026-11-06"
+      }
+    },
+    {
+      "id": "AS12B-S1-04",
+      "topic": "T3.06",
+      "location": "public/data/supuestos.json",
+      "scenario": "AS12B-S1",
+      "priority": "P0",
+      "before": {
+        "i": "AS12B-S1-04",
+        "t": "T3.06",
+        "o": "A",
+        "q": "El siguiente código Java (versión 11 o superior), ¿es correcto? List<Integer> List = List.of(1, 2, 3); List.add(4);",
+        "a": [
+          "Sí, se añadirá el elemento 4 a la listsa list.",
+          "No, para los números debería usarse “Integer”, no “int”.",
+          "No, no existe esa forma de construir una lista.",
+          "No, la lista list es inmutable y no se puede añadir el 4."
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [],
+        "d": 2,
+        "n": "List.of es inmutable.",
+        "z": 1,
+        "s": "AS12B-S1"
+      },
+      "after": {
+        "i": "AS12B-S1-04",
+        "t": "T3.06",
+        "o": "A",
+        "q": "En Java 11, con import java.util.List; y dentro de main, ¿qué ocurre al ejecutar este código?\n```java\nList<Integer> list = List.of(1, 2, 3);\nlist.add(4);\n```",
+        "a": [
+          "Se añade 4 a la lista.",
+          "No compila porque debería utilizar int en lugar de Integer.",
+          "No compila porque List.of no existe en Java 11.",
+          "Compila, pero add lanza UnsupportedOperationException."
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [],
+        "d": 2,
+        "n": "Errata de academia: se cambia la variable List por list para no ocultar la interfaz; sólo después se alcanza la operación sobre una lista no modificable. El resumen sólo sitúa List; la inmutabilidad de List.of se acredita con el API. A: La lista no admite añadir elementos. B: Los argumentos de tipo usan Integer, no int. C: List.of existe desde Java9. D: La operación mutadora falla en ejecución. Fuente primaria: https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html",
+        "z": 1,
+        "s": "AS12B-S1",
+        "u": "List (interfaz): colección ordenada [p. 19]"
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java.pdf",
+        "page": 19,
+        "quote": "List (interfaz): colección ordenada",
+        "sha256": "e483f61444e926dc88182f2ea4f80e72943cb95f626cc55e665cd95b9714b620",
+        "role": "Resumen, no temario principal"
+      },
+      "reviewedOptions": [
+        "La lista no admite añadir elementos.",
+        "Los argumentos de tipo usan Integer, no int.",
+        "List.of existe desde Java9.",
+        "La operación mutadora falla en ejecución."
+      ],
+      "primary": [
+        {
+          "url": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/List.html",
+          "checked": "2026-11-06"
+        }
+      ],
+      "sourceDiscrepancy": "Errata de academia: se cambia la variable List por list para no ocultar la interfaz; sólo después se alcanza la operación sobre una lista no modificable. El resumen sólo sitúa List; la inmutabilidad de List.of se acredita con el API.",
+      "objectiveChange": "Mismo caso List.of/add; reparación explícita del identificador de variable para evaluar la operación pretendida, no el error de ocultación.",
+      "status": "independently-reviewed-local-not-applied",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "originalTask": {
+        "id": "ITEM-AS12B-S1-04",
+        "finding": "AS12B-S1-04",
+        "evidence": "Simulacro 12 (bis).pdf (plantilla p. 22)",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave no aplicable. Con List mayúscula, List.of se resuelve a través de la variable. javac 21 rechaza la llamada estática de interfaz mediante expresión. Solo al corregir el nombre a list se llega a add, que falla por inmutabilidad.",
+        "location": "public/data/supuestos.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "AS12B-S1-04",
+          "topic": "T3.06",
+          "origin": "A",
+          "family": null,
+          "scenario": "AS12B-S1"
+        }
+      },
+      "beforeSha256": "d6a707ec2c51a9033c0f58aa974bbb11091a9e5dab444b35fea00c06d862701b",
+      "afterSha256": "d79010c491234c319170151b935e0fcd09189fdc511ee728b59be8fc10a713e7",
+      "inSample": false,
+      "storageFile": "public/data/supuestos.json",
+      "scenarioId": "AS12B-S1",
+      "context": {
+        "scenarioId": "AS12B-S1",
+        "storageFile": "public/data/supuestos.json",
+        "supTexto": "",
+        "contextSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "hashContract": "SHA256 raw UTF-8 supTexto; contextual hashes = SHA256 JSON.stringify({scenarioId,supTexto,question}) in stated insertion order",
+        "beforeContextualSha256": "190c4913ed0d487bee121d7c8c65c9bde5a41a372d5e679d4641ade0142f1cc0",
+        "afterContextualSha256": "5804937e9098e2061c0560dbac8b9d13d54060978085282b41cec4759f83e443",
+        "sourcePDF": "RECURSOS/SIMULACROS/Simulacro 12 (bis).pdf",
+        "sourcePdfSha256": "05f942757c317f295ba81d922a95e924891a5956a67731e2b92c6ceb39a3da5b",
+        "questionPage": 13,
+        "keyPage": 22,
+        "key": "D",
+        "contextPagesRead": [
+          13,
+          14,
+          15,
+          16
+        ],
+        "assessment": "El supuesto comienza directamente en pregunta1 sin preámbulo compartido; q04 y q09 son ejercicios autónomos sin clases/imports externos. texto vacío no elimina contexto necesario para estos dos IDs. No se certifican restantes preguntas ni figuras del supuesto."
+      },
+      "questionSha256": "dbf3f2dac939452170fb359cc44c89c52566637ecab05fc03aa7d31b43faafad",
+      "independentReview": {
+        "verdict": "APPROVE_SCOPED",
+        "keyUnique": true,
+        "reviewedOptions": [
+          "La lista no admite añadir elementos.",
+          "Los argumentos de tipo usan Integer, no int.",
+          "List.of existe desde Java9.",
+          "La operación mutadora falla en ejecución."
+        ],
+        "k": "K",
+        "scope": "Contenido de las cuatro alternativas, referencia y alcance contrastados. No certifica ejecución .NET.",
+        "reviewer": "oficial",
+        "date": "2026-11-06"
+      }
+    },
+    {
+      "id": "AS12B-S1-09",
+      "topic": "T3.06",
+      "location": "public/data/supuestos.json",
+      "scenario": "AS12B-S1",
+      "priority": "P0",
+      "before": {
+        "i": "AS12B-S1-09",
+        "t": "T3.06",
+        "o": "A",
+        "q": "En Java, ¿qué interfaz utilizaría si dispone de una lista de elementos y desea ordenarlos según el orden natural de los mismos?",
+        "a": [
+          "java.util.Sorted.",
+          "java.util.Order.",
+          "java.util.Comparator.",
+          "java.util.Comparable."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Comparable frente a Comparator e inventadas.",
+        "s": "AS12B-S1"
+      },
+      "after": {
+        "i": "AS12B-S1-09",
+        "t": "T3.06",
+        "o": "A",
+        "q": "En Java, ¿qué interfaz define el orden natural de los objetos de una clase?",
+        "a": [
+          "java.util.Sorted.",
+          "java.util.Order.",
+          "java.util.Comparator.",
+          "java.lang.Comparable."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 2,
+        "n": "Errata de academia: Comparable pertenece a java.lang, no a java.util. A: No es la interfaz estándar. B: No es la interfaz estándar. C: Comparator define una comparación externa. D: compareTo define el orden natural. Fuente primaria: https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Comparable.html",
+        "s": "AS12B-S1",
+        "u": "java.lang.Comparable, java.lang.CharSequence [p. 31]"
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java.pdf",
+        "page": 31,
+        "quote": "java.lang.Comparable, java.lang.CharSequence",
+        "sha256": "e483f61444e926dc88182f2ea4f80e72943cb95f626cc55e665cd95b9714b620",
+        "role": "Resumen, no temario principal"
+      },
+      "reviewedOptions": [
+        "No es la interfaz estándar.",
+        "No es la interfaz estándar.",
+        "Comparator define una comparación externa.",
+        "compareTo define el orden natural."
+      ],
+      "primary": [
+        {
+          "url": "https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Comparable.html",
+          "checked": "2026-11-06"
+        }
+      ],
+      "sourceDiscrepancy": "Errata de academia: Comparable pertenece a java.lang, no a java.util.",
+      "objectiveChange": "Mismo concepto; se corrige premisa falsa o alternativa errónea.",
+      "status": "independently-reviewed-local-not-applied",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "originalTask": {
+        "id": "ITEM-AS12B-S1-09",
+        "finding": "AS12B-S1-09",
+        "evidence": "Simulacro 12 (bis).pdf (plantilla p. 22); T3.06 Java y .NET - Resumen - Java.pdf p. 31 (pasaje localizado: Comparable)",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave D. El orden natural lo define java.lang.Comparable. El nombre cualificado java.util.Comparable de la clave no existe. Comparator define un orden externo.",
+        "location": "public/data/supuestos.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "AS12B-S1-09",
+          "topic": "T3.06",
+          "origin": "A",
+          "family": null,
+          "scenario": "AS12B-S1"
+        }
+      },
+      "beforeSha256": "9691ed18b1e2458115ccdeb81559463b3576376ed0a9c9c7e16a880c82a04f6b",
+      "afterSha256": "0558ba118c495e7b99cb56489e777712a08e6c9d0bb2e6847e2d2562df6a941f",
+      "inSample": false,
+      "storageFile": "public/data/supuestos.json",
+      "scenarioId": "AS12B-S1",
+      "context": {
+        "scenarioId": "AS12B-S1",
+        "storageFile": "public/data/supuestos.json",
+        "supTexto": "",
+        "contextSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "hashContract": "SHA256 raw UTF-8 supTexto; contextual hashes = SHA256 JSON.stringify({scenarioId,supTexto,question}) in stated insertion order",
+        "beforeContextualSha256": "f17bbb7dfa266210864e9e8bec3a057fd91d22c704c0995b4d150b4caec6a9d9",
+        "afterContextualSha256": "24fa9c0973accc1d650c325bb982eeb5a6a55dd68b903df0e74ac58a17da4748",
+        "sourcePDF": "RECURSOS/SIMULACROS/Simulacro 12 (bis).pdf",
+        "sourcePdfSha256": "05f942757c317f295ba81d922a95e924891a5956a67731e2b92c6ceb39a3da5b",
+        "questionPage": 16,
+        "keyPage": 22,
+        "key": "D",
+        "contextPagesRead": [
+          13,
+          14,
+          15,
+          16
+        ],
+        "assessment": "El supuesto comienza directamente en pregunta1 sin preámbulo compartido; q04 y q09 son ejercicios autónomos sin clases/imports externos. texto vacío no elimina contexto necesario para estos dos IDs. No se certifican restantes preguntas ni figuras del supuesto."
+      },
+      "questionSha256": "d899df4e83921563c4600e5128ac2de303ed64d72c7cf3c5810940a933f9f544",
+      "independentReview": {
+        "verdict": "APPROVE_SCOPED",
+        "keyUnique": true,
+        "reviewedOptions": [
+          "No es la interfaz estándar.",
+          "No es la interfaz estándar.",
+          "Comparator define una comparación externa.",
+          "compareTo define el orden natural."
+        ],
+        "k": "D",
+        "scope": "Contenido de las cuatro alternativas, referencia y alcance contrastados. No certifica ejecución .NET.",
+        "reviewer": "oficial",
+        "date": "2026-11-06"
+      }
+    },
+    {
+      "id": "GEN-T3.06-98.v1",
+      "topic": "T3.06",
+      "location": "public/data/T3.06.json",
+      "scenario": null,
+      "priority": "P0",
+      "before": {
+        "i": "GEN-T3.06-98.v1",
+        "t": "T3.06",
+        "o": "G",
+        "q": "En C#, las variables de instancia son:",
+        "a": [
+          "Las constantes.",
+          "Las que llevan el modificador static.",
+          "Cualquier variable sin el modificador static.",
+          "Solo las privadas."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.06-98",
+        "u": "Variables estáticas: en la declaración se incluye el modificador static. Variables de instancia: cualquier variable sin el modificador static.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T3.06-98.v1",
+        "t": "T3.06",
+        "o": "G",
+        "q": "En C#, un campo de instancia de una clase es:",
+        "a": [
+          "Una constante declarada con const.",
+          "Un campo declarado con static.",
+          "Un campo no estático que pertenece a cada instancia.",
+          "Cualquier variable local de un método."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.06-98",
+        "u": "Variables de instancia: cualquier variable sin el modificador static. [p. 6]",
+        "v": 0,
+        "w": 1,
+        "n": "La ausencia de static en cualquier variable no basta: hay que distinguir campos de locales y parámetros. A: Una constante no es un campo de instancia. B: Ese campo pertenece al tipo. C: Describe el campo de instancia. D: Una local no es miembro de la instancia. Fuente primaria: https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/fields"
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - C sharp.pdf",
+        "page": 6,
+        "quote": "Variables de instancia: cualquier variable sin el modificador static.",
+        "sha256": "563da7491d1e448f1e37bd58ed145ff1c6dd9539c9abb619e203ef333b593d78",
+        "role": "Resumen, no temario principal"
+      },
+      "reviewedOptions": [
+        "Una constante no es un campo de instancia.",
+        "Ese campo pertenece al tipo.",
+        "Describe el campo de instancia.",
+        "Una local no es miembro de la instancia."
+      ],
+      "primary": [
+        {
+          "url": "https://learn.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/fields",
+          "checked": "2026-11-06"
+        }
+      ],
+      "sourceDiscrepancy": "La ausencia de static en cualquier variable no basta: hay que distinguir campos de locales y parámetros.",
+      "objectiveChange": "Mismo concepto; se corrige premisa falsa o alternativa errónea.",
+      "status": "independently-reviewed-local-not-applied",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "originalTask": {
+        "id": "ITEM-GEN-T3.06-98.v1",
+        "finding": "GEN-T3.06-98.v1",
+        "evidence": "T3.06 Java y .NET/T3.06 Java y .NET - Resumen - C sharp.pdf p. 6",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave registrada C. Una variable local o un parámetro sin static tampoco es variable de instancia. Tiene que tratarse de un campo de instancia.",
+        "location": "public/data/T3.06.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "GEN-T3.06-98.v1",
+          "topic": "T3.06",
+          "origin": "G",
+          "family": "GEN-T3.06-98",
+          "scenario": null
+        }
+      },
+      "beforeSha256": "42294b400d8250807819bd4361624c080997226adb78aa7a42ff3ea745cb4f9f",
+      "afterSha256": "05115358501285607d1b4fb4384f5e938b54dabb7cc8eb9f2048b90853f0dc5f",
+      "inSample": false,
+      "storageFile": "public/data/T3.06.json",
+      "scenarioId": null,
+      "questionSha256": "3c989301c20eb803c5638f9ecf875506cf8f4697aca810967ed54d29310bba95",
+      "independentReview": {
+        "verdict": "APPROVE_SCOPED",
+        "keyUnique": true,
+        "reviewedOptions": [
+          "Una constante no es un campo de instancia.",
+          "Ese campo pertenece al tipo.",
+          "Describe el campo de instancia.",
+          "Una local no es miembro de la instancia."
+        ],
+        "k": "C",
+        "scope": "Contenido de las cuatro alternativas, referencia y alcance contrastados. No certifica ejecución .NET.",
+        "reviewer": "oficial",
+        "date": "2026-11-06"
+      }
+    },
+    {
+      "id": "GEN-T3.06-101.v1",
+      "topic": "T3.06",
+      "location": "public/data/T3.06.json",
+      "scenario": null,
+      "priority": "P0",
+      "before": {
+        "i": "GEN-T3.06-101.v1",
+        "t": "T3.06",
+        "o": "G",
+        "q": "En C#, la conversión implícita se considera:",
+        "a": [
+          "Siempre explícita.",
+          "Segura, sin pérdida de información.",
+          "Reservada a enum.",
+          "Insegura, con pérdida de información."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          2,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.06-101",
+        "u": "La conversión implícita se considera segura, no ocasionando pérdida de información. Se incluye la conversión de tipos enteros más pequeños a más grandes y conversiones de clases derivadas a clases base.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T3.06-101.v1",
+        "t": "T3.06",
+        "o": "G",
+        "q": "Sobre las conversiones numéricas implícitas de C#, ¿qué afirmación es correcta?",
+        "a": [
+          "Todas requieren un cast escrito.",
+          "Algunas, como int a float, pueden perder precisión sin requerir un cast.",
+          "Sólo existen entre tipos enum.",
+          "Todas pierden precisión."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          2,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.06-101",
+        "u": "La conversión implícita se considera segura, no ocasionando pérdida de información. [p. 7]",
+        "v": 0,
+        "w": 1,
+        "n": "El resumen generaliza conservación de información; int→float y long→double son contraejemplos documentados. A: Una implícita no requiere ese cast. B: La representación flotante puede redondear. C: También existen entre tipos numéricos no enum. D: Muchas son exactas. Fuente primaria: https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/numeric-conversions"
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - C sharp.pdf",
+        "page": 7,
+        "quote": "La conversión implícita se considera segura, no ocasionando pérdida de información.",
+        "sha256": "563da7491d1e448f1e37bd58ed145ff1c6dd9539c9abb619e203ef333b593d78",
+        "role": "Resumen, no temario principal"
+      },
+      "reviewedOptions": [
+        "Una implícita no requiere ese cast.",
+        "La representación flotante puede redondear.",
+        "También existen entre tipos numéricos no enum.",
+        "Muchas son exactas."
+      ],
+      "primary": [
+        {
+          "url": "https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/numeric-conversions",
+          "checked": "2026-11-06"
+        }
+      ],
+      "sourceDiscrepancy": "El resumen generaliza conservación de información; int→float y long→double son contraejemplos documentados.",
+      "objectiveChange": "Mismo concepto; se corrige premisa falsa o alternativa errónea.",
+      "status": "independently-reviewed-local-not-applied",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "originalTask": {
+        "id": "ITEM-GEN-T3.06-101.v1",
+        "finding": "GEN-T3.06-101.v1",
+        "evidence": "T3.06 Java y .NET/T3.06 Java y .NET - Resumen - C sharp.pdf p. 7",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave registrada B. Las conversiones implícitas de long a double o de int a float pueden perder precisión. La ausencia de cast no implica conservar toda la información.",
+        "location": "public/data/T3.06.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "GEN-T3.06-101.v1",
+          "topic": "T3.06",
+          "origin": "G",
+          "family": "GEN-T3.06-101",
+          "scenario": null
+        }
+      },
+      "beforeSha256": "dcaeb6d3168f3ce2d397df26864219e5802983415d3067058ae9470ab73f6f76",
+      "afterSha256": "d131f14e7b56b5bb2cba32ac5805dff86a79b4857d4ced03b81b0dbbba75e904",
+      "inSample": false,
+      "storageFile": "public/data/T3.06.json",
+      "scenarioId": null,
+      "questionSha256": "75e43e0d88c7572c7cf288d765288c0eff20db3524e9aee4dae777eb79e40ef7",
+      "independentReview": {
+        "verdict": "APPROVE_SCOPED",
+        "keyUnique": true,
+        "reviewedOptions": [
+          "Una implícita no requiere ese cast.",
+          "La representación flotante puede redondear.",
+          "También existen entre tipos numéricos no enum.",
+          "Muchas son exactas."
+        ],
+        "k": "D",
+        "scope": "Contenido de las cuatro alternativas, referencia y alcance contrastados. No certifica ejecución .NET.",
+        "reviewer": "oficial",
+        "date": "2026-11-06"
+      }
+    },
+    {
+      "id": "GEN-T3.06-141.v2",
+      "topic": "T3.06",
+      "location": "public/data/T3.06.json",
+      "scenario": null,
+      "priority": "P0",
+      "before": {
+        "i": "GEN-T3.06-141.v2",
+        "t": "T3.06",
+        "o": "G",
+        "q": "En C#, las excepciones se crean mediante la palabra clave:",
+        "a": [
+          "throw.",
+          "try.",
+          "new exception.",
+          "raise."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.06-141",
+        "u": "Las excepciones son tipos que derivan de System.Exception. El control de excepciones usa las palabras clave try, catch y finally",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T3.06-141.v2",
+        "t": "T3.06",
+        "o": "G",
+        "q": "En C#, en la instrucción throw new Exception();, ¿qué palabra clave construye el objeto de excepción?",
+        "a": [
+          "throw.",
+          "try.",
+          "new.",
+          "raise."
+        ],
+        "c": 2,
+        "k": "K",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.06-141",
+        "u": "Las excepciones se crean mediante el uso de la palabra clave throw. [p. 35]",
+        "v": 0,
+        "w": 1,
+        "n": "throw lanza o relanza; new construye el objeto usado en este ejemplo. A: Lanza la excepción construida. B: Delimita un bloque protegido. C: Invoca la construcción del objeto. D: No es la palabra clave de C#. Fuente primaria: https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/statements/exception-handling-statements"
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - C sharp.pdf",
+        "page": 35,
+        "quote": "Las excepciones se crean mediante el uso de la palabra clave throw.",
+        "sha256": "563da7491d1e448f1e37bd58ed145ff1c6dd9539c9abb619e203ef333b593d78",
+        "role": "Resumen, no temario principal"
+      },
+      "reviewedOptions": [
+        "Lanza la excepción construida.",
+        "Delimita un bloque protegido.",
+        "Invoca la construcción del objeto.",
+        "No es la palabra clave de C#."
+      ],
+      "primary": [
+        {
+          "url": "https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/statements/exception-handling-statements",
+          "checked": "2026-11-06"
+        }
+      ],
+      "sourceDiscrepancy": "throw lanza o relanza; new construye el objeto usado en este ejemplo.",
+      "objectiveChange": "Mismo concepto; se corrige premisa falsa o alternativa errónea.",
+      "status": "independently-reviewed-local-not-applied",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "originalTask": {
+        "id": "ITEM-GEN-T3.06-141.v2",
+        "finding": "GEN-T3.06-141.v2",
+        "evidence": "T3.06 Java y .NET/T3.06 Java y .NET - Resumen - C sharp.pdf p. 35",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave registrada A. throw lanza o relanza; no construye el objeto de excepción. En throw new Exception() el objeto se crea con new.",
+        "location": "public/data/T3.06.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "GEN-T3.06-141.v2",
+          "topic": "T3.06",
+          "origin": "G",
+          "family": "GEN-T3.06-141",
+          "scenario": null
+        }
+      },
+      "beforeSha256": "fbe64662964785cde5be479322ad9db1d1a2205ebc93392a79edc95ca178bd94",
+      "afterSha256": "7ee77640a91f61223ca90aa551b239e1e16122fe62e8ce02be4a6c619ae10b7c",
+      "inSample": false,
+      "storageFile": "public/data/T3.06.json",
+      "scenarioId": null,
+      "questionSha256": "77585aa70a9293cf525e7659c63e898fff0a6fa389b7644f7a865fb4f530cf73",
+      "independentReview": {
+        "verdict": "APPROVE_SCOPED",
+        "keyUnique": true,
+        "reviewedOptions": [
+          "Lanza la excepción construida.",
+          "Delimita un bloque protegido.",
+          "Invoca la construcción del objeto.",
+          "No es la palabra clave de C#."
+        ],
+        "k": "K",
+        "scope": "Contenido de las cuatro alternativas, referencia y alcance contrastados. No certifica ejecución .NET.",
+        "reviewer": "oficial",
+        "date": "2026-11-06"
+      }
+    },
+    {
+      "id": "GEN-T3.06-142.v2",
+      "topic": "T3.06",
+      "location": "public/data/T3.06.json",
+      "scenario": null,
+      "priority": "P0",
+      "before": {
+        "i": "GEN-T3.06-142.v2",
+        "t": "T3.06",
+        "o": "G",
+        "q": "En C#, ante una excepción el CLR ejecuta:",
+        "a": [
+          "El primer bloque catch que encuentra.",
+          "El último bloque catch.",
+          "Todos los bloques catch coincidentes.",
+          "El bloque finally antes que cualquier catch."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.06-142",
+        "u": "Cuando se genera una excepción, CLR desenreda la pila, busca un método con un bloque catch para el tipo de excepción específico y ejecuta el primer bloque catch que encuentra. Si no encuentra ningún bloque catch adecuado en cualquier parte de la pila de llamadas, finalizará el proceso y mostrará un mensaje al usuario.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T3.06-142.v2",
+        "t": "T3.06",
+        "o": "G",
+        "q": "En C#, ¿cómo se selecciona un bloque catch entre varios asociados al mismo try?",
+        "a": [
+          "Se evalúan en orden y se elige el primero compatible con la excepción y cuyo filtro, si existe, sea verdadero.",
+          "Siempre el último.",
+          "Todos los que tengan tipo compatible.",
+          "El primero aunque su tipo sea incompatible."
+        ],
+        "c": 0,
+        "k": "D",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.06-142",
+        "u": "busca un método con un bloque catch para el tipo de excepción específico y ejecuta el primer bloque catch que encuentra. [p. 35]",
+        "v": 0,
+        "w": 1,
+        "n": "La selección atiende a la compatibilidad de la excepción y al filtro, no a la igualdad exacta del tipo ni a ser simplemente el primer catch textual. Si ninguno es aplicable, la búsqueda continúa fuera de ese try. A: Incluye el orden, la compatibilidad y el filtro. B: No se prioriza el último. C: Se selecciona un manejador, no todos. D: Un tipo incompatible no captura la excepción. Fuente primaria: https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/statements/exception-handling-statements"
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - C sharp.pdf",
+        "page": 35,
+        "quote": "busca un método con un bloque catch para el tipo de excepción específico y ejecuta el primer bloque catch que encuentra.",
+        "sha256": "563da7491d1e448f1e37bd58ed145ff1c6dd9539c9abb619e203ef333b593d78",
+        "role": "Resumen, no temario principal"
+      },
+      "reviewedOptions": [
+        "Incluye orden, compatibilidad y filtro; admite catch general sin declarar tipo.",
+        "No se prioriza el último.",
+        "Se selecciona un manejador, no todos.",
+        "Un tipo incompatible no captura la excepción."
+      ],
+      "primary": [
+        {
+          "url": "https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/statements/exception-handling-statements",
+          "checked": "2026-11-06"
+        }
+      ],
+      "sourceDiscrepancy": "La selección necesita coincidencia de tipo y filtro; no basta ser el primer catch textual. Segunda firma precisa compatibilidad en lugar de igualdad del tipo y contempla ausencia de manejador aplicable.",
+      "objectiveChange": "Mismo concepto; se corrige premisa falsa o alternativa errónea.",
+      "status": "independently-reviewed-local-not-applied",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "originalTask": {
+        "id": "ITEM-GEN-T3.06-142.v2",
+        "finding": "GEN-T3.06-142.v2",
+        "evidence": "T3.06 Java y .NET/T3.06 Java y .NET - Resumen - C sharp.pdf p. 35",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave registrada A. El primer catch textual puede ser incompatible o su filtro falso. La opción omite la condición decisiva de coincidencia.",
+        "location": "public/data/T3.06.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "GEN-T3.06-142.v2",
+          "topic": "T3.06",
+          "origin": "G",
+          "family": "GEN-T3.06-142",
+          "scenario": null
+        }
+      },
+      "beforeSha256": "3582702a64c906f975d90aa5745a3923d29d9138f8f3d4d1cad54f6403a5cff1",
+      "afterSha256": "ff82902d5b823222408b9d9769685544796e6b12a54091e5545c1a5cb9bd43bf",
+      "inSample": false,
+      "storageFile": "public/data/T3.06.json",
+      "scenarioId": null,
+      "questionSha256": "70c7739d6f0769bb7b32114187b140ad9d2db770a06d1c0b0c5aa86b06e1a7c6",
+      "independentReview": {
+        "verdict": "APPROVE_SCOPED",
+        "keyUnique": true,
+        "reviewedOptions": [
+          "Incluye orden, compatibilidad y filtro; admite catch general sin declarar tipo.",
+          "No se prioriza el último.",
+          "Se selecciona un manejador, no todos.",
+          "Un tipo incompatible no captura la excepción."
+        ],
+        "k": "D",
+        "scope": "Contenido de las cuatro alternativas, referencia y alcance contrastados. No certifica ejecución .NET.",
+        "reviewer": "oficial",
+        "date": "2026-11-06"
+      }
+    },
+    {
+      "id": "GEN-T3.06-236.v2",
+      "topic": "T3.06",
+      "location": "public/data/T3.06.json",
+      "scenario": null,
+      "priority": "P0",
+      "before": {
+        "i": "GEN-T3.06-236.v2",
+        "t": "T3.06",
+        "o": "G",
+        "q": "Jakarta EE modifica el nombre del JCP a:",
+        "a": [
+          "Eclipse Community Process.",
+          "Eclipse JSR Group.",
+          "Eclipse EE.next Working Group (EE.next).",
+          "Jakarta Community Process."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.06-236",
+        "u": "La plataforma Java EE se desarrolla a través de Java Community Process (JCP), que es responsable de todas las tecnologías Java. Grupos de expertos compuestos por partes interesadas han creado solicitudes de especificación Java (JSR)",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T3.06-236.v2",
+        "t": "T3.06",
+        "o": "G",
+        "q": "¿Qué afirmación distingue correctamente el JCP y el proceso de especificaciones de Jakarta EE?",
+        "a": [
+          "JCP cambió oficialmente su nombre a Eclipse Community Process.",
+          "JCP dejó de existir al crearse Jakarta EE.",
+          "Jakarta EE tiene su proceso de especificaciones en Eclipse; no es un simple cambio de nombre del JCP.",
+          "Jakarta EE se especifica sin proceso formal."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.06-236",
+        "u": "Jakarta EE modifica el nombre de los JCP a Eclipse EE.next Working Group (EE.next). [p. 4]",
+        "v": 0,
+        "w": 1,
+        "n": "El resumen confunde la transferencia de JavaEE y creación de procesos/grupos con renombrar el JCP. A: No es el nombre oficial del JCP. B: JCP sigue existiendo. C: JESP y JCP son procesos distintos. D: Existe JESP. Fuente primaria: https://jakarta.ee/about/jesp/ ; https://jcp.org/en/home/index"
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java y .NET subrayado.pdf",
+        "page": 4,
+        "quote": "Jakarta EE modifica el nombre de los JCP a Eclipse EE.next Working Group (EE.next).",
+        "sha256": "958fd595e8074cf619116c4662a21e86ff492f6f46cc077292171661df440e8b",
+        "role": "Resumen, no temario principal"
+      },
+      "reviewedOptions": [
+        "No es el nombre oficial del JCP.",
+        "JCP sigue existiendo.",
+        "JESP y JCP son procesos distintos.",
+        "Existe JESP."
+      ],
+      "primary": [
+        {
+          "url": "https://jakarta.ee/about/jesp/",
+          "checked": "2026-11-06"
+        },
+        {
+          "url": "https://jcp.org/en/home/index",
+          "checked": "2026-11-06"
+        }
+      ],
+      "sourceDiscrepancy": "El resumen confunde la transferencia de JavaEE y creación de procesos/grupos con renombrar el JCP.",
+      "objectiveChange": "Mismo concepto; se corrige premisa falsa o alternativa errónea.",
+      "status": "independently-reviewed-local-not-applied",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "originalTask": {
+        "id": "ITEM-GEN-T3.06-236.v2",
+        "finding": "GEN-T3.06-236.v2",
+        "evidence": "T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java y .NET subrayado.pdf p. 4",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave registrada C. El JCP no fue renombrado. Sigue existiendo; Eclipse constituyó un proceso/grupo separado para Jakarta EE.",
+        "location": "public/data/T3.06.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "GEN-T3.06-236.v2",
+          "topic": "T3.06",
+          "origin": "G",
+          "family": "GEN-T3.06-236",
+          "scenario": null
+        }
+      },
+      "beforeSha256": "e608f64e39704c75bc39406e587d65156bf32e5e3dfb370474a739c26091832d",
+      "afterSha256": "d563c87206b234b83ce8dc8decb088776d53dade44fe3909bf421e33fdb5ac12",
+      "inSample": false,
+      "storageFile": "public/data/T3.06.json",
+      "scenarioId": null,
+      "questionSha256": "fc506a17afaa6b53afbcff5c92c32df7aeb20a30cdb08ead84c63e25a8c0326b",
+      "independentReview": {
+        "verdict": "APPROVE_SCOPED",
+        "keyUnique": true,
+        "reviewedOptions": [
+          "No es el nombre oficial del JCP.",
+          "JCP sigue existiendo.",
+          "JESP y JCP son procesos distintos.",
+          "Existe JESP."
+        ],
+        "k": "D",
+        "scope": "Contenido de las cuatro alternativas, referencia y alcance contrastados. No certifica ejecución .NET.",
+        "reviewer": "oficial",
+        "date": "2026-11-06"
+      }
+    },
+    {
+      "id": "GEN-T3.06-269.v2",
+      "topic": "T3.06",
+      "location": "public/data/T3.06.json",
+      "scenario": null,
+      "priority": "P0",
+      "before": {
+        "i": "GEN-T3.06-269.v2",
+        "t": "T3.06",
+        "o": "G",
+        "q": "En un servlet, si durante un tiempo configurable no recibe peticiones:",
+        "a": [
+          "Se bloquea.",
+          "Se reinicia.",
+          "Es descargado de memoria.",
+          "Se duplica."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.06-269",
+        "u": "El ciclo de vida de un servlet tiene 3 fases: Instanciación e inicialización: se crea el servlet en memoria (si no existe una instancia previa del mismo) y se llama al método init() para inicializar su funcionamiento.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T3.06-269.v2",
+        "t": "T3.06",
+        "o": "G",
+        "q": "Según Jakarta Servlet 6.1, ¿qué se puede afirmar sobre la permanencia de una instancia servlet en servicio?",
+        "a": [
+          "Toda instancia se reinicia cada minuto.",
+          "Toda instancia debe durar hasta apagar el servidor.",
+          "El contenedor puede retirarla; no hay un plazo universal de inactividad que obligue a descargarla.",
+          "Cada petición obliga a crear y destruir una instancia nueva."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.06-269",
+        "u": "Destrucción: si durante un tiempo (configurable) el servlet no recibe peticiones, es descargado de memoria. [p. 13]",
+        "v": 0,
+        "w": 1,
+        "n": "El ciclo de vida depende del contenedor; no existe la obligación general de descarga por inactividad afirmada en el resumen. A: No fija ese intervalo. B: Puede retirarse antes. C: La especificación no fija duración obligatoria. D: Una instancia puede atender varias peticiones. Fuente primaria: https://jakarta.ee/specifications/servlet/6.1/jakarta-servlet-spec-6.1.html"
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java y .NET subrayado.pdf",
+        "page": 13,
+        "quote": "Destrucción: si durante un tiempo (configurable) el servlet no recibe peticiones, es descargado de memoria.",
+        "sha256": "958fd595e8074cf619116c4662a21e86ff492f6f46cc077292171661df440e8b",
+        "role": "Resumen, no temario principal"
+      },
+      "reviewedOptions": [
+        "No fija ese intervalo.",
+        "Puede retirarse antes.",
+        "La especificación no fija duración obligatoria.",
+        "Una instancia puede atender varias peticiones."
+      ],
+      "primary": [
+        {
+          "url": "https://jakarta.ee/specifications/servlet/6.1/jakarta-servlet-spec-6.1.html",
+          "checked": "2026-11-06"
+        }
+      ],
+      "sourceDiscrepancy": "El ciclo de vida depende del contenedor; no existe la obligación general de descarga por inactividad afirmada en el resumen.",
+      "objectiveChange": "Mismo concepto; se corrige premisa falsa o alternativa errónea.",
+      "status": "independently-reviewed-local-not-applied",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "originalTask": {
+        "id": "ITEM-GEN-T3.06-269.v2",
+        "finding": "GEN-T3.06-269.v2",
+        "evidence": "T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java y .NET subrayado.pdf p. 13",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave registrada C. El contenedor puede decidir retirar una instancia, pero no hay obligación de descargarla al transcurrir un tiempo de inactividad configurable.",
+        "location": "public/data/T3.06.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "GEN-T3.06-269.v2",
+          "topic": "T3.06",
+          "origin": "G",
+          "family": "GEN-T3.06-269",
+          "scenario": null
+        }
+      },
+      "beforeSha256": "edba3a5ff4639aa896b5b6e17b153dff520e0a71cb280577debbdf2f2c099789",
+      "afterSha256": "5cf106ea8ff9496843d35615eff724ccfbb546eb6a6ecfcaf7545fcc7ba9ffaf",
+      "inSample": false,
+      "storageFile": "public/data/T3.06.json",
+      "scenarioId": null,
+      "questionSha256": "9d2fcc05d8981d55ff31fff51619f53045ef15de97cae171d844db0c97c054ce",
+      "independentReview": {
+        "verdict": "APPROVE_SCOPED",
+        "keyUnique": true,
+        "reviewedOptions": [
+          "No fija ese intervalo.",
+          "Puede retirarse antes.",
+          "La especificación no fija duración obligatoria.",
+          "Una instancia puede atender varias peticiones."
+        ],
+        "k": "D",
+        "scope": "Contenido de las cuatro alternativas, referencia y alcance contrastados. No certifica ejecución .NET.",
+        "reviewer": "oficial",
+        "date": "2026-11-06"
+      }
+    },
+    {
+      "id": "GEN-T3.06-350.v1",
+      "topic": "T3.06",
+      "location": "public/data/T3.06.json",
+      "scenario": null,
+      "priority": "P0",
+      "before": {
+        "i": "GEN-T3.06-350.v1",
+        "t": "T3.06",
+        "o": "G",
+        "q": "JCA (Java Cryptography Architecture) reemplaza y amplía a:",
+        "a": [
+          "JSSE.",
+          "JGSS.",
+          "JCE (Java Cryptography Extension).",
+          "JAAS."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          13
+        ],
+        "d": 3,
+        "f": "GEN-T3.06-350",
+        "u": "Java Cryptography Architecture (JCA) contiene una arquitectura de proveedor y un conjunto de APIs para firmas digitales, hashes (SHA), validación de certificados y certificados, cifrado simétrico (DES, 3DES, IDEA…), cifrado asimétrico (RSA, DSA, ElGamal…), generación y gestión de claves y generación segura de números aleatorios.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T3.06-350.v1",
+        "t": "T3.06",
+        "o": "G",
+        "q": "Según la documentación de Java SE21, ¿qué relación existe entre JCA y JCE?",
+        "a": [
+          "JCE reemplaza al sistema de permisos de archivos.",
+          "JCA sólo gestiona interfaces gráficas.",
+          "JCE está integrado en el JDK y se considera parte de JCA.",
+          "JCA eliminó todas las API de javax.crypto."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          7,
+          13
+        ],
+        "d": 3,
+        "f": "GEN-T3.06-350",
+        "u": "Reemplaza y amplia al API Java Cryptography Extension (JCE). [p. 48]",
+        "v": 0,
+        "w": 1,
+        "n": "La relación de extensión e integración se invierte en el resumen; JCE se considera parte de JCA. A: No describe JCE. B: JCA es criptografía. C: Es la relación documentada. D: javax.crypto forma parte de la arquitectura. Fuente primaria: https://docs.oracle.com/en/java/javase/21/security/java-cryptography-architecture-jca-reference-guide.html"
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java y .NET subrayado.pdf",
+        "page": 48,
+        "quote": "Reemplaza y amplia al API Java Cryptography Extension (JCE).",
+        "sha256": "958fd595e8074cf619116c4662a21e86ff492f6f46cc077292171661df440e8b",
+        "role": "Resumen, no temario principal"
+      },
+      "reviewedOptions": [
+        "No describe JCE.",
+        "JCA es criptografía.",
+        "Es la relación documentada.",
+        "javax.crypto forma parte de la arquitectura."
+      ],
+      "primary": [
+        {
+          "url": "https://docs.oracle.com/en/java/javase/21/security/java-cryptography-architecture-jca-reference-guide.html",
+          "checked": "2026-11-06"
+        }
+      ],
+      "sourceDiscrepancy": "La relación de extensión e integración se invierte en el resumen; JCE se considera parte de JCA.",
+      "objectiveChange": "Mismo concepto; se corrige premisa falsa o alternativa errónea.",
+      "status": "independently-reviewed-local-not-applied",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "originalTask": {
+        "id": "ITEM-GEN-T3.06-350.v1",
+        "finding": "GEN-T3.06-350.v1",
+        "evidence": "T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java y .NET subrayado.pdf p. 48",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave registrada C. La extensión JCE añadió criptografía al diseño original JCA y después se integró en la plataforma. Describir JCA como reemplazo que amplió JCE invierte la relación histórica.",
+        "location": "public/data/T3.06.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "GEN-T3.06-350.v1",
+          "topic": "T3.06",
+          "origin": "G",
+          "family": "GEN-T3.06-350",
+          "scenario": null
+        }
+      },
+      "beforeSha256": "6eb124702eb29833b044cd90938e4d1af17da9a435b7b9e488f0089555c913b3",
+      "afterSha256": "659cf595cf3c5a41815daab607e260c11ffbc71f99c7e5e8cb0505c9b59cf6f8",
+      "inSample": false,
+      "storageFile": "public/data/T3.06.json",
+      "scenarioId": null,
+      "questionSha256": "3e20fe2accf253ea922aaf789ea743a7da3a2c545a3be775c1fb77513bd58ee4",
+      "independentReview": {
+        "verdict": "APPROVE_SCOPED",
+        "keyUnique": true,
+        "reviewedOptions": [
+          "No describe JCE.",
+          "JCA es criptografía.",
+          "Es la relación documentada.",
+          "javax.crypto forma parte de la arquitectura."
+        ],
+        "k": "D",
+        "scope": "Contenido de las cuatro alternativas, referencia y alcance contrastados. No certifica ejecución .NET.",
+        "reviewer": "oficial",
+        "date": "2026-11-06"
+      }
+    },
+    {
+      "id": "GEN-T3.06-388.v2",
+      "topic": "T3.06",
+      "location": "public/data/T3.06.json",
+      "scenario": null,
+      "priority": "P0",
+      "before": {
+        "i": "GEN-T3.06-388.v2",
+        "t": "T3.06",
+        "o": "G",
+        "q": "La compatibilidad con múltiples versiones (multi-targeting) permite:",
+        "a": [
+          "Evitar el CLR.",
+          "Compilar a nativo.",
+          "Ejecutar varias aplicaciones a la vez.",
+          "Crear bibliotecas que funcionan en varias plataformas compatibles con una versión del estándar."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.06-388",
+        "u": "Compatibilidad de versiones. Como norma general, las aplicaciones que se desarrollan con una versión determinada de .NET Framework se ejecutan sin modificaciones en una versión posterior. Ejecución en paralelo. .NET Framework ayuda a resolver conflictos entre versiones y permite que varias versiones del CLR coexistan en el mismo equipo.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T3.06-388.v2",
+        "t": "T3.06",
+        "o": "G",
+        "q": "En un proyecto de biblioteca .NET, multi-targeting permite:",
+        "a": [
+          "Evitar cualquier runtime en todos los destinos.",
+          "Obligar a usar sólo un framework objetivo.",
+          "Ejecutar varias aplicaciones simultáneamente.",
+          "Compilar el proyecto para varios frameworks objetivo y obtener sus artefactos correspondientes."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.06-388",
+        "u": "Compatibilidad con múltiples versiones (multi-targeting). [p. 57]",
+        "v": 0,
+        "w": 1,
+        "n": "Multi-targeting no equivale a un único binario portable por apuntar a .NET Standard. A: No garantiza ausencia de runtime. B: Es precisamente más de un destino. C: Confunde compilación y ejecución concurrente. D: Distingue los artefactos por destino. Fuente primaria: https://learn.microsoft.com/en-us/dotnet/standard/library-guidance/cross-platform-targeting"
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java y .NET subrayado.pdf",
+        "page": 57,
+        "quote": "Compatibilidad con múltiples versiones (multi-targeting).",
+        "sha256": "958fd595e8074cf619116c4662a21e86ff492f6f46cc077292171661df440e8b",
+        "role": "Resumen, no temario principal"
+      },
+      "reviewedOptions": [
+        "No garantiza ausencia de runtime.",
+        "Es precisamente más de un destino.",
+        "Confunde compilación y ejecución concurrente.",
+        "Distingue los artefactos por destino."
+      ],
+      "primary": [
+        {
+          "url": "https://learn.microsoft.com/en-us/dotnet/standard/library-guidance/cross-platform-targeting",
+          "checked": "2026-11-06"
+        }
+      ],
+      "sourceDiscrepancy": "Multi-targeting no equivale a un único binario portable por apuntar a .NET Standard.",
+      "objectiveChange": "Mismo concepto; se corrige premisa falsa o alternativa errónea.",
+      "status": "independently-reviewed-local-not-applied",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "originalTask": {
+        "id": "ITEM-GEN-T3.06-388.v2",
+        "finding": "GEN-T3.06-388.v2",
+        "evidence": "T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java y .NET subrayado.pdf p. 57",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave registrada D. Multi-targeting permite generar artefactos para varios frameworks objetivo. Una biblioteca binaria portable gracias a una versión común del estándar es un concepto distinto.",
+        "location": "public/data/T3.06.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "GEN-T3.06-388.v2",
+          "topic": "T3.06",
+          "origin": "G",
+          "family": "GEN-T3.06-388",
+          "scenario": null
+        }
+      },
+      "beforeSha256": "6f7b5c343be339afc7e39742052e52ae052c22444b785c3daec4545fba486b01",
+      "afterSha256": "0554e8a8febcf13a4585a6804711c91c5670fa42951f44aa646b2b7dd2b2b5b3",
+      "inSample": false,
+      "storageFile": "public/data/T3.06.json",
+      "scenarioId": null,
+      "questionSha256": "b6c530709ca1fd147c83747d00ce4d5a9e433d5f5f5370e21714d12924f1dc88",
+      "independentReview": {
+        "verdict": "APPROVE_SCOPED",
+        "keyUnique": true,
+        "reviewedOptions": [
+          "No garantiza ausencia de runtime.",
+          "Es precisamente más de un destino.",
+          "Confunde compilación y ejecución concurrente.",
+          "Distingue los artefactos por destino."
+        ],
+        "k": "C",
+        "scope": "Contenido de las cuatro alternativas, referencia y alcance contrastados. No certifica ejecución .NET.",
+        "reviewer": "oficial",
+        "date": "2026-11-06"
+      }
+    },
+    {
+      "id": "GEN-T3.06-389.v1",
+      "topic": "T3.06",
+      "location": "public/data/T3.06.json",
+      "scenario": null,
+      "priority": "P0",
+      "before": {
+        "i": "GEN-T3.06-389.v1",
+        "t": "T3.06",
+        "o": "G",
+        "q": "El Common Language Specification (CLS) determina:",
+        "a": [
+          "Las versiones del CLR.",
+          "Las reglas necesarias para crear código CIL compatible con el CLR.",
+          "El recolector de basura.",
+          "Los tipos básicos comunes."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.06-389",
+        "u": "La herramienta Clrver.exe notifica todas las versiones instaladas de CLR en el equipo.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T3.06-389.v1",
+        "t": "T3.06",
+        "o": "G",
+        "q": "En .NET, el Common Language Specification (CLS) define principalmente:",
+        "a": [
+          "Las versiones instaladas del CLR.",
+          "Reglas para que los componentes sean utilizables por distintos lenguajes .NET.",
+          "El algoritmo del recolector de basura.",
+          "El conjunto de instrucciones de una CPU física."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.06-389",
+        "u": "Common Language Specification (CLS) que determina las reglas necesarias para crear ese código CIL compatible con el CLR. [p. 58]",
+        "v": 0,
+        "w": 1,
+        "n": "CLS se ocupa de interoperabilidad entre lenguajes, no de toda la validez del CIL para CLR. A: No es un inventario de versiones. B: Expresa la interoperabilidad. C: No especifica el algoritmo GC. D: No define una ISA de hardware. Fuente primaria: https://learn.microsoft.com/en-us/dotnet/standard/language-independence"
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java y .NET subrayado.pdf",
+        "page": 58,
+        "quote": "Common Language Specification (CLS) que determina las reglas necesarias para crear ese código CIL compatible con el CLR.",
+        "sha256": "958fd595e8074cf619116c4662a21e86ff492f6f46cc077292171661df440e8b",
+        "role": "Resumen, no temario principal"
+      },
+      "reviewedOptions": [
+        "No es un inventario de versiones.",
+        "Expresa la interoperabilidad.",
+        "No especifica el algoritmo GC.",
+        "No define una ISA de hardware."
+      ],
+      "primary": [
+        {
+          "url": "https://learn.microsoft.com/en-us/dotnet/standard/language-independence",
+          "checked": "2026-11-06"
+        }
+      ],
+      "sourceDiscrepancy": "CLS se ocupa de interoperabilidad entre lenguajes, no de toda la validez del CIL para CLR.",
+      "objectiveChange": "Mismo concepto; se corrige premisa falsa o alternativa errónea.",
+      "status": "independently-reviewed-local-not-applied",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "originalTask": {
+        "id": "ITEM-GEN-T3.06-389.v1",
+        "finding": "GEN-T3.06-389.v1",
+        "evidence": "T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java y .NET subrayado.pdf p. 58",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave registrada B. CLS es el subconjunto de reglas de tipos/miembros para interoperabilidad entre lenguajes. El CLR puede ejecutar código que no es CLS-compliant.",
+        "location": "public/data/T3.06.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "GEN-T3.06-389.v1",
+          "topic": "T3.06",
+          "origin": "G",
+          "family": "GEN-T3.06-389",
+          "scenario": null
+        }
+      },
+      "beforeSha256": "5fd9731d0da10e63829115864ea7041b8d9d17da7abc7614a79fdc14dfda1cc1",
+      "afterSha256": "650a9b90037a6f0b87c8b7b3d4f48803c6aec483bf26dff0b7c4e8152e93172f",
+      "inSample": false,
+      "storageFile": "public/data/T3.06.json",
+      "scenarioId": null,
+      "questionSha256": "09dc50a44201c5d86c4a9977ea6c85f2a04d921882c5f0ea0bade13e7286b2d2",
+      "independentReview": {
+        "verdict": "APPROVE_SCOPED",
+        "keyUnique": true,
+        "reviewedOptions": [
+          "No es un inventario de versiones.",
+          "Expresa la interoperabilidad.",
+          "No especifica el algoritmo GC.",
+          "No define una ISA de hardware."
+        ],
+        "k": "C",
+        "scope": "Contenido de las cuatro alternativas, referencia y alcance contrastados. No certifica ejecución .NET.",
+        "reviewer": "oficial",
+        "date": "2026-11-06"
+      }
+    },
+    {
+      "id": "GEN-T3.06-390.v2",
+      "topic": "T3.06",
+      "location": "public/data/T3.06.json",
+      "scenario": null,
+      "priority": "P0",
+      "before": {
+        "i": "GEN-T3.06-390.v2",
+        "t": "T3.06",
+        "o": "G",
+        "q": "En JIT se requieren tantas compilaciones como:",
+        "a": [
+          "Lenguajes use la aplicación.",
+          "Ensamblados contiene la aplicación.",
+          "Instancias de la aplicación se estén ejecutando.",
+          "Versiones del CLR haya."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          8,
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T3.06-390",
+        "u": "un compilador JIT (Just-In-Time) es el que genera el código máquina real que se ejecuta en la plataforma del cliente y se lleva a cabo en el mismo equipo en que debe ejecutarse el código. Se requieren tantas compilaciones JIT como instancias de la aplicación se estén ejecutando.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T3.06-390.v2",
+        "t": "T3.06",
+        "o": "G",
+        "q": "En la ejecución administrada .NET con JIT, ¿qué afirmación sobre la compilación es correcta?",
+        "a": [
+          "Se produce exactamente una compilación por lenguaje fuente.",
+          "Se compila siempre un ensamblado completo en una única operación.",
+          "El JIT compila métodos según se necesitan; no hay igualdad general entre compilaciones y número de instancias de aplicación.",
+          "El número de compilaciones siempre coincide con las versiones de CLR instaladas."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          8,
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T3.06-390",
+        "u": "Se requieren tantas compilaciones JIT como instancias de la aplicación se estén ejecutando. [p. 58]",
+        "v": 0,
+        "w": 1,
+        "n": "El JIT trabaja por métodos; el recuento del resumen no es una regla universal. A: No depende así del lenguaje fuente. B: No impone compilación completa anticipada. C: Es la granularidad documentada. D: Versiones instaladas no determinan ese recuento. Fuente primaria: https://learn.microsoft.com/en-us/dotnet/standard/managed-execution-process"
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java y .NET subrayado.pdf",
+        "page": 58,
+        "quote": "Se requieren tantas compilaciones JIT como instancias de la aplicación se estén ejecutando.",
+        "sha256": "958fd595e8074cf619116c4662a21e86ff492f6f46cc077292171661df440e8b",
+        "role": "Resumen, no temario principal"
+      },
+      "reviewedOptions": [
+        "No depende así del lenguaje fuente.",
+        "No impone compilación completa anticipada.",
+        "Es la granularidad documentada.",
+        "Versiones instaladas no determinan ese recuento."
+      ],
+      "primary": [
+        {
+          "url": "https://learn.microsoft.com/en-us/dotnet/standard/managed-execution-process",
+          "checked": "2026-11-06"
+        }
+      ],
+      "sourceDiscrepancy": "El JIT trabaja por métodos; el recuento del resumen no es una regla universal.",
+      "objectiveChange": "Mismo concepto; se corrige premisa falsa o alternativa errónea.",
+      "status": "independently-reviewed-local-not-applied",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "originalTask": {
+        "id": "ITEM-GEN-T3.06-390.v2",
+        "finding": "GEN-T3.06-390.v2",
+        "evidence": "T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java y .NET subrayado.pdf p. 58",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave registrada C. JIT compila métodos según su uso y puede recompilarlos por niveles; el recuento no coincide con el número de instancias de aplicación.",
+        "location": "public/data/T3.06.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "GEN-T3.06-390.v2",
+          "topic": "T3.06",
+          "origin": "G",
+          "family": "GEN-T3.06-390",
+          "scenario": null
+        }
+      },
+      "beforeSha256": "909b23552cc8f6dafab7f12d75f32124e817776880d736413627c417a1725686",
+      "afterSha256": "cce1a2fa03c15d8b5fd7f35eed93762f7e9c10262174f2f9435104d37d90bd06",
+      "inSample": false,
+      "storageFile": "public/data/T3.06.json",
+      "scenarioId": null,
+      "questionSha256": "79854a250b3e4a3076270ae7d7c26e1e82389f6ecf973ec335bed53f771a52b7",
+      "independentReview": {
+        "verdict": "APPROVE_SCOPED",
+        "keyUnique": true,
+        "reviewedOptions": [
+          "No depende así del lenguaje fuente.",
+          "No impone compilación completa anticipada.",
+          "Es la granularidad documentada.",
+          "Versiones instaladas no determinan ese recuento."
+        ],
+        "k": "D",
+        "scope": "Contenido de las cuatro alternativas, referencia y alcance contrastados. No certifica ejecución .NET.",
+        "reviewer": "oficial",
+        "date": "2026-11-06"
+      }
+    },
+    {
+      "id": "GEN-T3.06-394.v2",
+      "topic": "T3.06",
+      "location": "public/data/T3.06.json",
+      "scenario": null,
+      "priority": "P0",
+      "before": {
+        "i": "GEN-T3.06-394.v2",
+        "t": "T3.06",
+        "o": "G",
+        "q": "El concepto de ensamblado es:",
+        "a": [
+          "Propio de C.",
+          "Común a Java y .NET.",
+          "Propio de Jakarta EE.",
+          "Específico de .NET Framework."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.06-394",
+        "u": "Los ensamblados son las unidades de creación de las aplicaciones .NET Framework (concepto específico de este framework). Son la unidad fundamental de implementación, control de versiones, reutilización, ámbitos de activación y permisos de seguridad.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T3.06-394.v2",
+        "t": "T3.06",
+        "o": "G",
+        "q": "Los ensamblados, como unidades de implementación de aplicaciones, existen:",
+        "a": [
+          "Sólo en C sin runtime.",
+          "Sólo en Jakarta EE.",
+          "Sólo en .NET Framework clásico y nunca en .NET moderno.",
+          "Tanto en .NET Framework como en .NET moderno."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.06-394",
+        "u": "Los ensamblados son las unidades de creación de las aplicaciones .NET Framework (concepto específico de este framework). [p. 59]",
+        "v": 0,
+        "w": 1,
+        "n": "El alcance exclusivo de .NETFramework es incorrecto; .NET moderno también usa ensamblados. A: No es exclusivo de C. B: No es la unidad propia de JakartaEE. C: La exclusión de .NET moderno es falsa. D: Ambos usan ensamblados. Fuente primaria: https://learn.microsoft.com/en-us/dotnet/standard/assembly/"
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java y .NET subrayado.pdf",
+        "page": 59,
+        "quote": "Los ensamblados son las unidades de creación de las aplicaciones .NET Framework (concepto específico de este framework).",
+        "sha256": "958fd595e8074cf619116c4662a21e86ff492f6f46cc077292171661df440e8b",
+        "role": "Resumen, no temario principal"
+      },
+      "reviewedOptions": [
+        "No es exclusivo de C.",
+        "No es la unidad propia de JakartaEE.",
+        "La exclusión de .NET moderno es falsa.",
+        "Ambos usan ensamblados."
+      ],
+      "primary": [
+        {
+          "url": "https://learn.microsoft.com/en-us/dotnet/standard/assembly/",
+          "checked": "2026-11-06"
+        }
+      ],
+      "sourceDiscrepancy": "El alcance exclusivo de .NETFramework es incorrecto; .NET moderno también usa ensamblados.",
+      "objectiveChange": "Mismo concepto; se corrige premisa falsa o alternativa errónea.",
+      "status": "independently-reviewed-local-not-applied",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "originalTask": {
+        "id": "ITEM-GEN-T3.06-394.v2",
+        "finding": "GEN-T3.06-394.v2",
+        "evidence": "T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java y .NET subrayado.pdf p. 59",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave registrada D. También existen en .NET moderno y Mono, por lo que «específico de .NET Framework» es demasiado estrecho.",
+        "location": "public/data/T3.06.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "GEN-T3.06-394.v2",
+          "topic": "T3.06",
+          "origin": "G",
+          "family": "GEN-T3.06-394",
+          "scenario": null
+        }
+      },
+      "beforeSha256": "2363a21f71c0ef62edf2fe893c7e55880be46e2076b3409301f6bc94bf26753c",
+      "afterSha256": "eb3f7eadf480edadd5315ad8d156d7c8b745645a362f560602a059ddcca81232",
+      "inSample": false,
+      "storageFile": "public/data/T3.06.json",
+      "scenarioId": null,
+      "questionSha256": "da27db5f5a3f2f7db0e443e3f277e311dd2b0a997645cf9a29f4f0128e2fed1c",
+      "independentReview": {
+        "verdict": "APPROVE_SCOPED",
+        "keyUnique": true,
+        "reviewedOptions": [
+          "No es exclusivo de C.",
+          "No es la unidad propia de JakartaEE.",
+          "La exclusión de .NET moderno es falsa.",
+          "Ambos usan ensamblados."
+        ],
+        "k": "C",
+        "scope": "Contenido de las cuatro alternativas, referencia y alcance contrastados. No certifica ejecución .NET.",
+        "reviewer": "oficial",
+        "date": "2026-11-06"
+      }
+    },
+    {
+      "id": "GEN-T3.06-407.v1",
+      "topic": "T3.06",
+      "location": "public/data/T3.06.json",
+      "scenario": null,
+      "priority": "P0",
+      "before": {
+        "i": "GEN-T3.06-407.v1",
+        "t": "T3.06",
+        "o": "G",
+        "q": "En ASP.NET Web Pages, el archivo .cshtml.cs contiene:",
+        "a": [
+          "El marcado HTML con Razor.",
+          "Código C# que controla los eventos de página.",
+          "Los estilos.",
+          "Las vistas."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.06-407",
+        "u": "ASP.NET Web Pages es el más reciente de los modelos de programación, perteneciente a .NET Core. Utiliza la sintaxis Razor.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T3.06-407.v1",
+        "t": "T3.06",
+        "o": "G",
+        "q": "En ASP.NET Web Pages clásico con C#, ¿qué archivo puede combinar marcado HTML y código servidor con sintaxis Razor?",
+        "a": [
+          "Un archivo .css.",
+          "Un archivo .cshtml.",
+          "Un archivo .png.",
+          "Un archivo .class de Java."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.06-407",
+        "u": ".cshtml: contiene el marcado HTML con código C# que usa la sintaxis Razor. [p. 65]",
+        "v": 0,
+        "w": 1,
+        "n": "El resumen mezcla WebPages clásico con RazorPages de ASP.NETCore; se mantiene WebPages y se pregunta su archivo real, sin trasladar la pregunta a otro framework. A: Contiene estilos. B: Es el archivo Razor de WebPages con C#. C: Es una imagen. D: Es bytecode Java. Fuente primaria: https://learn.microsoft.com/en-us/aspnet/web-pages/overview/getting-started/introducing-razor-syntax-c"
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java y .NET subrayado.pdf",
+        "page": 65,
+        "quote": ".cshtml: contiene el marcado HTML con código C# que usa la sintaxis Razor.",
+        "sha256": "958fd595e8074cf619116c4662a21e86ff492f6f46cc077292171661df440e8b",
+        "role": "Resumen, no temario principal"
+      },
+      "reviewedOptions": [
+        "Contiene estilos.",
+        "Es el archivo Razor de WebPages con C#.",
+        "Es una imagen.",
+        "Es bytecode Java."
+      ],
+      "primary": [
+        {
+          "url": "https://learn.microsoft.com/en-us/aspnet/web-pages/overview/getting-started/introducing-razor-syntax-c",
+          "checked": "2026-11-06"
+        }
+      ],
+      "sourceDiscrepancy": "El resumen mezcla WebPages clásico con RazorPages de ASP.NETCore; se mantiene WebPages y se pregunta su archivo real, sin trasladar la pregunta a otro framework.",
+      "objectiveChange": "Mismo objetivo ubicación de código Razor; se elimina el compañero .cshtml.cs atribuido erróneamente a WebPages, sin cambiar a RazorPagesCore.",
+      "status": "independently-reviewed-local-not-applied",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "originalTask": {
+        "id": "ITEM-GEN-T3.06-407.v1",
+        "finding": "GEN-T3.06-407.v1",
+        "evidence": "T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java y .NET subrayado.pdf p. 64 | T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java y .NET subrayado.pdf p. 65",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave registrada B. El compañero .cshtml.cs con PageModel y handlers es la convención de Razor Pages en Core. En Web Pages clásico el código se escribe en .cshtml.",
+        "location": "public/data/T3.06.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "GEN-T3.06-407.v1",
+          "topic": "T3.06",
+          "origin": "G",
+          "family": "GEN-T3.06-407",
+          "scenario": null
+        }
+      },
+      "beforeSha256": "14bfb7ded39f7536b023f6ee1e0aeaeec38fc2236682cccdc80266c107a16c5e",
+      "afterSha256": "404ba410a888014b27eb6cbaee67e5a8ae65a65d4c8171bb1ef043f51eceffc4",
+      "inSample": false,
+      "storageFile": "public/data/T3.06.json",
+      "scenarioId": null,
+      "questionSha256": "2fcc863f82b19a95174470514c2f9a7795e1a5b146bd2b63e87532bc27a8a0ac",
+      "independentReview": {
+        "verdict": "APPROVE_SCOPED",
+        "keyUnique": true,
+        "reviewedOptions": [
+          "Contiene estilos.",
+          "Es el archivo Razor de WebPages con C#.",
+          "Es una imagen.",
+          "Es bytecode Java."
+        ],
+        "k": "D",
+        "scope": "Contenido de las cuatro alternativas, referencia y alcance contrastados. No certifica ejecución .NET.",
+        "reviewer": "oficial",
+        "date": "2026-11-06"
+      }
+    },
+    {
+      "id": "GEN-T3.06-432.v2",
+      "topic": "T3.06",
+      "location": "public/data/T3.06.json",
+      "scenario": null,
+      "priority": "P0",
+      "before": {
+        "i": "GEN-T3.06-432.v2",
+        "t": "T3.06",
+        "o": "G",
+        "q": "EntityClient se comunica con el proveedor subyacente mediante:",
+        "a": [
+          "T-SQL.",
+          "PL/SQL.",
+          "LINQ.",
+          "Entity SQL."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.06-432",
+        "u": "EntityClient: proveedor de datos especial que se usa para obtener acceso a datos basándose en un Entity Data Model (EDM). A diferencia de otros proveedores de datos .NET Framework, no interactúa directamente con ningún origen de datos. En su lugar, usa Entity SQL para comunicarse con el proveedor de datos subyacente.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T3.06-432.v2",
+        "t": "T3.06",
+        "o": "G",
+        "q": "En Entity Framework clásico, EntityClient se comunica con el proveedor de datos subyacente mediante:",
+        "a": [
+          "T-SQL obligatorio para cualquier proveedor.",
+          "PL/SQL obligatorio para cualquier proveedor.",
+          "Una expresión LINQ sin transformación.",
+          "Un árbol de comandos canónico obtenido al analizar y transformar la consulta."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.06-432",
+        "u": "En su lugar, usa Entity SQL para comunicarse con el proveedor de datos subyacente. [p. 72]",
+        "v": 0,
+        "w": 1,
+        "n": "EntitySQL es entrada conceptual; la comunicación descrita por Microsoft usa un árbol de comandos. A: Depende del proveedor, no es universal. B: Tampoco es universal. C: La entrada se transforma. D: Es el medio de comunicación documentado. Fuente primaria: https://learn.microsoft.com/en-us/dotnet/framework/data/adonet/ef/entityclient-provider-for-the-entity-framework"
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java y .NET subrayado.pdf",
+        "page": 72,
+        "quote": "En su lugar, usa Entity SQL para comunicarse con el proveedor de datos subyacente.",
+        "sha256": "958fd595e8074cf619116c4662a21e86ff492f6f46cc077292171661df440e8b",
+        "role": "Resumen, no temario principal"
+      },
+      "reviewedOptions": [
+        "Depende del proveedor, no es universal.",
+        "Tampoco es universal.",
+        "La entrada se transforma.",
+        "Es el medio de comunicación documentado."
+      ],
+      "primary": [
+        {
+          "url": "https://learn.microsoft.com/en-us/dotnet/framework/data/adonet/ef/entityclient-provider-for-the-entity-framework",
+          "checked": "2026-11-06"
+        },
+        {
+          "url": "https://learn.microsoft.com/en-us/dotnet/framework/data/adonet/data-providers",
+          "checked": "2026-11-06",
+          "purpose": "Registra simplificación oficial coincidente con el PDF; contraste con sección detallada."
+        }
+      ],
+      "sourceDiscrepancy": "EntitySQL es entrada conceptual; la comunicación descrita por Microsoft usa un árbol de comandos. La página general de proveedores de Microsoft también usa la simplificación EntitySQL; la sección detallada Executing Queries identifica el árbol canónico. La propuesta distingue esos niveles, no afirma que el resumen carezca de antecedente oficial.",
+      "objectiveChange": "Mismo concepto; se corrige premisa falsa o alternativa errónea.",
+      "status": "independently-reviewed-local-not-applied",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "originalTask": {
+        "id": "ITEM-GEN-T3.06-432.v2",
+        "finding": "GEN-T3.06-432.v2",
+        "evidence": "T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java y .NET subrayado.pdf p. 72",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave registrada D. Entity SQL es lenguaje de entrada del proveedor conceptual. El proveedor de almacén recibe un árbol/comando traducido a su dialecto, no Entity SQL directamente.",
+        "location": "public/data/T3.06.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "GEN-T3.06-432.v2",
+          "topic": "T3.06",
+          "origin": "G",
+          "family": "GEN-T3.06-432",
+          "scenario": null
+        }
+      },
+      "beforeSha256": "f16d3e47c37667b7a8443f39505b023fc4f3cffb56c58675746e8ee54c32d840",
+      "afterSha256": "377276d779ad2fdd53b83a105b2f18a5221c86e92b71607b0c0c62067b7da452",
+      "inSample": false,
+      "storageFile": "public/data/T3.06.json",
+      "scenarioId": null,
+      "questionSha256": "04540aa0dfd204b633e089f18450d473519b3c5112c1a1d69d593871facbd211",
+      "independentReview": {
+        "verdict": "APPROVE_SCOPED",
+        "keyUnique": true,
+        "reviewedOptions": [
+          "Depende del proveedor, no es universal.",
+          "Tampoco es universal.",
+          "La entrada se transforma.",
+          "Es el medio de comunicación documentado."
+        ],
+        "k": "C",
+        "scope": "Contenido de las cuatro alternativas, referencia y alcance contrastados. No certifica ejecución .NET.",
+        "reviewer": "oficial",
+        "date": "2026-11-06"
+      }
+    },
+    {
+      "id": "GEN-T3.06-464.v2",
+      "topic": "T3.06",
+      "location": "public/data/T3.06.json",
+      "scenario": null,
+      "priority": "P0",
+      "before": {
+        "i": "GEN-T3.06-464.v2",
+        "t": "T3.06",
+        "o": "G",
+        "q": "El comando de la CLI de NuGet para listar los paquetes instalados es:",
+        "a": [
+          "nuget ls.",
+          "nuget list.",
+          "nuget packages.",
+          "nuget show."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.06-464",
+        "u": "También se puede administrar paquetes NuGet con la CLI de NuGet: nuget install <paquete>: instala la última versión del paquete.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T3.06-464.v2",
+        "t": "T3.06",
+        "o": "G",
+        "q": "En la CLI nuget.exe, ¿qué enumera el comando nuget list?",
+        "a": [
+          "Sólo los ensamblados cargados en memoria.",
+          "Paquetes de los orígenes consultados, no necesariamente referencias instaladas en un proyecto.",
+          "Todos los procesos .NET activos.",
+          "Sólo clases públicas del proyecto actual."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.06-464",
+        "u": "nuget list: lista los paquetes instalados del proyecto. [p. 84]",
+        "v": 0,
+        "w": 1,
+        "n": "nuget list consulta fuentes de paquetes; no lista por sí mismo referencias instaladas del proyecto. A: No inspecciona la memoria de procesos. B: Es la finalidad del comando. C: No es un monitor de procesos. D: No inspecciona clases. Fuente primaria: https://learn.microsoft.com/en-us/nuget/reference/cli-reference/cli-ref-list"
+      },
+      "reference": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java y .NET subrayado.pdf",
+        "page": 84,
+        "quote": "nuget list: lista los paquetes instalados del proyecto.",
+        "sha256": "958fd595e8074cf619116c4662a21e86ff492f6f46cc077292171661df440e8b",
+        "role": "Resumen, no temario principal"
+      },
+      "reviewedOptions": [
+        "No inspecciona la memoria de procesos.",
+        "Es la finalidad del comando.",
+        "No es un monitor de procesos.",
+        "No inspecciona clases."
+      ],
+      "primary": [
+        {
+          "url": "https://learn.microsoft.com/en-us/nuget/reference/cli-reference/cli-ref-list",
+          "checked": "2026-11-06"
+        }
+      ],
+      "sourceDiscrepancy": "nuget list consulta fuentes de paquetes; no lista por sí mismo referencias instaladas del proyecto.",
+      "objectiveChange": "Se conserva nuget.exe/list y se corrige su objeto real; no se sustituye por otra CLI o SDK.",
+      "status": "independently-reviewed-local-not-applied",
+      "queuedForIntegration": false,
+      "resolved": false,
+      "originalTask": {
+        "id": "ITEM-GEN-T3.06-464.v2",
+        "finding": "GEN-T3.06-464.v2",
+        "evidence": "T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java y .NET subrayado.pdf p. 84",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave registrada B. nuget list enumera paquetes de los orígenes configurados, no los instalados en el proyecto. Ninguna opción ofrece el listado de referencias instaladas.",
+        "location": "public/data/T3.06.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "GEN-T3.06-464.v2",
+          "topic": "T3.06",
+          "origin": "G",
+          "family": "GEN-T3.06-464",
+          "scenario": null
+        }
+      },
+      "beforeSha256": "4163ffbbe7fba22c18e25c4fbd552d86347057569b07e856eb3b294228201f0b",
+      "afterSha256": "73565b611fe3ce8fd94f1c5e3eb6d16a415c7ec9bb1502f26ff8b772cd26197a",
+      "inSample": false,
+      "storageFile": "public/data/T3.06.json",
+      "scenarioId": null,
+      "questionSha256": "bc19f74714b9496c964c64f4bade888b8c45ec74e1a1f189583ff79c61cf189c",
+      "independentReview": {
+        "verdict": "APPROVE_SCOPED",
+        "keyUnique": true,
+        "reviewedOptions": [
+          "No inspecciona la memoria de procesos.",
+          "Es la finalidad del comando.",
+          "No es un monitor de procesos.",
+          "No inspecciona clases."
+        ],
+        "k": "D",
+        "scope": "Contenido de las cuatro alternativas, referencia y alcance contrastados. No certifica ejecución .NET.",
+        "reviewer": "oficial",
+        "date": "2026-11-06"
+      }
+    }
+  ],
+  "files": {
+    "T3.06.json": {
+      "beforeSha256": "cd8ead125529d2bdcf6a5e84d6c730df4c13c599046fce704ca2c8a86e4fd6cc",
+      "afterSha256": "c8b506447d77a53f045ba0d8c5351bb9a15009fa2573fe46caf7ef6c45f8da23"
+    },
+    "supuestos.json": {
+      "beforeSha256": "e0103cd4837cc7ab4b0f6ed07fd1a058f45d15603f619b52568fdfab660da744",
+      "afterSha256": "9b85f51bff5cb4f87f7a7827575bd3c363e6bc8eaaa8109ff63edd4a03fa0c7d"
+    },
+    "meta.json": {
+      "beforeSha256": "a45df16461321b2eea669013fb44507fa7a48f2c1ebaa613d074ba9cc516003a",
+      "afterSha256": "9b953bdd6e77d8107cc79f501195ee49b3320cc686d441397b4f2ad850abe181"
+    }
+  },
+  "metadataEdits": [
+    {
+      "id": "AT306-P1-35",
+      "topic": "T3.06",
+      "index": 2,
+      "before": [
+        "T3.06",
+        "A",
+        "I",
+        [],
+        0
+      ],
+      "after": [
+        "T3.06",
+        "A",
+        "D",
+        [],
+        0
+      ],
+      "beforeSha256": "a90012e3589d1ebd5086426484b56cb7a0e26911ab288910bc27e8485b68ebbd",
+      "afterSha256": "0476926b14f804d8731c348f8207fe2b5887273b18a3cdf907fb7a7cfa791e8b"
+    },
+    {
+      "id": "GEN-T3.06-101.v1",
+      "topic": "T3.06",
+      "index": 2,
+      "before": [
+        "T3.06",
+        "G",
+        "C",
+        [
+          2,
+          8
+        ],
+        3
+      ],
+      "after": [
+        "T3.06",
+        "G",
+        "D",
+        [
+          2,
+          8
+        ],
+        3
+      ],
+      "beforeSha256": "b9a26a5faf67b0ba094de21760fc5eeafdf639196a7d251b8e8d9472fccdf59b",
+      "afterSha256": "9b2375d2761c870dfd20d77ac3041031f2379e159b765a2d6750163924ff47e8"
+    },
+    {
+      "id": "GEN-T3.06-141.v2",
+      "topic": "T3.06",
+      "index": 2,
+      "before": [
+        "T3.06",
+        "G",
+        "C",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "after": [
+        "T3.06",
+        "G",
+        "K",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "beforeSha256": "eb695785d5e708397d0e028f8a12445ae84f2c0e0037b19dd7342eba60ffbeb7",
+      "afterSha256": "17a2b362473af6a5e05ea7ad74422dd50c3638eef0c6acf4def407562c63113c"
+    },
+    {
+      "id": "GEN-T3.06-142.v2",
+      "topic": "T3.06",
+      "index": 2,
+      "before": [
+        "T3.06",
+        "G",
+        "C",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "after": [
+        "T3.06",
+        "G",
+        "D",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "beforeSha256": "eb695785d5e708397d0e028f8a12445ae84f2c0e0037b19dd7342eba60ffbeb7",
+      "afterSha256": "403a7c3bcf067de26a0b9a64f9b27d72569004f29f177dc47154d2e9d9ae2917"
+    },
+    {
+      "id": "GEN-T3.06-236.v2",
+      "topic": "T3.06",
+      "index": 2,
+      "before": [
+        "T3.06",
+        "G",
+        "C",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "after": [
+        "T3.06",
+        "G",
+        "D",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "beforeSha256": "eb695785d5e708397d0e028f8a12445ae84f2c0e0037b19dd7342eba60ffbeb7",
+      "afterSha256": "403a7c3bcf067de26a0b9a64f9b27d72569004f29f177dc47154d2e9d9ae2917"
+    },
+    {
+      "id": "GEN-T3.06-269.v2",
+      "topic": "T3.06",
+      "index": 2,
+      "before": [
+        "T3.06",
+        "G",
+        "C",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "after": [
+        "T3.06",
+        "G",
+        "D",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "beforeSha256": "eb695785d5e708397d0e028f8a12445ae84f2c0e0037b19dd7342eba60ffbeb7",
+      "afterSha256": "403a7c3bcf067de26a0b9a64f9b27d72569004f29f177dc47154d2e9d9ae2917"
+    },
+    {
+      "id": "GEN-T3.06-350.v1",
+      "topic": "T3.06",
+      "index": 2,
+      "before": [
+        "T3.06",
+        "G",
+        "C",
+        [
+          7,
+          13
+        ],
+        3
+      ],
+      "after": [
+        "T3.06",
+        "G",
+        "D",
+        [
+          7,
+          13
+        ],
+        3
+      ],
+      "beforeSha256": "8ac7cf3721bd16eb5e89fb48ed919152077f1b69e6c6fcd600bfbfb1ba43d5f1",
+      "afterSha256": "c4a5a5c6c61de598766100aec8f75fa64d7bf107f6b400d07fd3ea9e2e7286d3"
+    },
+    {
+      "id": "GEN-T3.06-390.v2",
+      "topic": "T3.06",
+      "index": 2,
+      "before": [
+        "T3.06",
+        "G",
+        "C",
+        [
+          8,
+          7
+        ],
+        3
+      ],
+      "after": [
+        "T3.06",
+        "G",
+        "D",
+        [
+          8,
+          7
+        ],
+        3
+      ],
+      "beforeSha256": "0ed89a0e4f8ab819eaf724fce68f466903c584936c28675443001a9228cb8eb4",
+      "afterSha256": "48890d0a16b2046d93fe5bfa7e5b9d467f230599f494e5aa7926c68d07ad7405"
+    },
+    {
+      "id": "GEN-T3.06-407.v1",
+      "topic": "T3.06",
+      "index": 2,
+      "before": [
+        "T3.06",
+        "G",
+        "C",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "after": [
+        "T3.06",
+        "G",
+        "D",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "beforeSha256": "eb695785d5e708397d0e028f8a12445ae84f2c0e0037b19dd7342eba60ffbeb7",
+      "afterSha256": "403a7c3bcf067de26a0b9a64f9b27d72569004f29f177dc47154d2e9d9ae2917"
+    },
+    {
+      "id": "GEN-T3.06-464.v2",
+      "topic": "T3.06",
+      "index": 2,
+      "before": [
+        "T3.06",
+        "G",
+        "C",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "after": [
+        "T3.06",
+        "G",
+        "D",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "beforeSha256": "eb695785d5e708397d0e028f8a12445ae84f2c0e0037b19dd7342eba60ffbeb7",
+      "afterSha256": "403a7c3bcf067de26a0b9a64f9b27d72569004f29f177dc47154d2e9d9ae2917"
+    }
+  ],
+  "sampleFiles": {},
+  "held": [
+    {
+      "id": "TAIL2022-P1-49",
+      "before": {
+        "i": "TAIL2022-P1-49",
+        "t": "T3.06",
+        "o": "O",
+        "q": "Señale la respuesta INCORRECTA referente al objeto POCO en .NET:",
+        "a": [
+          "Es una estructura de datos de .NET que solo contiene propiedades o campos públicos.",
+          "Es el acrónimo de Plain Old CLR Object.",
+          "No hereda de otra clase o implementa una interfaz.",
+          "Podrá contener miembros como: métodos. eventos y delegados."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [
+          12
+        ],
+        "d": 2,
+        "n": "POCO: d) contradice \"solo propiedades\".",
+        "y": "Ingreso libre OEP 2022 (2023)"
+      },
+      "reason": "Microsoft glossary define POCO restrictivo como el temario; Microsoft architectural-principles define persistencia ignorante más amplia. No adjudicar una definición universal ni reescribir el oficial para imponer DDD.",
+      "status": "held_not_approved",
+      "primary": [
+        "https://learn.microsoft.com/en-us/dotnet/standard/glossary",
+        "https://learn.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/architectural-principles"
+      ],
+      "after": null,
+      "originalTask": {
+        "id": "ITEM-TAIL2022-P1-49",
+        "finding": "TAIL2022-P1-49",
+        "evidence": "TAI-2022-L-U-P1-49 cuaderno p. 5, definitiva D. T3.06 Java y .NET/T3.06 Java y .NET - Resumen - C sharp.pdf, p. 12 (pasaje localizado: «cero o mas espacios de nombres un espacio de nombres contiene tipos como clases estructuras interfaces enumeraciones u otr»). La referencia describe tipos C#, no restricciones especiales para POCO.",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "POCO significa Plain Old CLR Object y se define por independencia de infraestructura. Puede tener métodos, eventos o datos no públicos y usar herencia o interfaces ordinarias. Por tanto D puede ser verdadera y A y C son excesivamente restrictivas.",
+        "location": "public/data/T3.06.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "TAIL2022-P1-49",
+          "topic": "T3.06",
+          "origin": "O",
+          "family": null,
+          "scenario": null
+        }
+      },
+      "temarioConflict": {
+        "pdf": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java y .NET subrayado.pdf",
+        "page": 70,
+        "sha256": "958fd595e8074cf619116c4662a21e86ff492f6f46cc077292171661df440e8b",
+        "quote": "Un POCO no debe contener ningún otro miembro, como métodos, eventos o delegados. Un POCO no hereda de otra clase ni implementa una interfaz.",
+        "primaryConflict": {
+          "glossary": "Microsoft define POCO puro como datos públicos sin métodos/herencia/interfaces.",
+          "architecture": "Microsoft también llama POCO a tipos de dominio independientes de persistencia; no impone prohibición general de comportamiento/herencia."
+        },
+        "proposedSeparateQuarantine": {
+          "notApplied": true,
+          "eligibleProof": false,
+          "note": "Definición dependiente de la fuente. Clave histórica disponible para consulta; no autovalidada como afirmación universal."
+        }
+      }
+    },
+    {
+      "id": "AT306-P1-43",
+      "before": {
+        "i": "AT306-P1-43",
+        "t": "T3.06",
+        "o": "A",
+        "q": "¿Cuándo NO es conveniente usar EJB?",
+        "a": [
+          "Existe un número de clientes numeroso.",
+          "Para aplicaciones que deben ser escalables.",
+          "Se requiere el uso de transacciones.",
+          "Para aplicaciones que usan datos de bases de datos."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [
+          14
+        ],
+        "d": 2,
+        "n": "Cuándo no usar EJB."
+      },
+      "reason": "Las cuatro situaciones son compatibles con EJB; no hay criterio primario que permita convertir usar bases de datos en inconveniente. Se retiene para no cambiar objetivo a una recomendación arbitraria.",
+      "status": "held_not_approved",
+      "primary": [],
+      "after": null,
+      "originalTask": {
+        "id": "ITEM-AT306-P1-43",
+        "finding": "AT306-P1-43",
+        "evidence": "T3.06 Java y .NET - Test.pdf (plantilla p. 16); T3.06 Java y .NET - Resumen - Java y .NET subrayado.pdf p. 12 (pasaje localizado: EJB)",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave D. Usar una base de datos no desaconseja EJB y las transacciones pueden justificarlo. Todos los escenarios son compatibles.",
+        "location": "public/data/T3.06.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "AT306-P1-43",
+          "topic": "T3.06",
+          "origin": "A",
+          "family": null,
+          "scenario": null
+        }
+      }
+    },
+    {
+      "id": "GEN-T3.06-424",
+      "before": {
+        "i": "GEN-T3.06-424",
+        "t": "T3.06",
+        "o": "G",
+        "q": "Un POCO .NET:",
+        "a": [
+          "No hereda de otra clase ni implementa una interfaz.",
+          "Debe implementar IEnumerable.",
+          "Debe heredar de DbContext.",
+          "Debe contener métodos de persistencia."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.06-424",
+        "u": "Un POCO no debe contener ningún otro miembro, como métodos, eventos o delegados. Un POCO no hereda de otra clase ni implementa una interfaz.",
+        "v": 0,
+        "w": 1
+      },
+      "reason": "Microsoft glossary define POCO restrictivo como el temario; Microsoft architectural-principles define persistencia ignorante más amplia. No adjudicar una definición universal ni reescribir el oficial para imponer DDD.",
+      "status": "held_not_approved",
+      "primary": [
+        "https://learn.microsoft.com/en-us/dotnet/standard/glossary",
+        "https://learn.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/architectural-principles"
+      ],
+      "after": null,
+      "originalTask": {
+        "id": "ITEM-GEN-T3.06-424",
+        "finding": "GEN-T3.06-424",
+        "evidence": "T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java y .NET subrayado.pdf p. 70",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave registrada A. Un POCO puede implementar interfaces o heredar de clases del dominio. Lo relevante es no exigir una base o contrato específico de infraestructura.",
+        "location": "public/data/T3.06.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "GEN-T3.06-424",
+          "topic": "T3.06",
+          "origin": "G",
+          "family": "GEN-T3.06-424",
+          "scenario": null
+        }
+      },
+      "temarioConflict": {
+        "pdf": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java y .NET subrayado.pdf",
+        "page": 70,
+        "sha256": "958fd595e8074cf619116c4662a21e86ff492f6f46cc077292171661df440e8b",
+        "quote": "Un POCO no debe contener ningún otro miembro, como métodos, eventos o delegados. Un POCO no hereda de otra clase ni implementa una interfaz.",
+        "primaryConflict": {
+          "glossary": "Microsoft define POCO puro como datos públicos sin métodos/herencia/interfaces.",
+          "architecture": "Microsoft también llama POCO a tipos de dominio independientes de persistencia; no impone prohibición general de comportamiento/herencia."
+        },
+        "proposedSeparateQuarantine": {
+          "notApplied": true,
+          "eligibleProof": false,
+          "note": "Definición dependiente de la fuente. Clave histórica disponible para consulta; no autovalidada como afirmación universal."
+        }
+      }
+    },
+    {
+      "id": "GEN-T3.06-424.v1",
+      "before": {
+        "i": "GEN-T3.06-424.v1",
+        "t": "T3.06",
+        "o": "G",
+        "q": "Una estructura POCO contiene solo:",
+        "a": [
+          "Delegados.",
+          "Métodos y eventos.",
+          "Constructores privados.",
+          "Propiedades o campos públicos."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.06-424",
+        "u": "Un POCO no debe contener ningún otro miembro, como métodos, eventos o delegados. Un POCO no hereda de otra clase ni implementa una interfaz.",
+        "v": 0,
+        "w": 1
+      },
+      "reason": "Microsoft glossary define POCO restrictivo como el temario; Microsoft architectural-principles define persistencia ignorante más amplia. No adjudicar una definición universal ni reescribir el oficial para imponer DDD.",
+      "status": "held_not_approved",
+      "primary": [
+        "https://learn.microsoft.com/en-us/dotnet/standard/glossary",
+        "https://learn.microsoft.com/en-us/dotnet/architecture/modern-web-apps-azure/architectural-principles"
+      ],
+      "after": null,
+      "originalTask": {
+        "id": "ITEM-GEN-T3.06-424.v1",
+        "finding": "GEN-T3.06-424.v1",
+        "evidence": "T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java y .NET subrayado.pdf p. 70",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave registrada D. Un POCO puede contener métodos, constructores y miembros privados además de propiedades, sin perder su condición de objeto ordinario.",
+        "location": "public/data/T3.06.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "GEN-T3.06-424.v1",
+          "topic": "T3.06",
+          "origin": "G",
+          "family": "GEN-T3.06-424",
+          "scenario": null
+        }
+      },
+      "temarioConflict": {
+        "pdf": "/Volumes/SSD/Google Drive/TEMARIO_OPOSICION/01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java y .NET subrayado.pdf",
+        "page": 70,
+        "sha256": "958fd595e8074cf619116c4662a21e86ff492f6f46cc077292171661df440e8b",
+        "quote": "Un POCO no debe contener ningún otro miembro, como métodos, eventos o delegados. Un POCO no hereda de otra clase ni implementa una interfaz.",
+        "primaryConflict": {
+          "glossary": "Microsoft define POCO puro como datos públicos sin métodos/herencia/interfaces.",
+          "architecture": "Microsoft también llama POCO a tipos de dominio independientes de persistencia; no impone prohibición general de comportamiento/herencia."
+        },
+        "proposedSeparateQuarantine": {
+          "notApplied": true,
+          "eligibleProof": false,
+          "note": "Definición dependiente de la fuente. Clave histórica disponible para consulta; no autovalidada como afirmación universal."
+        }
+      }
+    }
+  ],
+  "separateMitigations": [
+    {
+      "id": "L2025A-S1-R-02",
+      "status": "MITIGACION_PREEXISTENTE_ANULACION_OFICIAL_VERIFICADA",
+      "factualRepair": false,
+      "bankNp": 1,
+      "keyHistorical": 2,
+      "profile80plus20Excludes": true,
+      "sourcePage": 1,
+      "visualPassage": "Supuesto I / Preguntas de reserva / 2. ANULADA",
+      "pdf": "work/reinicio-oficial/A.pdf",
+      "pdfSha256": "2535da974513214a63f18aeea58055a1e28139df0e6716981237546fe7afac9d",
+      "url": "https://sede.inap.gob.es/sites/sede/files/public/2026-10/PlantillarespuestasDefTAI-L-A_G4WN8WY1M8_154AB89SD658.pdf",
+      "portal": "https://laadministracionaldia.inap.es/noticia.asp?id=1520923",
+      "networkLimitation": "Portal INAP vigente consultado; descarga PDF directa devuelve403. Copia local previa y URL exacta del corpus coinciden; lectura visual independiente realizada.",
+      "before": {
+        "i": "L2025A-S1-R-02",
+        "t": "T3.06",
+        "o": "O",
+        "q": "Para el mantenimiento de la aplicación, se requiere ejecutar un código de limpieza cuando el motor Catalina de Tomcat se detenga por completo, pero antes de que la máquina virtual de Java finalice. ¿Cuál es la opción correcta para ello?",
+        "a": [
+          "Registrar un shutdown hook.",
+          "Usar una anotación @PreDestroy en la clase del código de limpieza.",
+          "Implementar un LifecycleListener y registrarlo en el elemento <server> del fichero \"server.xml\".",
+          "Definir en Tomcat una Valve personalizada en el elemento <Server> con el método de limpieza."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          7
+        ],
+        "d": 3,
+        "n": "ADVERTENCIA PROVISIONAL: se conserva C y p=1 según la plantilla provisional de ingreso libre disponible. Pendiente de plantilla definitiva de ingreso libre aplicable al modelo A; la anulación de la pregunta equivalente en promoción interna no determina su estado en ingreso libre. No usar en evaluación puntuable hasta confirmación. Excluida automáticamente de los simulacros puntuables; disponible para estudiar. Fuentes locales y páginas: public/data/revision-ocr/editorial-13.json.",
+        "y": "Ingreso libre convocatoria 2025",
+        "p": 1,
+        "r": 1,
+        "s": "L2025A-S1",
+        "np": 1
+      },
+      "originalTask": {
+        "id": "ITEM-L2025A-S1-R-02",
+        "finding": "L2025A-S1-R-02",
+        "evidence": "Plantillas definitivas 2025 y cotejo por aparición en contraste-plantillas.csv.",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "La corrección histórica mantiene C pese a anulación; np=1 ya evita puntuar. Las definitivas de libre y promoción anulan las apariciones enlazadas.",
+        "location": "public/data/supuestos.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "L2025A-S1-R-02",
+          "topic": "T3.06",
+          "origin": "O",
+          "family": null,
+          "scenario": "L2025A-S1"
+        }
+      }
+    }
+  ],
+  "implementation": {
+    "prior300Unchanged": true,
+    "firestoreWrites": 0
+  }
+}
