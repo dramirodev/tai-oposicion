@@ -116,9 +116,10 @@ it('la solicitud pasa a pendiente y el aprobado empieza a sincronizar', async ()
 });
 
 it('sincroniza el checkpoint de planificación solo bajo la cuenta aprobada y lo combina al recibir cambios', async () => {
+  const timestamp = Date.now();
   const session = {
-    dateKey: new Date().toLocaleDateString('en-CA'), activities: [{ activity: 'activeRecall', minutes: 20, reason: 'active-recall', topicIds: ['T1.01'] }],
-    currentIndex: 0, currentStartedAt: null, elapsedSecondsByActivity: [0], updatedAt: Date.now(), startedAt: Date.now(), completedAt: null,
+    dateKey: new Date(timestamp).toLocaleDateString('en-CA'), activities: [{ activity: 'activeRecall', minutes: 20, reason: 'active-recall', topicIds: ['T1.01'] }],
+    currentIndex: 0, currentStartedAt: null, elapsedSecondsByActivity: [0], updatedAt: timestamp, startedAt: timestamp, completedAt: null,
   };
   trainingStore.getSession.mockReturnValue(session);
   const history = [{ id: session.dateKey, dateKey: session.dateKey, startedAt: session.startedAt, completedAt: session.startedAt + 2,

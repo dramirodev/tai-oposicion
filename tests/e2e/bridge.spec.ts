@@ -58,7 +58,7 @@ test('Planificación enlaza el intento al checkpoint y conserva la referencia al
     localStorage.setItem(`tai.training-session.v1.${encodeURIComponent('guest')}`, JSON.stringify({
       schemaVersion:2, id:sessionId, dateKey,
       activities:[{ id:activityId, activity:'topicTest', minutes:30, reason:'coverage', topicId:'T1.01', topicIds:['T1.01'] }],
-      currentIndex:0, currentStartedAt:null, elapsedSecondsByActivity:[0], updatedAt:Date.now(), startedAt:Date.now(), completedAt:null,
+      currentIndex:0, currentStartedAt:null, elapsedSecondsByActivity:[0], updatedAt:date.getTime(), startedAt:date.getTime(), completedAt:null,
     }));
     return { sessionId, activityId };
   });
@@ -115,7 +115,7 @@ test('la sesión diaria avanza dos actividades de test en viewport móvil', asyn
     ];
     localStorage.setItem(`tai.training-session.v1.${encodeURIComponent('guest')}`, JSON.stringify({
       schemaVersion:2, id:sessionId, dateKey, activities, currentIndex:0, currentStartedAt:null,
-      elapsedSecondsByActivity:[0, 0], updatedAt:Date.now(), startedAt:Date.now(), completedAt:null,
+      elapsedSecondsByActivity:[0, 0], updatedAt:date.getTime(), startedAt:date.getTime(), completedAt:null,
     }));
     return { sessionId, activityIds:activities.map(activity => activity.id) };
   });

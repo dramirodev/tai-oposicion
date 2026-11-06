@@ -85,3 +85,14 @@ it('fusiona historial remoto válido, elimina duplicados y omite entradas malfor
   expect(readTrainingSessionHistory('owner-a')).toEqual([entry]);
   expect(mergeRemoteTrainingSessionHistory('owner-a', [entry])).toBe(false);
 });
+
+
+it('rechaza una actualización anterior al inicio aunque difiera solo un milisegundo', () => {
+  const key = 'tai.training-session.v1.owner-a';
+  const paused = { ...session, currentStartedAt: null, updatedAt: timestamp };
+  localStorage.setItem(key, JSON.stringify({ ...paused, startedAt: timestamp + 1 }));
+  expect(readTrainingSession('owner-a', timestamp + 1)).toBeNull();
+  expect(localStorage.getItem(key)).toBeNull();
+  localStorage.setItem(key, JSON.stringify(paused));
+  expect(readTrainingSession('owner-a', timestamp + 1)).toMatchObject(paused);
+});
