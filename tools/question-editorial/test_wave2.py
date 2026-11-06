@@ -64,8 +64,11 @@ class Wave2Tests(unittest.TestCase):
             self.assertEqual(edit['before'][:2]+edit['before'][3:], edit['after'][:2]+edit['after'][3:])
             for side in ('before', 'after'):
                 self.assertEqual(sha(encode(edit[side])), edit[side+'Sha256'])
+        with tempfile.TemporaryDirectory() as temporary:
+            boundary = copy_release_boundary(Path(temporary), 'reviewed-wave2')
+            boundary_bytes = {name: (boundary/name).read_bytes() for name in LEDGER['files']}
         for name, fingerprints in LEDGER['files'].items():
-            raw = (ROOT / 'public/data' / name).read_bytes()
+            raw = boundary_bytes[name]
             self.assertEqual(sha(raw), fingerprints['afterSha256'])
             rows = json.loads(raw)
             before = json.loads(raw)

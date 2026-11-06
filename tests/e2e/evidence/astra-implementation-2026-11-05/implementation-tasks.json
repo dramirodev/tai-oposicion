@@ -43214,9 +43214,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave A. wc cuenta palabras, líneas y bytes pero no devuelve la lista de palabras. Ninguna de las cuatro órdenes cumple lo solicitado.",
     "location": "public/data/T4.01.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada con cuatro alternativas y fuentes, aplicada localmente con replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -43225,13 +43226,27 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "AT401-P1-16",
       "topic": "T4.01",
       "origin": "A",
       "family": null,
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-admin20.json",
+      "beforeSha256": "3e923d42e69cad9b88c443f12c95497e8812182c2e2491e264b4eef2e020e82f",
+      "afterSha256": "878850deb068933f22b793e7bad66b6654420a46b9ab90d2010c68d6576b523d",
+      "source": {
+        "pdf": "T4.01 Administración de SO/T4.01 Administración de SO - Temario (version alternativa).pdf",
+        "page": 18,
+        "sha256": "f7c99562cca2c5d2b7923505c7faced04877e46def902faa38faa149ea2c575e",
+        "quote": "wc opciones files: proviene de word count. Con la opción-c cuenta bytes, con -l líneas y con -w palabras.",
+        "role": "Respaldo directo"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -43242,9 +43257,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave B. remove --purge elimina configuraciones del paquete, no todas las dependencias instaladas automáticamente. Para dependencias huérfanas interviene autoremove.",
     "location": "public/data/T4.01.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada con cuatro alternativas y fuentes, aplicada localmente con replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -43253,13 +43269,27 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "AT401-P1-18",
       "topic": "T4.01",
       "origin": "A",
       "family": null,
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-admin20.json",
+      "beforeSha256": "ddb72a726811e64356b1a5312b3b0da05ad86df3ae83bb0f41c478e1790d7b48",
+      "afterSha256": "06e3c51f58967ec9728fea47e3cc90c663b66de3486d93ffc9e4ed3889c6c206",
+      "source": {
+        "pdf": "T4.01 Administración de SO/T4.01 Administración de SO - Temario (version alternativa).pdf",
+        "page": 24,
+        "sha256": "f7c99562cca2c5d2b7923505c7faced04877e46def902faa38faa149ea2c575e",
+        "quote": "remove --purge package. Elimina por completo el paquete, incluyendo sus archivos de configuración.",
+        "role": "Respaldo directo"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -43270,9 +43300,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave B. dpkg -P purga el paquete nombrado y sus ficheros de configuración. Tampoco elimina automáticamente todas sus dependencias.",
     "location": "public/data/T4.01.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada con cuatro alternativas y fuentes, aplicada localmente con replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -43281,13 +43312,27 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "AT401-P1-19",
       "topic": "T4.01",
       "origin": "A",
       "family": null,
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-admin20.json",
+      "beforeSha256": "2c297ec5a9cc2f8a2796d99fa1036707d44f230707f0cd67b423b5aae146d1c7",
+      "afterSha256": "bd00a2c519dccd70ca8dee4d75b88cb3565c5d019445b0985d915a2337cf585d",
+      "source": {
+        "pdf": "T4.01 Administración de SO/T4.01 Administración de SO - Temario (version alternativa).pdf",
+        "page": 25,
+        "sha256": "f7c99562cca2c5d2b7923505c7faced04877e46def902faa38faa149ea2c575e",
+        "quote": "dpkg -P paquete # elimina el paquete y ficheros de configuración",
+        "role": "Respaldo directo"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -44362,9 +44407,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave D. Si se pregunta cuánto historial puede perderse, corresponde RPO. RTO mide tiempo para recuperar servicio. Se acepta RTO solo con otra redacción.",
     "location": "public/data/T4.02.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada con cuatro alternativas y fuentes, aplicada localmente con replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -44373,13 +44419,27 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "AT402-P1-21",
       "topic": "T4.02",
       "origin": "A",
       "family": null,
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-admin20.json",
+      "beforeSha256": "584d30c60ec2e1c02be5350a62ea9fce5acb903282c0dd2fbf06642e2c6f49ae",
+      "afterSha256": "40a35228e42dbfc3c7254df59c2cca797ebf16bef88002c9cab47f26d1264601",
+      "source": {
+        "pdf": "T4.02 Administración de BD y Virtualización/T4.02 Administración de BD y Virtualización - Temario.pdf",
+        "page": 58,
+        "sha256": "27e64d9f792c38d63afe91f3e887bebbd9c7c5ea85f0fdc06ee93a6a59fcf64f",
+        "quote": "PUNTO de recuperación objetivo o RPO (Recovery Point Objective): es el periodo máximo de tiempo en el cual se han podido ver afectados datos antes de un incidente.",
+        "role": "Respaldo directo"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -45314,9 +45374,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Una copia desde la última completa es diferencial. La clave incremental corresponde a cambios desde la copia anterior, aunque fuera incremental.",
     "location": "public/data/T4.02.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada con cuatro alternativas y fuentes, aplicada localmente con replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -45325,13 +45386,27 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "AS10-P1-81",
       "topic": "T4.02",
       "origin": "A",
       "family": null,
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-admin20.json",
+      "beforeSha256": "ee240fd75cdf120edb650a8fce6c46ae2ce36bd861ad477e531f546cbf7bb21d",
+      "afterSha256": "eb50eaaee1b0f5c658194ca0d9fb0997d9a693a101635c0692d5eb506816a800",
+      "source": {
+        "pdf": "T4.02 Administración de BD y Virtualización/T4.02 Administración de BD y Virtualización - Temario.pdf",
+        "page": 55,
+        "sha256": "27e64d9f792c38d63afe91f3e887bebbd9c7c5ea85f0fdc06ee93a6a59fcf64f",
+        "quote": "Backup DIFERENCIAL: partiendo de una copia de backup completa, se realiza una copia de todos los datos modificados desde que se hizo ese backup completo,",
+        "role": "Respaldo directo"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -45958,9 +46033,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave A. En el registro DKIM k especifica el tipo de clave, no selecciona la clave individual. El selector s de la firma permite localizar el registro y p contiene material público.",
     "location": "public/data/T4.03.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada con cuatro alternativas y fuentes, aplicada localmente con replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -45969,13 +46045,27 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "AT403-P1-38",
       "topic": "T4.03",
       "origin": "A",
       "family": null,
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-admin20.json",
+      "beforeSha256": "5f331a7f9da01d41cebacc0830b8292ebe8c8d7a9a3602d594e93432c5b14ce8",
+      "afterSha256": "ca77d287c5c3ffb7a5b4185ef5975fc2e922bc6c1a9942780d96fb124791ccbd",
+      "source": {
+        "pdf": "T4.03 Administración del Correo/T4.03 Administración del Correo - Temario.pdf",
+        "page": 25,
+        "sha256": "db3cd01ac360f546a252c040fb97b6b436bee4809c5255b610b8a43d6f1f6bee",
+        "quote": "k=rsa: tipo de clave criptográfica utilizada, en este caso RSA.",
+        "role": "Respaldo directo"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -46182,9 +46272,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave C. S/MIME sí cifra y firma; la referencia de S/MIME 4.0 es RFC 8551. RFC 8581 no es el estándar citado en el enunciado.",
     "location": "public/data/T4.03.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada con cuatro alternativas y fuentes, aplicada localmente con replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -46193,13 +46284,27 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "AS11B-P1-87",
       "topic": "T4.03",
       "origin": "A",
       "family": null,
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-admin20.json",
+      "beforeSha256": "7671e625a67451477cb6ff0135ac9ecc8aaf96e1657d466bbba51c94bbd418f8",
+      "afterSha256": "06bfa007c479fa1415fe9b00961cec3a4d620743cb847d3b457765f011090d66",
+      "source": {
+        "pdf": "T4.03 Administración del Correo/T4.03 Administración del Correo - Temario.pdf",
+        "page": 26,
+        "sha256": "db3cd01ac360f546a252c040fb97b6b436bee4809c5255b610b8a43d6f1f6bee",
+        "quote": "S/MIME (Secure/Multipurpose Internet Mail Extensions) es un estándar especificado en el RFC 8581 (versión 4.0) que permite el cifrado de correos electrónicos mediante criptografía asimétrica y la firma digital de correos electrónicos.",
+        "role": "Pasaje discrepante o cobertura parcial; corrección contrastada con primaria"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -54342,9 +54447,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "D solo resuelve conflictos ordinarios de una misma configuración. Un vínculo forzado superior puede prevalecer y ajustes distintos se acumulan; ninguna opción expresa la regla general.",
     "location": "public/data/T4.01.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada con cuatro alternativas y fuentes, aplicada localmente con replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -54353,13 +54459,27 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T4.01-05.v1",
       "topic": "T4.01",
       "origin": "G",
       "family": "GEN-T4.01-05",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-admin20.json",
+      "beforeSha256": "84859f8bf6a50314133b49d814e20427c78ff3d69d5924a942f0b9751ce0aaaf",
+      "afterSha256": "3d70addbda5abed7f6aae7a25d1bd81d47f98d20c8f8f60db75f29a42050b78f",
+      "source": {
+        "pdf": "T4.01 Administración de SO/T4.01 Administración de SO - Temario.pdf",
+        "page": 2,
+        "sha256": "830785b3be7c2f7d946930a151261b43598861d4639ef66c897af5c2384deff2",
+        "quote": "Se aplican en (LSDOU): (1) Local, (2), Site, (3) Domain, (4) OU. Última GPO aplicada es la que prevalece.",
+        "role": "Respaldo directo"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -55322,9 +55442,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave B. Un espejo de cuatro miembros contiene cuatro copias del mismo dato: 1 TB, opción D. La cifra 2 TB requiere dos pares dispuestos de otra forma.",
     "location": "public/data/T4.02.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada con cuatro alternativas y fuentes, aplicada localmente con replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -55333,13 +55454,27 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T4.02-42.v1",
       "topic": "T4.02",
       "origin": "G",
       "family": "GEN-T4.02-42",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-admin20.json",
+      "beforeSha256": "f2bcab856b2b74a360c0e54e713ab3d23f4eb8084e8b13a14d2f92e56e95bc28",
+      "afterSha256": "620fd3d57d8532264d972b5009f11adedd474e00c281b4b72af1956bcced6dc4",
+      "source": {
+        "pdf": "T4.02 Administración de BD y Virtualización/T4.02 Administración de BD y Virtualización - Temario.pdf",
+        "page": 27,
+        "sha256": "27e64d9f792c38d63afe91f3e887bebbd9c7c5ea85f0fdc06ee93a6a59fcf64f",
+        "quote": "la capacidad total del RAID 1 será la del disco más pequeño.",
+        "role": "Pasaje discrepante o cobertura parcial; corrección contrastada con primaria"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -56414,9 +56549,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave B. SDS es una categoría más amplia que vSAN o una SAN virtual, con soluciones de bloques, objetos o archivos. B no es sinónimo general.",
     "location": "public/data/T4.02.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada con cuatro alternativas y fuentes, aplicada localmente con replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -56425,13 +56561,27 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T4.02-80.v1",
       "topic": "T4.02",
       "origin": "G",
       "family": "GEN-T4.02-80",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-admin20.json",
+      "beforeSha256": "83f63d4bb3110244a04fb16345757139df6e7d822517c4da13535f57a53d5b5f",
+      "afterSha256": "bfba17e9678d7b5a79bb2ed70e813b14b8a93807863b76b743e0a0f0774d3b67",
+      "source": {
+        "pdf": "T4.02 Administración de BD y Virtualización/T4.02 Administración de BD y Virtualización - Temario.pdf",
+        "page": 48,
+        "sha256": "27e64d9f792c38d63afe91f3e887bebbd9c7c5ea85f0fdc06ee93a6a59fcf64f",
+        "quote": "El SDS (Software Defined Storage) o almacenamiento definido por software",
+        "role": "Pasaje discrepante o cobertura parcial; corrección contrastada con primaria"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -57198,9 +57348,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave B. Seis horas es un objetivo máximo, no la afirmación «se tardarán 6 horas». Ninguna opción expresa el límite sin confundirlo con tiempo observado.",
     "location": "public/data/T4.02.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada con cuatro alternativas y fuentes, aplicada localmente con replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -57209,13 +57360,27 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T4.02-104.v2",
       "topic": "T4.02",
       "origin": "G",
       "family": "GEN-T4.02-104",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-admin20.json",
+      "beforeSha256": "e4eb4c9a224e44a7974c1e59c8880ef2c5fa75342ac50edeaf6cab3fcf9b585d",
+      "afterSha256": "c20ba7fa11542ec43cac4ec2cfed07d48053e360b32114b0458bcc0bcb768130",
+      "source": {
+        "pdf": "T4.02 Administración de BD y Virtualización/T4.02 Administración de BD y Virtualización - Temario.pdf",
+        "page": 58,
+        "sha256": "27e64d9f792c38d63afe91f3e887bebbd9c7c5ea85f0fdc06ee93a6a59fcf64f",
+        "quote": "También se puede definir como el tiempo máximo que el servicio puede permanecer interrumpido.",
+        "role": "Pasaje discrepante o cobertura parcial; corrección contrastada con primaria"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -57422,9 +57587,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave A. RTA puede superar, igualar o quedar por debajo del RTO; A expresa una aspiración y no una relación necesariamente cierta.",
     "location": "public/data/T4.02.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada con cuatro alternativas y fuentes, aplicada localmente con replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -57433,13 +57599,27 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T4.02-109.v2",
       "topic": "T4.02",
       "origin": "G",
       "family": "GEN-T4.02-109",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-admin20.json",
+      "beforeSha256": "98d8b1e134186db66edad3da54472ac115f1d95e4689ca8789ffb7421aec38d0",
+      "afterSha256": "7dab8d7501d8c77a3dac9038f6facb5206200e795efc1cde1b4658a86b03d626",
+      "source": {
+        "pdf": "T4.02 Administración de BD y Virtualización/T4.02 Administración de BD y Virtualización - Temario.pdf",
+        "page": 60,
+        "sha256": "27e64d9f792c38d63afe91f3e887bebbd9c7c5ea85f0fdc06ee93a6a59fcf64f",
+        "quote": "RTA (Recovery Time Actual): tiempo que realmente se requiere para reanudar el servicio.",
+        "role": "Pasaje discrepante o cobertura parcial; corrección contrastada con primaria"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -57786,9 +57966,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave A. RHV usa KVM. Etiquetar la plataforma como tipo 2 contradice la clasificación de su hipervisor que emplea el mismo tema; C es la opción coherente.",
     "location": "public/data/T4.02.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada con cuatro alternativas y fuentes, aplicada localmente con replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -57797,13 +57978,27 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T4.02-121",
       "topic": "T4.02",
       "origin": "G",
       "family": "GEN-T4.02-121",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-admin20.json",
+      "beforeSha256": "0b20297549b73076d996de0c1f2290d10bff9d5a6e33f9e876fef49f100b2170",
+      "afterSha256": "f5ab4bea4af943e9b1c7903f015aa21d2ec58f141ef1acc26b9c5fb313bded57",
+      "source": {
+        "pdf": "T4.02 Administración de BD y Virtualización/T4.02 Administración de BD y Virtualización - Temario.pdf",
+        "page": 69,
+        "sha256": "27e64d9f792c38d63afe91f3e887bebbd9c7c5ea85f0fdc06ee93a6a59fcf64f",
+        "quote": "KVM (Kernel-based Virtual Machine): solución de virtualización de código abierto para sistemas Linux de tipo 1.",
+        "role": "Pasaje discrepante o cobertura parcial; corrección contrastada con primaria"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -58038,9 +58233,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave D. RDS es de Microsoft y antes se llamó Terminal Services, pero RDSH es uno de sus roles. D afirma una equivalencia errónea y ninguna alternativa es enteramente correcta.",
     "location": "public/data/T4.02.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada con cuatro alternativas y fuentes, aplicada localmente con replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -58049,13 +58245,27 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T4.02-128",
       "topic": "T4.02",
       "origin": "G",
       "family": "GEN-T4.02-128",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-admin20.json",
+      "beforeSha256": "606f55083e88e14b03d870b1c68d28bbd4be9ca897760abaff0cd89c0d6b6648",
+      "afterSha256": "868be35cc746920d103ee959c143f25447bdcdac8a2b3c12322483f171a7a440",
+      "source": {
+        "pdf": "T4.02 Administración de BD y Virtualización/T4.02 Administración de BD y Virtualización - Temario.pdf",
+        "page": 73,
+        "sha256": "27e64d9f792c38d63afe91f3e887bebbd9c7c5ea85f0fdc06ee93a6a59fcf64f",
+        "quote": "RDS (Remote Desktop Services): Remote Desktop Services, RDS, es una tecnología de Microsoft. Se conoce también como RDSH (Remote Desktop Session Host) y anteriormente se conocía como Terminal Services.",
+        "role": "Pasaje discrepante o cobertura parcial; corrección contrastada con primaria"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -58514,9 +58724,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave A. El montaje es temporal y residente en memoria, pero el host puede paginar a swap. A promete que los datos nunca alcanzan disco; falta una opción enteramente cierta.",
     "location": "public/data/T4.02.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada con cuatro alternativas y fuentes, aplicada localmente con replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -58525,13 +58736,27 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T4.02-147.v1",
       "topic": "T4.02",
       "origin": "G",
       "family": "GEN-T4.02-147",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-admin20.json",
+      "beforeSha256": "2e4e6ba7b137cd7b5d043681ff4b187850a3ddf7f5eff215b8cd11ea32f2433d",
+      "afterSha256": "c4bec09de9ee56d9db4d7f6221e26b961e1f716bc91d6ca7356fdf8fb790e38f",
+      "source": {
+        "pdf": "T4.02 Administración de BD y Virtualización/T4.02 Administración de BD y Virtualización - Temario.pdf",
+        "page": 84,
+        "sha256": "27e64d9f792c38d63afe91f3e887bebbd9c7c5ea85f0fdc06ee93a6a59fcf64f",
+        "quote": "Montajes tmpfs: cuando un contenedor genera datos de estado no persistentes, conviene usar un montaje tmpfs para evitar almacenar los datos en cualquier lugar de forma permanente y para aumentar el rendimiento del contenedor al evitar escribir en la capa de escritura del contenedor. Los montajes tmpfs son como carpetas virtuales que solo existen en la memoria del host y nunca se escriben en el sistema de archivos.",
+        "role": "Pasaje discrepante o cobertura parcial; corrección contrastada con primaria"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -58682,9 +58907,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave D. LXD gestiona contenedores de sistema y máquinas virtuales; no es un contenedor. Además el proyecto pasó a Canonical en 2023.",
     "location": "public/data/T4.02.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada con cuatro alternativas y fuentes, aplicada localmente con replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -58693,13 +58919,27 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T4.02-155",
       "topic": "T4.02",
       "origin": "G",
       "family": "GEN-T4.02-155",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-admin20.json",
+      "beforeSha256": "2b034a8253e0930c9ecdb325f6b5b9025ee00290ca774a7b33d90f6d822008be",
+      "afterSha256": "d8d224cbb61db3110c321932180cb3ace6893b30945d1de03125ad7ce671ce77",
+      "source": {
+        "pdf": "T4.02 Administración de BD y Virtualización/T4.02 Administración de BD y Virtualización - Temario.pdf",
+        "page": 90,
+        "sha256": "27e64d9f792c38d63afe91f3e887bebbd9c7c5ea85f0fdc06ee93a6a59fcf64f",
+        "quote": "LXD es un contenedor de sistema y un administrador de MVs.",
+        "role": "Pasaje discrepante o cobertura parcial; corrección contrastada con primaria"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -58850,9 +59090,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave D. En la especificación de Compose se denomina proyecto a la aplicación desplegada. Un stack se asocia específicamente a Swarm; el distractor correcto falta.",
     "location": "public/data/T4.02.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada con cuatro alternativas y fuentes, aplicada localmente con replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -58861,13 +59102,27 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T4.02-162.v1",
       "topic": "T4.02",
       "origin": "G",
       "family": "GEN-T4.02-162",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-admin20.json",
+      "beforeSha256": "00bafb0212d61db1b97ab214a9e703990c9ccf00072d06bf544bf974f1a846dd",
+      "afterSha256": "79261ec5940b6816287249b7fd64cdfddf63338a318dc1cb500ea21456850ca9",
+      "source": {
+        "pdf": "T4.02 Administración de BD y Virtualización/T4.02 Administración de BD y Virtualización - Temario.pdf",
+        "page": 95,
+        "sha256": "27e64d9f792c38d63afe91f3e887bebbd9c7c5ea85f0fdc06ee93a6a59fcf64f",
+        "quote": "Docker Compose es una herramienta oficial de Docker que está disponible para orquestar conjuntos de contenedores. El comando “Docker compose” se utiliza para crear aplicaciones MULTICONTENEDOR conocidas como “stacks” o pilas.",
+        "role": "Pasaje discrepante o cobertura parcial; corrección contrastada con primaria"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -59522,9 +59777,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave A. RFC 1341, de 1992, ya define MIME y es anterior a RFC 1521. Falta el RFC inicial entre las opciones.",
     "location": "public/data/T4.03.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada con cuatro alternativas y fuentes, aplicada localmente con replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -59533,13 +59789,27 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T4.03-05",
       "topic": "T4.03",
       "origin": "G",
       "family": "GEN-T4.03-05",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-admin20.json",
+      "beforeSha256": "e1e42ec92bc08dd62d48f2cf260d28eb59178504a3258c0b1eb553acff993b88",
+      "afterSha256": "056a4b579d2b5197d77628d079d93bc8502d8994b555a3272b7a96f83928582f",
+      "source": {
+        "pdf": "T4.03 Administración del Correo/T4.03 Administración del Correo - Temario.pdf",
+        "page": 5,
+        "sha256": "db3cd01ac360f546a252c040fb97b6b436bee4809c5255b610b8a43d6f1f6bee",
+        "quote": "definidas inicialmente en el RFC 1521 y posteriormente en RFC 2045 parte 1, RFC 2046 parte 2, RFC 2047 parte 3 y RFC 4289 parte 4",
+        "role": "Pasaje discrepante o cobertura parcial; corrección contrastada con primaria"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -60278,9 +60548,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave A. RETR descarga sin eliminar. El servidor marca para borrado con DELE y confirma al pasar a UPDATE tras QUIT; ninguna respuesta describe la descarga general.",
     "location": "public/data/T4.03.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada con cuatro alternativas y fuentes, aplicada localmente con replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -60289,13 +60560,27 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T4.03-29",
       "topic": "T4.03",
       "origin": "G",
       "family": "GEN-T4.03-29",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-admin20.json",
+      "beforeSha256": "0d2b5f5e6372934a31d3d106a1ee6ae6e974e9138c655952c9b1f77ed917c1c1",
+      "afterSha256": "e0aef075d411d0550a23d142c5e4801a08e9563b01d14a4cbe1dbe951e8d39aa",
+      "source": {
+        "pdf": "T4.03 Administración del Correo/T4.03 Administración del Correo - Temario.pdf",
+        "page": 18,
+        "sha256": "db3cd01ac360f546a252c040fb97b6b436bee4809c5255b610b8a43d6f1f6bee",
+        "quote": "RETR: (recuperar) solicita un mensaje específico, que no se borra del buzón.",
+        "role": "Pasaje discrepante o cobertura parcial; corrección contrastada con primaria"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -61146,9 +61431,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave A. El campo puede indicar bash, sh, zsh o nologin; si está vacío la regla tradicional es /bin/sh. No existe el bash universal que propone la clave.",
     "location": "public/data/T4.04.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada con cuatro alternativas y fuentes, aplicada localmente con replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -61157,13 +61443,27 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T4.04-24.v2",
       "topic": "T4.04",
       "origin": "G",
       "family": "GEN-T4.04-24",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-admin20.json",
+      "beforeSha256": "163b6bd32d6fd4b5275f5f4e5febc9df2e974b87853dc61fc6f204d9cac3743c",
+      "afterSha256": "8ff3d8dbb49108c8d5127d686ae0f8f887c8d2befb611eb6513f126ac20ccdce",
+      "source": {
+        "pdf": "T4.04 Administración de LAN/T4.04 Administración de LAN - Temario.pdf",
+        "page": 15,
+        "sha256": "062ceb78c62611a4fc191ef019d6b923c902de774f9f0a29ee933c808c8944c0",
+        "quote": "usuario:password:uid:gid:comentario:directorio:shell-inicio",
+        "role": "Pasaje discrepante o cobertura parcial; corrección contrastada con primaria"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
