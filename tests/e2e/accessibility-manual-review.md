@@ -75,3 +75,8 @@ Los atajos Meta++ y Control++ no cambian innerWidth=500, outerWidth=500, deviceP
 ### Barrido automático oscuro — 6/11
 
 Inicio, Planificación, Ajustes, Simulacros y Progreso vacío: Lighthouse snapshot accesibilidad100 en preview offline integrado a 500×841. Contraste y objetivos de Planificación/Ajustes devuelven score1 y cero incidencias. Informes completos en `evidence/integration-2026-11-06/*-dark-lighthouse.json`; tema oscuro confirmado por captura visual. No se extiende el resultado a gráficos poblados, overlays, todos los roles ni contraste no textual. UX-009 conserva su estado parcial.
+
+
+### Reintento de acceso nativo — 6/11/2026
+
+`cua.getState()` enumera aplicaciones nativas, pero devuelve browsers=[] y «The browser access host is unavailable». El canal de navegador nativo sigue sin estar disponible para comprobar el zoom real. No se usó otro mecanismo para eludir ese límite y no se marca200/400% como verificado. Las pruebas DOM/Playwright y Lighthouse registradas arriba siguen siendo evidencia distinta.

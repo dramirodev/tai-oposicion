@@ -4,11 +4,13 @@
 
 Esta sección prevalece sobre los hitos históricos que se conservan debajo.
 
+Hito10:37: ATE-015/016 corregidos y verificados. Importación repetida300 sesiones deduplicada; recuperación exacta en contexto limpio. Supertest13/13(1,7min), sync26/26, check1049/29 omitidas. Helper REST pagina y segundo login reutiliza proveedor.
+
 - Checkout activo: `/tmp/tai-audit-integration`, PR110, integración de main6b68b0b publicada como2e85f9e. Checkout original con cambios concurrentes intacto.
 - Verificado: check1046/29 omitidas; E2E global306/30 omitidas/0 fallos (11,7min), tras integrar1.1.16. Perfiles locales0/2/300 sesiones6/6 por separado. Supertest actualizado12/12:313 controles iniciales y97 observaciones en3 estados dinámicos, todos nombrados.
-- CI42190272937 verifica2e85f9e: QUICK y Auth pasan; comparación integral Linux aún en curso. ATE-014 temporal corregido localmente20/20 + adaptador10/10, pendiente confirmación Linux. Referencia visual60a2263 vigente.
-- Abiertos: UX-009 (lector/zoom nativo/contraste integral); ATE-005 (cobertura restante, perfiles autenticados longitudinales y variantes); ATE-006 (CI integral y perfiles manuales/programados); ATE-014 hasta verificar remoto.
-- Siguiente acción: consultar `gh run view 42190272937 --json status,conclusion,jobs`; investigar cualquier fallo. No enviar otro push durante el run para no cancelarlo. Cambios nuevos de fixtures/inventario verificados localmente, pendientes de publicación tras ese resultado. No merge a main ni deploy.
+- CI42190272937 verifica2e85f9e con éxito: check1046/29 omitidas, QUICK12/12, Auth2/2, baseline76/76 y candidata306/30 omitidas/0 fallos Linux. ATE-014 cerrado, referencia60a2263 vigente. No incluye cambios posteriores48bd72d/ATE-015.
+- Abiertos: UX-009 (lector/zoom nativo/contraste integral); ATE-005 (cobertura restante, perfiles autenticados longitudinales y variantes); ATE-006 (perfiles manuales/programados); ATE-015/016 cerrados con nueva evidencia.
+- Siguiente acción: publicar cambios verificados en PR110 y consultar nueva CI; continuar cobertura residual ATE-005. UX-009 requiere acceso nativo/tecnologías asistivas y perfiles CI programados aún no registrados en default. No merge a main ni deploy.
 
 
 ## Revalidación integral de baseline — 5 de noviembre de 2026

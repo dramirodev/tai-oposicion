@@ -289,9 +289,18 @@ function flush(): void {
       .catch(writeErr);
   }
 }
+// Local snapshot notifications may arrive before earlier writes are acknowledged.
+// Keep the latest pending payload per account/document to avoid re-enqueuing it.
+const pendingSessions = new Map<string, { payload: string }>();
 export function pushSession(session: Session): void {
   if (!canSync() || !uid) return;
-  setDoc(doc(db, 'users', uid, 'sessions', session.id), session).catch(writeErr);
+  const targetUid = uid, key = `${targetUid}/${session.id}`;
+  const pending = { payload: JSON.stringify(session) };
+  if (pendingSessions.get(key)?.payload === pending.payload) return;
+  pendingSessions.set(key, pending);
+  void setDoc(doc(db, 'users', targetUid, 'sessions', session.id), session)
+    .catch(writeErr)
+    .finally(() => { if (pendingSessions.get(key) === pending) pendingSessions.delete(key); });
 }
 
 export function pushTrainingSession(session: DailyTrainingSession): void {

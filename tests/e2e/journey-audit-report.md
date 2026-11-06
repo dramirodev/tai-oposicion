@@ -536,3 +536,10 @@ El journey owner añade Planificación → estudio de tema → autoevaluación �
 - ATE-010 fija el reloj del fixture de vacaciones; ATE-011 espera pregunta y respuesta observables antes de finalizar. Ambos cerrados con suite focal/global, sin alterar reglas de negocio ni aumentar timeouts. Persiste aviso no bloqueante de jsdom `window.scrollTo`.
 - UX-009 sigue parcial: pendientes tecnología asistiva real, zoom nativo 200/400 y contraste integral. ATE-005 conserva brechas de controles dinámicos/concurrencia. ATE-006 sigue sin ejecución remota: consulta GitHub del 6/11 devuelve cero PR y cero runs en la rama. Siguiente acción: publicar este corte y abrir PR de revisión para activar CI, sin merge ni deploy.
 - No se usó Firebase productivo ni Gemini. Los cambios concurrentes de README y auditoría editorial se preservan.
+
+
+## Persistencia longitudinal autenticada — 6/11/2026
+
+ATE-005/015/016: Ajustes→importar300 sesiones dos veces→verificar colección remota completa→contexto limpio→login→Progreso→comparar primer/último intento(+20). Igualdad exacta300DTO, sin duplicados; Supertest13/13. Se corrigió la repetición de escrituras pendientes que agotaba localStorage de Firestore, y los helpers de paginación/reautenticación. Check1049/29 omitidas y sync26/26. Evidencia: [historial autenticado](evidence/history-sync-2026-11-06/README.md). No demuestra todas las variantes longitudinales ni conformidad WCAG.
+
+CI Linux42190272937 para2e85f9e: éxito, baseline76/76 y candidata306/30 omitidas/0 fallos; QUICK12/12 y Auth2/2. Es anterior al arreglo ATE-015 y a los nuevos tests, cuya verificación local se indica arriba.

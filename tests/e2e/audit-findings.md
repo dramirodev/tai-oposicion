@@ -536,9 +536,9 @@ Seguimiento de la prueba Auth heredada: el refuerzo de T1.02 está primero, con 
 - **Causa:** Fixture temporal no atómico. Hipótesis inicial de estado React obsoleto no corroborada: el servicio lee localStorage al obtener el checkpoint.
 - **Solución:** Reutilizar date.getTime() para ambos campos. No modificar validador, reglas de negocio, aserciones ni timeout.
 - **Archivos afectados:** tests/e2e/bridge.spec.ts; tests/adapters/training-session.test.js; fixture equivalente de tests/sync.test.js.
-- **Estado de implementación:** CORREGIDO SIN VERIFICAR.
-- **Pruebas:** Adaptador10/10; repetición E2E20/20 (2 recorridos ×2 motores ×5 repeticiones), 2,2min. npm run check:1017 aprobadas/29 omitidas; arquitectura/lint/tipos correctos. Nueva CI Linux pendiente.
-- **Resultado final:** Defecto del fixture corregido; pendiente confirmar repetición y señal remota. ATE-006 permanece abierto.
+- **Estado de implementación:** CORREGIDO Y VERIFICADO.
+- **Pruebas:** Adaptador10/10; repetición E2E20/20 (2 recorridos ×2 motores ×5 repeticiones), 2,2min. npm run check:1017 aprobadas/29 omitidas; arquitectura/lint/tipos correctos. CI Linux42190272937 aprobada el6/11: baseline76/76, candidata306/30 omitidas/0 fallos; QUICK12/12, Auth2/2, check1046/29 omitidas.
+- **Resultado final:** Defecto del fixture corregido y regresión Linux aprobada; el trace histórico ausente impide atribuir con certeza aquel fallo concreto. ATE-006 conserva pendientes sus perfiles manuales/programados.
 
 
 ### ATE-005 — Perfiles locales reutilizables en Progreso (6/11)
@@ -551,3 +551,30 @@ Fixtures versionados new/partial/extensive de0/2/300 sesiones en tests/e2e/fixtu
 Supertest12/12 sobre demo-tai-auth, propietario sintético: Oficial2025(11), Por examen(38), Por tema(48) =97 observaciones de controles, cero nombres vacíos; se comprueba pestaña activa y, en listas, selección final y acción Estudiar habilitada. JSON incluye estado/acción/oráculo y árbol con cajas. Evidencia `evidence/dynamic-controls-2026-11-06/`. Son observaciones, no porcentaje ni prueba individual de cada control. ATE-005 permanece abierto.
 
 Última integración1.1.16: E2E global306 aprobadas/30 omitidas/0 fallos (11,7min), más6/6 nuevos perfiles locales por separado. Check1046/29 omitidas. CI42190272937 aún en curso: resultado remoto pendiente.
+
+
+### ATE-015 — Importación de historial extenso bloquea la sincronización
+
+- **Categoría / funcionalidad:** Integridad y persistencia / copias de seguridad.
+- **Descripción/evidencia:** Supertest nuevo importa300 sesiones dos veces mediante UI. Local conserva300; REST autorizado devuelve0 durante30s. Trace registra Firestore AsyncQueue QuotaExceededError en firestore_mutations. Reproducción6/11/2026, suite34749.
+- **Severidad/prioridad:** P1. El historial importado no llega a otro dispositivo.
+- **Causa probable:** Cada snapshot parcial reenvía sesiones ausentes sin deduplicar escrituras aún pendientes; importaciones consecutivas amplifican la cola.
+- **Actual/propuesto/consecuencias:** Conservar listeners, payloads, reglas y límite300. Evitar encolar de nuevo la misma sesión/cuenta/payload mientras espera confirmación; permitir modificaciones y reintentos tras error. No eliminar datos ni desactivar persistencia.
+- **Archivos:** src/adapters/firebase/legacy-sync.ts; tests/sync.test.js; tests/e2e/supertest-emulator.spec.ts.
+- **Estado:** CORREGIDO Y VERIFICADO.
+- **Verificación/resultado:** 6/11: sync26/26, check1049/29 omitidas y Supertest13/13 (1,7min, ejecución49763). Historial remoto300 y contexto limpio recupera exactamente300 DTO; comparación+20; doble importación sin duplicados. Evidencia en evidence/history-sync-2026-11-06.
+
+
+### ATE-006 — Primera regresión integral remota aprobada (6/11)
+
+[CI42190272937](https://github.com/dramirodev/tai-oposicion/actions/runs/42190272937), head2e85f9e: éxito. Check1046/29 omitidas, QUICK12/12, Auth2/2; baseline76/76; candidata306 aprobadas/30 omitidas/0 fallos(15,3min). También pasan reglas27, aislamiento y publicación atómica en Emulator. Este resultado verifica el workflow de PR, no el workflow programado/manual aún ausente de la rama por defecto. No incluye48bd72d ni ATE-015 todavía locales.
+
+### ATE-016 — Helpers de observación y reautenticación incompletos
+
+- **Categoría/funcionalidad:** Infraestructura E2E; historial extenso y cambio de contexto.
+- **Descripción/evidencia:** Segunda pasada de ATE-015 observa30 documentos y `nextPageToken`; readSyntheticRemote ignoraba páginas siguientes. Tercera pasada recupera300 sesiones y+20 correctamente, pero signInSynthetic usa Add new account para un proveedor ya vinculado: tras reset, Auth Emulator13.35.1 falla con `User tai-supertest does not have providerInfo google.com`; suite3 aprobadas/10 fallidas.
+- **Severidad/prioridad:** P1; bloquea regresiones y falsea conteos extensos.
+- **Causa:** Helpers diseñados para una sola página/login.
+- **Solución/archivos:** tests/e2e/synthetic-auth.ts recorre nextPageToken con máximo100 páginas y detección de repetición; selecciona identidad ya visible en el popup y solo crea si falta. No Admin, no SDK productivo ni permisos modificados.
+- **Estado:** CORREGIDO Y VERIFICADO.
+- **Pruebas/resultado:** Supertest49763:13/13,1,7min, código0 desde emuladores nuevos. Incluye segunda autenticación y posterior limpieza/preparación de los otros perfiles. Evidencia compartida con ATE-015 en evidence/history-sync-2026-11-06.

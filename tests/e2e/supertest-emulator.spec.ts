@@ -17,6 +17,8 @@ import {
 import { identities, assertEmulators } from '../../scripts/e2e/synthetic-users.mjs';
 import { guardSyntheticBrowser, signInSynthetic, readSyntheticRemote } from './synthetic-auth';
 
+import { studyProfileFixture } from './fixtures/study-profiles';
+
 const restrictedRoutes = [
   'temario',
   'planificacion',
@@ -42,6 +44,68 @@ test.describe('Firebase Auth Emulator supertest', () => {
       stdio: 'inherit',
     });
     await guardSyntheticBrowser(context);
+  });
+  test('historial extenso importado se recupera en un navegador nuevo sin duplicados', async ({ page, browser }) => {
+    test.setTimeout(120_000);
+    const fixture = studyProfileFixture('extensive');
+    await signInSynthetic(page, identities.owner.email);
+    const backups = page.getByRole('heading', { name: 'Copias de seguridad' }).locator('..');
+    for (let repetition = 0; repetition < 2; repetition++) {
+      await backups.locator('input[type="file"]').setInputFiles({
+        name: 'historial-sintetico.json',
+        mimeType: 'application/json',
+        buffer: Buffer.from(JSON.stringify(fixture)),
+      });
+      const confirmation = page.getByRole('dialog');
+      await expect(confirmation).toContainText('300 sesiones válidas');
+      await confirmation.getByRole('button', { name: 'Importar copia' }).click();
+      await expect(confirmation).toBeHidden();
+      await expect(backups.getByRole('status')).toContainText('Copia combinada:');
+    }
+    await expect
+      .poll(
+        async () => {
+          const remote = await readSyntheticRemote(page, 'users/tai-supertest/sessions');
+          expect(remote.status).toBe(200);
+          return remote.data.documents?.length ?? 0;
+        },
+        { timeout: 30_000 },
+      )
+      .toBe(300);
+    const fresh = await browser.newContext({ baseURL: 'http://127.0.0.1:4191', viewport: { width: 320, height: 900 } });
+    try {
+      await guardSyntheticBrowser(fresh);
+      const recovered = await fresh.newPage();
+      await recovered.goto('/#/settings');
+      expect(await recovered.evaluate(() => localStorage.getItem('tai.v1:tai-supertest'))).toBeNull();
+      await signInSynthetic(recovered, identities.owner.email);
+      await expect
+        .poll(
+          () =>
+            recovered.evaluate(
+              () => JSON.parse(localStorage.getItem('tai.v1:tai-supertest') || '{}').sessions?.length ?? 0,
+            ),
+          { timeout: 30_000 },
+        )
+        .toBe(300);
+      const restored = await recovered.evaluate(
+        () => JSON.parse(localStorage.getItem('tai.v1:tai-supertest')!).sessions,
+      );
+      expect(restored).toEqual(fixture.sessions);
+      await recovered.goto('/#/stats');
+      await recovered.getByRole('button', { name: 'Simulacros', exact: true }).click();
+      const history = recovered.getByRole('region', { name: 'Historial de simulacros' });
+      await expect(history.getByLabel('Intento A').locator('option')).toHaveCount(300);
+      await history.getByLabel('Intento A').selectOption(fixture.sessions.at(-1)!.id);
+      await history.getByLabel('Intento B').selectOption(fixture.sessions[0].id);
+      await expect(history.getByText('Nota: +20', { exact: false })).toBeVisible();
+      await recovered.screenshot({
+        path: test.info().outputPath('authenticated-history-restored.png'),
+        fullPage: true,
+      });
+    } finally {
+      await fresh.close();
+    }
   });
   test('propietario sintético completa planificación, estudio, evaluación, preguntas y estadísticas', async ({
     page,
