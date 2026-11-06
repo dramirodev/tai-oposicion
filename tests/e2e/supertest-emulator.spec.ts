@@ -299,7 +299,8 @@ test.describe('Firebase Auth Emulator supertest', () => {
     const evidenceDir = 'tests/e2e/evidence/accessibility-2026-11-05';
     mkdirSync(evidenceDir, { recursive: true });
     await page.screenshot({ path: `${evidenceDir}/authenticated-run-before-reload.png`, fullPage: true });
-    if (firestoreUnavailable) await page.route('http://127.0.0.1:8080/**', route => route.abort('failed'));
+    let abortedWrites = 0;
+    if (firestoreUnavailable) await page.route('http://127.0.0.1:8080/**', route => { abortedWrites++; return route.abort('failed'); });
     await page.reload();
     const resumeDialog = page.getByRole('dialog');
     await expect(resumeDialog).toContainText('Tienes sin terminar');
@@ -314,7 +315,10 @@ test.describe('Firebase Auth Emulator supertest', () => {
     expect(resumed.ids).toEqual(checkpoint.ids);
     expect(resumed.idx).toBe(checkpoint.idx);
     expect(resumed.ans[0]).toBe(checkpoint.ans[0]);
-    if (firestoreUnavailable) await page.unroute('http://127.0.0.1:8080/**');
+    if (firestoreUnavailable) {
+      expect(abortedWrites).toBeGreaterThan(0);
+      await page.unroute('http://127.0.0.1:8080/**');
+    }
     await page.getByRole('button', { name: 'Salir', exact: true }).click();
     const confirmation = page.getByRole('dialog');
     await expect(confirmation).toContainText('Lo respondido se guardará como sesión interrumpida');
@@ -323,6 +327,47 @@ test.describe('Firebase Auth Emulator supertest', () => {
     await expect(page.getByRole('heading', { name: 'Resultado' })).toBeVisible();
     await expect(page.getByText('Sesión interrumpida')).toBeVisible();
     expect(await page.evaluate(() => localStorage.getItem('tai.run:tai-supertest'))).toBeNull();
+  });
+  test('token de renovación rechazado permite reautenticar sin borrar el progreso local', async ({ page }) => {
+    await signInSynthetic(page, identities.owner.email);
+    await page.getByLabel('Tema que estás introduciendo esta semana').selectOption('T1.02');
+    const localKey = 'tai.v1:tai-supertest';
+    const before = await page.evaluate(key => localStorage.getItem(key), localKey);
+    expect(before).not.toBeNull();
+    await page.evaluate(async () => {
+      const db = await new Promise<IDBDatabase>((resolve, reject) => {
+        const request = indexedDB.open('firebaseLocalStorageDb');
+        request.onsuccess = () => resolve(request.result);
+        request.onerror = () => reject(request.error);
+      });
+      try {
+        await new Promise<void>((resolve, reject) => {
+          const tx = db.transaction('firebaseLocalStorage', 'readwrite');
+          const store = tx.objectStore('firebaseLocalStorage');
+          const request = store.openCursor();
+          request.onsuccess = () => {
+            const cursor = request.result;
+            if (!cursor) return;
+            const record = cursor.value;
+            const user = record.value?.user ?? record.value;
+            if (user?.email === 'tai-supertest@example.test') {
+              user.stsTokenManager.expirationTime = 0;
+              user.stsTokenManager.refreshToken = 'invalid-synthetic-refresh-token';
+              cursor.update(record);
+            }
+            cursor.continue();
+          };
+          tx.oncomplete = () => resolve();
+          tx.onerror = () => reject(tx.error);
+        });
+      } finally { db.close(); }
+    });
+    await page.reload();
+    await expect(page.getByRole('button', { name: 'Entrar con Google' })).toBeVisible();
+    expect(await page.evaluate(key => localStorage.getItem(key), localKey)).toBe(before);
+    await signInSynthetic(page, identities.owner.email);
+    await page.goto('/#/planificacion');
+    await expect(page.getByRole('heading', { name: 'Planificación de estudio', exact: true })).toBeVisible();
   });
   test('Lectura atenta recorre sus tres pasos, avanza y permite salir', async ({ page }) => {
     test.setTimeout(90_000);

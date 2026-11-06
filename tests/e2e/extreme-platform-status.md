@@ -242,3 +242,8 @@ Rama audit/followup-2026-11-06 en /tmp/tai-audit-followup. UX-023 pérdida de fo
 ### ATE-005 — Recuperación con Firestore inaccesible
 
 Ampliación del recorrido autenticado: tras responder y avanzar a pregunta2, se abortan las peticiones HTTP al Emulator Firestore8080 durante la recarga. Se verifica diálogo2/3, continuar la misma pregunta y conservación exacta de IDs, índice y respuesta. Se retira la inyección y se finaliza como sesión interrumpida con checkpoint eliminado. Supertest18/18, código0; typecheck y diff-check correctos. Solo Emulator demo-tai-auth. Esto comprueba el estado local/UI; no certifica sincronización remota final ni caducidad de token. ATE-005 continúa EN CORRECCIÓN. Próximo paso: instrumentar conteo de peticiones abortadas y caducidad forzada con oráculo de reautenticación, sin modificar seguridad de producción.
+
+
+### ATE-005 — Token inválido y caída comprobada
+
+Supertest19/19,2,5min,código0 (/tmp/tai-ate-expiry.log). Configuración guardada desde UI no nula; token de renovación sintético inválido con vencimiento forzado; recarga permite volver a entrar, conserva el estado local exacto y abre Planificación. No equivale a expiración natural ni revocación administrativa. Caída Firestore exige peticiones abortadas>0, checkpoint y respuesta conservados. Typecheck/diff-check correctos. Sin cambios de producto ni producción. Sigue EN CORRECCIÓN por matriz residual y persistencia remota tras recuperación.
