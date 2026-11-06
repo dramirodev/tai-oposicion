@@ -247,3 +247,13 @@ Ampliación del recorrido autenticado: tras responder y avanzar a pregunta2, se 
 ### ATE-005 — Token inválido y caída comprobada
 
 Supertest19/19,2,5min,código0 (/tmp/tai-ate-expiry.log). Configuración guardada desde UI no nula; token de renovación sintético inválido con vencimiento forzado; recarga permite volver a entrar, conserva el estado local exacto y abre Planificación. No equivale a expiración natural ni revocación administrativa. Caída Firestore exige peticiones abortadas>0, checkpoint y respuesta conservados. Typecheck/diff-check correctos. Sin cambios de producto ni producción. Sigue EN CORRECCIÓN por matriz residual y persistencia remota tras recuperación.
+
+
+### Reanudación tras interrupción y cambios concurrentes
+
+El comando interrumpido no creó commit. Se guardó10f7b08 y se integró origin/audit/followup-2026-11-06 (1f03a13, PR117 incluida) sin descartar cambios; conflicto sólo documental, ambos historiales conservados. Publicado c644a02. Check integrado1088/29omitidas y Supertest19/19 (2,3min) correctos. Regresión global local en curso: sesión94131, /tmp/tai-ate-integrated-e2e.log; referencia76/76 completada, candidata aún sin resultado final. No cerrar ATE-005 ni atribuir éxito global. Próximo paso exacto: terminar esa sesión, investigar cualquier fallo y ampliar persistencia remota/controles pendientes. Raíz concurrente y capturas generadas sin confirmar preservadas.
+
+
+### Regresión global y matriz ATE-005
+
+Global integrado c644a02: referencia76/76 y candidata312/44omitidas,11,9min,código0. Sin fallos reproducibles. Nuevo oráculo remoto tras finalizar la recuperación exige que todos los IDs de sesiones locales existan en Firestore, leído con token cliente; Supertest19/19,2,6min, typecheck correcto. Sólo Emulator. Matriz explícita en ate-005-coverage.md; sigue EN CORRECCIÓN por correspondencia individual de controles/estados y conflictos simultáneos del mismo registro entre contextos. No declarar cierre por agrupar controles en flujos. Próximo paso: definir y ejecutar oráculo de concurrencia desde contrato de sincronización y completar correspondencias individuales.

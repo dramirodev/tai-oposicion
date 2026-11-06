@@ -327,6 +327,14 @@ test.describe('Firebase Auth Emulator supertest', () => {
     await expect(page.getByRole('heading', { name: 'Resultado' })).toBeVisible();
     await expect(page.getByText('Sesión interrumpida')).toBeVisible();
     expect(await page.evaluate(() => localStorage.getItem('tai.run:tai-supertest'))).toBeNull();
+    const sessionIds = await page.evaluate(() => JSON.parse(localStorage.getItem('tai.v1:tai-supertest')!).sessions.map((session: {id:string}) => session.id) as string[]);
+    expect(sessionIds.length).toBeGreaterThan(0);
+    await expect.poll(async () => {
+      const remote = await readSyntheticRemote(page, 'users/tai-supertest/sessions');
+      expect(remote.status).toBe(200);
+      const ids = (remote.data.documents ?? []).map((document: {name:string}) => document.name.split('/').at(-1));
+      return sessionIds.every(id => ids.includes(id));
+    }, { timeout:30_000 }).toBe(true);
   });
   test('token de renovación rechazado permite reautenticar sin borrar el progreso local', async ({ page }) => {
     await signInSynthetic(page, identities.owner.email);

@@ -664,3 +664,8 @@ Pruebas: regresión roja de contenido anterior, preflight/rollback/idempotencia/
 **Prioridad:** P2, infraestructura de prueba; impacto de producto no demostrado. **Estado:** ANALIZADO.
 
 El primer intento de deploy42237352967 del merge PR116/f6aa79f falló en `tests/firestore-rules.test.js:244`: segundo cliente sin estado inicial al vencer un bucle de50×20ms; 26 pruebas pasaron y no se publicaron reglas o Hosting. El test, adaptador de calendario y reglas son idénticos a la entrega anterior. Las 27 pruebas originales pasaron en un emulador local nuevo, sin modificaciones. La inicialización asíncrona del listener bajo carga es una hipótesis, no una causa demostrada ni una pérdida de datos confirmada. Se conserva el fallo y se ejecuta un único reintento oficial del job completo, sin relajar aserciones o aumentar plazos. Si se repite, instrumentar la recepción inicial y diferenciar disponibilidad del servidor, caché y entrega al segundo cliente antes de cambiar código o pruebas. No se consultaron ni modificaron datos de estudiantes.
+
+
+### Regresión global y matriz ATE-005
+
+Global integrado c644a02: referencia76/76 y candidata312/44omitidas,11,9min,código0. Sin fallos reproducibles. Nuevo oráculo remoto tras finalizar la recuperación exige que todos los IDs de sesiones locales existan en Firestore, leído con token cliente; Supertest19/19,2,6min, typecheck correcto. Sólo Emulator. Matriz explícita en ate-005-coverage.md; sigue EN CORRECCIÓN por correspondencia individual de controles/estados y conflictos simultáneos del mismo registro entre contextos. No declarar cierre por agrupar controles en flujos. Próximo paso: definir y ejecutar oráculo de concurrencia desde contrato de sincronización y completar correspondencias individuales.
