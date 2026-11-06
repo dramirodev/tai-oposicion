@@ -18,6 +18,7 @@ BATCHES = {
 REVIEWED_BATCHES = {
     'reviewed-19': 'reviewed-19.json',
     'reviewed-followup': 'reviewed-followup.json',
+    'reviewed-wave2': 'reviewed-wave2.json',
 }
 
 

@@ -8,6 +8,7 @@ import subprocess
 import sys
 import tempfile
 import unittest
+from historical_bank import copy_release_boundary
 
 ROOT = Path(__file__).resolve().parents[2]
 EDITORIAL = ROOT/'scripts/bank-editorial'
@@ -17,6 +18,12 @@ sha = lambda data: hashlib.sha256(data).hexdigest()
 
 
 class FollowupTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.historical = tempfile.TemporaryDirectory()
+        cls.addClassCleanup(cls.historical.cleanup)
+        cls.boundary = copy_release_boundary(Path(cls.historical.name), 'reviewed-followup')
+
     def test_complete_evidence_and_exact_scope(self):
         self.assertEqual(len(LEDGER['questions']),36)
         self.assertEqual(len({q['id'] for q in LEDGER['questions']}),36)
@@ -25,7 +32,7 @@ class FollowupTests(unittest.TestCase):
         previous = json.loads((EDITORIAL/'reviewed-19.json').read_text())
         self.assertFalse({q['id'] for q in previous['questions']} & {q['id'] for q in LEDGER['questions']})
         for name,info in LEDGER['files'].items():
-            raw=(ROOT/'public/data'/name).read_bytes()
+            raw=(self.boundary/name).read_bytes()
             self.assertEqual(sha(raw),info['afterSha256'])
             after=json.loads(raw);before=json.loads(raw)
             if name == 'meta.json':
@@ -53,13 +60,13 @@ class FollowupTests(unittest.TestCase):
                 self.assertIn(q['after']['c'],range(4))
                 self.assertEqual(len(q['reviewedOptions']),4)
                 self.assertTrue(all(q['reviewedOptions']))
-                metadata=json.loads((ROOT/'public/data/meta.json').read_text())
+                metadata=json.loads((self.boundary/'meta.json').read_text())
                 self.assertEqual(metadata[q['id']][2],q['after']['k'])
                 ref=q['reference'];self.assertRegex(ref['sha256'],r'^[a-f0-9]{64}$')
                 self.assertTrue(ref['page']>0 and ref['quote'])
                 self.assertEqual(q['after']['u'],f"{ref['quote']} [p. {ref['page']}]")
                 if q['inSample']:
-                    sample=json.loads((ROOT/'public/sample'/(q['topic']+'.json')).read_text())
+                    sample=json.loads((self.boundary/'sample'/(q['topic']+'.json')).read_text())
                     self.assertEqual(next(x for x in sample if x['i']==q['id']),q['after'])
 
     def test_independent_execution_examples(self):
@@ -77,7 +84,7 @@ class FollowupTests(unittest.TestCase):
             files={name:info for name,info in LEDGER['files'].items()}
             files.update({'sample/'+name:info for name,info in LEDGER['sampleFiles'].items()})
             for name in files:
-                src=ROOT/'public'/name if name.startswith('sample/') else ROOT/'public/data'/name
+                src=self.boundary/name
                 shutil.copyfile(src,folder/name)
             def run(mode):return subprocess.run([sys.executable,str(EDITORIAL/'replay.py'),'--batch','reviewed-followup','--candidate-dir',temp,'--include-sample',mode],capture_output=True,text=True)
             def fingerprints():return {n:sha((folder/n).read_bytes()) for n in files}
@@ -94,7 +101,7 @@ class FollowupTests(unittest.TestCase):
             self.assertTrue(run('--apply').stdout.startswith('0 '))
             # Simulate a crash after one topic; accepted before/after hashes recover deterministically.
             self.assertTrue(run('--rollback').stdout.startswith('38 '))
-            first=next(iter(LEDGER['files']));shutil.copyfile(ROOT/'public/data'/first,folder/first)
+            first=next(iter(LEDGER['files']));shutil.copyfile(self.boundary/first,folder/first)
             self.assertEqual(run('--apply').returncode,0)
             self.assertEqual(fingerprints(),approved)
             target=folder/name;target.unlink();target.symlink_to(folder/first)

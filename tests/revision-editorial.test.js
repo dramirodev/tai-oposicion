@@ -5,11 +5,15 @@ import { questionNotice } from '../src/shared/presentation/study-content.js';
 import { filterScoringQuestions } from '../src/core/domain/selection.js';
 const load = f => JSON.parse(readFileSync(`public/data/${f}`, 'utf8'));
 const by = (f, id) => load(f).find(q => q.i === id);
-it('las preguntas reescritas como «versión editorial» vuelven a su contenido original', () => {
+it('conserva originales sin una reparación documentada y mantiene la cuarentena PHP', () => {
   const q = by('T3.09.json', 'AT309-P1-12');
   expect(q.c).toBe(3);
   expect(q.q).toContain('INCORRECTA');
-  expect(by('T3.03.json', 'GEN-T3.03-48').q).toContain('débilmente tipados');
+  const php = by('T3.03.json', 'GEN-T3.03-48');
+  const review = JSON.parse(readFileSync('scripts/bank-editorial/reviewed-wave2.json', 'utf8')).questions.find(q => q.id === php.i);
+  expect(php).toEqual(review.after);
+  expect(php.q).toContain('En PHP');
+  expect(php.np).toBe(1); expect(php.w).toBe(1);
   for (const [f, id] of [['T3.09.json', 'AT309-P1-12'], ['T3.03.json', 'GEN-T3.03-48'], ['T3.03.json', 'GEN-T3.03-48.v1'], ['T3.08.json', 'GEN-T3.08-418.v1']]) {
     expect(by(f, id).n || '').not.toContain('VERSIÓN EDITORIAL');
   }
@@ -196,11 +200,12 @@ it.each([
 });
 
 
-it('mantiene fuera de puntuación las 50 correcciones factuales que aún no están publicadas', () => {
+it('exige prueba de contenido para las 178 nuevas correcciones factuales', () => {
  const previous = JSON.parse(readFileSync('scripts/bank-editorial/reviewed-19.json', 'utf8')).questions;
  const followup = JSON.parse(readFileSync('scripts/bank-editorial/reviewed-followup.json', 'utf8')).questions.filter(q => q.priority === 'P0');
- const entries = [...previous, ...followup];
- expect(entries).toHaveLength(50);
+ const wave2 = JSON.parse(readFileSync('scripts/bank-editorial/reviewed-wave2.json', 'utf8')).questions.filter(q => q.after.np !== 1);
+ const entries = [...previous, ...followup, ...wave2];
+ expect(entries).toHaveLength(178);
  for (const entry of entries) {
   for (const version of [entry.before, entry.after]) {
    expect(isQuestionEditoriallyQuarantined(version.i), version.i).toBe(true);

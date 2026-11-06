@@ -7,7 +7,7 @@ import { approvedQuestionHashes } from '../src/core/domain/approved-question-has
 import { applyEditorialScoring, isEditorialContentBlocked } from '../src/core/domain/question-review-overrides.js';
 import { questionNotice } from '../src/shared/presentation/study-content.js';
 const read = file => JSON.parse(readFileSync(file, 'utf8'));
-const recent = ['reviewed-19','reviewed-followup'].flatMap(f => read(`scripts/bank-editorial/${f}.json`).questions);
+const recent = ['reviewed-19','reviewed-followup','reviewed-wave2'].flatMap(f => read(`scripts/bank-editorial/${f}.json`).questions.filter(q=>q.after.np!==1));
 const published = ['reviewed-web','reviewed-T3.08','reviewed-T4.07'].flatMap(f => read(`scripts/bank-editorial/${f}.json`).map(entry => {
  const topic=f==='reviewed-T4.07'?'T4.07':'T3.08';
  const after=read(`public/data/${topic}.json`).find(q=>q.i===entry.id);
@@ -18,8 +18,8 @@ const published = ['reviewed-web','reviewed-T3.08','reviewed-T4.07'].flatMap(f =
 const proposals=[...recent,...published];
 afterEach(() => vi.unstubAllGlobals());
 const crypto = () => vi.stubGlobal('crypto', webcrypto);
-it('binds exactly68 reviewed records and rejects68 actual prior records, including after a newer sameID', async () => {
- crypto(); expect(Object.keys(approvedQuestionHashes)).toHaveLength(68);
+it('binds exactly196 reviewed records and rejects196 actual prior records, including after a newer sameID', async () => {
+ crypto(); expect(Object.keys(approvedQuestionHashes)).toHaveLength(196);
  for(const {id,before,after,topic} of proposals) {
    expect(read(`public/data/${topic}.json`).find(q=>q.i===id),id).toEqual(after);
    const fresh=await verifyQuestionContent(after);
@@ -115,4 +115,12 @@ it('removes missing-figure warnings only for proven recovered content and its pr
    expect(toFailureQuestionView(stale).editorialNotice).toContain('Solo estudio');
   }
  }
+});
+
+it('never approves the PHP study-only revision while its source acceptance remains pending',async()=>{
+ crypto();const q=read('scripts/bank-editorial/reviewed-wave2.json').questions.find(q=>q.id==='GEN-T3.03-48');
+ expect(q.after.np).toBe(1);expect(q.after.w).toBe(1);
+ expect(approvedQuestionHashes[q.id]).toBeUndefined();
+ expect(hasApprovedQuestionContent(await verifyQuestionContent(q.after))).toBe(false);
+ expect(isEditorialContentBlocked(await verifyQuestionContent(q.after))).toBe(true);
 });
