@@ -7,7 +7,7 @@ import { approvedQuestionHashes } from '../src/core/domain/approved-question-has
 import { applyEditorialScoring, isEditorialContentBlocked } from '../src/core/domain/question-review-overrides.js';
 import { questionNotice } from '../src/shared/presentation/study-content.js';
 const read = file => JSON.parse(readFileSync(file, 'utf8'));
-const recent = ['reviewed-19','reviewed-followup','reviewed-wave2','reviewed-admin20','reviewed-legal19','reviewed-programming20'].flatMap(f => read(`scripts/bank-editorial/${f}.json`).questions.filter(q=>q.after.np!==1));
+const recent = ['reviewed-19','reviewed-followup','reviewed-wave2','reviewed-admin20','reviewed-legal19','reviewed-programming20','reviewed-web25','reviewed-architecture20'].flatMap(f => read(`scripts/bank-editorial/${f}.json`).questions.filter(q=>q.after.np!==1));
 const published = ['reviewed-web','reviewed-T3.08','reviewed-T4.07'].flatMap(f => read(`scripts/bank-editorial/${f}.json`).map(entry => {
  const topic=f==='reviewed-T4.07'?'T4.07':'T3.08';
  const after=read(`public/data/${topic}.json`).find(q=>q.i===entry.id);
@@ -18,8 +18,8 @@ const published = ['reviewed-web','reviewed-T3.08','reviewed-T4.07'].flatMap(f =
 const proposals=[...recent,...published];
 afterEach(() => vi.unstubAllGlobals());
 const crypto = () => vi.stubGlobal('crypto', webcrypto);
-it('binds exactly255 reviewed records and rejects255 actual prior records, including after a newer sameID', async () => {
- crypto(); expect(Object.keys(approvedQuestionHashes)).toHaveLength(255);
+it('binds exactly300 reviewed records and rejects300 actual prior records, including after a newer sameID', async () => {
+ crypto(); expect(Object.keys(approvedQuestionHashes)).toHaveLength(300);
  for(const {id,before,after,topic} of proposals) {
    expect(read(`public/data/${topic}.json`).find(q=>q.i===id),id).toEqual(after);
    const fresh=await verifyQuestionContent(after);

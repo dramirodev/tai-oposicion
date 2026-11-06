@@ -11,7 +11,7 @@ import sys
 
 ROOT = Path(__file__).resolve().parents[2]
 EDITORIAL = ROOT / 'scripts/bank-editorial'
-ORDER = ('reviewed-19', 'reviewed-followup', 'reviewed-wave2', 'reviewed-admin20', 'reviewed-legal19', 'reviewed-programming20')
+ORDER = ('reviewed-19', 'reviewed-followup', 'reviewed-wave2', 'reviewed-admin20', 'reviewed-legal19', 'reviewed-programming20', 'reviewed-web25', 'reviewed-architecture20')
 
 
 def copy_release_boundary(folder, batch):

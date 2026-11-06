@@ -18459,9 +18459,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "El service worker corre en contexto de worker distinto de la página pero gestionado por el propio navegador. Ninguna respuesta describe claramente esa diferencia.",
     "location": "public/data/T3.08.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada de cuatro opciones con fuente documental, oráculos cuando aplican y replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -18470,13 +18471,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.08-34",
       "topic": "T3.08",
       "origin": "G",
       "family": "GEN-T3.08-34",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-web25.json",
+      "beforeSha256": "d6dfc6b875b0e0816510744a73c094900696d6596463f0f59afa1ae6a544b3bd",
+      "afterSha256": "636736080ded675b92c567b7b48dd8d741e4f522ae853bce22ecb0d4802ea775",
+      "source": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario.pdf",
+        "page": 11,
+        "quote": "Service Worker: es un fichero JavaScript que se ejecuta en 2º plano y separado del",
+        "sha256": "980aaf92d3f84a4a632d5324ef15fde8d6ce8c71f385ec2a57fb3d806c9c0bc5"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -18515,9 +18529,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "La respuesta ante una repetición depende de la estrategia programada: cache-first, network-first, etc. No hay comportamiento obligatorio como C.",
     "location": "public/data/T3.08.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada de cuatro opciones con fuente documental, oráculos cuando aplican y replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -18526,13 +18541,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.08-35",
       "topic": "T3.08",
       "origin": "G",
       "family": "GEN-T3.08-35",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-web25.json",
+      "beforeSha256": "7e966a677f476235c12735bdb5293513a8c5811212659223ce880db1a36637c5",
+      "afterSha256": "e430341cb4bec3833d4a45a9b1e8962fe807532c97977f62e19c7345e9d2fd14",
+      "source": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario.pdf",
+        "page": 11,
+        "quote": "directamente de la caché sin acceder al",
+        "sha256": "980aaf92d3f84a4a632d5324ef15fde8d6ce8c71f385ec2a57fb3d806c9c0bc5"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -18543,9 +18571,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Tampoco la primera solicitud obliga a descargar y cachear. Puede haber precaché, respuesta sintética u otra estrategia del manejador.",
     "location": "public/data/T3.08.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada de cuatro opciones con fuente documental, oráculos cuando aplican y replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -18554,13 +18583,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.08-35.v1",
       "topic": "T3.08",
       "origin": "G",
       "family": "GEN-T3.08-35",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-web25.json",
+      "beforeSha256": "50304360e077884d6118beb0d7292df3fe8109096346f5c08448f8cf0256a7df",
+      "afterSha256": "caa5311ac57712a94e32aa0e9a88a88e9a3a1df9645f83a3c0ce6c7ef7300a4c",
+      "source": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario.pdf",
+        "page": 11,
+        "quote": "al servidor y almacena la copia en la caché",
+        "sha256": "980aaf92d3f84a4a632d5324ef15fde8d6ce8c71f385ec2a57fb3d806c9c0bc5"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -20789,9 +20831,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Se pueden omitir determinadas etiquetas de html/head/body bajo condiciones; los elementos del árbol no son facultativos. La clave confunde requisito estructural con omisión de marcas.",
     "location": "public/data/T3.08.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada de cuatro opciones con fuente documental, oráculos cuando aplican y replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -20800,13 +20843,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.08-317",
       "topic": "T3.08",
       "origin": "G",
       "family": "GEN-T3.08-317",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-web25.json",
+      "beforeSha256": "04c8397d885d14e67281a1aaa157a6c53a37b69a26094bd583caedd4459b013c",
+      "afterSha256": "020b767ccdbf1763b91144c4314081135a22492f843783d92e50f8c6d6338263",
+      "source": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - HTML.pdf",
+        "page": 8,
+        "quote": "Es el propio navegador el que añade los elementos que faltan.",
+        "sha256": "3481a610ced055ed9c38c313cd78ba950d6219498a7dbf38511046146c7ba5ba"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -20929,9 +20985,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "El orden no es totalmente libre: base debe preceder a determinados elementos con URL y meta charset tiene límites de posición. Las otras opciones tampoco describen la regla.",
     "location": "public/data/T3.08.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada de cuatro opciones con fuente documental, oráculos cuando aplican y replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -20940,13 +20997,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.08-319.v2",
       "topic": "T3.08",
       "origin": "G",
       "family": "GEN-T3.08-319",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-web25.json",
+      "beforeSha256": "39e175254d03802f2af7f178d49aa4ea5ef42bd4a8b6356c85f7e6d1ca8d9cc8",
+      "afterSha256": "2d4a738523e565eca3c819d4c6806763b3f695b2eb8d281b66297a27b8e3297b",
+      "source": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - HTML.pdf",
+        "page": 9,
+        "quote": "No existe orden entre los elementos",
+        "sha256": "3481a610ced055ed9c38c313cd78ba950d6219498a7dbf38511046146c7ba5ba"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -21013,9 +21083,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "head no contiene todo lo invisible: scripts, contenido oculto y elementos no representados pueden estar en body. Ninguna opción define un contenedor universal de contenido invisible.",
     "location": "public/data/T3.08.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada de cuatro opciones con fuente documental, oráculos cuando aplican y replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -21024,13 +21095,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.08-323.v1",
       "topic": "T3.08",
       "origin": "G",
       "family": "GEN-T3.08-323",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-web25.json",
+      "beforeSha256": "affe6da4983133258b1ea578e5edede8634e6407de4f63b56f8554c71fdd3d2b",
+      "afterSha256": "6c5e2437e797e3bf2670bb0ab47e957d55a7f8d0d6763d4a5189646c07530e45",
+      "source": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - HTML.pdf",
+        "page": 9,
+        "quote": "La cabecera (<head> ... </head>) contiene el título del documento, la metainformación",
+        "sha256": "3481a610ced055ed9c38c313cd78ba950d6219498a7dbf38511046146c7ba5ba"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -21265,9 +21349,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "WHATWG permite varios main si como máximo uno carece de atributo hidden. D prohíbe todo segundo elemento, mientras A («puede existir varios») sí es posible.",
     "location": "public/data/T3.08.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada de cuatro opciones con fuente documental, oráculos cuando aplican y replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -21276,13 +21361,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.08-335",
       "topic": "T3.08",
       "origin": "G",
       "family": "GEN-T3.08-335",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-web25.json",
+      "beforeSha256": "b886fd7e114cf7845dbb822fd1d3c027284ecb0322fb939d3ce6be4e940ef401",
+      "afterSha256": "a06eb7513df7d1eac2aa9ae74e97b39f7dbd0622b5975f44ff78132a8da6a4d6",
+      "source": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - HTML.pdf",
+        "page": 21,
+        "quote": "Solo puede existir un elemento en el documento.",
+        "sha256": "3481a610ced055ed9c38c313cd78ba950d6219498a7dbf38511046146c7ba5ba"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -21492,9 +21590,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "label es la etiqueta o nombre visible del grupo. No define un «valor de la agrupación» remitido como valor del campo; ninguna alternativa ofrece con precisión el significado.",
     "location": "public/data/T3.08.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada de cuatro opciones con fuente documental, oráculos cuando aplican y replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -21503,13 +21602,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.08-357.v2",
       "topic": "T3.08",
       "origin": "G",
       "family": "GEN-T3.08-357",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-web25.json",
+      "beforeSha256": "e6c24f51e5401b7c9596d134f0be4fda183c8b8c1893ac256c154eef669d55e4",
+      "afterSha256": "560ceffe1f5bcc8883f4c50c58e89ac5bfe7f60eb1e2fa89ccf4a25369193b4e",
+      "source": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - HTML.pdf",
+        "page": 60,
+        "quote": "label: valor de la agrupación.",
+        "sha256": "3481a610ced055ed9c38c313cd78ba950d6219498a7dbf38511046146c7ba5ba"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -21688,9 +21800,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Según el HTML Living Standard, cite representa el título de una obra, no el nombre de una persona por ser autora. B avala expresamente algo que el estándar excluye.",
     "location": "public/data/T3.08.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada de cuatro opciones con fuente documental, oráculos cuando aplican y replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -21699,13 +21812,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.08-407.v1",
       "topic": "T3.08",
       "origin": "G",
       "family": "GEN-T3.08-407",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-web25.json",
+      "beforeSha256": "75c38beaeae6b23d77d82fb92cb00c79845b8271de28d148a54f83077671c8b4",
+      "afterSha256": "e6540d4e7bdae7b3f913949f26d494cc3d6894f937d59454806c3a58e487e680",
+      "source": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - HTML.pdf",
+        "page": 29,
+        "quote": "Marca una referencia a una fuente o el autor de un texto citado.",
+        "sha256": "3481a610ced055ed9c38c313cd78ba950d6219498a7dbf38511046146c7ba5ba"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -72536,9 +72662,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave D. Un servicio también puede definirse. No hay incompatibilidad entre definir, describir, publicar y descubrir.",
     "location": "public/data/T3.07.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada de cuatro opciones con fuente documental, oráculos cuando aplican y replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -72547,13 +72674,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "AT307-P1-06",
       "topic": "T3.07",
       "origin": "A",
       "family": null,
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-architecture20.json",
+      "beforeSha256": "3895d4cf60eeb2435ef2ba2aaff2d5277437d927632208e61b602249a1d9f842",
+      "afterSha256": "cf35d17b28c9d0a8f075e61702d6a3efe240f1e8d26dbc1bac46d6a8a8a18ab6",
+      "source": {
+        "pdf": "01_Temario/T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf",
+        "page": 21,
+        "quote": "siendo este mecanismo de invocación totalmente independiente de la plataforma que utilicemos y del lenguaje de programación en el que se haya implementado internamente el servicio.",
+        "sha256": "7ac226eb1c711e5def0166d08552f5c6c9fc667b531fdc470250337c024136c0"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -72928,9 +73068,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave B. WSDL tiene enlaces HTTP. Swagger UI visualiza e interactúa con una especificación existente, y no es el lenguaje para especificarla.",
     "location": "public/data/T3.07.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada de cuatro opciones con fuente documental, oráculos cuando aplican y replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -72939,13 +73080,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "AT307-P1-51",
       "topic": "T3.07",
       "origin": "A",
       "family": null,
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-architecture20.json",
+      "beforeSha256": "6b266114be09b289999c0c5a6d0bb9c01a83713604adafbd98ce67be37123864",
+      "afterSha256": "afdca39803554466e1a5268fb242716558592e61752549959b427f84aa128ad9",
+      "source": {
+        "pdf": "01_Temario/T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf",
+        "page": 52,
+        "quote": "Swagger UI genera automáticamente a partir de la especificación OpenAPI (en YAML o JSON) la documentación visual de la API.",
+        "sha256": "7ac226eb1c711e5def0166d08552f5c6c9fc667b531fdc470250337c024136c0"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -73572,9 +73726,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave D. U sí existe en HTML5 con semántica de anotación no articulada. También están admitidos b, i y q.",
     "location": "public/data/T3.08.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada de cuatro opciones con fuente documental, oráculos cuando aplican y replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -73583,13 +73738,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "AT308-P1-06",
       "topic": "T3.08",
       "origin": "A",
       "family": null,
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-web25.json",
+      "beforeSha256": "a487f9b23a2283a7f4402e826168123176bdbf6456c1f1c98111f0bd564b9cf1",
+      "afterSha256": "a58d366948ba88bad2bb85b902111a20bc0a82ebdeac7abe391b961c15e693e2",
+      "source": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - HTML.pdf",
+        "page": 36,
+        "quote": "<font> Fuente del texto No soportado en HTML5",
+        "sha256": "3481a610ced055ed9c38c313cd78ba950d6219498a7dbf38511046146c7ba5ba"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -73628,9 +73796,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave C. Blank sin guion bajo es un nombre válido de contexto de navegación. No equivale a _blank, pero no invalida el enlace.",
     "location": "public/data/T3.08.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada de cuatro opciones con fuente documental, oráculos cuando aplican y replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -73639,13 +73808,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "AT308-P1-11",
       "topic": "T3.08",
       "origin": "A",
       "family": null,
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-web25.json",
+      "beforeSha256": "f9b6c58320ffaaf93472aef1a60d609072915c00cd8529a9d3ec6a6068490513",
+      "afterSha256": "ef32acd69a674401982e9c86e8ca8571bf2f71c2320832001b7c580079ec5e86",
+      "source": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - HTML.pdf",
+        "page": 28,
+        "quote": "_blank: nueva pestaña/ventana",
+        "sha256": "3481a610ced055ed9c38c313cd78ba950d6219498a7dbf38511046146c7ba5ba"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -73964,9 +74146,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave A. La llamada correcta es array_unshift($colores,\"amarillo\"). Con dólar inicial se invoca una variable-función no definida.",
     "location": "public/data/T3.08.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada de cuatro opciones con fuente documental, oráculos cuando aplican y replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -73975,13 +74158,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "AT308-P1-48",
       "topic": "T3.08",
       "origin": "A",
       "family": null,
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-web25.json",
+      "beforeSha256": "770ceceb7de68c024fff2f93e1d6d52789342594fceb06efcfe39b27ada51277",
+      "afterSha256": "6c521eefd229c7c97e6db19e26c8c617c60f04af3ae28d2c56b2356ab4d40451",
+      "source": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - PHP.pdf",
+        "page": 16,
+        "quote": "Añadir un elemento al principio del array:",
+        "sha256": "3db02f45ec04725a28170676ae433e9e5bdcab16a4091f97fba4bade1b1fa5b5"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -73992,9 +74188,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave C. La llamada correcta es array_shift($colores), sin dólar en el identificador y sin segundo argumento.",
     "location": "public/data/T3.08.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada de cuatro opciones con fuente documental, oráculos cuando aplican y replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -74003,13 +74200,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "AT308-P1-49",
       "topic": "T3.08",
       "origin": "A",
       "family": null,
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-web25.json",
+      "beforeSha256": "b128fd8d3c5e5a9e0c2bde128909411b09f334eca9fc8ac4e2601a5c254d7662",
+      "afterSha256": "ac6b36f1be30939e46bad83926490a69f98d9006f4dbc9c5c40ff0d5e1dc62c7",
+      "source": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - PHP.pdf",
+        "page": 17,
+        "quote": "Eliminar un elemento del principio del array:",
+        "sha256": "3db02f45ec04725a28170676ae433e9e5bdcab16a4091f97fba4bade1b1fa5b5"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -74020,9 +74230,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave D. La llamada correcta es array_pop($colores), sin dólar inicial ni argumento adicional.",
     "location": "public/data/T3.08.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada de cuatro opciones con fuente documental, oráculos cuando aplican y replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -74031,13 +74242,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "AT308-P1-50",
       "topic": "T3.08",
       "origin": "A",
       "family": null,
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-web25.json",
+      "beforeSha256": "cf76c03b5ba6fec995be943c4a1569a4506a5c6e1521218c3baa37c798fa184d",
+      "afterSha256": "bd8cab4e4ddaddcbf38e4180862db1288a0d0418f34bf63eed00587a17be7690",
+      "source": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - PHP.pdf",
+        "page": 17,
+        "quote": "Eliminar un elemento del final del array:",
+        "sha256": "3db02f45ec04725a28170676ae433e9e5bdcab16a4091f97fba4bade1b1fa5b5"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -74188,9 +74412,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave A. El corte produce una lista de tres caracteres ['c','o','n']. Print no muestra la cadena con sin corchetes ni comillas.",
     "location": "public/data/T3.08.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada de cuatro opciones con fuente documental, oráculos cuando aplican y replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -74199,13 +74424,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "AT308-P1-68",
       "topic": "T3.08",
       "origin": "A",
       "family": null,
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-web25.json",
+      "beforeSha256": "17022886cd83bd9bbf66c227206a023c15af420b0ee95358341203dc7b84fc93",
+      "afterSha256": "4ba027273b5dc9e996d20de27839e86e16235c318c989451b4031a866cdff3dd",
+      "source": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - Python.pdf",
+        "page": 9,
+        "quote": "a[:-3]",
+        "sha256": "3c2812e69c47029198d5e8371123b6cd0c0984b4ca73c41e93a229534521969b"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -74272,9 +74510,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave B. Let permite declaraciones en bloque y en el ámbito global de un script. Var también tiene alcance local en funciones, contradiciendo el distractor.",
     "location": "public/data/T3.08.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada de cuatro opciones con fuente documental, oráculos cuando aplican y replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -74283,13 +74522,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "AT308-P1-76",
       "topic": "T3.08",
       "origin": "A",
       "family": null,
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-web25.json",
+      "beforeSha256": "1518ee7aa79681a984c53b5a920cf23db6821abbb9f8bde61f657ffd240c1397",
+      "afterSha256": "df771c037a4774a77473cde1f50dbad3862a54ccdc1af54203ac76ca0f8c371d",
+      "source": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - JavaScript.pdf",
+        "page": 7,
+        "quote": "let: declara una variable local de ámbito de bloque, opcionalmente inicializándola a un",
+        "sha256": "1c05b0864e61ae0c2424e1f4d955a400e9260ddce455fba99a0337d56988f8cc"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -74328,9 +74580,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave B. El estado 2 es HEADERS_RECEIVED: ya se recibieron cabeceras de la respuesta. La clave lo niega.",
     "location": "public/data/T3.08.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada de cuatro opciones con fuente documental, oráculos cuando aplican y replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -74339,13 +74592,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "AT308-P1-81",
       "topic": "T3.08",
       "origin": "A",
       "family": null,
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-web25.json",
+      "beforeSha256": "4e507ac0474c5523a833eef583e1c582494b7ae23842b471379b9d5132ca06fb",
+      "afterSha256": "53bf482ec537dc219c27c43d7ba2c1d0fde2bf780bb390cdb0abd7e037215407",
+      "source": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - JavaScript.pdf",
+        "page": 27,
+        "quote": "2: se ha enviado la petición pero el servidor aún no ha contestado.",
+        "sha256": "1c05b0864e61ae0c2424e1f4d955a400e9260ddce455fba99a0337d56988f8cc"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -74440,9 +74706,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave C. El paquete instalable Android es .apk, tercera opción. ARM es una arquitectura de procesador.",
     "location": "public/data/T3.08.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada de cuatro opciones con fuente documental, oráculos cuando aplican y replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -74451,13 +74718,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "AT308-P1-87",
       "topic": "T3.08",
       "origin": "A",
       "family": null,
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-web25.json",
+      "beforeSha256": "f6d80d0f00262e54e17915caa2eaa0c8d42aadfd32b95eb9bac246caec7ad73f",
+      "afterSha256": "54c5d73e8c433b42fe6bdce372dc9e848506f9027ddcdc7e3cf17b262d94cc73",
+      "source": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario.pdf",
+        "page": 7,
+        "quote": "El formato de empaquetado de la app es .app (Apple Store) y .apk (Google Play).",
+        "sha256": "980aaf92d3f84a4a632d5324ef15fde8d6ce8c71f385ec2a57fb3d806c9c0bc5"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -74692,9 +74972,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave B. La llamada estándar es array_push($colores,\"azul\"), sin dólar ante el nombre. Todas las opciones imprimen una variable-función inexistente en el contexto.",
     "location": "public/data/T3.08.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada de cuatro opciones con fuente documental, oráculos cuando aplican y replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -74703,13 +74984,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "AS08-P1-81",
       "topic": "T3.08",
       "origin": "A",
       "family": null,
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-web25.json",
+      "beforeSha256": "f9c1e82c472481929977aad0fb1baf2aa2c2d2ed7f3b497b248168503a1714e9",
+      "afterSha256": "6f79aa625a8fc0655147cefb08d8aa81a54423a995924b149b6437b840c18c8e",
+      "source": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - PHP.pdf",
+        "page": 16,
+        "quote": "Añadir uno o varios elementos al final del array:",
+        "sha256": "3db02f45ec04725a28170676ae433e9e5bdcab16a4091f97fba4bade1b1fa5b5"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -74776,9 +75070,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave A. El array de la clave es válido aisladamente, pero estado: sin llaves y comillas no constituye JSON válido como texto completo.",
     "location": "public/data/T3.08.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada de cuatro opciones con fuente documental, oráculos cuando aplican y replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -74787,13 +75082,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "AS08B-P1-R-03",
       "topic": "T3.08",
       "origin": "A",
       "family": null,
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-web25.json",
+      "beforeSha256": "3b2cda95ebad3d1c5597dac0ffdc07a66389fe64d7dce431dba2f4a72f543c8c",
+      "afterSha256": "4fdbb03d4e61b5f1f28eb2dd3aab71aa1f9535c2eead03a3947fede15bf175be",
+      "source": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario.pdf",
+        "page": 11,
+        "quote": "manifiesto es un archivo (manifest.json) en formato JavaScript JSON.",
+        "sha256": "980aaf92d3f84a4a632d5324ef15fde8d6ce8c71f385ec2a57fb3d806c9c0bc5"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -75084,9 +75392,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave B. Se accede con una clave, por ejemplo $_GET['nombre']. El acceso vacío $_GET[] no puede usarse para leer.",
     "location": "public/data/T3.08.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada de cuatro opciones con fuente documental, oráculos cuando aplican y replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -75095,13 +75404,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "AS11B-P1-71",
       "topic": "T3.08",
       "origin": "A",
       "family": null,
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-web25.json",
+      "beforeSha256": "ae84637e6f51bf275029553f87c79dbb60e663f6ffc30ed851f61b5b6058630a",
+      "afterSha256": "6976b82360e482d01906f68e07840bdd302eaff07faecbeb73f1a7c72572a9d9",
+      "source": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - PHP.pdf",
+        "page": 9,
+        "quote": "$_GET Variables HTTP GET",
+        "sha256": "3db02f45ec04725a28170676ae433e9e5bdcab16a4091f97fba4bade1b1fa5b5"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -93321,9 +93643,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada B. Añadir/quitar clientes cambia la demanda, no la capacidad del servicio. Ninguna opción expresa añadir réplicas o nodos servidores.",
     "location": "public/data/T3.07.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada de cuatro opciones con fuente documental, oráculos cuando aplican y replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -93332,13 +93655,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.07-07.v1",
       "topic": "T3.07",
       "origin": "G",
       "family": "GEN-T3.07-07",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-architecture20.json",
+      "beforeSha256": "580461ae9164e5da8d6d5e0b09023ad0f14b4f8c5a0ed38f3b21ec0352b2609d",
+      "afterSha256": "61ea68d7acb160b9c64c9a41defeb1ab175bf9ad63fa2d3148565a5f77c74bf4",
+      "source": {
+        "pdf": "01_Temario/T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf",
+        "page": 4,
+        "quote": "Horizontalmente significa añadir o eliminar clientes.",
+        "sha256": "7ac226eb1c711e5def0166d08552f5c6c9fc667b531fdc470250337c024136c0"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -93657,9 +93993,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada D. Un receptor por entrega no implica procesamiento exactamente una vez. Una caída antes del acuse puede causar reentrega.",
     "location": "public/data/T3.07.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada de cuatro opciones con fuente documental, oráculos cuando aplican y replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -93668,13 +94005,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.07-54",
       "topic": "T3.07",
       "origin": "G",
       "family": "GEN-T3.07-54",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-architecture20.json",
+      "beforeSha256": "96ba782eacdf7877117802bd46049b7a4cc9e1dfb972f6e3ec0a9d0dc5501c27",
+      "afterSha256": "5f458cf3b1d26e3194a33cc389e0d8ff2af402c4fc36924c397ecc0532cd8606",
+      "source": {
+        "pdf": "01_Temario/T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf",
+        "page": 16,
+        "quote": "Desde el punto de vista funcional, los mensajes son procesados por el servicio receptor una única vez y eliminados de la cola una vez tratados.",
+        "sha256": "7ac226eb1c711e5def0166d08552f5c6c9fc667b531fdc470250337c024136c0"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -93713,9 +94063,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada B. El grupo servido en un BFF se distingue por frontend/cliente; los microservicios subyacentes son los que el BFF consume, no sus destinatarios.",
     "location": "public/data/T3.07.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada de cuatro opciones con fuente documental, oráculos cuando aplican y replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -93724,13 +94075,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.07-59.v1",
       "topic": "T3.07",
       "origin": "G",
       "family": "GEN-T3.07-59",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-architecture20.json",
+      "beforeSha256": "a6785ecab8cf2d439102bdc0b98adb39b3aee013c590a1f0135392a563867cd4",
+      "afterSha256": "a7fd1c5666c239b877face5404480941006b59c4748444530776802f3e07084e",
+      "source": {
+        "pdf": "01_Temario/T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf",
+        "page": 17,
+        "quote": "conocido como patrón Backend For Frontend (BFF), donde cada API GW ofrece servicios a grupo determinado de microservicios.",
+        "sha256": "7ac226eb1c711e5def0166d08552f5c6c9fc667b531fdc470250337c024136c0"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -93825,9 +94189,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada C. Un servicio web ordinario opera perfectamente como cliente/servidor. Su distribución no implica que evolucione a topología peer-to-peer.",
     "location": "public/data/T3.07.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada de cuatro opciones con fuente documental, oráculos cuando aplican y replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -93836,13 +94201,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.07-71.v2",
       "topic": "T3.07",
       "origin": "G",
       "family": "GEN-T3.07-71",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-architecture20.json",
+      "beforeSha256": "79e22cb9fcc09c979abce61a32eb7fce2d9e6265ca759ccf8c7e5824bacae49f",
+      "afterSha256": "82a03e2b9c45271ca5b73898ad406feb8ff2c25acc76a3d9a506d831eed6b4cb",
+      "source": {
+        "pdf": "01_Temario/T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf",
+        "page": 21,
+        "quote": "representan una revolución al alejarse de las arquitecturas tradicionales tipo cliente-servidor a nuevas arquitecturas distribuidas tipo igual-a-igual (peer-to-peer).",
+        "sha256": "7ac226eb1c711e5def0166d08552f5c6c9fc667b531fdc470250337c024136c0"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -94035,9 +94413,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada D. No todas las tecnologías web usan XML. REST puede usar JSON, binarios u otras representaciones.",
     "location": "public/data/T3.07.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada de cuatro opciones con fuente documental, oráculos cuando aplican y replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -94046,13 +94425,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.07-82.v1",
       "topic": "T3.07",
       "origin": "G",
       "family": "GEN-T3.07-82",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-architecture20.json",
+      "beforeSha256": "9f315e93591bc36d7b5347d53b300264b8c79ec0de25d843459669c374b93feb",
+      "afterSha256": "638bb5ed703e2e8a3a67d71ceef225f21e6a43eba2c35e416f56b811159e353c",
+      "source": {
+        "pdf": "01_Temario/T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf",
+        "page": 24,
+        "quote": "Todas las tecnologías de WS se basan en XML.",
+        "sha256": "7ac226eb1c711e5def0166d08552f5c6c9fc667b531fdc470250337c024136c0"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -94119,9 +94511,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada D. El atributo wsu:Id se asocia opcionalmente al UsernameToken. No es un atributo obligatorio del subelemento Username como afirma D.",
     "location": "public/data/T3.07.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada de cuatro opciones con fuente documental, oráculos cuando aplican y replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -94130,13 +94523,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.07-91.v1",
       "topic": "T3.07",
       "origin": "G",
       "family": "GEN-T3.07-91",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-architecture20.json",
+      "beforeSha256": "6d80fae28e72aefc6c0a04d9dd8eae44ebbc116a52c852ca9c88f8a6dace27a2",
+      "afterSha256": "85cea115667d99daeab5c19ec9af0a5b999464a7a7582e9910be7d739500fe34",
+      "source": {
+        "pdf": "01_Temario/T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf",
+        "page": 26,
+        "quote": "User Name Token: el token UsernameToken contiene el subelemento Username con el atributo Id, pudiendo ampliarse los atributos.",
+        "sha256": "7ac226eb1c711e5def0166d08552f5c6c9fc667b531fdc470250337c024136c0"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -94189,9 +94595,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada B. El registro y revocación son de las claves/credenciales, no del servicio que suministra la funcionalidad.",
     "location": "public/data/T3.07.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada de cuatro opciones con fuente documental, oráculos cuando aplican y replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -94200,13 +94607,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.07-100.v2",
       "topic": "T3.07",
       "origin": "G",
       "family": "GEN-T3.07-100",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-architecture20.json",
+      "beforeSha256": "7147a8cf3070dd37e8277047a3aa0cc19f6a7ae3628513b86c3d48b47f5c4c83",
+      "afterSha256": "90b7ae7d1aba4fb18f38c17c893f2fd7cbddb97e50b43efefd6fe677f4bc446e",
+      "source": {
+        "pdf": "01_Temario/T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf",
+        "page": 27,
+        "quote": "Permite manejar los procesos de registro y revocación del servicio.",
+        "sha256": "7ac226eb1c711e5def0166d08552f5c6c9fc667b531fdc470250337c024136c0"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -94273,9 +94693,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada B. relay indica si un intermediario retransmite un bloque dirigido a él que no ha procesado. La clave describe eliminación tras procesamiento y no define relay.",
     "location": "public/data/T3.07.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada de cuatro opciones con fuente documental, oráculos cuando aplican y replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -94284,13 +94705,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.07-111.v1",
       "topic": "T3.07",
       "origin": "G",
       "family": "GEN-T3.07-111",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-architecture20.json",
+      "beforeSha256": "cebda5dfee8332dde56b24646c40025f4a4fbc0794b992439346e3ad96817df3",
+      "afterSha256": "15fa2d098ad93f9677ac44d389545bb8a84e82bc5ecd62b6c7e74da0886a858f",
+      "source": {
+        "pdf": "01_Temario/T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf",
+        "page": 29,
+        "quote": "Cuando un nodo intermediario SOAP procesa un bloque de cabecera, el nodo relay intermediario SOAP elimina el bloque de cabecera del mensaje SOAP.",
+        "sha256": "7ac226eb1c711e5def0166d08552f5c6c9fc667b531fdc470250337c024136c0"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -94973,9 +95407,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada B. El código es un resultado intermedio que se canjea, no el resultado final del flujo de código. El acceso se obtiene con el access token.",
     "location": "public/data/T3.07.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada de cuatro opciones con fuente documental, oráculos cuando aplican y replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -94984,13 +95419,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.07-164.v1",
       "topic": "T3.07",
       "origin": "G",
       "family": "GEN-T3.07-164",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-architecture20.json",
+      "beforeSha256": "90375c709e0a8a998d5bde52a0d7c661b63e49dca7e3a78ad8f0293fe32327ec",
+      "afterSha256": "4bb1a22e7fde46c5106ad493a74773a061a434ca9b0dbe448ebf156d339e5984",
+      "source": {
+        "pdf": "01_Temario/T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf",
+        "page": 50,
+        "quote": "redirige de vuelta al cliente un código de autorización o un TOKEN DE ACCESO, según el tipo de concesión.",
+        "sha256": "7ac226eb1c711e5def0166d08552f5c6c9fc667b531fdc470250337c024136c0"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -95029,9 +95477,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada C. El payload solo contiene los claims que se hayan incluido, puede incluso no incluir datos del usuario y no elimina la necesidad de comprobar validez o consultar datos externos.",
     "location": "public/data/T3.07.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada de cuatro opciones con fuente documental, oráculos cuando aplican y replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -95040,13 +95489,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.07-166",
       "topic": "T3.07",
       "origin": "G",
       "family": "GEN-T3.07-166",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-architecture20.json",
+      "beforeSha256": "187001006c5eeccca66398b5fb8415ed20658f6728745a4868dfe27408bdd35f",
+      "afterSha256": "3ae78c7199af64299b1fc272f5b4aa4be6702c881f501542abb4224c7a611473",
+      "source": {
+        "pdf": "01_Temario/T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf",
+        "page": 50,
+        "quote": "autónoma (la carga útil tiene toda la información del usuario, no siendo necesario consultar una BD)",
+        "sha256": "7ac226eb1c711e5def0166d08552f5c6c9fc667b531fdc470250337c024136c0"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -95113,9 +95575,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada D. JWT no es un mecanismo o protocolo de autenticación y no impone guardar estado en el cliente.",
     "location": "public/data/T3.07.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada de cuatro opciones con fuente documental, oráculos cuando aplican y replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -95124,13 +95587,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.07-168",
       "topic": "T3.07",
       "origin": "G",
       "family": "GEN-T3.07-168",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-architecture20.json",
+      "beforeSha256": "7fb9756eb45d25ec0a3e71ef9b7341ac59d0ae1bad8c159ad8ce2a6a94935b52",
+      "afterSha256": "50eadd06a87ef690eb93421ba23de8419392745e1ba738f14ea2a497a7cae477",
+      "source": {
+        "pdf": "01_Temario/T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf",
+        "page": 50,
+        "quote": "JWT es un mecanismo de AUTENTICACIÓN sin estado ya que el estado del usuario nunca se almacena en el servidor, sino que se guarda en el cliente",
+        "sha256": "7ac226eb1c711e5def0166d08552f5c6c9fc667b531fdc470250337c024136c0"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -95141,9 +95617,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada A. Un JWT puede actuar como identificador de una sesión de servidor u otro dato; no son diseños mutuamente excluyentes.",
     "location": "public/data/T3.07.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada de cuatro opciones con fuente documental, oráculos cuando aplican y replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -95152,13 +95629,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.07-168.v1",
       "topic": "T3.07",
       "origin": "G",
       "family": "GEN-T3.07-168",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-architecture20.json",
+      "beforeSha256": "e0663c6b3dbc3f02ebb33cf42bccbf1406a3f6f54e42eb259e7b75e75f8a16e8",
+      "afterSha256": "f524b3139e302d99933497e5dfa6841ad403860b67f13be299902d45fbab3019",
+      "source": {
+        "pdf": "01_Temario/T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf",
+        "page": 50,
+        "quote": "JWT es un mecanismo de AUTENTICACIÓN sin estado ya que el estado del usuario nunca se almacena en el servidor, sino que se guarda en el cliente",
+        "sha256": "7ac226eb1c711e5def0166d08552f5c6c9fc667b531fdc470250337c024136c0"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -95169,9 +95659,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada D. La especificación no determina dónde almacenar el estado del usuario ni dónde conservar el token.",
     "location": "public/data/T3.07.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada de cuatro opciones con fuente documental, oráculos cuando aplican y replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -95180,13 +95671,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.07-168.v2",
       "topic": "T3.07",
       "origin": "G",
       "family": "GEN-T3.07-168",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-architecture20.json",
+      "beforeSha256": "10db41cae27f5818009d60b9a5bd506c1608a5eed1a9be71ab10145dc0516df4",
+      "afterSha256": "1961cc2ec4980e44e8cfefad9bb541f226068c34b452ae5d4616e1b399b23552",
+      "source": {
+        "pdf": "01_Temario/T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf",
+        "page": 50,
+        "quote": "JWT es un mecanismo de AUTENTICACIÓN sin estado ya que el estado del usuario nunca se almacena en el servidor, sino que se guarda en el cliente",
+        "sha256": "7ac226eb1c711e5def0166d08552f5c6c9fc667b531fdc470250337c024136c0"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -95421,9 +95925,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada A. Postman puede enviar XML SOAP sobre HTTP además de probar REST. La alternativa D es más completa que la clave A.",
     "location": "public/data/T3.07.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada de cuatro opciones con fuente documental, oráculos cuando aplican y replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -95432,13 +95937,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.07-185.v1",
       "topic": "T3.07",
       "origin": "G",
       "family": "GEN-T3.07-185",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-architecture20.json",
+      "beforeSha256": "cf63aac861c1ebabc08be7560f861c2fcecc2a284d85f684a7ce229d511e0e2a",
+      "afterSha256": "6b72bd5183710675eea5e09d8aaf810e08fd012f059a70fccc382980b476cd14",
+      "source": {
+        "pdf": "01_Temario/T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf",
+        "page": 55,
+        "quote": "Postman: herramienta para probar servicios web RESTful.",
+        "sha256": "7ac226eb1c711e5def0166d08552f5c6c9fc667b531fdc470250337c024136c0"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -95477,9 +95995,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada D. Un adaptador de persistencia o un cliente HTTP también son adaptadores y no reciben necesariamente el nombre de controlador.",
     "location": "public/data/T3.07.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada de cuatro opciones con fuente documental, oráculos cuando aplican y replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -95488,13 +96007,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.07-188.v2",
       "topic": "T3.07",
       "origin": "G",
       "family": "GEN-T3.07-188",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-architecture20.json",
+      "beforeSha256": "6f4733bb5644008a101ee260717b5cb35af17c8681d0f1246a258205c8ac18d3",
+      "afterSha256": "726991a8eb67dc61d3c5fed85c9f13a5eed49bc58cf65721aa0e21f1cf32c0b8",
+      "source": {
+        "pdf": "01_Temario/T3.07 Arquitectura de Sistemas/T3.07 Arquitectura de Sistemas - Temario.pdf",
+        "page": 56,
+        "quote": "Adaptador: especialización de un puerto para un contexto concreto, también denominado controlador (como una clase que implementa una interface).",
+        "sha256": "7ac226eb1c711e5def0166d08552f5c6c9fc667b531fdc470250337c024136c0"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -98011,9 +98543,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada C. En comilla simple sí se interpretan las secuencias para apóstrofo y barra invertida. Solo la interpolación de variables se suprime.",
     "location": "public/data/T3.08.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada de cuatro opciones con fuente documental, oráculos cuando aplican y replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -98022,13 +98555,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.08-912",
       "topic": "T3.08",
       "origin": "G",
       "family": "GEN-T3.08-912",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-web25.json",
+      "beforeSha256": "3fb3ee0564ffe0924ab0db2e3dbc27b0d2fe05d5de9b9c975721fdfb9310f584",
+      "afterSha256": "062b6dc3a0bd52a4156dcf59de9ae00aabc43bae73e0e51a9e8c221a5318aa5b",
+      "source": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - PHP.pdf",
+        "page": 7,
+        "quote": "Entrecomillado simple: NO expande secuencias",
+        "sha256": "3db02f45ec04725a28170676ae433e9e5bdcab16a4091f97fba4bade1b1fa5b5"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -98501,9 +99047,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada B. El fin de sesión del navegador no asegura la eliminación inmediata del fichero: depende de destrucción explícita y recolección.",
     "location": "public/data/T3.08.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada de cuatro opciones con fuente documental, oráculos cuando aplican y replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -98512,13 +99059,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.08-975.v2",
       "topic": "T3.08",
       "origin": "G",
       "family": "GEN-T3.08-975",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-web25.json",
+      "beforeSha256": "fd4a7421db5741aaddc0bb9055fd673db59733a2388e30a7f8c5638a53354f08",
+      "afterSha256": "6b151ed966f607fee63ae1a743f39ae12dcf16278a2b7f5f6eb873c171822ba6",
+      "source": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - PHP.pdf",
+        "page": 31,
+        "quote": "Cuando termina la sesión, PHP elimina automáticamente el archivo de sesión",
+        "sha256": "3db02f45ec04725a28170676ae433e9e5bdcab16a4091f97fba4bade1b1fa5b5"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -98613,9 +99173,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada A. La cookie con ID no se elimina con session_destroy. La clave añade una operación que hay que realizar separadamente.",
     "location": "public/data/T3.08.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada de cuatro opciones con fuente documental, oráculos cuando aplican y replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -98624,13 +99185,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.08-978",
       "topic": "T3.08",
       "origin": "G",
       "family": "GEN-T3.08-978",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-web25.json",
+      "beforeSha256": "30b80f2aba83d779f2a17b87ea3096846b66516ea394dd287340337ffcb68c9b",
+      "afterSha256": "4875f72c439e55a5f12e76c1535bbb877df1b9aeed131a5b6ecf1ba059fe3c67",
+      "source": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - PHP.pdf",
+        "page": 33,
+        "quote": "Puede terminar una sesión completa utilizando la función session_destroy() en cualquier lugar",
+        "sha256": "3db02f45ec04725a28170676ae433e9e5bdcab16a4091f97fba4bade1b1fa5b5"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -98641,9 +99215,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada D. Un nuevo ID y cookie no están garantizados. El cliente puede reenviar el ID antiguo y su aceptación depende de modo estricto y configuración.",
     "location": "public/data/T3.08.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada de cuatro opciones con fuente documental, oráculos cuando aplican y replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -98652,13 +99227,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.08-978.v1",
       "topic": "T3.08",
       "origin": "G",
       "family": "GEN-T3.08-978",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-web25.json",
+      "beforeSha256": "0c2d10fd243fba02736b2e8fb542fdaa24bee148cec9f65b311365eef8a3f882",
+      "afterSha256": "dc2393e2fd75d9d4cecc9e231158a21ac961bf760e8bfdfe36cf4b789bd9cd4a",
+      "source": {
+        "pdf": "01_Temario/T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - PHP.pdf",
+        "page": 33,
+        "quote": "establecerá una nueva cookie de sesión de ID de sesión, junto con un nuevo archivo de",
+        "sha256": "3db02f45ec04725a28170676ae433e9e5bdcab16a4091f97fba4bade1b1fa5b5"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -100420,9 +101008,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada C. El Sprint Backlog lo actualizan los Developers durante el Sprint. Lo que se protege es el Sprint Goal.",
     "location": "public/data/T3.10.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada de cuatro opciones con fuente documental, oráculos cuando aplican y replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -100431,13 +101020,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.10-122",
       "topic": "T3.10",
       "origin": "G",
       "family": "GEN-T3.10-122",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-architecture20.json",
+      "beforeSha256": "f0b2f58b3ca0201f86f6144775206acdba67d84b19fcc9edc19376a7e16927aa",
+      "afterSha256": "e04a052291fca5f67907e4c43611503035eabfb508b9859cb5e5eb5b3888e13f",
+      "source": {
+        "pdf": "01_Temario/T3.10 Metodologías de Pruebas y Colaboración/T3.10 Metodologías de Pruebas y Colaboración - Temario.pdf",
+        "page": 23,
+        "quote": "Durante una iteración, nadie puede cambiar el backlog de la iteración, lo que significa que los requisitos están congelados para esa iteración.",
+        "sha256": "68ea4f2bd2e450d418b4e0faecb0c0ffe9c7aaab298218252925dbf6445e8581"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -100504,9 +101106,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada C. Sprint Review es una sesión de trabajo con stakeholders para inspeccionar resultados y decidir adaptaciones, no un control de aceptación de expectativas del Product Owner.",
     "location": "public/data/T3.10.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada de cuatro opciones con fuente documental, oráculos cuando aplican y replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -100515,13 +101118,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.10-124.v2",
       "topic": "T3.10",
       "origin": "G",
       "family": "GEN-T3.10-124",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-architecture20.json",
+      "beforeSha256": "363fd69710d64e7306a72557e6b33d81ba82f7b0b82ea36554daeb78c9c64f30",
+      "afterSha256": "dd0066fd3bb71bb89bc5f03433bffcbae0accf5763dac069579d6b48f8889c0d",
+      "source": {
+        "pdf": "01_Temario/T3.10 Metodologías de Pruebas y Colaboración/T3.10 Metodologías de Pruebas y Colaboración - Temario.pdf",
+        "page": 23,
+        "quote": "SPRINT REVIEW (reunión de revisión del sprint): al final del sprint se inspecciona el resultado del mismo y se verifica si el incremento de producto satisface las expectativas del Product Owner e identificar si hay que hacer ajustes.",
+        "sha256": "68ea4f2bd2e450d418b4e0faecb0c0ffe9c7aaab298218252925dbf6445e8581"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -101316,9 +101932,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada B. La clave escribe --<fichero> como opción y no separa -- de la ruta. Reset --hard también descarta cambios, con alcance global.",
     "location": "public/data/T3.10.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación revisada de cuatro opciones con fuente documental, oráculos cuando aplican y replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -101327,13 +101944,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.10-322.v2",
       "topic": "T3.10",
       "origin": "G",
       "family": "GEN-T3.10-322",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-architecture20.json",
+      "beforeSha256": "6f42f5d4d98fb9fbbf82705eaf803e1e12de4bcccbd658fb92bad5083d92b5f3",
+      "afterSha256": "f4442bde8e63c1ba6179edff676cf4a237dd419187927881c0512ad60dd033fe",
+      "source": {
+        "pdf": "01_Temario/T3.10 Metodologías de Pruebas y Colaboración/T3.10 Metodologías de Pruebas y Colaboración - Temario.pdf",
+        "page": 53,
+        "quote": "git checkout --<fichero> actualiza el fichero a la versión anterior, es decir, descarta los cambios. En concreto, reemplaza los cambios en el directorio de trabajo con el último contenido de HEAD. Sin embargo, los cambios agregados al Index, así como los nuevos archivos se mantendrán sin cambio.",
+        "sha256": "68ea4f2bd2e450d418b4e0faecb0c0ffe9c7aaab298218252925dbf6445e8581"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
