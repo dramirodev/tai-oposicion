@@ -170,3 +170,14 @@ Check de integración: 1.016 aprobadas/29 omitidas; primer arranque de design-fl
 - Referencias visuales revisadas verificadas: **12/12** Chromium/WebKit, tres rutas × dos temas. Los 14 fallos del E2E inicial quedan cubiertos por reejecuciones posteriores **2/2 + 12/12**, con los otros 292 ya aprobados. No se presenta como una única pasada global verde. Siguiente paso: commit de integración y referencia visual consolidada, push a PR110 y verificar CI remota.
 
 - Referencia visual consolidada: `60a2263a7829164c6d90130bcf95d2b575529130`. Integra las pantallas ya revisadas de main con foco visible y regresiones de auditoría. La referencia anterior 282f692 queda en Git; no se cambian tolerancias ni aserciones funcionales.
+
+## Ampliación a Firefox y señal CI — 6/11/2026
+
+- Firefox157/Playwright1.64.1: `npm run test:e2e:firefox` **39/39**, planificación, formularios, teclado y reflow; capturas light/dark inspeccionadas. Perfil reproducible dedicado conserva la suite estándar Chromium/WebKit. No certifica Auth Firefox.
+- EXTREME integrado: **2/2**, 1.000 acciones por motor Chromium/WebKit, sin Gemini. Typecheck y diff-check correctos.
+- Configurable/Oficial2025: Lighthouse13.4.1 accesibilidad100 en preview offline local (500×841), árbol accesible y Tab/Shift+Tab/Enter, foco visible3px. Evidencias y límites en `evidence/integration-2026-11-06/README.md`. No equivale a conformidad WCAG.
+- PR110 sin conflictos; head32c200b, CI42181131603 inició y pasó preparación, editoriales, reglas, publicación atómica Emulator, arquitectura/lint/tipos/unitarias/build/cards. Instalación Playwright permanece en curso >18min; se solicitó cancelación para recuperar log. No está verificado CI remoto.
+
+### Diagnóstico de preparación CI
+
+Run42181131603 cancelado tras >18min en instalación de dependencias: el log demuestra progreso lento, 114MB desde azure.archive.ubuntu.com (Get39 al cancelar), no bloqueo de TAI. Alternativa de imagen oficial Playwright1.64.1-noble descartada: registry devolvió404, no se usa otra versión incompatible. Propuesta acotada: en runners Ubuntu con mirrorlists, seleccionar archive.ubuntu.com/security.ubuntu.com por HTTPS (InRelease200), conservando firmas/claves APT y el conjunto de dependencias. Separar instalación de sistema y navegadores, límites15/10min y job60min. No alterar producción. Evitar subir evidencias QUICK antiguas cuando ese paso ni se ejecutó. Verificación remota pendiente.

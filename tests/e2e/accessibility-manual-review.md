@@ -56,3 +56,10 @@
 - ATE-010 fija el reloj del fixture de vacaciones; ATE-011 espera pregunta y respuesta observables antes de finalizar. Ambos cerrados con suite focal/global, sin alterar reglas de negocio ni aumentar timeouts. Persiste aviso no bloqueante de jsdom `window.scrollTo`.
 - UX-009 sigue parcial: pendientes tecnología asistiva real, zoom nativo 200/400 y contraste integral. ATE-005 conserva brechas de controles dinámicos/concurrencia. ATE-006 sigue sin ejecución remota: consulta GitHub del 6/11 devuelve cero PR y cero runs en la rama. Siguiente acción: publicar este corte y abrir PR de revisión para activar CI, sin merge ni deploy.
 - No se usó Firebase productivo ni Gemini. Los cambios concurrentes de README y auditoría editorial se preservan.
+
+## Ampliación a Firefox y señal CI — 6/11/2026
+
+- Firefox157/Playwright1.64.1: `npm run test:e2e:firefox` **39/39**, planificación, formularios, teclado y reflow; capturas light/dark inspeccionadas. Perfil reproducible dedicado conserva la suite estándar Chromium/WebKit. No certifica Auth Firefox.
+- EXTREME integrado: **2/2**, 1.000 acciones por motor Chromium/WebKit, sin Gemini. Typecheck y diff-check correctos.
+- Configurable/Oficial2025: Lighthouse13.4.1 accesibilidad100 en preview offline local (500×841), árbol accesible y Tab/Shift+Tab/Enter, foco visible3px. Evidencias y límites en `evidence/integration-2026-11-06/README.md`. No equivale a conformidad WCAG.
+- PR110 sin conflictos; head32c200b, CI42181131603 inició y pasó preparación, editoriales, reglas, publicación atómica Emulator, arquitectura/lint/tipos/unitarias/build/cards. Instalación Playwright permanece en curso >18min; se solicitó cancelación para recuperar log. No está verificado CI remoto.
