@@ -17,7 +17,8 @@ import { resolveCardsPageState } from './cards-page-state.js';
 const gradeLabels = ['Fallé', 'Dudaba', 'Lo sabía'] as const;
 const reasons = ERROR_REPORT_REASONS;
 function Notice({ card }: { card: StudyCard }) {
-  const html = questionNotice({ n: card.nota, np: card.np, i: card.id.startsWith('FC-Q-') ? card.id.slice(5) : undefined });
+  const fallback = questionNotice({ n: card.nota, np: card.np, i: card.id.startsWith('FC-Q-') ? card.id.slice(5) : undefined });
+  const html = card.np === 1 ? fallback : card.editorialNotice ?? fallback;
   return <StudyQuestionSources noticeHtml={html} languageContext={card.q} />;
 }
 

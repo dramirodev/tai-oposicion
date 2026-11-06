@@ -97,6 +97,7 @@ export interface AcademyStudyProgressServices {
   removeLocalPdf(topicId: string, materialPath: string, sourceHash: string): Promise<void>;
 }
 export interface StudyCard {
+  editorialNotice?: string;
   id: string; t: string; q: string; a: string; nota?: string; ref?: string; tipo?: string; src?: string;
   np?: number; source?: { url: string; title?: string; page?: number; verified: boolean }; supTexto?: string; cp?: string; caduca?: boolean;
 }
