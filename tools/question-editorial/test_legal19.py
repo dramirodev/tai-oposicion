@@ -30,12 +30,15 @@ class Legal19Tests(unittest.TestCase):
         self.assertEqual({q['id'] for q in QUESTIONS.values() if q['inSample']},
                          {'AT107-P1-59'})
         self.assertEqual(len(LEDGER['metadataEdits']), 6)
-        meta = json.loads((ROOT / 'public/data/meta.json').read_text())
+        temporary_boundary = tempfile.TemporaryDirectory()
+        self.addCleanup(temporary_boundary.cleanup)
+        boundary = copy_release_boundary(Path(temporary_boundary.name), 'reviewed-legal19')
+        meta = json.loads((boundary / 'meta.json').read_text())
         for q in QUESTIONS.values():
             with self.subTest(id=q['id']):
                 for side in ('before', 'after'):
                     self.assertEqual(sha(encode(q[side])), q[side+'Sha256'])
-                row = next(x for x in json.loads((ROOT/'public/data'/(q['topic']+'.json')).read_text()) if x['i']==q['id'])
+                row = next(x for x in json.loads((boundary/(q['topic']+'.json')).read_text()) if x['i']==q['id'])
                 self.assertEqual(row, q['after'])
                 self.assertEqual(len(row['a']), 4)
                 self.assertEqual(len(set(row['a'])), 4)

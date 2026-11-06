@@ -11,7 +11,8 @@
     "scripts/bank-editorial/reviewed-followup.json",
     "scripts/bank-editorial/reviewed-wave2.json",
     "scripts/bank-editorial/reviewed-admin20.json",
-    "scripts/bank-editorial/reviewed-legal19.json"
+    "scripts/bank-editorial/reviewed-legal19.json",
+    "scripts/bank-editorial/reviewed-programming20.json"
   ],
   "files": {
     "T1.01.json": {
@@ -100,7 +101,7 @@
     },
     "T3.06.json": {
       "sourceBuildSha256": "2acbb6cc84034956e06fda7241297e19fdca38b48e75b7a568d84935c7e67c9e",
-      "approvedSha256": "72cb69f11ead21ac547cc15159d41ec87b822db2987fda9cb9707c0e585ed658"
+      "approvedSha256": "cd8ead125529d2bdcf6a5e84d6c730df4c13c599046fce704ca2c8a86e4fd6cc"
     },
     "T3.07.json": {
       "sourceBuildSha256": "02b0137e359ecbf35300ae60e152f65dac9f68af11c4815d5e9a7474bcbfd292",
@@ -164,7 +165,7 @@
     },
     "meta.json": {
       "sourceBuildSha256": "4fba68b338a59ab59c86c6e24da4b5b918c243c23ea5e69781532f0cd1b6ac2d",
-      "approvedSha256": "f97cf2615ccf66e4641b05e8ac5e9c80fb2af621f96e9fcd7a8dd00a29a9ae96"
+      "approvedSha256": "3f6b6d9fd70efe5a84fc01fc0a10c19f530cfa8be75fd81f88844e0675d1496a"
     },
     "supuestos.json": {
       "sourceBuildSha256": "8e38f2d07f8f00e08365b469d5dc9ea13131cbacd094fe09888f52714fb77dd2",

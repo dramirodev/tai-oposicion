@@ -71964,9 +71964,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave C. Inline no obliga a sustituir llamadas por su cuerpo. C++ admite bool, friend también declara funciones y los argumentos por defecto tienen restricciones.",
     "location": "public/data/T3.06.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación de C/C++ o Jakarta con cuatro opciones contrastadas, source literal y rollback reproducible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -71975,13 +71976,27 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "AT306-P1-53",
       "topic": "T3.06",
       "origin": "A",
       "family": null,
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-programming20.json",
+      "beforeSha256": "c198ffcd653d5c2e9affc5221f49cf50a6b737d1e50932a6fa07542e8af4de91",
+      "afterSha256": "192fcd8202aa6d29de71c3ca4f7d81285c2dbee7dcc67d6ee437180170a0b114",
+      "source": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - C plus.pdf",
+        "page": 3,
+        "sha256": "9243bafe5bb5be43ae4e14d28154cbad8fe5c110587560fbd782438e41abf0ff",
+        "quote": "Avisa al compilador que una función particular deberá ser generada en línea, en vez inline de requerir de una llamada de función.",
+        "role": "Resumen, no temario completo"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -87194,9 +87209,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada D. Kernighan es coautor del libro con Ritchie. La atribución del lenguaje a ambos confunde obra y lenguaje; ninguna opción identifica únicamente a Ritchie. https://www.nokia.com/bell-labs/about/dennis-m-ritchie/chist.html",
     "location": "public/data/T3.06.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación de C/C++ o Jakarta con cuatro opciones contrastadas, source literal y rollback reproducible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -87205,13 +87221,27 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.06-01.v1",
       "topic": "T3.06",
       "origin": "G",
       "family": "GEN-T3.06-01",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-programming20.json",
+      "beforeSha256": "ea66d705561d7d9f3b16bec37158b6d4d018e23e21014dce4bff2f110c233ed0",
+      "afterSha256": "61462e95b4cf33df9e15d788865a8311a3b1354aeac30b1f89d5950d688d49e4",
+      "source": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - C.pdf",
+        "page": 3,
+        "sha256": "359e9ca003f4a0387feb698e2c497fe74de966f9164c4c9932a4fae1b64b5618",
+        "quote": "El lenguaje de programación C fue creado por Brian Kernighan y Dennis Ritchie a mediados de los años 70.",
+        "role": "Resumen, no temario completo"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -87250,9 +87280,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada D. En C sin restringir a C90 existen, entre otras, _Bool y _Atomic. «Siempre en minúsculas» es falso.",
     "location": "public/data/T3.06.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación de C/C++ o Jakarta con cuatro opciones contrastadas, source literal y rollback reproducible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -87261,13 +87292,27 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.06-03.v1",
       "topic": "T3.06",
       "origin": "G",
       "family": "GEN-T3.06-03",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-programming20.json",
+      "beforeSha256": "433703920b7c00b65f23cb1ac759bbfc05ee77e4951874026170d40b8651d7c0",
+      "afterSha256": "85d8eb52ee8296142d888aeebeccd0cae628bd9ec296241b8bdf9f4a36d867eb",
+      "source": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - C.pdf",
+        "page": 3,
+        "sha256": "359e9ca003f4a0387feb698e2c497fe74de966f9164c4c9932a4fae1b64b5618",
+        "quote": "Las palabras reservadas se escriben siempre minúsculas.",
+        "role": "Resumen, no temario completo"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -87418,9 +87463,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada A. Un objeto de ámbito de archivo puede tener enlace interno con static, y otro fichero tampoco lo ve sin declaración apropiada.",
     "location": "public/data/T3.06.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación de C/C++ o Jakarta con cuatro opciones contrastadas, source literal y rollback reproducible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -87429,13 +87475,27 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.06-10.v1",
       "topic": "T3.06",
       "origin": "G",
       "family": "GEN-T3.06-10",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-programming20.json",
+      "beforeSha256": "c77cc31072e5abe694ac27024011431d05f38cb2b253e4a745763c109a7ce56d",
+      "afterSha256": "6f5be62ff3fbb4a340d3e653375e7490ab482b4b6e64d400aa7e1a5bbfd94d8a",
+      "source": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - C.pdf",
+        "page": 4,
+        "sha256": "359e9ca003f4a0387feb698e2c497fe74de966f9164c4c9932a4fae1b64b5618",
+        "quote": "Fuera de todas las funciones del programa, son las llamadas variables globales, accesibles desde cualquier parte del programa.",
+        "role": "Resumen, no temario completo"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -87474,9 +87534,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada A. Dos float pueden operar como float. La promoción a double sí se produce, por ejemplo, en argumentos variádicos.",
     "location": "public/data/T3.06.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación de C/C++ o Jakarta con cuatro opciones contrastadas, source literal y rollback reproducible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -87485,13 +87546,27 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.06-13.v1",
       "topic": "T3.06",
       "origin": "G",
       "family": "GEN-T3.06-13",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-programming20.json",
+      "beforeSha256": "8915c072fce3c8b52bab391863ffd6ba1fb8e7e6cae3b066c852caf72234ee1a",
+      "afterSha256": "255aad40e03b0e37ef5c3f954d8a7b0880703831dfeae536a8ae65c4f8d567cb",
+      "source": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - C.pdf",
+        "page": 6,
+        "sha256": "359e9ca003f4a0387feb698e2c497fe74de966f9164c4c9932a4fae1b64b5618",
+        "quote": "Todos los char y short int se convierten a int. Todos los float a double.",
+        "role": "Resumen, no temario completo"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -87502,9 +87577,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada D. Si el otro operando es long double, el que se convierte es el double; por tanto la regla universal no vale.",
     "location": "public/data/T3.06.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación de C/C++ o Jakarta con cuatro opciones contrastadas, source literal y rollback reproducible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -87513,13 +87589,27 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.06-13.v2",
       "topic": "T3.06",
       "origin": "G",
       "family": "GEN-T3.06-13",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-programming20.json",
+      "beforeSha256": "78fdd9d19c876b82ef54bcbb2dc32cddd41b24215ab53aa953e3dac1dac8c2e1",
+      "afterSha256": "ddd35ba0e1b83a7d6683eddcdbf71fde2224f5a8683dadf38578ecd0d904c48c",
+      "source": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - C.pdf",
+        "page": 6,
+        "sha256": "359e9ca003f4a0387feb698e2c497fe74de966f9164c4c9932a4fae1b64b5618",
+        "quote": "Si uno de los operandos es un long double, el otro se convierte en long double.",
+        "role": "Resumen, no temario completo"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -87586,9 +87676,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada A. El lenguaje selecciona el valor coincidente, sin exigir comparación secuencial. Una tabla de saltos implementa switch sin recorrer los case.",
     "location": "public/data/T3.06.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación de C/C++ o Jakarta con cuatro opciones contrastadas, source literal y rollback reproducible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -87597,13 +87688,27 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.06-23.v2",
       "topic": "T3.06",
       "origin": "G",
       "family": "GEN-T3.06-23",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-programming20.json",
+      "beforeSha256": "df10988a590b5c8917210abe88789d7187d6fb9625195bcaacc975bf38a41513",
+      "afterSha256": "13751f62ca8cc805bfdf666bb13eaa822e9b791805beabecafacc0e04300d663",
+      "source": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - C.pdf",
+        "page": 13,
+        "sha256": "359e9ca003f4a0387feb698e2c497fe74de966f9164c4c9932a4fae1b64b5618",
+        "quote": "realizando la comparación desde arriba hacia abajo.",
+        "role": "Resumen, no temario completo"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -87698,9 +87803,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada A. puts añade el carácter de nueva línea, no retorno de carro. En Unix se observa LF sin CR. Ninguna alternativa enuncia la operación exacta.",
     "location": "public/data/T3.06.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación de C/C++ o Jakarta con cuatro opciones contrastadas, source literal y rollback reproducible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -87709,13 +87815,27 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.06-40.v2",
       "topic": "T3.06",
       "origin": "G",
       "family": "GEN-T3.06-40",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-programming20.json",
+      "beforeSha256": "15439415dc6b7227df63b5d06aa0a7169d117933bffb0bd61e68ac72c54d6756",
+      "afterSha256": "f6cb1cd73d30c46a56f30eaff60a364c2321ba4d2fcdb4ea8703df3a67cd7571",
+      "source": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - C.pdf",
+        "page": 22,
+        "sha256": "359e9ca003f4a0387feb698e2c497fe74de966f9164c4c9932a4fae1b64b5618",
+        "quote": "int puts(const char *s); Escribe un string en la salida estándar. El string es el almacenado en s y añade al final un retorno de carro.",
+        "role": "Resumen, no temario completo"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -87810,9 +87930,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada C. «Nunca» es falso: una opción -I. puede añadir el directorio de trabajo a la búsqueda incluso entre ángulos. ISO C no fija esa lista.",
     "location": "public/data/T3.06.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación de C/C++ o Jakarta con cuatro opciones contrastadas, source literal y rollback reproducible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -87821,13 +87942,27 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.06-47",
       "topic": "T3.06",
       "origin": "G",
       "family": "GEN-T3.06-47",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-programming20.json",
+      "beforeSha256": "22d2d8d886beb7510d631e9642ccb4f71992edae733818092f578108ca2900f5",
+      "afterSha256": "727a8a504427e8787d781e4ea97d53eca48dca2ccef94c7e15d224d1f3a13611",
+      "source": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - C.pdf",
+        "page": 25,
+        "sha256": "359e9ca003f4a0387feb698e2c497fe74de966f9164c4c9932a4fae1b64b5618",
+        "quote": "en el primer caso, se busca el archivo en los directorios de la línea de ordenes de compilación, y, después en los directorios estándar de C, pero nunca en el directorio de trabajo;",
+        "role": "Resumen, no temario completo"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -87838,9 +87973,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada A. La primera ruta es dependiente de implementación. Compiladores habituales prueban el directorio del fichero que incluye, que puede ser distinto del directorio de trabajo.",
     "location": "public/data/T3.06.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación de C/C++ o Jakarta con cuatro opciones contrastadas, source literal y rollback reproducible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -87849,13 +87985,27 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.06-47.v1",
       "topic": "T3.06",
       "origin": "G",
       "family": "GEN-T3.06-47",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-programming20.json",
+      "beforeSha256": "cb930902fa97b86a730be6cd05f74877d75607f7b20eab6d92733c83dc621704",
+      "afterSha256": "7e420f989ae4953337e607bfc41f1493a5c70d1dc53af03af5bc3e8a8322a599",
+      "source": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - C.pdf",
+        "page": 25,
+        "sha256": "359e9ca003f4a0387feb698e2c497fe74de966f9164c4c9932a4fae1b64b5618",
+        "quote": "en el segundo caso, el primer sitio donde se busca el archivo a incluir es en el directorio actual de trabajo,",
+        "role": "Resumen, no temario completo"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -87866,9 +88016,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada D. Stroustrup inició C with Classes en 1979; C++ recibió su nombre en 1983. No se ofrece 1979.",
     "location": "public/data/T3.06.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación de C/C++ o Jakarta con cuatro opciones contrastadas, source literal y rollback reproducible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -87877,13 +88028,27 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.06-49.v1",
       "topic": "T3.06",
       "origin": "G",
       "family": "GEN-T3.06-49",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-programming20.json",
+      "beforeSha256": "bebb8473e7243da26c3ecac71cffc8b941ef74c3dfbf709a7b5c201abe164311",
+      "afterSha256": "d869983af161429b35b506d927446f061daf3d43dd695f3be7a7ec2150bfcbd2",
+      "source": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - C plus.pdf",
+        "page": 3,
+        "sha256": "9243bafe5bb5be43ae4e14d28154cbad8fe5c110587560fbd782438e41abf0ff",
+        "quote": "El lenguaje C++ se comenzó a desarrollar en 1980.",
+        "role": "Resumen, no temario completo"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -87978,9 +88143,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada C. La cabecera ISO C++ es <iostream>, sin .h. <iostream.h> pertenece a implementaciones anteriores a la estandarización.",
     "location": "public/data/T3.06.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación de C/C++ o Jakarta con cuatro opciones contrastadas, source literal y rollback reproducible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -87989,13 +88155,27 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.06-57.v2",
       "topic": "T3.06",
       "origin": "G",
       "family": "GEN-T3.06-57",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-programming20.json",
+      "beforeSha256": "28863bab95d7e34c79fdf3ee385aa27d22227a68ab182bc9c450174ceef3db51",
+      "afterSha256": "62e455396d7f44ad388ce77e96805d9276366a5ed0e9604f393422ea04dc2930",
+      "source": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - C plus.pdf",
+        "page": 6,
+        "sha256": "9243bafe5bb5be43ae4e14d28154cbad8fe5c110587560fbd782438e41abf0ff",
+        "quote": "Para utilizar entradas/salidas de flujo, se debe incluir el archivo de cabecera iostream.h.",
+        "role": "Resumen, no temario completo"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -88006,9 +88186,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada B. C también define un tipo enumerado. Lo distintivo en C++ es poder usar directamente el nombre de la enumeración sin anteponer enum o declarar un typedef.",
     "location": "public/data/T3.06.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación de C/C++ o Jakarta con cuatro opciones contrastadas, source literal y rollback reproducible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -88017,13 +88198,27 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.06-59.v1",
       "topic": "T3.06",
       "origin": "G",
       "family": "GEN-T3.06-59",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-programming20.json",
+      "beforeSha256": "228a031df3fd112cb9c115ce5a419ee38a04a2e81c482943f4256d7d0b6ac05a",
+      "afterSha256": "b04320f174c34af9d2744bc34a32771264722c5200767938ee51859b0b20aa4a",
+      "source": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - C plus.pdf",
+        "page": 7,
+        "sha256": "9243bafe5bb5be43ae4e14d28154cbad8fe5c110587560fbd782438e41abf0ff",
+        "quote": "Para declarar la variable del nuevo tipo, la palabra reservada enum no es requerida.",
+        "role": "Resumen, no temario completo"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -88118,9 +88313,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada A. El new ordinario lanza std::bad_alloc ante agotamiento. La forma con std::nothrow sí puede devolver nullptr; ninguna opción describe el caso general.",
     "location": "public/data/T3.06.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación de C/C++ o Jakarta con cuatro opciones contrastadas, source literal y rollback reproducible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -88129,13 +88325,27 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.06-65.v1",
       "topic": "T3.06",
       "origin": "G",
       "family": "GEN-T3.06-65",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-programming20.json",
+      "beforeSha256": "da6b89c5abc9e1861b38bb2953a2bdf310f5ab3482bc140397e1237eedfc0669",
+      "afterSha256": "e60bff454b371c3ff2c0d264098341753161e1fa0402a28e36066938a0c64e35",
+      "source": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - C plus.pdf",
+        "page": 10,
+        "sha256": "9243bafe5bb5be43ae4e14d28154cbad8fe5c110587560fbd782438e41abf0ff",
+        "quote": "Si mediante new no se puede asignar memoria, devuelve un puntero nulo.",
+        "role": "Resumen, no temario completo"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -88146,9 +88356,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada C. C++ moderno permite inicializadores en la propia declaración (B); además un setter usado después de construir asigna, no inicializa. «Deben» impide elegir C como regla general.",
     "location": "public/data/T3.06.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación de C/C++ o Jakarta con cuatro opciones contrastadas, source literal y rollback reproducible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -88157,13 +88368,27 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.06-68.v1",
       "topic": "T3.06",
       "origin": "G",
       "family": "GEN-T3.06-68",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-programming20.json",
+      "beforeSha256": "0262de583ecb9db4c6a0d22c7574c09e8af44d716b8d5d93bc866af062b9945c",
+      "afterSha256": "c8101613e66b3395f065112de6734a6cde886b94e0e09b69fe3794840927db09",
+      "source": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - C plus.pdf",
+        "page": 11,
+        "sha256": "9243bafe5bb5be43ae4e14d28154cbad8fe5c110587560fbd782438e41abf0ff",
+        "quote": "Los atributos de una clase no pueden ser inicializados donde son declarados en el cuerpo de la clase. Deberán ser inicializados por el constructor de la clase, o las funciones ''set'' les podrán asignar valores.",
+        "role": "Resumen, no temario completo"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -90960,9 +91185,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada B. La variante init() sin parámetros no recibe conf y está prevista para sobrescribirla sin llamar a super.init(conf). Eso corresponde a la variante con ServletConfig.",
     "location": "public/data/T3.06.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación de C/C++ o Jakarta con cuatro opciones contrastadas, source literal y rollback reproducible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -90971,13 +91197,27 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.06-274",
       "topic": "T3.06",
       "origin": "G",
       "family": "GEN-T3.06-274",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-programming20.json",
+      "beforeSha256": "5bd71a93a4a3531d34b066d8bca91419f177c667ae398cb3a9454bb788e07c54",
+      "afterSha256": "375e36ee5662ead1c87e010f29af4b58e17777bd55a5e4391069b59bb228fba7",
+      "source": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java y .NET subrayado.pdf",
+        "page": 14,
+        "sha256": "958fd595e8074cf619116c4662a21e86ff492f6f46cc077292171661df440e8b",
+        "quote": "Después debemos sobrescribir, si lo necesitamos, el método init() heredado de la superclase, encargado de inicializar el servlet. En él debemos incluir todo lo que queramos que se ejecute sólo cuando se cree el servlet en memoria. Para ello, primero llamamos al init() de la superclase. Después podemos incluir las inicializaciones necesarias.",
+        "role": "Resumen, no temario completo"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -91326,9 +91566,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada C. Una entidad puede tener constructor sin argumentos protected, acceso por campo sin setters y no siempre necesita Serializable. Ninguna opción describe los requisitos generales.",
     "location": "public/data/T3.06.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación de C/C++ o Jakarta con cuatro opciones contrastadas, source literal y rollback reproducible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -91337,13 +91578,27 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.06-329",
       "topic": "T3.06",
       "origin": "G",
       "family": "GEN-T3.06-329",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-programming20.json",
+      "beforeSha256": "e75f5df7d65634af2224e15be57996374cd1a425a95bd98d3fbb914299bfc52b",
+      "afterSha256": "b27fd30198827f2aab1021ba011feaaed77bc6643aa00bdcf726908e2c68f0ae",
+      "source": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java y .NET subrayado.pdf",
+        "page": 36,
+        "sha256": "958fd595e8074cf619116c4662a21e86ff492f6f46cc077292171661df440e8b",
+        "quote": "Para persistir una clase ésta debe cumplir una serie de requisitos: - Debe tener un constructor público sin argumentos. - Cada uno de los atributos a persistir debe tener un método get y otro set asociado. - Debe implementar la interfaz Serializable (paquete java.io).",
+        "role": "Resumen, no temario completo"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -91382,9 +91637,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada D. JPA no exige un fichero por clase. Un orm.xml puede definir varias entity en el mismo documento.",
     "location": "public/data/T3.06.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación de C/C++ o Jakarta con cuatro opciones contrastadas, source literal y rollback reproducible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -91393,13 +91649,27 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.06-332.v2",
       "topic": "T3.06",
       "origin": "G",
       "family": "GEN-T3.06-332",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-programming20.json",
+      "beforeSha256": "d787adba5d59ab2c64a509d257a3b0312575baf7f6af54c10846d759b4dc225b",
+      "afterSha256": "43d414dbe8346a592e78b47619599c58c5132afd4b0c562079406de18e810589",
+      "source": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java y .NET subrayado.pdf",
+        "page": 37,
+        "sha256": "958fd595e8074cf619116c4662a21e86ff492f6f46cc077292171661df440e8b",
+        "quote": "Documento XML: se genera un fichero para clase entidad indicando la tabla",
+        "role": "Resumen, no temario completo"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -91466,9 +91736,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada B. inverseJoinColumns contiene descripciones de columnas foráneas de la tabla intermedia que referencian la tabla inversa, no las columnas de la propia PK de esa entidad.",
     "location": "public/data/T3.06.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación de C/C++ o Jakarta con cuatro opciones contrastadas, source literal y rollback reproducible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -91477,13 +91748,27 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.06-337.v2",
       "topic": "T3.06",
       "origin": "G",
       "family": "GEN-T3.06-337",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-programming20.json",
+      "beforeSha256": "cdba26e5b294021f6adfa5e5bdd4612d891669f8820357fe3df87174ec4ee9aa",
+      "afterSha256": "7401fd04e26c992900e49734d270d8aca4810eb3ce4f0feb472067b36602fd1a",
+      "source": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java y .NET subrayado.pdf",
+        "page": 39,
+        "sha256": "958fd595e8074cf619116c4662a21e86ff492f6f46cc077292171661df440e8b",
+        "quote": "inverseJoinColumns: contiene cada una de las columnas que forman la clave primaria de la clase con la que se tiene la relación.",
+        "role": "Resumen, no temario completo"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -91746,9 +92031,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave registrada D. WAR prescribe estructura WEB-INF y recursos web. El descriptor web.xml puede omitirse; no es simplemente un JAR más un descriptor.",
     "location": "public/data/T3.06.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Reparación de C/C++ o Jakarta con cuatro opciones contrastadas, source literal y rollback reproducible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final e integración ordinaria",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -91757,13 +92043,27 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T3.06-362.v2",
       "topic": "T3.06",
       "origin": "G",
       "family": "GEN-T3.06-362",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-programming20.json",
+      "beforeSha256": "03954390057e85ec027108d83e73fac32fb240de2c096c4e6133a945bd905465",
+      "afterSha256": "b39b6ab732bdcc4f21ef9311bf233d669a65192b008efacfba50abd30dd541f9",
+      "source": {
+        "pdf": "01_Temario/T3.06 Java y .NET/T3.06 Java y .NET - Resumen - Java y .NET subrayado.pdf",
+        "page": 50,
+        "sha256": "958fd595e8074cf619116c4662a21e86ff492f6f46cc077292171661df440e8b",
+        "quote": "Web Archive (.war): este tipo de empaquetamiento permite la posibilidad de agrupar toda la estructura de directorios vista en .jar más el deployment descriptor (fichero de configuración web.xml) en un único fichero de extensión .war. El empaquetado de un .war es igual a un fichero .jar.",
+        "role": "Resumen, no temario completo"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
