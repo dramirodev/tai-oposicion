@@ -1,0 +1,2418 @@
+{
+  "schemaVersion": 1,
+  "baseCommit": "b2c35bae028deb380c44fe6b04bcf2de2c82d936",
+  "previousBatch": "reviewed-systems20",
+  "status": "LOCAL_PENDING_CI_AND_PUBLICATION",
+  "sourceCandidateSha256": "c08326e445f95ca50997c565ee2603c74ce0787ef1512b6bdc209333c895742c",
+  "sourceCandidate": "work/next-p0-foundations-remaining/revision-tecnico/reviewed-proposals.json",
+  "fingerprintEncoding": "SHA256 UTF8 JSON.stringify insertion-order; context envelope is distinct from sorted runtime proof",
+  "questions": [
+    {
+      "id": "AT204-P1-33",
+      "topic": "T2.04",
+      "priority": "P0",
+      "status": "REVISADA_SEGUNDA_FIRMA",
+      "before": {
+        "i": "AT204-P1-33",
+        "t": "T2.04",
+        "o": "A",
+        "q": "¿Cuál de las siguientes distribuciones está basada en Ubuntu?",
+        "a": [
+          "Ututo.",
+          "Peppermint OS.",
+          "Manjaro.",
+          "Arch Linux."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT204-P1-33",
+        "t": "T2.04",
+        "o": "A",
+        "q": "¿Cuál de las siguientes distribuciones dispone de una edición actual basada directamente en Debian, según la clasificación del temario y el proyecto?",
+        "a": [
+          "Ututo.",
+          "Peppermint OS.",
+          "Manjaro.",
+          "Arch Linux."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "u": "Peppermint OS                Debian [p. 51]",
+        "n": "Errata de la academia: la clave nombraba Peppermint como basada en Ubuntu; se actualiza el alcance a su edición Debian, sin negar la edición Devuan. A: Ututo no es la distribución Debian identificada en la tabla. B: Peppermint ofrece edición Debian; no se afirma que sea su única base. C: Manjaro pertenece a la familia Arch. D: Arch es una distribución independiente, no la edición Debian solicitada. Fuente primaria: https://peppermintos.com/2026/06/peppermintos-devuan-release-excalibur/ La clasificación de Ututo se comprueba además en la tabla de p.52; se pregunta por base directa para no confundir ancestros indirectos."
+      },
+      "reference": {
+        "pdf": "01_Temario/T2.04 Sistemas Operativos/T2.04 Sistemas Operativos - Temario.pdf",
+        "sha256": "d90c16c37eb47ab64152e40b217794d257fc0c1f0457311dc82b71987609f0e1",
+        "page": 51,
+        "quote": "Peppermint OS                Debian",
+        "role": "Temario principal"
+      },
+      "primary": [
+        {
+          "url": "https://peppermintos.com/2026/06/peppermintos-devuan-release-excalibur/",
+          "checked": "2026-11-06",
+          "supports": "El proyecto distingue su edición Debian y la edición Devuan."
+        },
+        {
+          "url": "https://manjaro.org/",
+          "checked": "2026-11-06",
+          "supports": "Manjaro se basa en Arch."
+        },
+        {
+          "url": "https://archlinux.org/about/",
+          "checked": "2026-11-06",
+          "supports": "Arch distribución independiente."
+        }
+      ],
+      "reviewedOptions": [
+        "La tabla del temario p.52 clasifica Ututo bajo Gentoo, no como la edición directamente basada en Debian identificada en p.51. No se generaliza a toda variante histórica de Ututo.",
+        "Peppermint ofrece edición Debian; no se afirma que sea su única base.",
+        "Manjaro pertenece a la familia Arch.",
+        "Arch es una distribución independiente, no la edición Debian solicitada."
+      ],
+      "sourceDiscrepancy": "Errata de la academia: la clave nombraba Peppermint como basada en Ubuntu; se actualiza el alcance a su edición Debian, sin negar la edición Devuan.",
+      "objectiveChange": "Se conserva el objetivo factual; se delimita el alcance del enunciado para eliminar la errata o ambigüedad descrita.",
+      "typeReview": {
+        "before": "D",
+        "after": "D",
+        "reason": "Interrogación directa de un hecho o clasificación."
+      },
+      "originalTask": {
+        "id": "ITEM-AT204-P1-33",
+        "finding": "AT204-P1-33",
+        "evidence": "T2.04 Sistemas Operativos/T2.04 Sistemas Operativos - Temario.pdf p. 51",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "La pregunta usa presente y marca Peppermint OS como basada en Ubuntu. El PDF la clasifica bajo Debian y el proyecto documenta Debian y Devuan como bases actuales.",
+        "location": "public/data/T2.04.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "AT204-P1-33",
+          "topic": "T2.04",
+          "origin": "A",
+          "family": null,
+          "scenario": null
+        }
+      },
+      "inSample": false,
+      "sampleCopies": [],
+      "oracle": "DOCUMENTAL; sin simular ejecución del producto.",
+      "beforeSha256": "3e748236ca580ef76adb3bbccb58f7b27ef9a0417eab41cafa3a6277137936c6",
+      "afterSha256": "5668df5ec78459e259101d8eab6557e726de67547b0ad2149adbc5c28b0a490f",
+      "storageFile": "public/data/T2.04.json",
+      "sampleFiles": []
+    },
+    {
+      "id": "GEN-T1.01-05",
+      "topic": "T1.01",
+      "priority": "P0",
+      "status": "REVISADA_SEGUNDA_FIRMA",
+      "before": {
+        "i": "GEN-T1.01-05",
+        "t": "T1.01",
+        "o": "G",
+        "q": "Según las características de la Constitución Española de 1978, ¿qué artículos han sido objeto de reforma constitucional hasta la actualidad?",
+        "a": [
+          "Los artículos 13.2, 99 y 49.",
+          "Los artículos 13.2, 135 y 49.",
+          "Los artículos 23.2, 135 y 49.",
+          "Los artículos 13.2, 135 y 168."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          2,
+          7
+        ],
+        "d": 2,
+        "f": "GEN-T1.01-05",
+        "u": "se han llevado a cabo solo 3 reformas … Articulo 13.2: con la intención de adaptar el texto a las previsiones del Tratado de Maastricht",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T1.01-05",
+        "t": "T1.01",
+        "o": "G",
+        "q": "A 6 de noviembre de 2026, ¿qué artículos o apartados de la Constitución Española de 1978 han sido reformados?",
+        "a": [
+          "13.2, 99, 49 y 69.3.",
+          "13.2, 135, 49 y 69.3.",
+          "23.2, 135, 49 y 69.3.",
+          "13.2, 135, 168 y 69.3."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          2,
+          7
+        ],
+        "d": 2,
+        "f": "GEN-T1.01-05",
+        "u": "Artículo 69: Ibiza y Formentera pasan a tener 1 Senador cada una (20/05/2026). [p. 4]",
+        "v": 0,
+        "w": 1,
+        "n": "La edición principal omite la cuarta reforma; la alternativa p 4 sí incorpora 69. La precisión 69.3 procede del BOE. A: 99 no pertenece a las cuatro reformas. B: Enumera las cuatro reformas vigentes a la fecha de corte. C: 23.2 sustituye incorrectamente a 13.2. D: 168 sustituye incorrectamente a 49. Fuente primaria: https://www.boe.es/buscar/act.php?id=BOE-A-1978-31229"
+      },
+      "reference": {
+        "pdf": "01_Temario/T1.01 Constitución Española/T1.01 Constitución Española - Temario (version alternativa).pdf",
+        "sha256": "4eba1a47e754a3c13d896670c6884c46c24827375836418fb7536d2e1de35b67",
+        "page": 4,
+        "quote": "Artículo 69: Ibiza y Formentera pasan a tener 1 Senador cada una (20/05/2026).",
+        "role": "Temario principal (versión alternativa)"
+      },
+      "primary": [
+        {
+          "url": "https://www.boe.es/buscar/act.php?id=BOE-A-1978-31229",
+          "checked": "2026-11-06",
+          "supports": "Texto consolidado con reforma de 69.3 publicada el20/05/2026; reformas previas13.2,135,49."
+        }
+      ],
+      "reviewedOptions": [
+        "99 no pertenece a las cuatro reformas.",
+        "Enumera las cuatro reformas vigentes a la fecha de corte.",
+        "23.2 sustituye incorrectamente a 13.2.",
+        "168 sustituye incorrectamente a 49."
+      ],
+      "sourceDiscrepancy": "La edición principal omite la cuarta reforma; la alternativa p 4 sí incorpora 69. La precisión 69.3 procede del BOE.",
+      "objectiveChange": "Se conserva el objetivo factual; se delimita el alcance del enunciado para eliminar la errata o ambigüedad descrita.",
+      "typeReview": {
+        "before": "D",
+        "after": "D",
+        "reason": "Interrogación directa de un hecho o clasificación."
+      },
+      "originalTask": {
+        "id": "ITEM-GEN-T1.01-05",
+        "finding": "GEN-T1.01-05",
+        "evidence": "T1.01 Constitución Española - Temario.pdf y versión alternativa p. 4",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Falta el artículo 69.3 en las cuatro alternativas. El término actualidad impide restringir la pregunta a 2024.",
+        "location": "public/data/T1.01.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "GEN-T1.01-05",
+          "topic": "T1.01",
+          "origin": "G",
+          "family": "GEN-T1.01-05",
+          "scenario": null
+        }
+      },
+      "inSample": false,
+      "sampleCopies": [],
+      "oracle": "DOCUMENTAL; sin simular ejecución del producto.",
+      "beforeSha256": "04a224f29ae73dfb87cb34960921a6df96ee33479ac0bd4a39d42efd18cded52",
+      "afterSha256": "38df6d2a7fd54cf99c4b01c54e9c1038d8333f23e1b1da7f872bca47a38477e8",
+      "storageFile": "public/data/T1.01.json",
+      "sampleFiles": []
+    },
+    {
+      "id": "GEN-T1.01-05.v1",
+      "topic": "T1.01",
+      "priority": "P0",
+      "status": "REVISADA_SEGUNDA_FIRMA",
+      "before": {
+        "i": "GEN-T1.01-05.v1",
+        "t": "T1.01",
+        "o": "G",
+        "q": "Según las características de la Constitución Española de 1978, ¿cuántas reformas constitucionales se han llevado a cabo hasta la actualidad?",
+        "a": [
+          "Dos.",
+          "Cinco.",
+          "Tres.",
+          "Cuatro."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          2,
+          7
+        ],
+        "d": 2,
+        "f": "GEN-T1.01-05",
+        "u": "se han llevado a cabo solo 3 reformas … Articulo 13.2: con la intención de adaptar el texto a las previsiones del Tratado de Maastricht",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T1.01-05.v1",
+        "t": "T1.01",
+        "o": "G",
+        "q": "A 6 de noviembre de 2026, ¿cuántas reformas ha tenido la Constitución Española de 1978?",
+        "a": [
+          "Dos.",
+          "Cinco.",
+          "Tres.",
+          "Cuatro."
+        ],
+        "c": 3,
+        "k": "D",
+        "x": [
+          2,
+          7
+        ],
+        "d": 2,
+        "f": "GEN-T1.01-05",
+        "u": "solo 4 reformas: [p. 4]",
+        "v": 0,
+        "w": 1,
+        "n": "La clave antigua C correspondía a una edición anterior. Se fija fecha y se emplea la versión alternativa actualizada con BOE. A: Dos omite las de 2024 y 2026. B: No hay quinta reforma a la fecha de corte. C: Tres reproduce la edición anterior a 2026. D: Cuatro:1992, 2011, 2024 y 2026. Fuente primaria: https://www.boe.es/buscar/act.php?id=BOE-A-1978-31229"
+      },
+      "reference": {
+        "pdf": "01_Temario/T1.01 Constitución Española/T1.01 Constitución Española - Temario (version alternativa).pdf",
+        "sha256": "4eba1a47e754a3c13d896670c6884c46c24827375836418fb7536d2e1de35b67",
+        "page": 4,
+        "quote": "solo 4 reformas:",
+        "role": "Temario principal (versión alternativa)"
+      },
+      "primary": [
+        {
+          "url": "https://www.boe.es/buscar/act.php?id=BOE-A-1978-31229",
+          "checked": "2026-11-06",
+          "supports": "Texto consolidado con reforma de 69.3 publicada el20/05/2026; reformas previas13.2,135,49."
+        }
+      ],
+      "reviewedOptions": [
+        "Dos omite las de 2024 y 2026.",
+        "No hay quinta reforma a la fecha de corte.",
+        "Tres reproduce la edición anterior a 2026.",
+        "Cuatro:1992, 2011, 2024 y 2026."
+      ],
+      "sourceDiscrepancy": "La clave antigua C correspondía a una edición anterior. Se fija fecha y se emplea la versión alternativa actualizada con BOE.",
+      "objectiveChange": "Se conserva el objetivo factual; se delimita el alcance del enunciado para eliminar la errata o ambigüedad descrita.",
+      "typeReview": {
+        "before": "D",
+        "after": "D",
+        "reason": "Interrogación directa de un hecho o clasificación."
+      },
+      "originalTask": {
+        "id": "ITEM-GEN-T1.01-05.v1",
+        "finding": "GEN-T1.01-05.v1",
+        "evidence": "T1.01 Constitución Española - Temario.pdf y versión alternativa p. 4",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Hay cuatro reformas y la opción D lo recoge; la clave C sigue la edición antigua.",
+        "location": "public/data/T1.01.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "GEN-T1.01-05.v1",
+          "topic": "T1.01",
+          "origin": "G",
+          "family": "GEN-T1.01-05",
+          "scenario": null
+        }
+      },
+      "inSample": false,
+      "sampleCopies": [],
+      "oracle": "DOCUMENTAL; sin simular ejecución del producto.",
+      "beforeSha256": "f8001f66cc6b66655947e6fd55b0ab56b329cc0910a02984170ffce9725501b2",
+      "afterSha256": "7e511bb350af4e963c491445c8fa639a29db38fc2bd9114ff53a56e85b9f979a",
+      "storageFile": "public/data/T1.01.json",
+      "sampleFiles": []
+    },
+    {
+      "id": "AS10B-P1-19",
+      "topic": "T1.08",
+      "priority": "P0",
+      "status": "REVISADA_SEGUNDA_FIRMA",
+      "before": {
+        "i": "AS10B-P1-19",
+        "t": "T1.08",
+        "o": "A",
+        "q": "¿Cuál de las siguientes claves NO está contemplada entre los datos criptográficos que almacena el DNI electrónico?",
+        "a": [
+          "Clave RSA privada de autenticación (Digital Signature).",
+          "Clave RSA pública de autenticación (Digital Signature).",
+          "Clave RSA privada de no repudio (ContentCommitment).",
+          "Clave RSA privada de firma (ContentCommitment)."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AS10B-P1-19",
+        "t": "T1.08",
+        "o": "A",
+        "q": "Entre las claves descritas para el chip del DNIe en el temario, ¿cuál NO es una clave del ciudadano almacenada en su documento?",
+        "a": [
+          "Clave RSA privada de autenticación (Digital Signature).",
+          "Clave RSA pública de autenticación (Digital Signature).",
+          "Clave privada de la autoridad de certificación raíz emisora.",
+          "Clave RSA privada de firma (ContentCommitment)."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "u": "Clave Pública de root CA para certificados card-verificables. [p. 96]",
+        "n": "Errata de la academia: no repudio y firma duplicaban la misma función. Se sustituye sólo el distractor C por una clave excluida inequívocamente. A: La privada de autenticación figura en el inventario. B: La pública de autenticación figura en el inventario. C: El documento no almacena la clave privada de la CA raíz; se confundiría la clave pública con la privada de la autoridad. D: La privada de firma figura en el inventario; ContentCommitment equivale a no repudio. Fuente primaria: https://www.dnielectronico.es/PortalDNIe/PRF1_Cons02.action?pag=REF_240"
+      },
+      "reference": {
+        "pdf": "01_Temario/T1.08 Sociedad de la Información/T1.08 Sociedad de la Información - Temario.pdf",
+        "sha256": "5f258b7cc3f23f39e1f8f4dbdf0679f85d8ff3c499df62a43cf011dcf27e391f",
+        "page": 96,
+        "quote": "Clave Pública de root CA para certificados card-verificables.",
+        "role": "Temario principal"
+      },
+      "primary": [
+        {
+          "url": "https://www.dnielectronico.es/PortalDNIe/PRF1_Cons02.action?pag=REF_240",
+          "checked": "2026-11-06",
+          "supports": "El inventario diferencia claves del ciudadano y clave pública raíz; no distribuye su clave privada."
+        }
+      ],
+      "reviewedOptions": [
+        "La privada de autenticación figura en el inventario.",
+        "La pública de autenticación figura en el inventario.",
+        "El documento no almacena la clave privada de la CA raíz; se confundiría la clave pública con la privada de la autoridad.",
+        "La privada de firma figura en el inventario; ContentCommitment equivale a no repudio."
+      ],
+      "sourceDiscrepancy": "Errata de la academia: no repudio y firma duplicaban la misma función. Se sustituye sólo el distractor C por una clave excluida inequívocamente.",
+      "objectiveChange": "Se conserva el objetivo factual; se delimita el alcance del enunciado para eliminar la errata o ambigüedad descrita.",
+      "typeReview": {
+        "before": "I",
+        "after": "I",
+        "reason": "Seleccionar la única afirmación falsa o elemento excluido."
+      },
+      "originalTask": {
+        "id": "ITEM-AS10B-P1-19",
+        "finding": "AS10B-P1-19",
+        "evidence": "T1.08 Sociedad de la Información/T1.08 Sociedad de la Información - Temario.pdf p. 96",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "C y D nombran la misma clave privada de firma con el bit contentCommitment, que históricamente se llamaba nonRepudiation. Ambas claves de autenticación existen. Ninguna opción excluye un elemento distinto.",
+        "location": "public/data/T1.08.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "AS10B-P1-19",
+          "topic": "T1.08",
+          "origin": "A",
+          "family": null,
+          "scenario": null
+        }
+      },
+      "inSample": false,
+      "sampleCopies": [],
+      "oracle": "DOCUMENTAL; sin simular ejecución del producto.",
+      "beforeSha256": "a964a1456f80117431adb599e906d03359d9c269c7e16d504c0979b516f417da",
+      "afterSha256": "0b7cf0c1d92d4d88b03cc853f22907ab18deeff318b7df1dd505e0d4bddd8085",
+      "storageFile": "public/data/T1.08.json",
+      "sampleFiles": []
+    },
+    {
+      "id": "GEN-T1.10-110.v1",
+      "topic": "T1.10",
+      "priority": "P0",
+      "status": "REVISADA_SEGUNDA_FIRMA",
+      "before": {
+        "i": "GEN-T1.10-110.v1",
+        "t": "T1.10",
+        "o": "G",
+        "q": "El Instituto Nacional de Ciberseguridad de España (INCIBE) es una sociedad dependiente del:",
+        "a": [
+          "Ministerio de Hacienda, a través de la Secretaría General de Administración Digital.",
+          "Ministerio de Asuntos Económicos y Transformación Digital, a través de la SEDIA.",
+          "Ministerio de Defensa, a través del Centro Criptológico Nacional.",
+          "Ministerio del Interior, a través de la Secretaría de Estado de Seguridad."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          1,
+          7
+        ],
+        "d": 2,
+        "f": "GEN-T1.10-110",
+        "u": "T1.10 Acceso Electrónico - Temario - parte2.pdf, p. 37: anteriormente Instituto Nacional de Tecnologías de la Comunicación (INTECO) | T1.10 Acceso Electrónico - Temario - parte2.pdf, p. 37: una sociedad dependiente del Ministerio de Asuntos Económicos y Transformación Digital a través de la Secretaría de Estado de Digitalización e Inteligencia Artificial | T1.10 Acceso Electrónico - Temario - parte2.pdf, p. 37: INCIBE-CERT está operado conjuntamente por INCIBE y CNPIC",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T1.10-110.v1",
+        "t": "T1.10",
+        "o": "G",
+        "q": "Según el artículo 6.8 del RD 210/2024 vigente a 6 de noviembre de 2026, ¿qué ministerio y secretaría de Estado ejercen la tutela de INCIBE?",
+        "a": [
+          "Ministerio de Hacienda, a través de la Secretaría General de Administración Digital.",
+          "Ministerio para la Transformación Digital y de la Función Pública, a través de la Secretaría de Estado de Telecomunicaciones e Infraestructuras Digitales.",
+          "Ministerio de Defensa, a través del Centro Criptológico Nacional.",
+          "Ministerio del Interior, a través de la Secretaría de Estado de Seguridad."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          1,
+          7
+        ],
+        "d": 2,
+        "f": "GEN-T1.10-110",
+        "u": "Asuntos Económicos y Transformación Digital a través de la Secretaría de Estado de Digitalización e Inteligencia Artificial [p. 37]",
+        "v": 0,
+        "w": 1,
+        "n": "El temario conserva la denominación ministerial antigua. Se actualiza mediante BOE; INCIBE está bajo tutela, no se confunde su naturaleza mercantil con una entidad pública empresarial. A: Hacienda/SGAD no es la tutela vigente. B: Recoge la cadena institucional del RD 210/2024 consolidado. C: Defensa/CCN no es la tutela de INCIBE. D: Interior no es la cadena institucional prevista. Fuente primaria: https://www.boe.es/buscar/act.php?id=BOE-A-2024-3796"
+      },
+      "reference": {
+        "pdf": "01_Temario/T1.10 Acceso Electrónico/T1.10 Acceso Electrónico - Temario - parte2.pdf",
+        "sha256": "6ee41d275d37973d7eb3e8cfef14c01ccdebc34b82d9a3281aaaf9ced288685a",
+        "page": 37,
+        "quote": "Asuntos Económicos y Transformación Digital a través de la Secretaría de Estado de Digitalización e Inteligencia Artificial",
+        "role": "Temario principal"
+      },
+      "primary": [
+        {
+          "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2024-3796",
+          "checked": "2026-11-06",
+          "supports": "Artículos2.6 y6.8: cadenas institucionales distintas para Red.es e INCIBE."
+        }
+      ],
+      "reviewedOptions": [
+        "Hacienda/SGAD no es la tutela vigente.",
+        "Recoge la cadena institucional del RD 210/2024 consolidado.",
+        "Defensa/CCN no es la tutela de INCIBE.",
+        "Interior no es la cadena institucional prevista."
+      ],
+      "sourceDiscrepancy": "El temario conserva la denominación ministerial antigua. Se actualiza mediante BOE; INCIBE está bajo tutela, no se confunde su naturaleza mercantil con una entidad pública empresarial.",
+      "objectiveChange": "Se conserva el objetivo factual; se delimita el alcance del enunciado para eliminar la errata o ambigüedad descrita.",
+      "typeReview": {
+        "before": "D",
+        "after": "D",
+        "reason": "Interrogación directa de un hecho o clasificación."
+      },
+      "originalTask": {
+        "id": "ITEM-GEN-T1.10-110.v1",
+        "finding": "GEN-T1.10-110.v1",
+        "evidence": "T1.10 Acceso Electrónico/T1.10 Acceso Electrónico - Temario - parte2.pdf p. 37",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Ninguna opción recoge Ministerio para la Transformación Digital y de la Función Pública y Secretaría de Estado de Telecomunicaciones e Infraestructuras Digitales. Véase plan anual de INCIBE, resultados 2024.",
+        "location": "public/data/T1.10.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "GEN-T1.10-110.v1",
+          "topic": "T1.10",
+          "origin": "G",
+          "family": "GEN-T1.10-110",
+          "scenario": null
+        }
+      },
+      "inSample": false,
+      "sampleCopies": [],
+      "oracle": "DOCUMENTAL; sin simular ejecución del producto.",
+      "beforeSha256": "cfe43889b33960f15f1271c15ec9eee2a0f3de4b534891b4f962bc2266f4dffe",
+      "afterSha256": "0f01bef073058d7b02cd37172525408ff4c8e83584ee5ec5fbc80549b6aa6ad3",
+      "storageFile": "public/data/T1.10.json",
+      "sampleFiles": []
+    },
+    {
+      "id": "GEN-T1.10-112",
+      "topic": "T1.10",
+      "priority": "P0",
+      "status": "REVISADA_SEGUNDA_FIRMA",
+      "before": {
+        "i": "GEN-T1.10-112",
+        "t": "T1.10",
+        "o": "G",
+        "q": "Red.es es una entidad pública adscrita al:",
+        "a": [
+          "Ministerio de Hacienda, a través de la Secretaría de Estado de Presupuestos y Gastos.",
+          "Ministerio de Política Territorial y Función Pública, a través de la Secretaría de Estado de Función Pública.",
+          "Ministerio de Asuntos Económicos y Transformación Digital, a través de la SEDIA.",
+          "Ministerio del Interior, a través de la Secretaría de Estado de Seguridad."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          1,
+          7
+        ],
+        "d": 2,
+        "f": "GEN-T1.10-112",
+        "u": "T1.10 Acceso Electrónico - Temario - parte2.pdf, p. 38: Red.es es una entidad pública adscrita al Ministerio de Asuntos Económicos y Transformación Digital a través de la Secretaría de Estado de Digitalización e Inteligencia Artificial | T1.10 Acceso Electrónico - Temario - parte2.pdf, p. 39: El Observatorio Nacional de las Telecomunicaciones y de la Sociedad de la Información (ONTSI) es el observatorio español de la economía y la sociedad digital",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T1.10-112",
+        "t": "T1.10",
+        "o": "G",
+        "q": "Según el artículo 2.6 del RD 210/2024 vigente a 6 de noviembre de 2026, ¿a qué ministerio y a través de qué secretaría de Estado está adscrita Red.es?",
+        "a": [
+          "Ministerio de Hacienda, a través de la Secretaría de Estado de Presupuestos y Gastos.",
+          "Ministerio de Política Territorial y Función Pública, a través de la Secretaría de Estado de Función Pública.",
+          "Ministerio para la Transformación Digital y de la Función Pública, a través de la Secretaría de Estado de Digitalización e Inteligencia Artificial.",
+          "Ministerio del Interior, a través de la Secretaría de Estado de Seguridad."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          1,
+          7
+        ],
+        "d": 2,
+        "f": "GEN-T1.10-112",
+        "u": "Red.es es una entidad pública adscrita al Ministerio de Asuntos Económicos y Transformación Digital a través de la Secretaría de Estado de Digitalización e Inteligencia Artificial. [p. 38]",
+        "v": 0,
+        "w": 1,
+        "n": "El temario conserva la denominación ministerial antigua. Se actualiza mediante BOE; INCIBE está bajo tutela, no se confunde su naturaleza mercantil con una entidad pública empresarial. A: Hacienda/Presupuestos no es la adscripción de Red.es. B: Política Territorial/Función Pública no es la adscripción de Red.es. C: Recoge la cadena institucional del RD 210/2024 consolidado. D: Interior no es la cadena institucional prevista. Fuente primaria: https://www.boe.es/buscar/act.php?id=BOE-A-2024-3796"
+      },
+      "reference": {
+        "pdf": "01_Temario/T1.10 Acceso Electrónico/T1.10 Acceso Electrónico - Temario - parte2.pdf",
+        "sha256": "6ee41d275d37973d7eb3e8cfef14c01ccdebc34b82d9a3281aaaf9ced288685a",
+        "page": 38,
+        "quote": "Red.es es una entidad pública adscrita al Ministerio de Asuntos Económicos y Transformación Digital a través de la Secretaría de Estado de Digitalización e Inteligencia Artificial.",
+        "role": "Temario principal"
+      },
+      "primary": [
+        {
+          "url": "https://www.boe.es/buscar/act.php?id=BOE-A-2024-3796",
+          "checked": "2026-11-06",
+          "supports": "Artículos2.6 y6.8: cadenas institucionales distintas para Red.es e INCIBE."
+        }
+      ],
+      "reviewedOptions": [
+        "Hacienda/Presupuestos no es la adscripción de Red.es.",
+        "Política Territorial/Función Pública no es la adscripción de Red.es.",
+        "Recoge la cadena institucional del RD 210/2024 consolidado.",
+        "Interior no es la cadena institucional prevista."
+      ],
+      "sourceDiscrepancy": "El temario conserva la denominación ministerial antigua. Se actualiza mediante BOE; INCIBE está bajo tutela, no se confunde su naturaleza mercantil con una entidad pública empresarial.",
+      "objectiveChange": "Se conserva el objetivo factual; se delimita el alcance del enunciado para eliminar la errata o ambigüedad descrita.",
+      "typeReview": {
+        "before": "D",
+        "after": "D",
+        "reason": "Interrogación directa de un hecho o clasificación."
+      },
+      "originalTask": {
+        "id": "ITEM-GEN-T1.10-112",
+        "finding": "GEN-T1.10-112",
+        "evidence": "T1.10 Acceso Electrónico/T1.10 Acceso Electrónico - Temario - parte2.pdf p. 38 · T1.10 Acceso Electrónico/T1.10 Acceso Electrónico - Temario - parte2.pdf p. 39",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Ninguna opción recoge el ministerio vigente. Red.es indica Ministerio para la Transformación Digital y de la Función Pública a través de la SEDIA en red.es/es/sobre-nosotros/quienes-somos.",
+        "location": "public/data/T1.10.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "GEN-T1.10-112",
+          "topic": "T1.10",
+          "origin": "G",
+          "family": "GEN-T1.10-112",
+          "scenario": null
+        }
+      },
+      "inSample": false,
+      "sampleCopies": [],
+      "oracle": "DOCUMENTAL; sin simular ejecución del producto.",
+      "beforeSha256": "ee1948f68ddf4e296ec5a3ececa53a3b12e9c1c17762278f897e5d565a8abf4d",
+      "afterSha256": "4a73cab0415028118203be1b18e964b90f22989fcd4f0e0208be950d79e40355",
+      "storageFile": "public/data/T1.10.json",
+      "sampleFiles": []
+    },
+    {
+      "id": "AT111-P1-23",
+      "topic": "T1.11",
+      "priority": "P0",
+      "status": "REVISADA_SEGUNDA_FIRMA",
+      "before": {
+        "i": "AT111-P1-23",
+        "t": "T1.11",
+        "o": "A",
+        "q": "¿Qué funcionalidad NO está incluida en la Carpeta Ciudadana?",
+        "a": [
+          "Mis expedientes.",
+          "Mis notificaciones.",
+          "Mis registros.",
+          "Mis apoderamientos."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT111-P1-23",
+        "t": "T1.11",
+        "o": "A",
+        "q": "¿Cuál de estas actuaciones NO forma parte de las funciones de consulta y seguimiento de Mi Carpeta Ciudadana?",
+        "a": [
+          "Consultar expedientes.",
+          "Acceder a notificaciones.",
+          "Consultar asientos registrales.",
+          "Dictar la resolución administrativa de un expediente del ciudadano."
+        ],
+        "c": 3,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "u": "Mis registros: conocer el estado de los asientos registrales. [p. 57]",
+        "n": "Errata de la academia: Mis apoderamientos sí existe. Se conserva la selección de funcionalidad excluida y se sustituye únicamente la alternativa falsa. A: El seguimiento de expedientes es una función descrita. B: El acceso a notificaciones es una función descrita. C: El estado de los registros es una función descrita. D: Resolver el procedimiento compete al órgano administrativo; el acceso al expediente no equivale a dictar su resolución. Fuente primaria: https://masinformacioncarpeta.carpetaciudadana.gob.es/infocc/mapa-web"
+      },
+      "reference": {
+        "pdf": "01_Temario/T1.11 Instrumentos de Acceso Electrónico/T1.11 Instrumentos de Acceso Electrónico - Temario.pdf",
+        "sha256": "090809ed96a6a340cc2052292870108310e85e1cd99294d403149be27ba4c51a",
+        "page": 57,
+        "quote": "Mis registros: conocer el estado de los asientos registrales.",
+        "role": "Temario principal"
+      },
+      "primary": [
+        {
+          "url": "https://masinformacioncarpeta.carpetaciudadana.gob.es/infocc/mapa-web",
+          "checked": "2026-11-06",
+          "supports": "El catálogo incluye expedientes,notificaciones,registros y apoderamientos; el portal permite acceso y seguimiento, no sustituye al órgano resolutor."
+        }
+      ],
+      "reviewedOptions": [
+        "El seguimiento de expedientes es una función descrita.",
+        "El acceso a notificaciones es una función descrita.",
+        "El estado de los registros es una función descrita.",
+        "Resolver el procedimiento compete al órgano administrativo; el acceso al expediente no equivale a dictar su resolución."
+      ],
+      "sourceDiscrepancy": "Errata de la academia: Mis apoderamientos sí existe. Se conserva la selección de funcionalidad excluida y se sustituye únicamente la alternativa falsa.",
+      "objectiveChange": "Se conserva el objetivo factual; se delimita el alcance del enunciado para eliminar la errata o ambigüedad descrita.",
+      "typeReview": {
+        "before": "I",
+        "after": "I",
+        "reason": "Seleccionar la única afirmación falsa o elemento excluido."
+      },
+      "originalTask": {
+        "id": "ITEM-AT111-P1-23",
+        "finding": "AT111-P1-23",
+        "evidence": "Mi Carpeta Ciudadana, https://masinformacioncarpeta.carpetaciudadana.gob.es/infocc/mapa-web",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "El mapa oficial incluye «Mis apoderamientos» bajo Mis servicios. La clave D excluye una funcionalidad disponible.",
+        "location": "public/data/T1.11.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "AT111-P1-23",
+          "topic": "T1.11",
+          "origin": "A",
+          "family": null,
+          "scenario": null
+        }
+      },
+      "inSample": false,
+      "sampleCopies": [],
+      "oracle": "DOCUMENTAL; sin simular ejecución del producto.",
+      "beforeSha256": "4d79abcdd3bfa183fa3e51d3810256410ade04a0ce1ca4c5662d8a7b07131e82",
+      "afterSha256": "ddf7cdb62336fb58aa3ac8898cf413c041ee1a6c4be6fe5387df1a9bb601a0ab",
+      "storageFile": "public/data/T1.11.json",
+      "sampleFiles": []
+    },
+    {
+      "id": "AT111-P1-30",
+      "topic": "T1.11",
+      "priority": "P0",
+      "status": "REVISADA_SEGUNDA_FIRMA",
+      "before": {
+        "i": "AT111-P1-30",
+        "t": "T1.11",
+        "o": "A",
+        "q": "El motor de traducción utilizado por la Comisión Europea se denomina:",
+        "a": [
+          "Moses.",
+          "Apertium.",
+          "Tr@nsEC.",
+          "MT@EC."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT111-P1-30",
+        "t": "T1.11",
+        "o": "A",
+        "q": "El servicio de traducción automática de la Comisión Europea que sustituyó a MT@EC el 15 de noviembre de 2017 se denomina:",
+        "a": [
+          "Moses.",
+          "Apertium.",
+          "Tr@nsEC.",
+          "eTranslation."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "contra sus herramientas y contra el motor MT@EC de la Comisión Europea [p. 74]",
+        "n": "El temario cita el servicio histórico MT@EC. Se identifica expresamente su sustitución, sin presentar el servicio antiguo como actual. A: Moses es un motor mencionado para PLATA, no el servicio sucesor de la Comisión. B: Apertium se menciona para PLATA, no es el sucesor. C: Tr@nsEC no es la denominación documentada. D: eTranslation es el sucesor documentado por la Comisión. Fuente primaria: https://commission.europa.eu/resources-partners/etranslation_en"
+      },
+      "reference": {
+        "pdf": "01_Temario/T1.11 Instrumentos de Acceso Electrónico/T1.11 Instrumentos de Acceso Electrónico - Temario.pdf",
+        "sha256": "090809ed96a6a340cc2052292870108310e85e1cd99294d403149be27ba4c51a",
+        "page": 74,
+        "quote": "contra sus herramientas y contra el motor MT@EC de la Comisión Europea",
+        "role": "Temario principal"
+      },
+      "primary": [
+        {
+          "url": "https://commission.europa.eu/resources-partners/etranslation_en",
+          "checked": "2026-11-06",
+          "supports": "La Comisión documenta el lanzamiento de eTranslation el15/11/2017 como sucesor de MT@EC."
+        },
+        {
+          "url": "https://ec.europa.eu/digital-building-blocks/sites/spaces/DIGITAL/blog/2017/11",
+          "checked": "2026-11-06",
+          "supports": "Noticia contemporánea de lanzamiento15/11/2017 y sucesión deMT@EC; laURLoriginal ahora redirige a servicio ampliado."
+        }
+      ],
+      "reviewedOptions": [
+        "Moses es un motor mencionado para PLATA, no el servicio sucesor de la Comisión.",
+        "Apertium se menciona para PLATA, no es el sucesor.",
+        "Tr@nsEC no es la denominación documentada.",
+        "eTranslation es el sucesor documentado por la Comisión."
+      ],
+      "sourceDiscrepancy": "El temario cita el servicio histórico MT@EC. Se identifica expresamente su sustitución, sin presentar el servicio antiguo como actual.",
+      "objectiveChange": "Se conserva el objetivo factual; se delimita el alcance del enunciado para eliminar la errata o ambigüedad descrita.",
+      "typeReview": {
+        "before": "C",
+        "after": "C",
+        "reason": "Completar una proposición inacabada."
+      },
+      "originalTask": {
+        "id": "ITEM-AT111-P1-30",
+        "finding": "AT111-P1-30",
+        "evidence": "Comisión Europea, https://commission.europa.eu/resources-partners/etranslation_en",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "La Comisión confirma que eTranslation sustituyó a MT@EC el 15 de noviembre de 2017. Ninguna opción nombra el servicio actual.",
+        "location": "public/data/T1.11.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "AT111-P1-30",
+          "topic": "T1.11",
+          "origin": "A",
+          "family": null,
+          "scenario": null
+        }
+      },
+      "inSample": false,
+      "sampleCopies": [],
+      "oracle": "DOCUMENTAL; sin simular ejecución del producto.",
+      "beforeSha256": "9fc33834c38e75c1c222ebf4c3b2ff467a23b7d35948b12a3336f6784dd60f8d",
+      "afterSha256": "33f0cc0b6f8769bbc60ceb4b139d306eb51fa23ca69fd8560790bcf6660776ab",
+      "storageFile": "public/data/T1.11.json",
+      "sampleFiles": []
+    },
+    {
+      "id": "AT202-P1-15",
+      "topic": "T2.02",
+      "priority": "P0",
+      "status": "REVISADA_SEGUNDA_FIRMA",
+      "before": {
+        "i": "AT202-P1-15",
+        "t": "T2.02",
+        "o": "A",
+        "q": "De las siguientes afirmaciones, señale la respuesta INCORRECTA:",
+        "a": [
+          "Thunderbolt 2 alcanza una velocidad de transmisión de 20 Gbps y utiliza el conector DisplayPort.",
+          "Thunderbolt 1 alcanza una velocidad de transmisión de 10 Gbps y utiliza el conector DisplayPort.",
+          "Thunderbolt 1 y Thunderbolt 2 operan en modo bidireccional.",
+          "Thunderbolt 3 utiliza un conector USB tipo C."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT202-P1-15",
+        "t": "T2.02",
+        "o": "A",
+        "q": "Sobre Thunderbolt 1, 2 y 3, señale la afirmación INCORRECTA:",
+        "a": [
+          "Thunderbolt 2 alcanza 20 Gbps y utiliza el conector físico Mini DisplayPort.",
+          "Thunderbolt 1 alcanza 10 Gbps por canal y utiliza el conector físico Mini DisplayPort.",
+          "Thunderbolt 1 y Thunderbolt 2 sólo transmiten datos en un sentido.",
+          "Thunderbolt 3 utiliza el conector USB tipo C."
+        ],
+        "c": 2,
+        "k": "I",
+        "x": [],
+        "d": null,
+        "u": "Thunderbolt 2: velocidad 20 Gbps (modo bidireccional). Conector DisplayPort. [p. 6]",
+        "n": "Errata de la academia: la opción C original era verdadera. Se invierte sólo esa afirmación y se precisa Mini DisplayPort en A/B. A: 20 Gbps y Mini DisplayPort corresponden aThunderbolt 2. B: Thunderbolt 1 tiene enlaces bidireccionales 10 Gbps y conectorMini DisplayPort. C: La unidireccionalidad es falsa: ambos permiten transmisión bidireccional. D: Thunderbolt 3 emplea USB-C como conector. Fuente primaria: https://developer.apple.com/library/archive/documentation/HardwareDrivers/Conceptual/ThunderboltDevGuide/Introduction/Introduction.html"
+      },
+      "reference": {
+        "pdf": "01_Temario/T2.02 Periféricos/T2.02 Periféricos - Temario.pdf",
+        "sha256": "963ced123c0fe2900b51d666f04e1dd593c9d9f65add543b87ee6af27af953af",
+        "page": 6,
+        "quote": "Thunderbolt 2: velocidad 20 Gbps (modo bidireccional). Conector DisplayPort.",
+        "role": "Temario principal"
+      },
+      "primary": [
+        {
+          "url": "https://developer.apple.com/library/archive/documentation/HardwareDrivers/Conceptual/ThunderboltDevGuide/Introduction/Introduction.html",
+          "checked": "2026-11-06",
+          "supports": "Thunderbolt dispone de enlaces bidireccionales de10Gbps; se distingue el conector MiniDisplayPort del protocolo."
+        },
+        {
+          "url": "https://www.aja.com/solutions/thunderbolt",
+          "checked": "2026-11-06",
+          "supports": "Fabricante de dispositivos: Thunderbolt1/2 conectorMiniDisplayPort; Thunderbolt3 USB-C; velocidades20/40Gbps."
+        }
+      ],
+      "reviewedOptions": [
+        "20 Gbps y Mini DisplayPort corresponden aThunderbolt 2.",
+        "Thunderbolt 1 tiene enlaces bidireccionales 10 Gbps y conectorMini DisplayPort.",
+        "La unidireccionalidad es falsa: ambos permiten transmisión bidireccional.",
+        "Thunderbolt 3 emplea USB-C como conector."
+      ],
+      "sourceDiscrepancy": "Errata de la academia: la opción C original era verdadera. Se invierte sólo esa afirmación y se precisa Mini DisplayPort en A/B.",
+      "objectiveChange": "Se conserva el objetivo factual; se delimita el alcance del enunciado para eliminar la errata o ambigüedad descrita.",
+      "typeReview": {
+        "before": "I",
+        "after": "I",
+        "reason": "Seleccionar la única afirmación falsa o elemento excluido."
+      },
+      "originalTask": {
+        "id": "ITEM-AT202-P1-15",
+        "finding": "AT202-P1-15",
+        "evidence": "T2.02 Periféricos/T2.02 Periféricos - Temario.pdf p. 6. T2.02 Periféricos/T2.02 Periféricos - Test.pdf, pregunta p. 4, solución impresa p. 10 (C), app C.",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Thunderbolt 1 y 2 sí permiten transmisión bidireccional, por lo que C no es la incorrecta. A/B deberían precisar el conector físico Mini DisplayPort. D acierta con USB-C.",
+        "location": "public/data/T2.02.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "AT202-P1-15",
+          "topic": "T2.02",
+          "origin": "A",
+          "family": null,
+          "scenario": null
+        }
+      },
+      "inSample": false,
+      "sampleCopies": [],
+      "oracle": "DOCUMENTAL; sin simular ejecución del producto.",
+      "beforeSha256": "e7d69f2ad1da9d589da638bbed5997116b7b656d403eb85cc113444b8a3ea8e6",
+      "afterSha256": "6b3d557c07c1c8e50824dac502252798c7312654ad91f4002b7a2d33848b30f1",
+      "storageFile": "public/data/T2.02.json",
+      "sampleFiles": []
+    },
+    {
+      "id": "AT204-P1-24",
+      "topic": "T2.04",
+      "priority": "P0",
+      "status": "REVISADA_SEGUNDA_FIRMA",
+      "before": {
+        "i": "AT204-P1-24",
+        "t": "T2.04",
+        "o": "A",
+        "q": "La interfaz de usuario de Windows 10 se denomina:",
+        "a": [
+          "Modern UI.",
+          "Continuum.",
+          "Aero.",
+          "Space."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT204-P1-24",
+        "t": "T2.04",
+        "o": "A",
+        "q": "En Windows 10, la función de adaptación entre la experiencia de escritorio y la de tableta conocida en el temario se denomina:",
+        "a": [
+          "Modern UI.",
+          "Continuum.",
+          "Aero.",
+          "Space."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "Continuum ofrece dos modos, uno para pantallas táctiles y otro para ratón y teclado. [p. 39]",
+        "n": "Se corrige el alcance del enunciado: Continuum designa adaptación de experiencia, no toda la interfaz. Marco de versión Windows 10 explícito. A: Modern UI se asocia al diseño de Windows 8, no a esta función. B: Continuum es la función concreta; no es el nombre general de toda la interfaz de Windows 10. C: Aero no denomina la adaptación solicitada. D: Space no es la denominación de esta función. Fuente primaria: https://learn.microsoft.com/en-us/windows-hardware/design/device-experiences/continuum"
+      },
+      "reference": {
+        "pdf": "01_Temario/T2.04 Sistemas Operativos/T2.04 Sistemas Operativos - Temario.pdf",
+        "sha256": "d90c16c37eb47ab64152e40b217794d257fc0c1f0457311dc82b71987609f0e1",
+        "page": 39,
+        "quote": "Continuum ofrece dos modos, uno para pantallas táctiles y otro para ratón y teclado.",
+        "role": "Temario principal"
+      },
+      "primary": [
+        {
+          "url": "https://learn.microsoft.com/en-us/windows-hardware/design/device-experiences/continuum",
+          "checked": "2026-11-06",
+          "supports": "Documenta la experiencia adaptable del modo tableta Windows10 y sus transiciones."
+        },
+        {
+          "url": "https://blogs.windows.com/windowsexperience/2015/07/27/continuum-on-windows-10/",
+          "checked": "2026-11-06",
+          "supports": "Microsoft identifica por nombreContinuum y transición escritorio/tableta enWindows10."
+        }
+      ],
+      "reviewedOptions": [
+        "Modern UI se asocia al diseño de Windows 8, no a esta función.",
+        "Continuum es la función concreta; no es el nombre general de toda la interfaz de Windows 10.",
+        "Aero no denomina la adaptación solicitada.",
+        "Space no es la denominación de esta función."
+      ],
+      "sourceDiscrepancy": "Se corrige el alcance del enunciado: Continuum designa adaptación de experiencia, no toda la interfaz. Marco de versión Windows 10 explícito.",
+      "objectiveChange": "Se conserva el objetivo factual; se delimita el alcance del enunciado para eliminar la errata o ambigüedad descrita.",
+      "typeReview": {
+        "before": "C",
+        "after": "C",
+        "reason": "Completar una proposición inacabada."
+      },
+      "originalTask": {
+        "id": "ITEM-AT204-P1-24",
+        "finding": "AT204-P1-24",
+        "evidence": "T2.04 Sistemas Operativos/T2.04 Sistemas Operativos - Temario.pdf p. 39. T2.04 Sistemas Operativos/T2.04 Sistemas Operativos - Test.pdf, pregunta p. 5, solución impresa p. 12 (B), app B.",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Continuum es una función de adaptación de la interfaz al modo de uso y al dispositivo, no el nombre general de toda la interfaz Windows 10. Aero, Space y Modern UI tampoco constituyen una respuesta exacta a ese literal.",
+        "location": "public/data/T2.04.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "AT204-P1-24",
+          "topic": "T2.04",
+          "origin": "A",
+          "family": null,
+          "scenario": null
+        }
+      },
+      "inSample": false,
+      "sampleCopies": [],
+      "oracle": "DOCUMENTAL; sin simular ejecución del producto.",
+      "beforeSha256": "3e7bf719d40985dc05ce26c6c3f07fee682685d08019aab268c59ea71c6401d6",
+      "afterSha256": "3b42202febf14a967122f1ae08678c70d354db44824a72c460464ca33af45c74",
+      "storageFile": "public/data/T2.04.json",
+      "sampleFiles": []
+    },
+    {
+      "id": "AT205-P1-30",
+      "topic": "T2.05",
+      "priority": "P0",
+      "status": "REVISADA_SEGUNDA_FIRMA",
+      "before": {
+        "i": "AT205-P1-30",
+        "t": "T2.05",
+        "o": "A",
+        "q": "Las reglas de Codd sirven para:",
+        "a": [
+          "Integrar correctamente el modelo conceptual en un sistema gestor de bases de datos.",
+          "Crear bases de datos más relacionadas y normalizadas.",
+          "Cumplir con el estándar ANSI-SPARC.",
+          "Describir correctamente los tres niveles del modelo de relación de entidades."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT205-P1-30",
+        "t": "T2.05",
+        "o": "A",
+        "q": "Las doce reglas de Codd evalúan si un producto que se anuncia como plenamente relacional:",
+        "a": [
+          "Integra automáticamente cualquier modelo conceptual.",
+          "Satisface las capacidades exigidas a un SGBD plenamente relacional.",
+          "Cumple el estándar arquitectónico ANSI-SPARC.",
+          "Describe los niveles de un modelo entidad-relación."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [],
+        "d": null,
+        "u": "Las 12 reglas de Codd [p. 9]",
+        "n": "Errata de la academia: relacionar y normalizar esquemas no expresa el objetivo de las reglas. La frase sobre un mínimo de seis del PDF tampoco es el criterio de Codd. A: La integración automática del modelo conceptual no es su finalidad. B: Las reglas sirven como criterio de conformidad del SGBD relacional. C: ANSI-SPARC describe una arquitectura distinta. D: Un modelo entidad-relación no equivale a las capacidades de un gestor. Fuente primaria: https://reldb.org/c/index.php/twelve-rules/"
+      },
+      "reference": {
+        "pdf": "01_Temario/T2.05 SGBD/T2.05 SGBD - Temario.pdf",
+        "sha256": "0b059be5a4bca8dc8ecf2dbffd7a73005d58b493c4adb42574533760e755c4a0",
+        "page": 9,
+        "quote": "Las 12 reglas de Codd",
+        "role": "Temario principal"
+      },
+      "primary": [
+        {
+          "url": "https://reldb.org/c/index.php/twelve-rules/",
+          "checked": "2026-11-06",
+          "supports": "Reproducción identificada de E.F.Codd, Computerworld14y21/10/1985: las doce reglas evalúan la plena conformidad relacional, con ReglaCero de base."
+        }
+      ],
+      "reviewedOptions": [
+        "La integración automática del modelo conceptual no es su finalidad.",
+        "Las reglas sirven como criterio de conformidad del SGBD relacional.",
+        "ANSI-SPARC describe una arquitectura distinta.",
+        "Un modelo entidad-relación no equivale a las capacidades de un gestor."
+      ],
+      "sourceDiscrepancy": "Errata de la academia: relacionar y normalizar esquemas no expresa el objetivo de las reglas. La frase sobre un mínimo de seis del PDF tampoco es el criterio de Codd.",
+      "objectiveChange": "Se conserva el objetivo factual; se delimita el alcance del enunciado para eliminar la errata o ambigüedad descrita.",
+      "typeReview": {
+        "before": "C",
+        "after": "C",
+        "reason": "Completar una proposición inacabada."
+      },
+      "originalTask": {
+        "id": "ITEM-AT205-P1-30",
+        "finding": "AT205-P1-30",
+        "evidence": "T2.05 SGBD/T2.05 SGBD - Temario.pdf p. 9. T2.05 SGBD/T2.05 SGBD - Test.pdf, pregunta p. 6, solución impresa p. 9 (B), app B.",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Las reglas caracterizan qué debe ofrecer un SGBD plenamente relacional. B confunde ese criterio con normalización de esquemas. Ninguna alternativa recoge la finalidad; ANSI-SPARC y niveles E/R pertenecen a otros marcos.",
+        "location": "public/data/T2.05.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "AT205-P1-30",
+          "topic": "T2.05",
+          "origin": "A",
+          "family": null,
+          "scenario": null
+        }
+      },
+      "inSample": false,
+      "sampleCopies": [],
+      "oracle": "DOCUMENTAL; sin simular ejecución del producto.",
+      "beforeSha256": "fdf269ace764391ff726ca5afa44c02bbdaeb7a0b63ca1d23ce0e159e81c08f8",
+      "afterSha256": "bf58fafe3ac92a930b5a379b815defe4a8c9ea99e4671cc50cbf77c7e06cf87d",
+      "storageFile": "public/data/T2.05.json",
+      "sampleFiles": []
+    },
+    {
+      "id": "GEN-T2.05-14",
+      "topic": "T2.05",
+      "priority": "P0",
+      "status": "REVISADA_SEGUNDA_FIRMA",
+      "before": {
+        "i": "GEN-T2.05-14",
+        "t": "T2.05",
+        "o": "G",
+        "q": "Codd estableció en 1985 una «Regla Cero» y doce principios. ¿Cuántos de ellos deben satisfacerse, como mínimo, para que una base de datos pueda considerarse relacional?",
+        "a": [
+          "Al menos ocho.",
+          "Los doce.",
+          "Al menos seis.",
+          "Al menos cuatro."
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [
+          2
+        ],
+        "d": 1,
+        "f": "GEN-T2.05-14",
+        "u": "En el año 1985, Codd estableció una regla general global, llamada “Regla Cero” y doce principios, de los cuales al menos seis deben satisfacerse para que una base de datos pueda considerarse relacional.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T2.05-14",
+        "t": "T2.05",
+        "o": "G",
+        "q": "Además de la Regla Cero, ¿cuántas de las doce reglas básicas de Codd debe cumplir un SGBD para satisfacer el criterio de plena relacionalidad de 1985?",
+        "a": [
+          "Ocho.",
+          "Las doce.",
+          "Seis.",
+          "Cuatro."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          2
+        ],
+        "d": 1,
+        "f": "GEN-T2.05-14",
+        "u": "En el año 1985, Codd estableció una regla general global, llamada “Regla Cero” y doce principios, de los cuales al menos seis deben satisfacerse para que una base de datos pueda considerarse relacional. [p. 9]",
+        "v": 0,
+        "w": 1,
+        "n": "Errata del temario: seis no es el criterio de plena relacionalidad de Codd. Se preguntan cantidades exactas para que «al menos ocho» no sea también verdadero para quien cumple doce. A: Ocho no alcanza el total de doce exigido. B: Las doce, además de la Regla Cero, satisfacen el criterio declarado. C: Seis reproduce el mínimo infundado del temario. D: Cuatro no alcanza el total exigido. Fuente primaria reproducida: https://reldb.org/c/index.php/twelve-rules/"
+      },
+      "reference": {
+        "pdf": "01_Temario/T2.05 SGBD/T2.05 SGBD - Temario.pdf",
+        "sha256": "0b059be5a4bca8dc8ecf2dbffd7a73005d58b493c4adb42574533760e755c4a0",
+        "page": 9,
+        "quote": "En el año 1985, Codd estableció una regla general global, llamada “Regla Cero” y doce principios, de los cuales al menos seis deben satisfacerse para que una base de datos pueda considerarse relacional.",
+        "role": "Temario principal"
+      },
+      "primary": [
+        {
+          "url": "https://reldb.org/c/index.php/twelve-rules/",
+          "checked": "2026-11-06",
+          "supports": "Reproducción identificada de E.F.Codd, Computerworld14y21/10/1985: las doce reglas evalúan la plena conformidad relacional, con ReglaCero de base."
+        }
+      ],
+      "reviewedOptions": [
+        "Ocho no alcanza el total de doce exigido.",
+        "Las doce, además de la Regla Cero, satisfacen el criterio declarado.",
+        "Seis reproduce el mínimo infundado del temario.",
+        "Cuatro no alcanza el total exigido."
+      ],
+      "sourceDiscrepancy": "Errata explícita del temario: el mínimo de seis no reproduce el criterio de plena relacionalidad. Se delimita el criterio del autor de 1985, no la denominación comercial ni un SGBD mínimo.",
+      "objectiveChange": "Se conserva el objetivo factual; se delimita el alcance del enunciado para eliminar la errata o ambigüedad descrita.",
+      "typeReview": {
+        "before": "D",
+        "after": "D",
+        "reason": "Interrogación directa de un hecho o clasificación."
+      },
+      "originalTask": {
+        "id": "ITEM-GEN-T2.05-14",
+        "finding": "GEN-T2.05-14",
+        "evidence": "T2.05 SGBD/T2.05 SGBD - Temario.pdf p. 9",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave registrada C. No hay umbral original de seis. Para el criterio de plena relacionalidad de Codd son exigibles las doce reglas básicas. B corresponde al número de reglas básicas; acotar «plenamente relacional».",
+        "location": "public/data/T2.05.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "GEN-T2.05-14",
+          "topic": "T2.05",
+          "origin": "G",
+          "family": "GEN-T2.05-14",
+          "scenario": null
+        }
+      },
+      "inSample": false,
+      "sampleCopies": [],
+      "oracle": "DOCUMENTAL; sin simular ejecución del producto.",
+      "beforeSha256": "dc39ea7600300b05291bba6bd53734d1f0242b11cdc21a8ecc689c3bd7567b2a",
+      "afterSha256": "e66e1c96a0f37dae64c7f05ddb6e8ff602ba3c5607e2e44d4dcc92485a9fad2e",
+      "storageFile": "public/data/T2.05.json",
+      "sampleFiles": []
+    },
+    {
+      "id": "GEN-T2.05-14.v1",
+      "topic": "T2.05",
+      "priority": "P0",
+      "status": "REVISADA_SEGUNDA_FIRMA",
+      "before": {
+        "i": "GEN-T2.05-14.v1",
+        "t": "T2.05",
+        "o": "G",
+        "q": "Para que una base de datos pueda considerarse relacional según Codd, de los doce principios deben cumplirse como mínimo:",
+        "a": [
+          "Tres.",
+          "Seis.",
+          "Nueve.",
+          "Doce."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          2
+        ],
+        "d": 1,
+        "f": "GEN-T2.05-14",
+        "u": "En el año 1985, Codd estableció una regla general global, llamada “Regla Cero” y doce principios, de los cuales al menos seis deben satisfacerse para que una base de datos pueda considerarse relacional.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T2.05-14.v1",
+        "t": "T2.05",
+        "o": "G",
+        "q": "Además de la Regla Cero, para satisfacer el criterio de plena relacionalidad de Codd (1985), de las doce reglas básicas deben cumplirse:",
+        "a": [
+          "Tres.",
+          "Seis.",
+          "Nueve.",
+          "Doce."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          2
+        ],
+        "d": 1,
+        "f": "GEN-T2.05-14",
+        "u": "En el año 1985, Codd estableció una regla general global, llamada “Regla Cero” y doce principios, de los cuales al menos seis deben satisfacerse para que una base de datos pueda considerarse relacional. [p. 9]",
+        "v": 0,
+        "w": 1,
+        "n": "Errata explícita del temario: el mínimo de seis no reproduce el criterio de plena relacionalidad. Se delimita el criterio del autor de 1985, no la denominación comercial ni un SGBD mínimo. A: Tres. es un subconjunto insuficiente para la plena conformidad de las doce reglas. B: Seis. es un subconjunto insuficiente para la plena conformidad de las doce reglas. C: Nueve. es un subconjunto insuficiente para la plena conformidad de las doce reglas. D: Doce es el conjunto completo de reglas básicas; la Regla Cero se exige además. Fuente primaria: https://reldb.org/c/index.php/twelve-rules/"
+      },
+      "reference": {
+        "pdf": "01_Temario/T2.05 SGBD/T2.05 SGBD - Temario.pdf",
+        "sha256": "0b059be5a4bca8dc8ecf2dbffd7a73005d58b493c4adb42574533760e755c4a0",
+        "page": 9,
+        "quote": "En el año 1985, Codd estableció una regla general global, llamada “Regla Cero” y doce principios, de los cuales al menos seis deben satisfacerse para que una base de datos pueda considerarse relacional.",
+        "role": "Temario principal"
+      },
+      "primary": [
+        {
+          "url": "https://reldb.org/c/index.php/twelve-rules/",
+          "checked": "2026-11-06",
+          "supports": "Reproducción identificada de E.F.Codd, Computerworld14y21/10/1985: las doce reglas evalúan la plena conformidad relacional, con ReglaCero de base."
+        }
+      ],
+      "reviewedOptions": [
+        "Tres. es un subconjunto insuficiente para la plena conformidad de las doce reglas.",
+        "Seis. es un subconjunto insuficiente para la plena conformidad de las doce reglas.",
+        "Nueve. es un subconjunto insuficiente para la plena conformidad de las doce reglas.",
+        "Doce es el conjunto completo de reglas básicas; la Regla Cero se exige además."
+      ],
+      "sourceDiscrepancy": "Errata explícita del temario: el mínimo de seis no reproduce el criterio de plena relacionalidad. Se delimita el criterio del autor de 1985, no la denominación comercial ni un SGBD mínimo.",
+      "objectiveChange": "Se conserva el objetivo factual; se delimita el alcance del enunciado para eliminar la errata o ambigüedad descrita.",
+      "typeReview": {
+        "before": "C",
+        "after": "C",
+        "reason": "Completar una proposición inacabada."
+      },
+      "originalTask": {
+        "id": "ITEM-GEN-T2.05-14.v1",
+        "finding": "GEN-T2.05-14.v1",
+        "evidence": "T2.05 SGBD/T2.05 SGBD - Temario.pdf p. 9",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave registrada B. El mínimo de seis procede del temario, no del texto de Codd. D expresa las doce reglas básicas para plena relacionalidad, además de los requisitos discutidos por el autor.",
+        "location": "public/data/T2.05.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "GEN-T2.05-14.v1",
+          "topic": "T2.05",
+          "origin": "G",
+          "family": "GEN-T2.05-14",
+          "scenario": null
+        }
+      },
+      "inSample": false,
+      "sampleCopies": [],
+      "oracle": "DOCUMENTAL; sin simular ejecución del producto.",
+      "beforeSha256": "a5a94c3f0740719baaf209ce22ae49698301e95fe2bdb4803ac75d013bebfa8a",
+      "afterSha256": "db2777ca99261510c51d4b3e5f392d4ebb6ed173d59efb4c94d58c4854c8f4d6",
+      "storageFile": "public/data/T2.05.json",
+      "sampleFiles": []
+    },
+    {
+      "id": "GEN-T2.05-14.v2",
+      "topic": "T2.05",
+      "priority": "P0",
+      "status": "REVISADA_SEGUNDA_FIRMA",
+      "before": {
+        "i": "GEN-T2.05-14.v2",
+        "t": "T2.05",
+        "o": "G",
+        "q": "De las doce reglas de Codd, ¿cuál es el número mínimo que debe satisfacer un SGBD para ser considerado relacional?",
+        "a": [
+          "Diez.",
+          "Seis.",
+          "Siete.",
+          "Cinco."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          2
+        ],
+        "d": 1,
+        "f": "GEN-T2.05-14",
+        "u": "En el año 1985, Codd estableció una regla general global, llamada “Regla Cero” y doce principios, de los cuales al menos seis deben satisfacerse para que una base de datos pueda considerarse relacional.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T2.05-14.v2",
+        "t": "T2.05",
+        "o": "G",
+        "q": "Además de la Regla Cero, ¿cuántas de las doce reglas básicas de Codd debe cumplir un SGBD para satisfacer el criterio de plena relacionalidad de 1985?",
+        "a": [
+          "Diez.",
+          "Doce.",
+          "Siete.",
+          "Cinco."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          2
+        ],
+        "d": 1,
+        "f": "GEN-T2.05-14",
+        "u": "En el año 1985, Codd estableció una regla general global, llamada “Regla Cero” y doce principios, de los cuales al menos seis deben satisfacerse para que una base de datos pueda considerarse relacional. [p. 9]",
+        "v": 0,
+        "w": 1,
+        "n": "Errata explícita del temario: el mínimo de seis no reproduce el criterio de plena relacionalidad. Se delimita el criterio del autor de 1985, no la denominación comercial ni un SGBD mínimo. A: Diez. es un subconjunto insuficiente para la plena conformidad de las doce reglas. B: Doce es el conjunto completo de reglas básicas; la Regla Cero se exige además. C: Siete. es un subconjunto insuficiente para la plena conformidad de las doce reglas. D: Cinco. es un subconjunto insuficiente para la plena conformidad de las doce reglas. Fuente primaria: https://reldb.org/c/index.php/twelve-rules/"
+      },
+      "reference": {
+        "pdf": "01_Temario/T2.05 SGBD/T2.05 SGBD - Temario.pdf",
+        "sha256": "0b059be5a4bca8dc8ecf2dbffd7a73005d58b493c4adb42574533760e755c4a0",
+        "page": 9,
+        "quote": "En el año 1985, Codd estableció una regla general global, llamada “Regla Cero” y doce principios, de los cuales al menos seis deben satisfacerse para que una base de datos pueda considerarse relacional.",
+        "role": "Temario principal"
+      },
+      "primary": [
+        {
+          "url": "https://reldb.org/c/index.php/twelve-rules/",
+          "checked": "2026-11-06",
+          "supports": "Reproducción identificada de E.F.Codd, Computerworld14y21/10/1985: las doce reglas evalúan la plena conformidad relacional, con ReglaCero de base."
+        }
+      ],
+      "reviewedOptions": [
+        "Diez. es un subconjunto insuficiente para la plena conformidad de las doce reglas.",
+        "Doce es el conjunto completo de reglas básicas; la Regla Cero se exige además.",
+        "Siete. es un subconjunto insuficiente para la plena conformidad de las doce reglas.",
+        "Cinco. es un subconjunto insuficiente para la plena conformidad de las doce reglas."
+      ],
+      "sourceDiscrepancy": "Errata explícita del temario: el mínimo de seis no reproduce el criterio de plena relacionalidad. Se delimita el criterio del autor de 1985, no la denominación comercial ni un SGBD mínimo.",
+      "objectiveChange": "Se conserva el objetivo factual; se delimita el alcance del enunciado para eliminar la errata o ambigüedad descrita.",
+      "typeReview": {
+        "before": "D",
+        "after": "D",
+        "reason": "Interrogación directa de un hecho o clasificación."
+      },
+      "originalTask": {
+        "id": "ITEM-GEN-T2.05-14.v2",
+        "finding": "GEN-T2.05-14.v2",
+        "evidence": "T2.05 SGBD/T2.05 SGBD - Temario.pdf p. 9",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave registrada B. La clave seis carece de respaldo en el texto de Codd. Ninguna alternativa ofrece doce para la plena relacionalidad.",
+        "location": "public/data/T2.05.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "GEN-T2.05-14.v2",
+          "topic": "T2.05",
+          "origin": "G",
+          "family": "GEN-T2.05-14",
+          "scenario": null
+        }
+      },
+      "inSample": false,
+      "sampleCopies": [],
+      "oracle": "DOCUMENTAL; sin simular ejecución del producto.",
+      "beforeSha256": "bb1c8f7064d4a055fe197653852fb6904b5e8a7566fdf80b5a3577b6c5a37db0",
+      "afterSha256": "cab6c08e161d587f4c4edcacd961005065525c2af0aad573ea17086efab5d27f",
+      "storageFile": "public/data/T2.05.json",
+      "sampleFiles": []
+    },
+    {
+      "id": "GEN-T2.01-90",
+      "topic": "T2.01",
+      "priority": "P0",
+      "status": "REVISADA_SEGUNDA_FIRMA",
+      "before": {
+        "i": "GEN-T2.01-90",
+        "t": "T2.01",
+        "o": "G",
+        "q": "El proceso de fabricación de un procesador se expresa en nanómetros y especifica:",
+        "a": [
+          "El tamaño de los transistores integrados en el procesador.",
+          "El número de núcleos del procesador.",
+          "El tamaño total del chip.",
+          "La frecuencia máxima de funcionamiento."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T2.01-90",
+        "u": "Proceso de fabricación: el proceso de fabricación especifica cuál es el tamaño de los transistores integrados en el procesador cuando se fabrica. Este valor se expresa en nanómetros (nm)",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T2.01-90",
+        "t": "T2.01",
+        "o": "G",
+        "q": "En la denominación de nodos modernos de fabricación de procesadores, una etiqueta como «7 nm» identifica:",
+        "a": [
+          "Una generación de tecnología de fabricación, sin fijar por sí sola una dimensión física única del transistor.",
+          "El número de núcleos del procesador.",
+          "El tamaño total del chip.",
+          "La frecuencia máxima de funcionamiento."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T2.01-90",
+        "u": "Este valor se expresa en nanómetros (nm) y se refiere a la medida de un transistor. [p. 41]",
+        "v": 0,
+        "w": 1,
+        "n": "Errata del temario: equipara directamente el nombre comercial moderno del nodo con el tamaño de un transistor. Se conserva el objeto proceso de fabricación y se delimita a nomenclatura moderna. A: La etiqueta moderna identifica la generación; no determina una medida única. B: El número de núcleos es otra característica. C: No es la dimensión total del chip. D: La etiqueta no fija la frecuencia máxima. Fuente primaria: https://www.intel.com/content/www/us/en/support/articles/000097598/processors.html"
+      },
+      "reference": {
+        "pdf": "01_Temario/T2.01 Informática Básica/T2.01 Informática Básica - Temario.pdf",
+        "sha256": "f569674274fbe378727b5cc4073872ef5273b2e93e94d51912dd322852e9b437",
+        "page": 41,
+        "quote": "Este valor se expresa en nanómetros (nm) y se refiere a la medida de un transistor.",
+        "role": "Temario principal"
+      },
+      "primary": [
+        {
+          "url": "https://www.intel.com/content/www/us/en/support/articles/000097598/processors.html",
+          "checked": "2026-11-06",
+          "supports": "Intel explica que el nombre del nodo dejó de corresponder a longitudes físicas concretas hace años."
+        }
+      ],
+      "reviewedOptions": [
+        "La etiqueta moderna identifica la generación; no determina una medida única.",
+        "El número de núcleos es otra característica.",
+        "No es la dimensión total del chip.",
+        "La etiqueta no fija la frecuencia máxima."
+      ],
+      "sourceDiscrepancy": "Errata del temario: equipara directamente el nombre comercial moderno del nodo con el tamaño de un transistor. Se conserva el objeto proceso de fabricación y se delimita a nomenclatura moderna.",
+      "objectiveChange": "Se conserva el objetivo factual; se delimita el alcance del enunciado para eliminar la errata o ambigüedad descrita.",
+      "typeReview": {
+        "before": "C",
+        "after": "C",
+        "reason": "Completar una proposición inacabada."
+      },
+      "originalTask": {
+        "id": "ITEM-GEN-T2.01-90",
+        "finding": "GEN-T2.01-90",
+        "evidence": "T2.01 Informática Básica/T2.01 Informática Básica - Temario.pdf p. 41",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave registrada A. A es la simplificación del temario, pero el nombre comercial de un nodo moderno en nanómetros no especifica por sí solo la dimensión de sus transistores. Ninguna alternativa lo expresa con precisión.",
+        "location": "public/data/T2.01.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "GEN-T2.01-90",
+          "topic": "T2.01",
+          "origin": "G",
+          "family": "GEN-T2.01-90",
+          "scenario": null
+        }
+      },
+      "inSample": false,
+      "sampleCopies": [],
+      "oracle": "DOCUMENTAL; sin simular ejecución del producto.",
+      "beforeSha256": "5c1d6e23173b8e3398a5e477ac43022e099d37e394db1131f155cd861a8fb1f4",
+      "afterSha256": "fe7f65cb25d193197ca8f9557a93b24b805b9124506eb0ff5077a3892b433847",
+      "storageFile": "public/data/T2.01.json",
+      "sampleFiles": []
+    },
+    {
+      "id": "GEN-T2.03-73.v1",
+      "topic": "T2.03",
+      "priority": "P0",
+      "status": "REVISADA_SEGUNDA_FIRMA",
+      "before": {
+        "i": "GEN-T2.03-73.v1",
+        "t": "T2.03",
+        "o": "G",
+        "q": "Es un algoritmo de búsqueda no informada (exhaustiva):",
+        "a": [
+          "El algoritmo A*.",
+          "El algoritmo Minimax.",
+          "La búsqueda por interpolación.",
+          "El algoritmo de escalada."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T2.03-73",
+        "u": "Búsqueda NO informada (exhaustiva): o Búsqueda secuencial. o Búsqueda binaria o dicotómica. o Búsqueda por interpolación. o Búsqueda en anchura. o Búsqueda en profundidad: una variante es el algoritmo Backtracking o vuelta atrás.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T2.03-73.v1",
+        "t": "T2.03",
+        "o": "G",
+        "q": "Es un algoritmo de búsqueda no informada que expande primero los nodos de menor profundidad:",
+        "a": [
+          "A*.",
+          "Búsqueda voraz guiada por una heurística.",
+          "Búsqueda en anchura.",
+          "Escalada guiada por una función heurística."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T2.03-73",
+        "u": "Búsqueda en anchura. [p. 35]",
+        "v": 0,
+        "w": 1,
+        "n": "El temario mezcla búsqueda de tablas y del espacio de estados. Se conserva la identificación de búsqueda no informada, eligiendo anchura ya incluida en la misma página; se elimina Minimax por su ambigüedad. A: A* utiliza evaluación heurística además del coste. B: La búsqueda voraz indicada usa una heurística. C: Anchura visita por niveles sin heurística. D: La escalada indicada se guía por la evaluación heurística. Fuente primaria: https://aima.cs.berkeley.edu/4th-ed/pdfs/newchap03.pdf"
+      },
+      "reference": {
+        "pdf": "01_Temario/T2.03 Estructuras de Datos/T2.03 Estructuras de Datos - Temario.pdf",
+        "sha256": "84f1ed094c810f65fb7e5f9ddd93a98003fe9d707d6f3c90d92b6de720cb902a",
+        "page": 35,
+        "quote": "Búsqueda en anchura.",
+        "role": "Temario principal"
+      },
+      "primary": [
+        {
+          "url": "https://aima.cs.berkeley.edu/4th-ed/pdfs/newchap03.pdf",
+          "checked": "2026-11-06",
+          "supports": "Russell/Norvig, capítulo3: breadth-first expande los nodos menos profundos sin información heurística."
+        }
+      ],
+      "reviewedOptions": [
+        "A* utiliza evaluación heurística además del coste.",
+        "La búsqueda voraz indicada usa una heurística.",
+        "Anchura visita por niveles sin heurística.",
+        "La escalada indicada se guía por la evaluación heurística."
+      ],
+      "sourceDiscrepancy": "El temario mezcla búsqueda de tablas y del espacio de estados. Se conserva la identificación de búsqueda no informada, eligiendo anchura ya incluida en la misma página; se elimina Minimax por su ambigüedad.",
+      "objectiveChange": "Se conserva el objetivo factual; se delimita el alcance del enunciado para eliminar la errata o ambigüedad descrita.",
+      "typeReview": {
+        "before": "C",
+        "after": "C",
+        "reason": "Completar una proposición inacabada."
+      },
+      "originalTask": {
+        "id": "ITEM-GEN-T2.03-73.v1",
+        "finding": "GEN-T2.03-73.v1",
+        "evidence": "T2.03 Estructuras de Datos/T2.03 Estructuras de Datos - Temario.pdf p. 35",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave registrada C. C (interpolación) estima la posición mediante los valores y no es búsqueda exhaustiva del espacio de estados. Minimax también admite exploración exhaustiva según implementación. Reformular con BFS o DFS como opción.",
+        "location": "public/data/T2.03.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "GEN-T2.03-73.v1",
+          "topic": "T2.03",
+          "origin": "G",
+          "family": "GEN-T2.03-73",
+          "scenario": null
+        }
+      },
+      "inSample": false,
+      "sampleCopies": [],
+      "oracle": "oracle.py: BFS real FIFO,8nodos,profundidad monótona y control negativo frente a DFS; no valida otros productos.",
+      "beforeSha256": "6fa1b00973c2a6bf63015d8a3e654ac73c5c8d80ae55e2ed4a648ed662658591",
+      "afterSha256": "9a233e48ea3f6c0a7c796da7e8ccb9783bf411ea8152f36cef2e6746d1e38fe2",
+      "storageFile": "public/data/T2.03.json",
+      "sampleFiles": []
+    },
+    {
+      "id": "GEN-T2.03-105.v2",
+      "topic": "T2.03",
+      "priority": "P0",
+      "status": "REVISADA_SEGUNDA_FIRMA",
+      "before": {
+        "i": "GEN-T2.03-105.v2",
+        "t": "T2.03",
+        "o": "G",
+        "q": "Microsoft Office solamente permite abrir, de los textos con formato, las extensiones:",
+        "a": [
+          "*.doc y *.docx.",
+          "*.odt, *.doc y *.docx.",
+          "*.odt y *.doc.",
+          "Solo *.odt."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T2.03-105",
+        "u": ".odt .doc .docx Archivos que contienen textos con formato Open Office Writer permite abrir los tres tipos de extensiones. Microsoft Office solamente permite abrir la extensión *.doc y *.docx.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T2.03-105.v2",
+        "t": "T2.03",
+        "o": "G",
+        "q": "¿Qué conjunto incluye todas las extensiones de documentos de texto de esta lista que puede abrir Word 2021: .odt, .doc y .docx?",
+        "a": [
+          ".doc y .docx.",
+          ".odt, .doc y .docx.",
+          ".odt y .doc.",
+          "Sólo .odt."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T2.03-105",
+        "u": "Microsoft Office solamente permite abrir la extensión *.doc y [p. 53]",
+        "v": 0,
+        "w": 1,
+        "n": "Errata del temario: Word 2021 también abre ODT. Se limita al conjunto enumerado, sin afirmar que sean sus únicos formatos ni prometer fidelidad completa al convertir. A: Omite ODT. B: Incluye las tres extensiones ofrecidas. C: Omite DOCX. D: Omite DOC y DOCX. Fuente primaria: https://support.microsoft.com/en-us/word/use-word-to-open-or-save-a-document-in-the-opendocument-text-odt-format"
+      },
+      "reference": {
+        "pdf": "01_Temario/T2.03 Estructuras de Datos/T2.03 Estructuras de Datos - Temario.pdf",
+        "sha256": "84f1ed094c810f65fb7e5f9ddd93a98003fe9d707d6f3c90d92b6de720cb902a",
+        "page": 53,
+        "quote": "Microsoft Office solamente permite abrir la extensión *.doc y",
+        "role": "Temario principal",
+        "quoteLimits": "Fragmento literal incompleto por tabla multicolumna; la siguiente línea de la celda termina *.docx. Se conserva el substring comprobable y no se finge extracción continua de columna."
+      },
+      "primary": [
+        {
+          "url": "https://learn.microsoft.com/en-us/office/compatibility/office-file-format-reference",
+          "checked": "2026-11-06",
+          "supports": "La referencia identifica DOC,DOCX y admite apertura ODT en Word2021."
+        },
+        {
+          "url": "https://support.microsoft.com/en-us/word/use-word-to-open-or-save-a-document-in-the-opendocument-text-odt-format",
+          "checked": "2026-11-06",
+          "supports": "Microsoft Support incluye Word2021 y apertura/guardadoODT; evita el enlace Learn que redirigió a portada."
+        }
+      ],
+      "reviewedOptions": [
+        "Omite ODT.",
+        "Incluye las tres extensiones ofrecidas.",
+        "Omite DOCX.",
+        "Omite DOC y DOCX."
+      ],
+      "sourceDiscrepancy": "Errata del temario: Word 2021 también abre ODT. Se limita al conjunto enumerado, sin afirmar que sean sus únicos formatos ni prometer fidelidad completa al convertir.",
+      "objectiveChange": "Se conserva el objetivo factual; se delimita el alcance del enunciado para eliminar la errata o ambigüedad descrita.",
+      "typeReview": {
+        "before": "C",
+        "after": "D",
+        "reason": "Interrogación directa de un hecho o clasificación."
+      },
+      "originalTask": {
+        "id": "ITEM-GEN-T2.03-105.v2",
+        "finding": "GEN-T2.03-105.v2",
+        "evidence": "T2.03 Estructuras de Datos/T2.03 Estructuras de Datos - Temario.pdf p. 53",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave registrada A. B, no A, recoge los tres formatos que puede abrir Word. Además «solamente» ni siquiera limita adecuadamente la respuesta a las extensiones enumeradas. Especificar versiones y el conjunto ofrecido.",
+        "location": "public/data/T2.03.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "GEN-T2.03-105.v2",
+          "topic": "T2.03",
+          "origin": "G",
+          "family": "GEN-T2.03-105",
+          "scenario": null
+        }
+      },
+      "inSample": false,
+      "sampleCopies": [],
+      "oracle": "DOCUMENTAL; sin simular ejecución del producto.",
+      "beforeSha256": "12ce8f91ab4f8ecd0993f3808463cbfe8384cff692fda7f4c3db7d3047d5f78b",
+      "afterSha256": "7ef97aa42619bf37a484557451b91369ddaf83bbab64ca326d25b8b1af1c9139",
+      "storageFile": "public/data/T2.03.json",
+      "sampleFiles": []
+    },
+    {
+      "id": "GEN-T2.04-87",
+      "topic": "T2.04",
+      "priority": "P0",
+      "status": "REVISADA_SEGUNDA_FIRMA",
+      "before": {
+        "i": "GEN-T2.04-87",
+        "t": "T2.04",
+        "o": "G",
+        "q": "Si existe más de una política GPO aplicable, se aplica:",
+        "a": [
+          "La del nivel de dominio siempre.",
+          "La más restrictiva.",
+          "La más permisiva.",
+          "La más reciente."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T2.04-87",
+        "u": "Las GPO permiten administrar objetos de usuarios y equipos, aplicando la más restrictiva en caso de existir más de una política.",
+        "v": 0,
+        "w": 1
+      },
+      "after": {
+        "i": "GEN-T2.04-87",
+        "t": "T2.04",
+        "o": "G",
+        "q": "En el procesamiento normal de GPO, sin vínculos forzados, bloqueo de herencia ni filtros, y con loopback deshabilitado, una GPO de dominio y otra de la OU del usuario configuran de forma contradictoria la misma directiva de usuario. ¿Cuál prevalece?",
+        "a": [
+          "La del dominio siempre.",
+          "La de la OU, procesada después de la del dominio.",
+          "La que tenga el valor más restrictivo, cualquiera que sea su nivel.",
+          "La que se haya creado más recientemente."
+        ],
+        "c": 1,
+        "k": "D",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T2.04-87",
+        "u": "Las GPO permiten administrar objetos de usuarios y equipos, aplicando la más restrictiva en caso de existir más de una política. [p. 42]",
+        "v": 0,
+        "w": 1,
+        "n": "Errata del temario: más restrictiva no es una regla general de precedencia. Se mantiene el conflicto de GPO y se explicitan condiciones que fijan una única solución. A: El dominio se procesa antes de la OU. B: La OU posterior prevalece en el supuesto delimitado. C: No existe una regla universal de máximo rigor. D: La fecha de creación no determina esa precedencia. Fuente primaria: https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/group-policy/group-policy-processing Se excluye expresamente loopback para que las directivas del equipo no sustituyan ni complementen la lista del usuario."
+      },
+      "reference": {
+        "pdf": "01_Temario/T2.04 Sistemas Operativos/T2.04 Sistemas Operativos - Temario.pdf",
+        "sha256": "d90c16c37eb47ab64152e40b217794d257fc0c1f0457311dc82b71987609f0e1",
+        "page": 42,
+        "quote": "Las GPO permiten administrar objetos de usuarios y equipos, aplicando la más restrictiva en caso de existir más de una política.",
+        "role": "Temario principal"
+      },
+      "primary": [
+        {
+          "url": "https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/manage/group-policy/group-policy-processing",
+          "checked": "2026-11-06",
+          "supports": "La precedencia normal procesa local,sitio,dominio,OU; la política posterior puede sobrescribir la anterior. Enforced e inheritance son excepciones delimitadas."
+        }
+      ],
+      "reviewedOptions": [
+        "El dominio se procesa antes de la OU.",
+        "La OU posterior prevalece en el supuesto delimitado.",
+        "No existe una regla universal de máximo rigor.",
+        "La fecha de creación no determina esa precedencia."
+      ],
+      "sourceDiscrepancy": "Errata del temario: más restrictiva no es una regla general de precedencia. Se mantiene el conflicto de GPO y se explicitan condiciones que fijan una única solución.",
+      "objectiveChange": "Se conserva el objetivo factual; se delimita el alcance del enunciado para eliminar la errata o ambigüedad descrita.",
+      "typeReview": {
+        "before": "C",
+        "after": "D",
+        "reason": "Interrogación directa de un hecho o clasificación."
+      },
+      "originalTask": {
+        "id": "ITEM-GEN-T2.04-87",
+        "finding": "GEN-T2.04-87",
+        "evidence": "T2.04 Sistemas Operativos/T2.04 Sistemas Operativos - Temario.pdf p. 42",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "Clave registrada B. La precedencia depende del orden local–sitio–dominio–OU, del vínculo, la herencia y la aplicación forzada. Una configuración posterior puede ser más permisiva.",
+        "location": "public/data/T2.04.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "GEN-T2.04-87",
+          "topic": "T2.04",
+          "origin": "G",
+          "family": "GEN-T2.04-87",
+          "scenario": null
+        }
+      },
+      "inSample": false,
+      "sampleCopies": [],
+      "oracle": "DOCUMENTAL; sin simular ejecución del producto.",
+      "beforeSha256": "524284a4967ed2bb6c5277f315a63eec72678a577854bc34a3806f7b0a1751f7",
+      "afterSha256": "4b5ca228e2d744ee510dd0c4bf0aaf97756f698852222e387f539e0287c7b627",
+      "storageFile": "public/data/T2.04.json",
+      "sampleFiles": []
+    }
+  ],
+  "files": {
+    "T2.04.json": {
+      "beforeSha256": "6940366d9364d754d290de62d90653745c5310de67114921c84d873772ffd19e",
+      "afterSha256": "8170542fe6f18dbad8068aec6e9a5af6d6070d3dde303c066a7e0e0bf7baa88c"
+    },
+    "T1.01.json": {
+      "beforeSha256": "a5451f6672c94a15a12b1a4f3704ebe05bb3e1ed2a0faecc51dbf9353d75624a",
+      "afterSha256": "9afa03dd0ef45defe910869c108d844d0a6455a305442b9d557f919b3837eb15"
+    },
+    "T1.08.json": {
+      "beforeSha256": "c16accc407f3084b993058872db9a5fa4971e2fefeb9667f98cc32d1bfe95624",
+      "afterSha256": "ebb88614122668d36a7e5c9075ce9e7e3df02ef6838197a76fdb438a120a0766"
+    },
+    "T1.10.json": {
+      "beforeSha256": "e5e97955d8019f452d9264959cd90c7840863ff457113102d719500d6932fa4b",
+      "afterSha256": "0ae153c37f6ae7607a187b6542f6a4bdc3138c5c5486f7f6c67565122d0d409a"
+    },
+    "T1.11.json": {
+      "beforeSha256": "fd8419784a3affd04bb29d492dabebd379a6b772c0f677b80a353e0c2d6a9097",
+      "afterSha256": "cac3a72a72b497cd6ca197fecd6a87c1bb720b424caa37e4ec161ad5e56bd4dc"
+    },
+    "T2.02.json": {
+      "beforeSha256": "d3acca0574dfe9b4c69d91f5616c0671688e552edc22b5e4aaec6a35193e09d8",
+      "afterSha256": "0829a05fcb5090f40ac610f871f26dd623a5797bddecc1acf0c7c7fa5719bdfc"
+    },
+    "T2.05.json": {
+      "beforeSha256": "d9f8fc67478f2dffbe88101363b735a54465a269592b375c6ccc07eadea2f5a7",
+      "afterSha256": "9a2b3d399046cf71e2b4001feb9f8eddc443adc6d83a8fabfa7b11f7b7070ef4"
+    },
+    "T2.01.json": {
+      "beforeSha256": "bddca118b43449750784f84ecd213fa7c5c0b8fe8f0afec84779e595bde0bbac",
+      "afterSha256": "882e83da1cd50cf97c45bf7a4d2ad003e968c55546f6fbfae48623a739f98007"
+    },
+    "T2.03.json": {
+      "beforeSha256": "cb14b8286918640c2148ceb9ccdd6e0016088490953c55cb08fd32741c94a3ae",
+      "afterSha256": "07a9fd18c0f74184dade938131fe9ee5e3cea6f232ac6c5b3a28adfe60598c67"
+    },
+    "meta.json": {
+      "beforeSha256": "84c22618280c889621fdfe3626cdff282b8bfd19a6051b437c9ea57fec867fa8",
+      "afterSha256": "56f5683e8e55240f1e9cf5c63177d29b14fc516e2bfefda9bed89c973041a570"
+    }
+  },
+  "metadataEdits": [
+    {
+      "id": "GEN-T2.03-105.v2",
+      "topic": "T2.03",
+      "index": 2,
+      "before": [
+        "T2.03",
+        "G",
+        "C",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "after": [
+        "T2.03",
+        "G",
+        "D",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "beforeSha256": "d817273e2c0f598a2c2c4a3941eda515b2cf8c410de48235c4b6b694e92c2aab",
+      "afterSha256": "0879b1f78f653427a8df7dbad1a791ce7f8b0bf4f36219e218193fbf716c7f92"
+    },
+    {
+      "id": "GEN-T2.04-87",
+      "topic": "T2.04",
+      "index": 2,
+      "before": [
+        "T2.04",
+        "G",
+        "C",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "after": [
+        "T2.04",
+        "G",
+        "D",
+        [
+          7,
+          8
+        ],
+        3
+      ],
+      "beforeSha256": "6d8934f86813be30826df93bd97aafc1782f23d18f52be8d3592c3a61e1ccc2d",
+      "afterSha256": "b25f6bad8db89615bcf549db899d86f30f6aa5c45e93655fe7ad7efc6ba6ab55"
+    }
+  ],
+  "sampleFiles": {},
+  "held": [
+    {
+      "id": "L2025A-P1-20",
+      "status": "RETENER",
+      "reason": "Cuestión oficial anulada: verificar mitigación vigente de puntuación separadamente; no se reescribe para salvar su clave.",
+      "originalTask": {
+        "id": "ITEM-L2025A-P1-20",
+        "finding": "L2025A-P1-20",
+        "evidence": "Plantillas definitivas 2025 y cotejo por aparición en contraste-plantillas.csv.",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "La definitiva libre anula la pregunta A20/B17. En el banco conserva C y carece de exclusión de puntuación.",
+        "location": "public/data/T1.10.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "L2025A-P1-20",
+          "topic": "T1.10",
+          "origin": "O",
+          "family": null,
+          "scenario": null
+        }
+      }
+    },
+    {
+      "id": "AT107-P1-29",
+      "status": "RETENER",
+      "reason": "Temario principal p54 sólo acredita creación del fiscal; no desarrolla la competencia semestral. BOE confirma la distinción pero falta pasaje del temario que respalde la clave específica dentro del alcance exigido.",
+      "originalTask": {
+        "id": "ITEM-AT107-P1-29",
+        "finding": "AT107-P1-29",
+        "evidence": "Estatuto Orgánico del Ministerio Fiscal, arts. 20.1 y 36, BOE-A-1982-837",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "La designación de fiscal de Sala se formaliza por real decreto, a propuesta del fiscal general; A confunde propuesta y nombramiento. D no se sostiene. B precisa delegación para intervenir en civil; C sí describe el informe semestral.",
+        "location": "public/data/T1.07.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "AT107-P1-29",
+          "topic": "T1.07",
+          "origin": "A",
+          "family": null,
+          "scenario": null
+        }
+      }
+    },
+    {
+      "id": "AS11-P1-26",
+      "status": "RETENER",
+      "reason": "La corrección exige delimitar refuerzo R3/R4 de op.acc.5; no se localizó pasaje principal con ese detalle. Se conserva pendiente y no se aplica una regla genérica para toda categoría media.",
+      "originalTask": {
+        "id": "ITEM-AS11-P1-26",
+        "finding": "AS11-P1-26",
+        "evidence": "RD 311/2022 anexo II op.acc.5, refuerzos R2, R3 y R4",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "En nivel medio se admite R2, R3 o R4 más R5. R3/R4 exigen registro presencial o telemático usando certificado cualificado; no añaden la tercera cadena de credenciales de C. D no reproduce el ENS vigente.",
+        "location": "public/data/T1.10.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "AS11-P1-26",
+          "topic": "T1.10",
+          "origin": "A",
+          "family": null,
+          "scenario": null
+        }
+      }
+    },
+    {
+      "id": "GEN-T1.07-44",
+      "status": "RETENER",
+      "reason": "La pregunta de estructura o norma modificada requiere adjudicar edición/alcance sin transformar el objetivo para salvar la clave. No se propone reparación en este lote.",
+      "originalTask": {
+        "id": "ITEM-GEN-T1.07-44",
+        "finding": "GEN-T1.07-44",
+        "evidence": "T1.07 Políticas de Igualdad/T1.07 Políticas de Igualdad - Temario.pdf p. 38",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "El texto consolidado incluye el art. 19 bis además de los numerados hasta 72 y un título preliminar además de I a V; la cifra estructural ofrecida describe el esquema original.",
+        "location": "public/data/T1.07.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "GEN-T1.07-44",
+          "topic": "T1.07",
+          "origin": "G",
+          "family": "GEN-T1.07-44",
+          "scenario": null
+        }
+      }
+    },
+    {
+      "id": "GEN-T1.08-02",
+      "status": "RETENER",
+      "reason": "La pregunta de estructura o norma modificada requiere adjudicar edición/alcance sin transformar el objetivo para salvar la clave. No se propone reparación en este lote.",
+      "originalTask": {
+        "id": "ITEM-GEN-T1.08-02",
+        "finding": "GEN-T1.08-02",
+        "evidence": "T1.08 Sociedad de la Información/T1.08 Sociedad de la Información - Temario.pdf p. 3",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "El texto consolidado mantiene siete títulos pero incorpora, entre otros, 12 bis, 12 ter, 35 bis, 36 bis y 39 bis/ter, además de artículos derogados. No puede inferirse un total de 45 del último número.",
+        "location": "public/data/T1.08.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "GEN-T1.08-02",
+          "topic": "T1.08",
+          "origin": "G",
+          "family": "GEN-T1.08-02",
+          "scenario": null
+        }
+      }
+    },
+    {
+      "id": "GEN-T1.08-02.v1",
+      "status": "RETENER",
+      "reason": "La pregunta de estructura o norma modificada requiere adjudicar edición/alcance sin transformar el objetivo para salvar la clave. No se propone reparación en este lote.",
+      "originalTask": {
+        "id": "ITEM-GEN-T1.08-02.v1",
+        "finding": "GEN-T1.08-02.v1",
+        "evidence": "T1.08 Sociedad de la Información/T1.08 Sociedad de la Información - Temario.pdf p. 3",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "El total de 45 confunde el último ordinal con el conteo; el índice consolidado incluye artículos intercalados y derogados. BOE-A-2002-13758.",
+        "location": "public/data/T1.08.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "GEN-T1.08-02.v1",
+          "topic": "T1.08",
+          "origin": "G",
+          "family": "GEN-T1.08-02",
+          "scenario": null
+        }
+      }
+    },
+    {
+      "id": "GEN-T1.08-48",
+      "status": "RETENER",
+      "reason": "La pregunta de estructura o norma modificada requiere adjudicar edición/alcance sin transformar el objetivo para salvar la clave. No se propone reparación en este lote.",
+      "originalTask": {
+        "id": "ITEM-GEN-T1.08-48",
+        "finding": "GEN-T1.08-48",
+        "evidence": "T1.08 Sociedad de la Información/T1.08 Sociedad de la Información - Temario.pdf p. 45",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "El art. 19 eIDAS fue suprimido el 18/10/2024 por art. 42 Directiva 2022/2555. No puede atribuirse una obligación vigente a ese apartado; revisar sistemática SRI2 y arts. 19 bis/24.",
+        "location": "public/data/T1.08.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "GEN-T1.08-48",
+          "topic": "T1.08",
+          "origin": "G",
+          "family": "GEN-T1.08-48",
+          "scenario": null
+        }
+      }
+    },
+    {
+      "id": "GEN-T1.08-73",
+      "status": "RETENER",
+      "reason": "Retención previa: falta cadena primaria suficiente de atribución Cl@ve; no se reautoriza.",
+      "originalTask": {
+        "id": "ITEM-GEN-T1.08-73",
+        "finding": "GEN-T1.08-73",
+        "evidence": "T1.08 Sociedad de la Información/T1.08 Sociedad de la Información - Temario.pdf p. 77 · T1.08 Sociedad de la Información/T1.08 Sociedad de la Información - Temario.pdf p. 78",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "La Orden PRE/1838/2014 citada nombra a la Dirección de Tecnologías de la Información y las Comunicaciones. B sustituye el órgano original por una agencia posterior y ninguna opción reproduce la fuente. BOE-A-2014-10264.",
+        "location": "public/data/T1.08.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "GEN-T1.08-73",
+          "topic": "T1.08",
+          "origin": "G",
+          "family": "GEN-T1.08-73",
+          "scenario": null
+        }
+      }
+    },
+    {
+      "id": "AT202-P1-45",
+      "status": "RETENER",
+      "reason": "Retención previa: comparación SSD/NVMe mezcla categorías y repararla exige cambiar el objetivo.",
+      "originalTask": {
+        "id": "ITEM-AT202-P1-45",
+        "finding": "AT202-P1-45",
+        "evidence": "T2.02 Periféricos/T2.02 Periféricos - Temario.pdf p. 22. T2.02 Periféricos/T2.02 Periféricos - Test.pdf, pregunta p. 8, solución impresa p. 10 (C), app C.",
+        "severity": "P0",
+        "classification": "Incorrecta",
+        "originalJudgment": "C mezcla una tecnología de almacenamiento con un protocolo que suelen usar los propios SSD y afirma máximos de capacidad sin modelos ni fecha. D los llama ópticos incorrectamente. La comparación general no determina una única alternativa.",
+        "location": "public/data/T2.02.json",
+        "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+        "dependencies": [
+          "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+        ],
+        "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
+        "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
+        "tests": [
+          "Regresión factual por ID",
+          "Integridad del catálogo",
+          "Compatibilidad de muestras y sesiones"
+        ],
+        "status": "PENDIENTE",
+        "dataAffected": {
+          "id": "AT202-P1-45",
+          "topic": "T2.02",
+          "origin": "A",
+          "family": null,
+          "scenario": null
+        }
+      }
+    }
+  ],
+  "implementation": {
+    "sourceAfterPreserved": true,
+    "scope": "Only signed rows, type metadata and explicit sample; no production",
+    "limits": "Documentales salvo oráculo BFS separado; no Windows/Word/DNIe/SGBD ejecutados. Sin banco,Git niFirestore modificados. Citas literales del temario que son erróneas se declaran expresamente como discrepancias y se contrastan con primaria."
+  }
+}

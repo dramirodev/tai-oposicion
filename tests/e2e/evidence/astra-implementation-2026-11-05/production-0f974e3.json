@@ -1,0 +1,23 @@
+{
+  "origin": "https://tai-oposicion.web.app",
+  "version": {
+    "version": "1.1.18+0f974e3",
+    "build": "1.1.18+0f974e3",
+    "date": "2026-11-06T10:51:59.287Z"
+  },
+  "checks": [
+    "home",
+    "anonymous-protected-route",
+    "login-entry",
+    "guest-question",
+    "guest-correction-and-result",
+    "reload",
+    "guest-local-persistence"
+  ],
+  "pageErrors": [],
+  "blockedWrites": [],
+  "limits": [
+    "Guest account only",
+    "OAuth login and private student data were not exercised"
+  ]
+}

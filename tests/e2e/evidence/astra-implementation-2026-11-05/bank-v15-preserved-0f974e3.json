@@ -1,0 +1,14 @@
+{
+  "at": "2026-11-06T11:40:47.001Z",
+  "build": "1.1.18+0f974e3",
+  "version": 15,
+  "firestoreReads": 79,
+  "firestoreWrites": 0,
+  "resourcesVerified": 77,
+  "exactDocumentsVerified": 78,
+  "resourceSha256Verified": 77,
+  "totalPublishedCorrections": 300,
+  "additionalStudyOnlyRecord": "GEN-T3.03-48",
+  "future40NotPublished": true,
+  "studentCollectionsAccessed": false
+}

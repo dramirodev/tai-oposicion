@@ -199,47 +199,48 @@ Más detalles de la composición visual están en [src/shared/styles/README.md](
 
 ### Implementación de la auditoría Astra
 
-La auditoría original conserva **16.078 dictámenes sobre 16.078 preguntas: cero IDs pendientes de revisión semántica**. Identificó 3.519 incidencias editoriales. Una incidencia auditada puede seguir pendiente de reparación; las dos cifras no son equivalentes.
+La auditoría original conserva **16.078 dictámenes sobre 16.078 preguntas: cero IDs pendientes de revisión semántica**. Identificó3.519 incidencias editoriales. Los dictámenes originales permanecen inmutables; una pregunta auditada puede seguir pendiente de reparación.
 
-Este checkout prepara **1.1.18**, con **340 reparaciones locales** y una revisión PHP que conserva `np:1/w:1` y sigue pendiente de aceptación de fuente. Quedan **3.179 incidencias sin reparación definitiva, incluidas 105 P0**. El registro derivado es `tests/e2e/evidence/astra-implementation-2026-11-05/implementation-tasks.json`; no sustituye los juicios originales.
+Este checkout prepara **1.1.19**, con **405 reparaciones locales**, una revisión PHP que mantiene `np:1/w:1` y **ocho exclusiones de puntuación confirmadas que no cuentan como reparaciones**. Quedan **3.114 incidencias sin reparación factual definitiva, incluidas40 P0**. Cuatro de esas40 ya tienen `np:1` persistido; otras ocho reciben la nueva protección de código de esta entrega. Las restantes necesitan resolución documentada, sin convertir incertidumbre en una respuesta validada. El estado porID está en `tests/e2e/evidence/astra-implementation-2026-11-05/implementation-tasks.json`.
 
-Última producción comprobada: **código 1.1.16+6b68b0b**, desplegado por el workflow oficial 42189339729 tras integrar [PR111](https://github.com/dramirodev/tai-oposicion/pull/111). El banco de Firestore está en **v14, con 68 correcciones publicadas**. La ampliación de 55, autorizada expresamente, se publicó en un commit con 17actualizaciones CAS, 28tipos del catálogo y cero borrados. La verificación posterior hizo78 lecturas y cero escrituras: los 77 recursos completos coinciden por SHA-256 con la fuente congelada, con las 13 correcciones anteriores preservadas. Los recorridos públicos pasaron 7/7, sin errores de página ni escrituras. Las muestras públicas revisadas se despliegan con Hosting; los temas privados permanecen excluidos.
+Última producción comprobada: **1.1.18+0f974e3**, [PR113](https://github.com/dramirodev/tai-oposicion/pull/113), despliegue oficial42205124709 correcto y siete comprobaciones de invitado sin errores ni escrituras. El banco sigue en **v15:300 reparaciones publicadas y PHP no puntuable**. La publicación233 autorizada se ejecutó desde M5 congelado3987188, tras CI112, mergeaeb4225 y despliegue42202392598; un commit con34 updatesCAS,105 tipos y cero borrados. La lectura independiente comprobó79 GET/77 SHA256 y preservó68 reparaciones anteriores. El cliente M5 con el snapshot leído aprobó300 actuales y bloqueó300 antiguas/300 mutadas en Chromium/WebKit. Tras PR113, otros79 GET confirmaron que los78documentos siguen exactamente iguales a la copia v15. No se accedió a datos de estudiantes.
 
-La rama `fix/tai-editorial-wave4`, aislada desde main e incorporando el commit consolidado `3987188`, añade 40 reparaciones sobre las 300 de PR112. PR112 se comprueba por separado antes de integrar esta entrega. La descripción del PR conserva la cabeza final, CI, integración y despliegue. El checkout principal y los worktrees de la auditoría UX/PR110 se preservan. No se realizan despliegues concurrentes.
+La rama `fix/tai-editorial-wave5`, en worktree independiente, parte de mainaeb4225 e incorpora M6d243c06 mediante b2c35ba. Añade65 reparaciones sobre las 340 de PR113 y ocho protecciones de código. Las105 reparaciones posteriores a M5 NO están publicadas ni autorizadas para Firestore. Se preservan el checkout principal y el trabajo UX/PR110; no hay despliegues concurrentes.
 
-| Manifiesto de `scripts/bank-editorial/` | Registros modificados | Reparaciones | Muestras |
+| Manifiesto de scripts/bank-editorial | Modificaciones | Reparaciones | Muestras |
 |---|---:|---:|---:|
-| reviewed-web, reviewed-T3.08, reviewed-T4.07 | 13 | 13 publicadas en v13 | 0 |
-| reviewed-19 | 19 | 19 publicadas en v14 | 0 |
-| reviewed-followup | 36 | 36 publicadas en v14, incluidas cinco recuperaciones | 2 |
-| reviewed-wave2 | 129 | 128; PHP sigue pendiente | 0 |
-| reviewed-admin20 | 20 | 20 | 2 |
-| reviewed-legal19 | 19 | 19 | 1 |
-| reviewed-programming20 | 20 | 20 | 0 |
-| reviewed-web25 | 25 | 25 | 0 |
-| reviewed-architecture20 | 20 | 20 | 0 |
-| reviewed-languages17 | 17 | 17; dos en supuestos | 0 |
-| reviewed-web23 | 23 | 23 | 0 |
+| reviewed-web, reviewed-T3.08, reviewed-T4.07 |13|13 publicadas en v13|0|
+| reviewed-19 |19|19 publicadas en v14|0|
+| reviewed-followup |36|36 publicadas en v14; cinco recuperaciones|2|
+| reviewed-wave2 |129|128 publicadas en v15; PHP sigue no puntuable|0|
+| reviewed-admin20 |20|20 publicadas en v15|2|
+| reviewed-legal19 |19|19 publicadas en v15|1|
+| reviewed-programming20 |20|20 publicadas en v15|0|
+| reviewed-web25 |25|25 publicadas en v15|0|
+| reviewed-architecture20 |20|20 publicadas en v15|0|
+| reviewed-languages17 |17|17 locales; dos en supuestos|0|
+| reviewed-web23 |23|23 locales|0|
+| reviewed-development11 |11|11 locales; una en supuestos|0|
+| reviewed-systems20 |20|20 locales|1|
+| reviewed-foundations18 |18|18 locales|0|
+| reviewed-systems16 |16|16 locales|0|
+| quarantines-reviewed8 |0 cambios de datos|0; ocho exclusiones de código|0|
 
-Cada reparación conserva antes/después completos, huellas, cuatro justificaciones de alternativas y referencia documental por página, pasaje y SHA. Los resúmenes complementarios se identifican como tales. Las fuentes primarias aclaran discrepancias del temario; un pasaje erróneo no se presenta como respaldo de la clave corregida. Se mantienen límites históricos explícitos, como PCIe2.1 y APFS2018, cuando forman parte del objetivo revisado. Las propuestas ambiguas o sin evidencia suficiente continúan pendientes.
+Cada reparación conserva antes/después completos, huellas de transporte, cuatro racionales y referencia por página, pasaje y SHA. Los resúmenes se identifican como tales; las discrepancias del temario con fuentes primarias se declaran. No se presenta una cita errónea como prueba de la nueva clave. Se conservan IDs, familias, contextos, orígenes e historiales; las etiquetas D/I/C/K sólo modifican el índice2 del catálogo. Las 65 de esta entrega actualizan23 tipos y una muestra; conservan los340 registros aprobados anteriores.
 
-Las cinco recuperaciones conservan transcripciones accesibles del código, árbol, grafo y diagramas originales. AS09-P1-48 evalúa cursivas/clases abstractas, sin convalidar la interpretación ambigua de leaf; DNS se acota a la etiqueta ASCII de 63, sin validar la frase original de 255 caracteres. Los cambios de enunciado, opciones, clave y contexto invalidan guardados incompatibles mediante la revisión existente. Se conservan IDs, familias, orígenes e historiales; las etiquetas D/I/C/K se alinean con el catálogo modificando sólo su índice de tipo.
-
-El [pipeline editorial](tools/question-editorial/README.md) utiliza los seis patrones documentados por Astra, trazabilidad al temario, validación estructural, duplicados y revisión independiente. Un candidato no adquiere aprobación factual por confianza de IA. `bank_release.py` conserva los bytes aprobados de 39 archivos al reconstruir; el publicador valida 77 recursos y utiliza actualización atómica con CAS. Los originales documentales no se modifican.
+El pipeline editorial utiliza los seis patrones demostrados por Astra, trazabilidad al temario, esquema, duplicados y revisión independiente. La confianza de IA no habilita puntuación. `bank_release.py` conserva39 archivos aprobados; el publicador valida77recursos y publica atómicamente conCAS. Se reutiliza el planificador; no se introducen predicciones sin datos para validarlas ni se cambian puntuaciones históricas.
 
 ### Puntuación y contenido verificado
 
-La prueba de contenido abarca **340 registros**. `approved-question-hashes.ts` contiene sólo IDs y SHA-256, sin texto privado de preguntas o respuestas en el JavaScript público. El catálogo verifica el registro completo antes de aplicar `np`; el dominio recibe un puerto SHA-256 y conserva una marca Symbol privada ligada al JSON con claves ordenadas. Enunciado, opciones, clave, contexto, explicación, referencia y `np` quedan vinculados. La huella de transporte de los manifiestos conserva, por separado, el orden de inserción.
+La allowlist contiene **405 ID/SHA-256**, sin el texto privado del banco. Se verifica el registro completo antes de aplicar `np`; el dominio usa un puerto de hash y un Symbol privado ligado al JSON canónico de claves ordenadas. Enunciado, alternativas, clave, explicación, referencia, contexto y `np` quedan vinculados. El motor vuelve a comprobar la prueba al responder/corregir/calcular totales y los entrenadores comprueban el registro cargado. ID, versión, confianza o metadatos remotos no autorizan la nota.
 
-Las dos correcciones de AS12B-S1 se conservan anidadas en `supuestos.json`. El catálogo vincula `supTexto` antes del digest, incluyendo la cadena vacía, y vuelve a comprobar el contexto después; sus dos ejercicios son autónomos según el PDF original. Las filas históricas ajenas conservan su forma. Un alias renombrado de una pregunta revisada queda sin puntuación porque la prueba también vincula el ID. El helper de generación es exclusivo de build/pruebas, rechaza rutas y enlaces simbólicos y comprueba la fila completa; no introduce texto privado en el JavaScript de la aplicación. Las huellas de transporte del ledger, la envolvente del caso y el hash canónico de runtime tienen contratos distintos, comprobados por separado.
+Las tres correcciones AS12B-S1-04/09/R-04 permanecen anidadas en `supuestos.json`. El catálogo vincula `supTexto` completo, incluso vacío, y vuelve a comprobar el contexto después del digest. Las filas históricas ajenas conservan su forma. Un alias renombrado de un registro revisado no hereda su aprobación. Copias por spread intactas conservan prueba; JSON/DTO y mutaciones no. `np:1` prevalece y PHP no recibe huella aprobada. El helper de build rechaza rutas, symlinks, filas o campos adicionales, duplicados y deriva; las huellas raw, envolvente del caso y runtime se prueban por separado.
 
-El motor vuelve a comprobar la prueba al responder, corregir y calcular totales; los entrenadores comprueban el registro cargado. Un ID, versión o campo remoto `verified` no habilitan puntuación. Una copia por spread intacta conserva la prueba; JSON y los DTO no la transportan. Mutaciones, ausencia/error de Web Crypto o contenido distinto mantienen la exclusión. `np:1` explícito prevalece y PHP no recibe una huella de aprobación. Las versiones antiguas del mismo ID, incluidas las cachés offline, siguen excluidas; una pestaña con contenido antiguo puede necesitar recarga para obtener la nueva fuente.
+Las ocho exclusiones nuevas tienen dos firmas, before/SHA, fuentes y cuatro alternativas revisadas en `quarantines-reviewed8.json`; no añaden hashes aprobados, no modifican datos persistidos ni cambian claves oficiales. L2025A-P1-20 ya se excluía con reserva1 en el perfil oficial, pero podía puntuar en práctica general: ahora se protege también allí. El caso SQL extraordinario conserva todo su contexto. Otros17 casos con evidencia insuficiente no se convierten automáticamente en cuarentena; la reserva oficial ya marcada `np:1` permanece igual.
 
-Falladas carga candidatos antes de filtrarlos al entrar en una sesión nueva. Sus conteos mantienen el contrato previo y la práctica comprueba de nuevo el contenido. Tarjetas obtiene candidatos de sus IDs guardados; sus avisos se calculan desde el registro verificado, con prioridad de `np:1`. Las figuras recuperadas dejan de anunciar material ausente sólo con prueba válida. Los avisos proyectados a la interfaz no autorizan la nota.
+Falladas carga antes de filtrar; tarjetas proyecta avisos desde contenido probado. Las no puntuables no escriben respuestas o estadísticas puntuables ni entran en el denominador. La reanudación comprueba UID, permiso y revisión. El perfil2025A conserva80 teóricas+20 de un caso, reservas, baremos separados y120 minutos absolutos desde abrir el cuaderno. Los históricos previos permanecen inmutables.
 
-Se conservan los cambios técnicos anteriores de puntuación, persistencia, acceso y planificación. Las preguntas no puntuables no escriben intentos ni estadísticas puntuables y no entran en el denominador. La recuperación verifica identidad, permiso y revisión antes de reanudar; la revocación retira contenido privado de memoria conservando el checkpoint por UID. El perfil oficial de ingreso libre 2025/modelo A combina 80 preguntas teóricas y 20 de un único caso III/IV, con reservas aplicables y 120 minutos absolutos desde abrir el cuaderno; los baremos y modalidades se conservan separados. No se modifican resultados históricos ni el planificador para introducir predicciones no validadas.
-
-El generador de huellas verifica los trece manifiestos, rechaza deriva/duplicados y excluye `np:1`:
+### Reproducción, pruebas y publicación
 
 ```sh
 node scripts/bank-editorial/generate-content-hashes.mjs
@@ -248,26 +249,23 @@ npm run test:editorial
 npm run build
 ```
 
-### Reproducción, pruebas y publicación
-
-Replay opera exclusivamente sobre una copia externa al repositorio; comprueba todos los archivos antes de escribir, rechaza deriva/enlaces simbólicos y permite reintentos y recuperación parcial. Para revertir las40 reparaciones de esta entrega, preparar copias externas de `T3.06.json`, `T3.08.json`, `supuestos.json` y `meta.json`, y ejecutar en este orden:
+Replay opera sólo sobre copias externas, con preflight completo, bloqueo, rechazo de deriva/symlinks y recuperación parcial. Para revertir las 65 de esta entrega, preparar las copias de los archivos enumerados por los cuatro manifiestos, con su directorio sample, y ejecutar:
 
 ```sh
-python3 scripts/bank-editorial/replay.py --candidate-dir RUTA --batch reviewed-web23 --include-sample --rollback
-python3 scripts/bank-editorial/replay.py --candidate-dir RUTA --batch reviewed-languages17 --include-sample --rollback
+python3 scripts/bank-editorial/replay.py --candidate-dir RUTA --batch reviewed-systems16 --include-sample --rollback
+python3 scripts/bank-editorial/replay.py --candidate-dir RUTA --batch reviewed-foundations18 --include-sample --rollback
+python3 scripts/bank-editorial/replay.py --candidate-dir RUTA --batch reviewed-systems20 --include-sample --rollback
+python3 scripts/bank-editorial/replay.py --candidate-dir RUTA --batch reviewed-development11 --include-sample --rollback
 ```
 
-Aplicar en orden inverso con `--apply`. Las pruebas históricas reconstruyen sus fronteras revirtiendo sucesores en temporales y siguen comprobando las huellas originales. Esta reversión de archivos no ejecuta una migración de Firestore; toda reversión productiva necesita plan, copia recuperable, CAS y una nueva versión del banco.
+Aplicar en orden inverso con `--apply`. Las pruebas reconstruyen las fronteras históricas sin cambiar sus SHA originales. Esto no escribe Firestore. Las ocho exclusiones se revierten mediante un cambio de código revisado y el pipeline habitual, sin borrar preguntas.
 
-Validación local final ejecutada: arquitectura, lint y tipos correctos; **1.058 unitarias aprobadas y 29 omitidas; 45 pruebas editoriales; build 1.1.18 correcto**. Las40 preguntas se renderizan con texto íntegro, cuatro alternativas y30 bloques de código por vista en Chromium/WebKit a393/1280 px (2/2). Las300 huellas anteriores permanecen idénticas. Se conservan cinco muestras anteriores y se añaden cero nuevas. Las nuevas pruebas rechazan contexto ausente/mutado, alias, `np:1`, crypto fallido, filas/citas/hash manipulados, IDs duplicados y enlaces simbólicos, manteniendo intacta la salida ante rechazo. Las dos selecciones oficiales conservan sus100 IDs y la reserva anulada sigue excluida. El test de generación comprueba también que un campo raw `supTexto` añadido sin aprobación no pueda ocultarse al enriquecer el contexto de runtime.
+Validación local final: arquitectura, lint y tipos correctos; **1.066 unitarias aprobadas/29 omitidas,61 pruebas Python y build1.1.19 correcto**. Las 65 preguntas se renderizan a393/1280px en Chromium/WebKit,100 bloques de código por vista,2/2. Se prueban405 contenidos aprobados con sus predecesores, seis muestras, tres casos anidados y ocho nuevas exclusiones; motor, nota/denominador, UID, checkpoint, historial, perfil100/reservas y ausencia de escrituras de respuestas protegidas. Los oráculos distinguen ejecución real y modelos: no se afirma runtime Oracle, SQLServer, .NET, GNUfind, Windows o protocolos que no se hayan ejecutado.
 
-La corrección HTML GEN-T3.08-418.v1 elimina `np` únicamente en la nueva redacción revisada; el test conserva la versión anterior bloqueada. PHP y las otras ambigüedades pendientes siguen sin puntuar. POCO3, EJB y tres web permanecen retenidas por las razones documentadas en los manifiestos; la anulación oficial preexistente no se cuenta como reparación nueva. Los oráculos distinguen ejecución real, fixtures, modelos y validación documental; no se afirma runtime .NET/NuGet, PHP, Jakarta, PostgreSQL o Windows sin ejecución real.
+AT309-P1-12 y GEN-T3.08-418.v1 sólo retiran `np` en sus redacciones corregidas con prueba exacta. El fixture de consulta histórica carga el before real de AT309, muestra el enunciado antiguo y su aviso vigente, desactiva opciones y comprueba que no guarda nota, estadísticas ni sesión. Los fallos anteriores por usar la edición actual como histórica se corrigieron sin relajar esas garantías. Se conservan las correcciones de montaje act/Home y de espera de checkpoint/pausa; no se desactivan aserciones ni se aumentan tiempos para ocultar fallos.
 
-Se corrigió el fixture de diseño esperando al propietario del montaje y al módulo Home dentro de `act`, con desmontaje explícito. El fallo se reprodujo retrasando Home 1,6 s y pasó con las mismas 15 pruebas; el fixture final no incorpora retrasos, reintentos ni tiempos ampliados. CI 109 también detectó dos esperas incompletas: Resultado precedía al efecto que persiste el checkpoint y recargar durante Pausar podía abortar `cards/index.json`. Se esperan el mismo checkpoint completo y la pausa terminada, conservando las comprobaciones de errores. Los artefactos HTML de trazas se guardan fuera del árbol servido para evitar recargas HMR durante el auditor de render.
+CI113 terminó correctamente:1.058 unitarias/29 omitidas,45 Python,Auth/Firestore/publicación concurrente,dosAuthUI,76 referencias y260 E2E/4 omitidas; despliegue42205124709 y postsmoke7/7 correctos. Esta rama ejecuta su propia CI antes del merge. Las pruebas en emuladores no certifican OAuth productivo, VoiceOver o dispositivos físicos. Se conservan las advertencias preexistentes de scrollTo/jsdom y tamaño de chunks. Los diagnósticos WebKit de sincronización se documentan separados de errores/rechazos JS; no se presenta la clasificación por documento como cero diagnósticos.
 
-Las pruebas adicionales de sincronización en emuladores usan tres contextos y cuentas sintéticas, con cola offline, reconexión y denegación entre UID. El resultado estricto app 3/4 y SDK 4/6 registra diagnósticos nativos WebKit durante la descarga del documento anterior; la clasificación por documento 6/6 confirma restauración y ausencia de errores/rechazos JS. No equivale a cero diagnósticos ni certifica OAuth productivo, VoiceOver o dispositivos físicos. Se conservan las advertencias preexistentes de jsdom `window.scrollTo` y tamaño de chunks.
+La autorización de233 está cumplida y sus recibos quedan en [publication233-v15.json](tests/e2e/evidence/astra-implementation-2026-11-05/publication233-v15.json), [verificación completa](tests/e2e/evidence/astra-implementation-2026-11-05/publication233-v15-verification.json) y [cliente300](tests/e2e/evidence/astra-implementation-2026-11-05/publication233-v15-client.json). El lote siguiente de105 necesita plan reproducible, copia v15, autorización específica, CI/merge/despliegue y lectura posterior; no se amplía la autorización anterior. Hosting no ejecuta el publicador del banco privado. Después de otras publicaciones no restaurar archivos completos antiguos sin preservar los cambios intermedios; cualquier rollback de datos requiere CAS y una nueva versión creciente.
 
-El flujo de publicación es PR→CI→merge ordinario→workflow oficial→verificación posterior. Las 13correcciones iniciales y las 55adicionales tienen autorización específica y están publicadas: banco v14, 68 preguntas, 77 hashes verificados y cero borrados. [Recibo55](tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14.json) y [verificación completa](tests/e2e/evidence/astra-implementation-2026-11-05/publication55-v14-verification.json). La publicación usó la fuente de datos M3 congelada y una comprobación independiente de compatibilidad con el código M4 desplegado; no incorporó los lotes posteriores. Los 149 registros de PR111 y las 84 reparaciones de PR112 forman un plan separado de 233 modificaciones (232 reparaciones y PHP no puntuable), con 105 tipos y 34 actualizaciones CAS; han recibido autorización específica del usuario para publicar después de CI, integración y despliegue verificados. Aún no se han publicado en este corte. Estas otras 40 reparaciones no están autorizadas para Firestore y no se incorporan a ese plan. El workflow de Hosting no ejecuta el publicador del banco. Una nueva publicación necesita su propio plan, copia, autorización, CAS y lectura posterior. Si hay publicaciones posteriores, no restaurar archivos completos de una copia antigua sin comprobar que se conservan los cambios intermedios.
-
-
-El código/muestras se revierten mediante un commit de revert y el pipeline habitual. Los hitos, comprobantes y handoff de integración se conservan en [PR107](https://github.com/dramirodev/tai-oposicion/pull/107), [PR108](https://github.com/dramirodev/tai-oposicion/pull/108), [PR109](https://github.com/dramirodev/tai-oposicion/pull/109) y [PR111](https://github.com/dramirodev/tai-oposicion/pull/111), y en el [registro operativo](tests/e2e/audit-findings.md). La misión sigue parcialmente completada por las publicaciones y el trabajo editorial pendiente.
+README, los PR107/108/109/111/112/113 y `tests/e2e/audit-findings.md` conservan la trazabilidad de integración. La misión sigue parcialmente completada por las reparaciones, publicaciones y verificaciones pendientes.

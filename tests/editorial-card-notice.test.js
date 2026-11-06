@@ -11,13 +11,13 @@ import { approvedQuestionHashes } from '../src/core/domain/approved-question-has
 import { readReviewedRecord } from '../scripts/bank-editorial/reviewed-record.mjs';
 const read=file=>JSON.parse(readFileSync(file,'utf8'));
 afterEach(()=>{vi.unstubAllGlobals();cleanup();});
-it('340 proven cards project their notice without the stale quarantine warning; explicitnp still wins in the UI',async()=>{
+it('405 proven cards project their notice without the stale quarantine warning; explicitnp still wins in the UI',async()=>{
  vi.stubGlobal('crypto',webcrypto);
  const meta=read('public/data/meta.json');
- const nested=read('scripts/bank-editorial/reviewed-languages17.json').questions.filter(q=>q.scenarioId);
+ const nested=['reviewed-languages17','reviewed-development11'].flatMap(name=>read(`scripts/bank-editorial/${name}.json`).questions.filter(q=>q.scenarioId));
  const raw=Object.keys(approvedQuestionHashes).map(id=>{const entry=nested.find(q=>q.id===id);return entry?readReviewedRecord(entry):read(`public/data/${meta[id][0]}.json`).find(q=>q.i===id);});
  const composition=createCardsComposition({loadQuestionMetadata:async()=>{},failedCardQuestionIds:()=>raw.map(q=>q.i),loadQuestionsById:async()=>Promise.all(raw.map(verifyQuestionContent)),loadJson:async()=>({temas:{}}),verifiedSources:{},accountId:()=>null,progress:{getSeenTopics:()=>[],getCardReviews:()=>({})}});
- const cards=await composition.loadAllCards();expect(cards).toHaveLength(340);
+ const cards=await composition.loadAllCards();expect(cards).toHaveLength(405);
  for(const card of cards)expect(card.editorialNotice,card.id).not.toContain('Solo estudio');
  for(const [card,warning] of [[cards[0],false],[{...cards[0],np:1,editorialNotice:''},true],[{...cards[0],editorialNotice:undefined},true]]) {
   const session={account:null,items:[card],index:0,revealed:false,results:[0,0,0]};

@@ -26,6 +26,10 @@ REVIEWED_BATCHES = {
     'reviewed-architecture20': 'reviewed-architecture20.json',
     'reviewed-languages17': 'reviewed-languages17.json',
     'reviewed-web23': 'reviewed-web23.json',
+    'reviewed-development11': 'reviewed-development11.json',
+    'reviewed-systems20': 'reviewed-systems20.json',
+    'reviewed-foundations18': 'reviewed-foundations18.json',
+    'reviewed-systems16': 'reviewed-systems16.json',
 }
 
 
