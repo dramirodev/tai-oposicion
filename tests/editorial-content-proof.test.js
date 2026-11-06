@@ -7,7 +7,7 @@ import { approvedQuestionHashes } from '../src/core/domain/approved-question-has
 import { applyEditorialScoring, isEditorialContentBlocked } from '../src/core/domain/question-review-overrides.js';
 import { questionNotice } from '../src/shared/presentation/study-content.js';
 const read = file => JSON.parse(readFileSync(file, 'utf8'));
-const recent = ['reviewed-19','reviewed-followup','reviewed-wave2','reviewed-admin20'].flatMap(f => read(`scripts/bank-editorial/${f}.json`).questions.filter(q=>q.after.np!==1));
+const recent = ['reviewed-19','reviewed-followup','reviewed-wave2','reviewed-admin20','reviewed-legal19'].flatMap(f => read(`scripts/bank-editorial/${f}.json`).questions.filter(q=>q.after.np!==1));
 const published = ['reviewed-web','reviewed-T3.08','reviewed-T4.07'].flatMap(f => read(`scripts/bank-editorial/${f}.json`).map(entry => {
  const topic=f==='reviewed-T4.07'?'T4.07':'T3.08';
  const after=read(`public/data/${topic}.json`).find(q=>q.i===entry.id);
@@ -18,8 +18,8 @@ const published = ['reviewed-web','reviewed-T3.08','reviewed-T4.07'].flatMap(f =
 const proposals=[...recent,...published];
 afterEach(() => vi.unstubAllGlobals());
 const crypto = () => vi.stubGlobal('crypto', webcrypto);
-it('binds exactly216 reviewed records and rejects216 actual prior records, including after a newer sameID', async () => {
- crypto(); expect(Object.keys(approvedQuestionHashes)).toHaveLength(216);
+it('binds exactly235 reviewed records and rejects235 actual prior records, including after a newer sameID', async () => {
+ crypto(); expect(Object.keys(approvedQuestionHashes)).toHaveLength(235);
  for(const {id,before,after,topic} of proposals) {
    expect(read(`public/data/${topic}.json`).find(q=>q.i===id),id).toEqual(after);
    const fresh=await verifyQuestionContent(after);
@@ -57,8 +57,8 @@ it('does not clear explicitnp1, and rejects absent or failing WebCrypto even on 
   expect(applyEditorialScoring(await verifyQuestionContent(q)).np).toBe(1);
  }
 });
-it('the four approved sample records use exactly the same content verification', async () => {
- crypto();const samples=proposals.filter(q=>q.inSample); expect(samples).toHaveLength(4);
+it('the five approved sample records use exactly the same content verification', async () => {
+ crypto();const samples=proposals.filter(q=>q.inSample); expect(samples).toHaveLength(5);
  for(const {id,topic} of samples) {
   const q=read(`public/sample/${topic}.json`).find(q=>q.i===id);
   expect(hasApprovedQuestionContent(await verifyQuestionContent(q)),id).toBe(true);

@@ -5404,9 +5404,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "El 40 % correspondía a la redacción inicial. Tras LO 2/2024, 44 bis LOREG exige lista paritaria y orden alterno. No sirve un porcentaje fijo para listas impares. Véase JEC, Instrucción 3/2025.",
     "location": "public/data/T1.07.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Corrección con cuatro alternativas y fuentes normativas contrastadas; replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final y revisión de integración",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -5415,13 +5416,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "AT107-P1-08",
       "topic": "T1.07",
       "origin": "A",
       "family": null,
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-legal19.json",
+      "beforeSha256": "d2aeef807abbd681b5f7f40b7f252bbfd720003148f072afbd5905fd7ec630fa",
+      "afterSha256": "04a35bffbb606d8851b57db31d1b5be572ffc4a7be84b231f6a8b6c58c337a1f",
+      "source": {
+        "pdf": "01_Temario/T1.07 Políticas de Igualdad/T1.07 Políticas de Igualdad - Temario.pdf",
+        "page": 32,
+        "sha256": "87083522e2f662659e2f016cc5fbd2a68f0bad091543d640ab88bdcac34dfa9a",
+        "quote": "los candidatos de cada uno de los sexos supongan como mínimo el 40%."
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -5824,9 +5838,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "A ya no es correcta. A igual grado se atiende al tiempo de espera desde la solicitud, que señala D, y solo a igualdad de grado y tiempo se usa la capacidad económica. Eliminar además «nivel».",
     "location": "public/data/T1.07.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Corrección con cuatro alternativas y fuentes normativas contrastadas; replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final y revisión de integración",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -5835,13 +5850,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "AT107-P1-59",
       "topic": "T1.07",
       "origin": "A",
       "family": null,
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-legal19.json",
+      "beforeSha256": "cc155096f301744bda398c32fa101a20bb7d1708f1f04e48b1b024d41becf59c",
+      "afterSha256": "9ec001d8f1ab51afc6e5d8a08ac5ca38043dc47026872e7853252fd6ffefd173",
+      "source": {
+        "pdf": "01_Temario/T1.07 Políticas de Igualdad/T1.07 Políticas de Igualdad - Temario.pdf",
+        "page": 149,
+        "sha256": "87083522e2f662659e2f016cc5fbd2a68f0bad091543d640ab88bdcac34dfa9a",
+        "quote": "La prioridad en el acceso a los servicios vendrá determinada por el grado de dependencia"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -5852,9 +5880,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "La clave B excluye atención residencial. El art. 22.4 ahora reconoce teleasistencia con independencia de los demás servicios reconocidos: D es la opción correcta.",
     "location": "public/data/T1.07.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Corrección con cuatro alternativas y fuentes normativas contrastadas; replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final y revisión de integración",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -5863,13 +5892,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "AT107-P1-61",
       "topic": "T1.07",
       "origin": "A",
       "family": null,
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-legal19.json",
+      "beforeSha256": "89a0366dc89b9c5cbdfef8ec2cbe22acfc0fb30dd53aa716cb2dc2efcb211571",
+      "afterSha256": "1e6ff2be9b9be9604483332c418c5a69a3f0705c663a5cde5cf17ea8a3baf6ef",
+      "source": {
+        "pdf": "01_Temario/T1.07 Políticas de Igualdad/T1.07 Políticas de Igualdad - Temario.pdf",
+        "page": 152,
+        "sha256": "87083522e2f662659e2f016cc5fbd2a68f0bad091543d640ab88bdcac34dfa9a",
+        "quote": "Este servicio se prestará a las personas que no reciban servicios de atención residencial"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -5880,9 +5922,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Los supuestos de centros propios o concertados y estancia permanente o temporal son ciertos, incluida convalecencia y descanso. D también es cierta si las tres anteriores lo son. Falta una afirmación falsa.",
     "location": "public/data/T1.07.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Corrección con cuatro alternativas y fuentes normativas contrastadas; replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final y revisión de integración",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -5891,13 +5934,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "AT107-P1-62",
       "topic": "T1.07",
       "origin": "A",
       "family": null,
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-legal19.json",
+      "beforeSha256": "41c02200901f833e7302f3b24cce460e989355b40f5053aaa9dc6506a48ee487",
+      "afterSha256": "1a6cafc7d5b935a4d185ac92b7f559b49724fcd569fcf4f3b58ba30aff1f8d9b",
+      "source": {
+        "pdf": "01_Temario/T1.07 Políticas de Igualdad/T1.07 Políticas de Igualdad - Temario.pdf",
+        "page": 153,
+        "sha256": "87083522e2f662659e2f016cc5fbd2a68f0bad091543d640ab88bdcac34dfa9a",
+        "quote": "La prestación de este servicio puede tener carácter permanente"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -7266,9 +7322,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "B afirma exclusividad de supervisión pública. Art. 10 permite también tratamiento autorizado por Derecho europeo o estatal con garantías apropiadas. Ninguna alternativa recoge la regla completa.",
     "location": "public/data/T1.09.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Corrección con cuatro alternativas y fuentes normativas contrastadas; replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final y revisión de integración",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -7277,13 +7334,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "AT109ALT-P1-11",
       "topic": "T1.09",
       "origin": "A",
       "family": null,
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-legal19.json",
+      "beforeSha256": "8ff36acd3f2c3ce1d900c6e0b9fed50cedd158e132281767da3564894462425f",
+      "afterSha256": "bd4c53ffe8f00a506fc0b4d6b65bf6d1b098649971fc12383b49cd754b095bb5",
+      "source": {
+        "pdf": "01_Temario/T1.09 Protección de Datos/T1.09 Protección de Datos - Temario.pdf",
+        "page": 13,
+        "sha256": "0e4d094116cca7f3a255d1daee0a04b5d72fdda65f8c0cba1bdcd1286c364e49",
+        "quote": "o cuando lo autorice el Derecho de la Unión o de los Estados miembros que establezca garantías adecuadas para los derechos y libertades de los interesados."
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -8330,9 +8400,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "A reproduce el texto original de 2010, pero el vigente requiere relación clasificada y estructurada conectada al SIA. Ya no exige aquí familias ni nivel de informatización. Tampoco B, C o D reproducen la obligación vigente.",
     "location": "public/data/T1.10.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Corrección con cuatro alternativas y fuentes normativas contrastadas; replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final y revisión de integración",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -8341,13 +8412,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "AT110-P1-70",
       "topic": "T1.10",
       "origin": "A",
       "family": null,
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-legal19.json",
+      "beforeSha256": "e14cbca8fb71de6f21f953e096bb78c6f289cbfbf38de482b36995675ab72f0f",
+      "afterSha256": "5dde7fb36cd3093cb5eaf3f95010ce98419b8bde135009b43291a2511e253a40",
+      "source": {
+        "pdf": "01_Temario/T1.10 Acceso Electrónico/T1.10 Acceso Electrónico - Temario - parte1.pdf",
+        "page": 115,
+        "sha256": "65544a91022ee92fcf4b81dbdfe5bd23ad28da9e0ef048a8d2094f6fd2bb7598",
+        "quote": "La relación de los procedimientos administrativos y servicios prestados de forma clasificada y estructurada."
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -8414,9 +8498,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "C describe la obligación real de reutilizar salvo justificación de eficiencia. El art. 17 actual tampoco dice lo que afirma D sobre procurar publicar código en desarrollo: exige publicar las aplicaciones reutilizables y el código final en los supuestos definidos. El negativo no puede puntuarse como C.",
     "location": "public/data/T1.10.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Corrección con cuatro alternativas y fuentes normativas contrastadas; replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final y revisión de integración",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -8425,13 +8510,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "AT110-P1-85",
       "topic": "T1.10",
       "origin": "A",
       "family": null,
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-legal19.json",
+      "beforeSha256": "881073d14714d1eaadc3bb1d6c6f0cefdb026cd50bea56cc4dc3f0dabb64d2ec",
+      "afterSha256": "8e9b0279c7dd6b579e72ee3bde7f3810d7da763ab11f7809eac9119d4cbd5f77",
+      "source": {
+        "pdf": "01_Temario/T1.10 Acceso Electrónico/T1.10 Acceso Electrónico - Temario - parte1.pdf",
+        "page": 123,
+        "sha256": "65544a91022ee92fcf4b81dbdfe5bd23ad28da9e0ef048a8d2094f6fd2bb7598",
+        "quote": "Las AAPP publicarán las aplicaciones reutilizables, en modo producto o en modo"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -8638,9 +8736,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Un sistema de clave concertada puede usarse como parte de un sistema admitido de firma no criptográfica si cumple los requisitos. D no es una inhabilitación general establecida por la ley.",
     "location": "public/data/T1.10.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Corrección con cuatro alternativas y fuentes normativas contrastadas; replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final y revisión de integración",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -8649,13 +8748,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "AT1102-P1-24",
       "topic": "T1.10",
       "origin": "A",
       "family": null,
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-legal19.json",
+      "beforeSha256": "7747c2de831f3934ba9d606f7dc924f647192dffe86a1b1c5f95e8c8f72ea832",
+      "afterSha256": "5a9235817095d6ff736424939095baf97b02cd6f240119a61c95fd972da70633",
+      "source": {
+        "pdf": "01_Temario/T1.10 Acceso Electrónico/T1.10 Acceso Electrónico - Temario - parte1.pdf",
+        "page": 22,
+        "sha256": "65544a91022ee92fcf4b81dbdfe5bd23ad28da9e0ef048a8d2094f6fd2bb7598",
+        "quote": "Los interesados podrán firmar a través de cualquier medio que permita acreditar la autenticidad de la expresión de su voluntad y consentimiento"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -8666,9 +8778,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Los arts. 9.2 y 10.2 garantizan que sea posible utilizar «uno de los sistemas» de las letras a y b. C lo sustituye por una obligación acumulativa de firma y sello, y D repite el defecto.",
     "location": "public/data/T1.10.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Corrección con cuatro alternativas y fuentes normativas contrastadas; replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final y revisión de integración",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -8677,13 +8790,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "AT1102-P1-27",
       "topic": "T1.10",
       "origin": "A",
       "family": null,
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-legal19.json",
+      "beforeSha256": "8ca43a7806e50c021062e094ab4ecbfc75ecfa5c6af3157699145000863fdb0e",
+      "afterSha256": "c38f3567a11976caaaea8ebca425e7d6a55db14698e656e0d27f549fee7aa0b2",
+      "source": {
+        "pdf": "01_Temario/T1.10 Acceso Electrónico/T1.10 Acceso Electrónico - Temario - parte1.pdf",
+        "page": 23,
+        "sha256": "65544a91022ee92fcf4b81dbdfe5bd23ad28da9e0ef048a8d2094f6fd2bb7598",
+        "quote": "Las AAPP deberán garantizar que la utilización de uno de los sistemas previstos en las letras a) y b)"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -8694,9 +8820,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "A reproduce la regla permisiva del art. 10.1 y por ello no puede ser la alternativa excluida. B, C y D corresponden a clases reconocidas con precisiones de redacción o condiciones.",
     "location": "public/data/T1.10.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Corrección con cuatro alternativas y fuentes normativas contrastadas; replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final y revisión de integración",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -8705,13 +8832,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "AT1102-P1-29",
       "topic": "T1.10",
       "origin": "A",
       "family": null,
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-legal19.json",
+      "beforeSha256": "2443a395854330c5215e90882afc72b8d0b21b33f3340cbfa81f4c975f78c570",
+      "afterSha256": "26566885fe93c5cec1c8f9dc07d193c58a5b8ff69b520272c2dc89750f86b8bb",
+      "source": {
+        "pdf": "01_Temario/T1.10 Acceso Electrónico/T1.10 Acceso Electrónico - Temario - parte1.pdf",
+        "page": 22,
+        "sha256": "65544a91022ee92fcf4b81dbdfe5bd23ad28da9e0ef048a8d2094f6fd2bb7598",
+        "quote": "Los interesados podrán firmar a través de cualquier medio que permita acreditar la autenticidad de la expresión de su voluntad y consentimiento"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -11263,9 +11403,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Artículo 14 del RD 371/2026: la Permanente es órgano de enlace y continuidad sin funciones decisorias. Ninguna alternativa describe el órgano «ejecutivo» bajo el régimen vigente.",
     "location": "public/data/T1.04.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Corrección con cuatro alternativas y fuentes normativas contrastadas; replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final y revisión de integración",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -11274,13 +11415,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T1.04-15.v1",
       "topic": "T1.04",
       "origin": "G",
       "family": "GEN-T1.04-15",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-legal19.json",
+      "beforeSha256": "a31f334b4b3d492cd74af723b1746f31a149735f6bfb5d783a044aeabbf07c33",
+      "afterSha256": "26a729a381d6d367495d629ab3c3a099655c90717396c27404cb233cb3097f48",
+      "source": {
+        "pdf": "01_Temario/T1.04 Transparencia/T1.04 Transparencia - Temario.pdf",
+        "page": 11,
+        "sha256": "792e290d60098ee9bf36896087c55d2a7de7bd94edfc05fef440798556525444",
+        "quote": "Comisión Permanente: actúa como órgano ejecutivo del foro e impulsa sus funciones."
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -11319,9 +11473,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "El art. 12.1 RD 371/2026 exige al menos dos reuniones ordinarias al año; ninguna alternativa expresa un mínimo abierto.",
     "location": "public/data/T1.04.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Corrección con cuatro alternativas y fuentes normativas contrastadas; replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final y revisión de integración",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -11330,13 +11485,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T1.04-16",
       "topic": "T1.04",
       "origin": "G",
       "family": "GEN-T1.04-16",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-legal19.json",
+      "beforeSha256": "d47aa8bdd7ef9369f808c681f43cd0ce7e302c70b2c8013661823077dc1fa8f8",
+      "afterSha256": "3b7ca879f976e506fba152ecb131fc68b0ad1f47e7d861dba3cbf53e60ea369b",
+      "source": {
+        "pdf": "01_Temario/T1.04 Transparencia/T1.04 Transparencia - Temario.pdf",
+        "page": 11,
+        "sha256": "792e290d60098ee9bf36896087c55d2a7de7bd94edfc05fef440798556525444",
+        "quote": "Se reúne 1 o 2 veces al año"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -11431,9 +11599,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "El art. 14.2 del RD 371/2026 integra una vocalía por grupo de trabajo y no un cupo fijo 6+6. Ninguna opción es correcta.",
     "location": "public/data/T1.04.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Corrección con cuatro alternativas y fuentes normativas contrastadas; replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final y revisión de integración",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -11442,13 +11611,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T1.04-17.v1",
       "topic": "T1.04",
       "origin": "G",
       "family": "GEN-T1.04-17",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-legal19.json",
+      "beforeSha256": "892ac719bcf724c5de33f7972b7a5b57623748382ccd2d9452aa6434d0f68c76",
+      "afterSha256": "911feb1f0c94c962d6713f88aaa1676c490cf4a4f6be2508e7e286511b76cc2b",
+      "source": {
+        "pdf": "01_Temario/T1.04 Transparencia/T1.04 Transparencia - Temario.pdf",
+        "page": 11,
+        "sha256": "792e290d60098ee9bf36896087c55d2a7de7bd94edfc05fef440798556525444",
+        "quote": "6 vocales representantes de las AAPP y 6 vocales representantes de la sociedad civil."
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -11515,9 +11697,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "La ley consolidada tiene artículos 1 a 40 más un artículo 6 bis, añadido en 2018. Ninguna opción expresa 41. BOE-A-2013-12887.",
     "location": "public/data/T1.04.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Corrección con cuatro alternativas y fuentes normativas contrastadas; replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final y revisión de integración",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -11526,13 +11709,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T1.04-19",
       "topic": "T1.04",
       "origin": "G",
       "family": "GEN-T1.04-19",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-legal19.json",
+      "beforeSha256": "c8a65e52dc7a3930f2ac482665ff8dbe83a19bee287ef0d5060a4089a3d2fbab",
+      "afterSha256": "ac4db1a88400b6c86f1090dc99ab9a914d7ca20b2d76b0a34a34861fce0ac809",
+      "source": {
+        "pdf": "01_Temario/T1.04 Transparencia/T1.04 Transparencia - Temario.pdf",
+        "page": 12,
+        "sha256": "792e290d60098ee9bf36896087c55d2a7de7bd94edfc05fef440798556525444",
+        "quote": "cuenta con 40 artículos estructurados en un título preliminar y 3 títulos más"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -12565,9 +12761,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "El distractor señalado D puede ser cierto: la costumbre no probada no rige según el 1.3. Si no hay ley aplicable, los principios sí pueden aplicarse. Ninguna alternativa inequívocamente incorrecta.",
     "location": "public/data/T1.06.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Corrección con cuatro alternativas y fuentes normativas contrastadas; replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final y revisión de integración",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -12576,13 +12773,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T1.06-02.v2",
       "topic": "T1.06",
       "origin": "G",
       "family": "GEN-T1.06-02",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-legal19.json",
+      "beforeSha256": "b3fef5101a2c6970e883e528fef3d18a3cdb58f59bd5938358c3213bf63bd78b",
+      "afterSha256": "5743e4ab902e23838db144395dc4ba83058c4f12c183278d503dc3ec5109026a",
+      "source": {
+        "pdf": "01_Temario/T1.06 Fuentes del Derecho/T1.06 Fuentes del Derecho - Temario OPO.pdf",
+        "page": 3,
+        "sha256": "4a2f6932755a6d48a2bd0d8d179707b9cacab6dcd466e7bfd2654a5d27170c1d",
+        "quote": "se aplicarán en defecto de ley o costumbre, sin perjuicio de su carácter informador del ordenamiento jurídico"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -13755,9 +13965,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "El vigente art. 44 bis LOREG ya no regula bloques de cinco con 40 % mínimo: exige ordenación alternativa de uno y otro sexo. BOE-A-2024-15936.",
     "location": "public/data/T1.07.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Corrección con cuatro alternativas y fuentes normativas contrastadas; replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final y revisión de integración",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -13766,13 +13977,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T1.07-41.v1",
       "topic": "T1.07",
       "origin": "G",
       "family": "GEN-T1.07-41",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-legal19.json",
+      "beforeSha256": "b2f9eeae3c53297cc22b557eb456b5330058f260dbc5a468dc9a825cf87653ea",
+      "afterSha256": "05ae06919be1f6116f2b76d17c62b5062d680552e9c9f396de6aa32480b81e34",
+      "source": {
+        "pdf": "01_Temario/T1.07 Políticas de Igualdad/T1.07 Políticas de Igualdad - Temario.pdf",
+        "page": 32,
+        "sha256": "87083522e2f662659e2f016cc5fbd2a68f0bad091543d640ab88bdcac34dfa9a",
+        "quote": "También se mantendrá la proporción mínima del cuarenta por ciento en cada tramo de cinco puestos."
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -14455,9 +14679,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "La lista la publica la Comisión; A añade «y sus agencias» sin base en el art. 6.1.a y ninguna otra opción atribuye la publicación correctamente.",
     "location": "public/data/T1.08.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Corrección con cuatro alternativas y fuentes normativas contrastadas; replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final y revisión de integración",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -14466,13 +14691,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T1.08-36",
       "topic": "T1.08",
       "origin": "G",
       "family": "GEN-T1.08-36",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-legal19.json",
+      "beforeSha256": "83230eee01de7d54b6b38e651a56255f0ed88d600d5f1f67c0cfb1d200ce1b7a",
+      "afterSha256": "b96f95095abf6d5a7e33be45df647e05e664e371d79a7a9f93b47ad388871b8e",
+      "source": {
+        "pdf": "01_Temario/T1.08 Sociedad de la Información/T1.08 Sociedad de la Información - Temario.pdf",
+        "page": 31,
+        "sha256": "5f258b7cc3f23f39e1f8f4dbdf0679f85d8ff3c499df62a43cf011dcf27e391f",
+        "quote": "incluido en la lista publicada por la Comisión."
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -16149,9 +16387,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Ninguna opción identifica al actual Ministerio para la Transformación Digital y de la Función Pública. RD 1125/2024 DF primera, DA primera.2 del ENI.",
     "location": "public/data/T1.10.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Corrección con cuatro alternativas y fuentes normativas contrastadas; replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final y revisión de integración",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -16160,13 +16399,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T1.10-97",
       "topic": "T1.10",
       "origin": "G",
       "family": "GEN-T1.10-97",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-legal19.json",
+      "beforeSha256": "dbeb88b3f021f9ff09e70911cb44cad5e01c4dbab4d22baf076f2dc4cadb1df2",
+      "afterSha256": "2ccbd352d59090acbba79f89bc65a46f82975f7b2151ba1ac92cd30e39d018ad",
+      "source": {
+        "pdf": "01_Temario/T1.10 Acceso Electrónico/T1.10 Acceso Electrónico - Temario - parte2.pdf",
+        "page": 5,
+        "sha256": "6ee41d275d37973d7eb3e8cfef14c01ccdebc34b82d9a3281aaaf9ced288685a",
+        "quote": "El Ministerio de Asuntos Económicos y Transformación Digital, a propuesta de la Comisión Sectorial de Administración Electrónica"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
@@ -16177,9 +16429,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Publica la persona titular de la Secretaría de Estado de Función Pública. Ninguna opción recoge el órgano vigente. BOE-A-2024-22935 DF primera.",
     "location": "public/data/T1.10.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Corrección con cuatro alternativas y fuentes normativas contrastadas; replay reversible; publicación pendiente.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI de cabeza final y revisión de integración",
+      "Autorización específica de datos y publicación verificada"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -16188,13 +16441,26 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T1.10-97.v1",
       "topic": "T1.10",
       "origin": "G",
       "family": "GEN-T1.10-97",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-legal19.json",
+      "beforeSha256": "c2f70da735a2e416ace2b6fd8e4979ebba34f3014f39a9f4a92ca8c3ced61a46",
+      "afterSha256": "82466cd1fd87be8a3065b11b4efb8f21c25b070a8c91e0930c1701eaa17ebe49",
+      "source": {
+        "pdf": "01_Temario/T1.10 Acceso Electrónico/T1.10 Acceso Electrónico - Temario - parte2.pdf",
+        "page": 5,
+        "sha256": "6ee41d275d37973d7eb3e8cfef14c01ccdebc34b82d9a3281aaaf9ced288685a",
+        "quote": "las publicará mediante Resolución de la Secretaria de Estado de Digitalización e Inteligencia Artificial"
+      },
+      "publication": "NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY"
     }
   },
   {
