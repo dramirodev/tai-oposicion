@@ -86,8 +86,8 @@ export function PlanningHorizon({ targetDate, today, preferences, catalogTopicId
         </section>
         {summary.plannedExtraNewTopicSessions > 0 && <p className="mt-2 mb-0 text-muted text-sm" role="status">La agenda confirmada añade {summary.plannedExtraNewTopicSessions} espacio(s) de contenido nuevo en día(s) que habitualmente son de consolidación. Se cuentan aparte y solo para las fechas/temas aún pendientes.</p>}
       </section>
-      <section aria-labelledby="planning-week-title" className="min-w-0">
-        <h3 id="planning-week-title" className="mb-2 text-base">Semana habitual</h3>
+      <section aria-labelledby="planning-usual-week-title" className="min-w-0">
+        <h3 id="planning-usual-week-title" className="mb-2 text-base">Semana habitual</h3>
         <p className="mb-3 text-muted">{formatDuration(summary.weeklyMinutes)} configurados · {summary.weeklyNewContentDays} días con espacio para tema nuevo.</p>
         <ul className="m-0 grid list-none grid-cols-2 gap-2 p-0 min-[420px]:grid-cols-4 md:grid-cols-2 xl:grid-cols-4">
           {weekDays.map(({ weekday, label }) => {

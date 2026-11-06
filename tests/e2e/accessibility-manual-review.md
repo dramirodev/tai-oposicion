@@ -48,3 +48,11 @@
 3. Medir texto, controles, foco, gráficos y estados claro/oscuro contra WCAG 2.2 AA, registrar valores y corregir incumplimientos.
 4. Medir objetivos interactivos y revisar excepciones del criterio 2.5.8.
 5. Repetir y adjuntar resultados antes de cambiar UX-009 a CORREGIDO Y VERIFICADO o cerrar el hallazgo.
+
+## Verificación de accesibilidad y regresiones — 6 de noviembre de 2026
+
+- UX-021 y UX-022 corregidos/verificados: nombres accesibles alineados con etiquetas visibles en calendario semanal/mensual, regiones con IDs únicos y editores H3. Evidencia antes/después: `evidence/accessibility-2026-11-06/`. Lighthouse 13.4.1: Planificación 99 → 100, sin los dos defectos reproducidos. Inicio, Ajustes y Estadísticas vacías: 100; estados offline claros, no autenticados. No es conformidad WCAG global.
+- Pruebas focales de componente: **50/50**, incluidas **24/24** de Planificación. `npm run check`: **966 aprobadas / 27 omitidas**, arquitectura/lint/tipos correctos. E2E de Planificación: **20/20** Chromium/WebKit tras los cambios finales, incluido primer render, confirmación, recarga, reprogramación y móvil. Build realizado por el runner.
+- ATE-010 fija el reloj del fixture de vacaciones; ATE-011 espera pregunta y respuesta observables antes de finalizar. Ambos cerrados con suite focal/global, sin alterar reglas de negocio ni aumentar timeouts. Persiste aviso no bloqueante de jsdom `window.scrollTo`.
+- UX-009 sigue parcial: pendientes tecnología asistiva real, zoom nativo 200/400 y contraste integral. ATE-005 conserva brechas de controles dinámicos/concurrencia. ATE-006 sigue sin ejecución remota: consulta GitHub del 6/11 devuelve cero PR y cero runs en la rama. Siguiente acción: publicar este corte y abrir PR de revisión para activar CI, sin merge ni deploy.
+- No se usó Firebase productivo ni Gemini. Los cambios concurrentes de README y auditoría editorial se preservan.

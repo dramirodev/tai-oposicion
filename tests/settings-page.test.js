@@ -21,7 +21,7 @@ async function renderSettings() {
  await screen.findByRole('heading', { name: 'Ajustes' });
 }
 beforeEach(() => { account = 'cuenta-a'; fullAccess = false; trainingState = DEFAULT_TRAINING_PREFERENCES; subscribers.clear(); settings = createSettings(); });
-afterEach(() => { view?.unmount(); view = undefined; subscribers.clear(); vi.clearAllMocks(); });
+afterEach(() => { view?.unmount(); view = undefined; subscribers.clear(); vi.clearAllMocks(); vi.useRealTimers(); });
 it('presenta ajustes por secciones y persiste los cambios de apariencia', async () => {
  const user = userEvent.setup();
  await renderSettings();
@@ -131,6 +131,7 @@ it('permite configurar, reordenar y quitar temas sin inferir el orden del catál
  expect(settings.setTrainingPreferences).toHaveBeenLastCalledWith(expect.objectContaining({ academyTopicOrderIds: ['T3.02'] }));
 });
 it('permite registrar una ventana especial de vacaciones sin cambiar el patrón semanal', async () => {
+ vi.setSystemTime(new Date(2026, 10, 3, 12));
  fullAccess = true;
  const user = userEvent.setup(); await renderSettings();
  await user.selectOptions(screen.getByRole('combobox', { name:'Tipo de evento' }), 'study-window');

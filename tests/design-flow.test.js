@@ -102,7 +102,14 @@ it('redirige el acceso directo antiguo de tarjetas a Inicio',async()=>{
 it('confirma el cierre desde el mapa si quedan preguntas sin responder',async()=>{
  const qs=JSON.parse(readFileSync('public/data/T1.01.json','utf8')).slice(0,3);
  const run=engine.createRun({kind:'sim',feedback:false,items:qs});await navigate('quiz','pregunta 1');
- document.querySelector('[data-jump="2"]').click();document.querySelector(`.opt[data-i="${qs[2].c}"]`).click();
+ document.querySelector('[data-jump="2"]').click();
+ await vi.waitFor(()=>{
+  expect(engine.getSnapshot().run.idx).toBe(2);
+  expect(document.querySelector('[data-jump="2"]')?.getAttribute('aria-current')).toBe('step');
+  expect(document.querySelector('#next')?.textContent).toContain('Terminar');
+ });
+ document.querySelector(`.opt[data-i="${qs[2].c}"]`).click();
+ await vi.waitFor(()=>expect(engine.getSnapshot().run.ans[2]).toBe(qs[2].c));
  await act(async()=>{document.querySelector('#next').click();await Promise.resolve();});
  await vi.waitFor(()=>expect(document.querySelector('.overlay')).not.toBeNull());
  expect(document.querySelector('.overlay').textContent).toContain('sin responder');

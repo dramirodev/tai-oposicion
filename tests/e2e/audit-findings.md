@@ -414,4 +414,43 @@ Estados válidos: `DETECTADO`, `ANALIZADO`, `PRIORIZADO`, `EN CORRECCIÓN`, `COR
 
 ## Registro y cierre
 
+### ATE-010 — La prueba de vacaciones caduca al cambiar la fecha real
+
+- **Categoría / prioridad:** Fiabilidad de regresión / P2.
+- **Evidencia y causa:** `npm run check` del 6/11/2026 falla en `settings-page.test.js`: exige «En curso» para el intervalo 2–5/11/2026 usando el reloj real; el producto correctamente devuelve «Pasado».
+- **Solución propuesta / archivos:** Fijar la fecha sintética del test y restaurarla tras cada caso, conservando intervalo y aserción; `tests/settings-page.test.js`.
+- **Estado:** CORREGIDO Y VERIFICADO.
+- **Verificación / resultado:** 6/11/2026: suites focales 50/50; `npm run check` 966 aprobadas/27 omitidas. Fecha controlada con `vi.setSystemTime` y restaurada; clasificación temporal de producto intacta.
+
+### ATE-011 — Carrera entre salto de pregunta y confirmación en la prueba de cierre
+
+- **Categoría / prioridad:** Fiabilidad de regresión / P2.
+- **Evidencia y causa:** `design-flow.test.js` falla intermitentemente al esperar un diálogo inexistente. Dispara salto a pregunta 3, respuesta y botón siguiente antes de esperar que React presente la pregunta destino. El test vecino de vencimiento sí espera índice, `aria-current` y texto «Terminar».
+- **Solución propuesta / archivos:** Esperar el estado observable de pregunta 3 y su respuesta guardada antes de finalizar, sin aumentar timeouts ni modificar aserciones de cierre; `tests/design-flow.test.js`.
+- **Estado:** CORREGIDO Y VERIFICADO.
+- **Verificación / resultado:** 6/11/2026: suites focales 50/50; `npm run check` 966 aprobadas/27 omitidas. Se espera índice, pregunta visible y respuesta guardada; no se aumentan timeouts. No demuestra ausencia absoluta de otras intermitencias.
+
+### UX-021 — El nombre accesible del botón de semana no contiene su texto visible
+
+- **Categoría / funcionalidad:** Accesibilidad, WCAG 2.5.3 / calendario de Planificación.
+- **Problema y evidencia:** «Esta semana» usa `aria-label="Semana actual"`. Lighthouse 13.4.1 reproduce `label-content-name-mismatch` en la página local, perfil offline sin Firebase, 500×841, el 6/11/2026. Evidencia: `evidence/accessibility-2026-11-06/planning-before.json`.
+- **Severidad / prioridad:** P1; dificulta activar por voz el texto que el usuario está viendo.
+- **Causa / propuesta:** Un aria-label redundante reemplaza el texto del botón. Retirarlo para que el texto visible también sea el nombre accesible; conservar acción y presentación.
+- **Archivos:** `src/features/planning/StudyCalendar.tsx`, regresiones de Planificación.
+- **Estado:** CORREGIDO Y VERIFICADO.
+- **Aceptación / verificación:** Botón localizable por «Esta semana», navegación semanal y regreso funcionales; repetir Lighthouse y pruebas de calendario.
+- **Resultado:** Verificado el 6/11/2026: regresión de etiquetas/teclado en semana y mes incluida en 24/24 tests de Planificación; Lighthouse final sin `label-content-name-mismatch`, accesibilidad 100 (`planning-final.json`). No representa conformidad global.
+- **Ampliación comprobada:** El DOM semanal también muestra «Minutos» con nombre «Duración de actividad semanal». La vista mensual usa «Tema visto» con nombre «Tema del repaso». Se armonizan las etiquetas visibles con los nombres existentes y se verifican los controles etiquetados en ambas vistas con un tema sintético.
+
+### UX-022 — Encabezados y regiones de Planificación tienen estructura ambigua
+
+- **Categoría / funcionalidad:** Estructura accesible y navegación por encabezados / Planificación.
+- **Problema y evidencia:** «Preparar esta semana» es H4 inmediatamente bajo la sección H2; Lighthouse detecta `heading-order`. Además, «Semana habitual» (H3) y «Estudio, repaso y descanso» (H2) comparten `planning-week-title`, usado por ambas regiones en `aria-labelledby`; el DOM del navegador confirma los dos IDs.
+- **Severidad / prioridad:** P2; jerarquía y nombres de regiones ambiguos para navegación asistida. El salto de encabezados se registra como problema semántico, no como prueba aislada de incumplimiento WCAG completo.
+- **Causa / propuesta:** Componentes reutilizan ID y niveles fijos. Asignar ID propio a Semana habitual y usar H3 en los editores hijos directos del calendario H2. Conservar clases, contenido y flujo.
+- **Archivos:** `src/features/planning/PlanningHorizon.tsx`, `src/features/planning/StudyCalendar.tsx`, regresiones de Planificación.
+- **Estado:** CORREGIDO Y VERIFICADO.
+- **Aceptación / verificación:** IDs únicos, regiones con nombres correctos y editores de nivel 3 en semana/mes; Lighthouse sin el fallo reproducido.
+- **Resultado:** Verificado el 6/11/2026: 24/24 tests de Planificación; regiones inequívocas, IDs únicos y H3 en ambos editores. Lighthouse final sin `heading-order`, accesibilidad 100. Evidencias antes/después en `evidence/accessibility-2026-11-06/`.
+
 Un hallazgo solo pasa a `CORREGIDO Y VERIFICADO` con referencia a evidencia ejecutada. Los hallazgos históricos no se eliminan; si una hipótesis no se confirma, se cambia a `DESCARTADO, CON JUSTIFICACIÓN` y se conserva la evidencia. Actualizar este registro y los informes vinculados tras cada unidad significativa.
