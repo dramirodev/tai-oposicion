@@ -54,6 +54,7 @@ function ReviewQuestionButton({ snapshot, onToggleReview }: { snapshot: QuizSnap
 }
 
 function FeedbackAnswerAction({ snapshot, onBlank, onReveal }: { snapshot: QuizSnapshot; onBlank: () => void; onReveal: () => void }) {
+  if (snapshot.prompt.nonScoring) return <span className="tag">Solo consulta · sin puntuación</span>;
   if (snapshot.studyState === 'unseen') return <button className="btn sec" id="blank" disabled={snapshot.paused} onClick={onBlank}>No lo sé</button>;
   if (snapshot.studyState === 'pending') return <><span className="tag warn" role="status">Pendiente</span><button className="btn sec" id="reveal-solution" disabled={snapshot.paused} onClick={onReveal}>Ver solución</button></>;
   if (snapshot.studyState === 'revealed') return <span className="tag warn" role="status">Solución consultada · blanco</span>;

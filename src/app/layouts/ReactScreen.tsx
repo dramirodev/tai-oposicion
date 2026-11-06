@@ -24,7 +24,7 @@ export function ReactScreen({ children, home = false, restricted = false }: { ch
   useEffect(() => {
     if (blocked || !root.current) return;
     return observeScrollSections(root.current);
-  }, [location.key, blocked]);
+  }, [location.key, blocked, accessResolved]);
   if (restricted && !accessResolved) return <PageLoading variant="legacy" />;
   if (blocked) return <Navigate to="/home" replace />;
   return <div ref={root} className="route-transition motion-safe:animate-[screen-arrive_160ms_ease-out]" tabIndex={-1} data-screen={location.pathname.split('/')[1] || 'home'}>

@@ -1,0 +1,15 @@
+[WebServer] (node:63920) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+(node:63923) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 [chromium-darwin] › tests/e2e/astra-session.spec.ts:16:5 › una pregunta solo de consulta permite terminar sin puntuar (2.3s)
+  ✓  2 [chromium-darwin] › tests/e2e/astra-session.spec.ts:29:5 › al recargar con una clave distinta caduca el guardado y se conserva el progreso previo (2.6s)
+(node:64087) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  3 [webkit-darwin] › tests/e2e/astra-session.spec.ts:16:5 › una pregunta solo de consulta permite terminar sin puntuar (2.0s)
+  ✓  4 [webkit-darwin] › tests/e2e/astra-session.spec.ts:29:5 › al recargar con una clave distinta caduca el guardado y se conserva el progreso previo (2.8s)
+
+  4 passed (10.8s)

@@ -32,6 +32,7 @@ function ReviewReport({ item, index, report }: { item: ResultItem; index: number
 }
 
 const outcomePresentation = {
+  'non-scoring': { style: 'b', label: 'Solo consulta · sin puntuación' },
   correct: { style: 'g', label: 'Acierto' },
   wrong: { style: 'r', label: 'Fallo' },
   blank: { style: 'b', label: 'En blanco' },
@@ -42,7 +43,7 @@ function ReviewDetails({ item, explanation }: { item: ResultItem; explanation: E
   return <>
     {item.notice && <StudyMarkup html={item.notice} languageContext={item.statement} />}
     <div className="pre review-statement"><StudyMarkup html={richHtml(item.statement)} languageContext={item.statement} /></div>
-    {item.options.map((option, optionIndex) => <div className={`ro my-1 rounded-[var(--r-s)] px-2 py-1.5 ${optionIndex === item.correctIndex ? 'bg-[var(--okbg)]' : optionIndex === item.answer ? 'bg-[var(--badbg)]' : ''}`} data-answer-index={optionIndex} key={`${item.id}-${optionIndex}`}><b>{'ABCD'[optionIndex]}</b> <span className="pre review-option-text"><StudyMarkup html={richHtml(option)} languageContext={item.statement} /></span>{optionIndex === item.correctIndex && <> <span className="sr">(Respuesta correcta)</span></>}</div>)}
+    {item.options.map((option, optionIndex) => <div className={`ro my-1 rounded-[var(--r-s)] px-2 py-1.5 ${item.outcome !== 'non-scoring' && optionIndex === item.correctIndex ? 'bg-[var(--okbg)]' : optionIndex === item.answer ? 'bg-[var(--badbg)]' : ''}`} data-answer-index={optionIndex} key={`${item.id}-${optionIndex}`}><b>{'ABCD'[optionIndex]}</b> <span className="pre review-option-text"><StudyMarkup html={richHtml(option)} languageContext={item.statement} /></span>{item.outcome !== 'non-scoring' && optionIndex === item.correctIndex && <> <span className="sr">(Respuesta correcta)</span></>}</div>)}
     {item.confidence && <p className="sub">Confianza antes de responder: {item.confidence === 'sure' ? 'Seguro' : item.confidence === 'betweenTwo' ? 'Entre dos' : 'Adivino'}</p>}
     {item.discardedOptions.length > 0 && <p className="sub">Opciones que descartaste antes de responder: {item.discardedOptions.map(option => 'ABCD'[option]).join(', ')}</p>}
     {item.highlights.length > 0 && <p className="sub">Tus marcas de este intento:</p>}
@@ -60,7 +61,7 @@ function ReviewItem({ item, index, report, interrupted }: { item: ResultItem; in
   const { style, label } = outcomePresentation[item.outcome];
 
   useEffect(() => {
-    if (item.outcome === 'revealed' || interrupted) return;
+    if (item.outcome === 'non-scoring' || item.outcome === 'revealed' || interrupted) return;
     let active = true;
     void result.loadExplanation(item).then(value => { if (active) setExplanation(value); }).catch(() => {});
     return () => { active = false; };
@@ -86,7 +87,7 @@ function ReviewItem({ item, index, report, interrupted }: { item: ResultItem; in
     }
   }, [index, item]);
 
-  return <details className={`rv block border-b border-line py-2 text-[length:var(--fs-b)] ${style === 'g' ? '[&>summary>i]:bg-[var(--ok)]' : style === 'r' ? '[&>summary>i]:bg-[var(--bad)]' : ''}`} data-review={index} data-question-id={item.id} data-attempt-id={item.attemptId}><summary className="flex cursor-pointer items-start gap-2"><i className="mt-[.4375rem] size-2.5 shrink-0 rounded-full bg-muted" /><span className="sr">{label}: </span>{item.outcome === 'revealed' && <span className="tag warn">Solución consultada · blanco</span>} {item.statement.slice(0, 110)}{item.statement.length > 110 ? '…' : ''}</summary>
+  return <details className={`rv block border-b border-line py-2 text-[length:var(--fs-b)] ${style === 'g' ? '[&>summary>i]:bg-[var(--ok)]' : style === 'r' ? '[&>summary>i]:bg-[var(--bad)]' : ''}`} data-review={index} data-question-id={item.id} data-attempt-id={item.attemptId}><summary className="flex cursor-pointer items-start gap-2"><i className="mt-[.4375rem] size-2.5 shrink-0 rounded-full bg-muted" /><span className="sr">{label}: </span>{item.outcome === 'non-scoring' && <span className="tag">{label}</span>}{item.outcome === 'revealed' && <span className="tag warn">Solución consultada · blanco</span>} {item.statement.slice(0, 110)}{item.statement.length > 110 ? '…' : ''}</summary>
     <ReviewDetails item={item} explanation={explanation} />
     {item.retryAvailable && <div className="mt-2"><p className="sub">La corrección de arriba ya se mostró. Este reintento se guarda aparte y no cambia tus estadísticas ni el repaso programado.</p><button type="button" className="btn sec" onClick={() => { if (!result.retryImmediately(item.id)) setRetryError(true); }}>Reintentar como práctica inmediata</button>{retryError && <p role="alert" className="sub">No se pudo iniciar el reintento. Esta revisión sigue disponible; vuelve a intentarlo.</p>}</div>}
     <ReviewReport item={item} index={index} report={report} />
@@ -108,7 +109,7 @@ export function ResultPage() {
   const [strategyLoading, setStrategyLoading] = useState(false);
   useEffect(() => {
     const activity = dailyTrainingActivity;
-    if (advancedDailyActivity.current || !snapshot || snapshot.interrupted
+    if (advancedDailyActivity.current || !snapshot || snapshot.interrupted || snapshot.correct + snapshot.wrong + snapshot.blank === 0
       || !['topicTest', 'mixedTopicTest', 'failures', 'spacedReviews', 'activeRecall'].includes(activity || '')) return;
     advancedDailyActivity.current = true;
     setDailyActivityAdvanced(!!home.completeTrainingActivity(activity as 'topicTest' | 'mixedTopicTest' | 'failures' | 'spacedReviews' | 'activeRecall', trainingActivityReference));
@@ -127,9 +128,14 @@ export function ResultPage() {
   return <>
     <h1>Resultado</h1>
     {snapshot.exposureKind === 'immediate-retry' && <div className="note" role="status"><b>Resultado de práctica inmediata</b><p className="my-1.5">Ya habías visto esta corrección. Este resultado no mide recuerdo diferido ni modifica tus estadísticas o repasos.</p></div>}
-    {snapshot.interrupted && <div className="note result-status"><b>Sesión interrumpida</b><p className="my-1.5">{snapshot.correct + snapshot.wrong} de {snapshot.items.length} preguntas respondidas. La puntuación global mantiene las no contestadas como blancos.</p></div>}
-    <div className="card big text-center"><p className="score-label mb-2 mt-0 text-[length:var(--fs-m)] text-muted">{snapshot.scorePending ? 'Puntuación neta pendiente' : 'Puntuación global'} <HelpIconLink topic="puntuacion" label="Ayuda sobre cómo se calcula la puntuación" /></p>
-      {snapshot.scorePending ? <div className="legend" role="status">No se calcula una nota neta porque la penalización por error aún no está configurada.</div>
+    {snapshot.interrupted && <div className="note result-status"><b>Sesión interrumpida</b><p className="my-1.5">{snapshot.correct + snapshot.wrong} de {snapshot.correct + snapshot.wrong + snapshot.blank} preguntas puntuables respondidas. La puntuación global mantiene las no contestadas como blancos.</p></div>}
+    <div className="card big text-center"><p className="score-label mb-2 mt-0 text-[length:var(--fs-m)] text-muted">{snapshot.officialResult ? 'Calificación por partes · TAI 2025' : snapshot.scorePending ? 'Puntuación neta pendiente' : 'Puntuación global'} <HelpIconLink topic="puntuacion" label="Ayuda sobre cómo se calcula la puntuación" /></p>
+      {snapshot.officialResult ? <div className="legend" role="status">
+        <p>Conocimientos: {snapshot.officialResult.theory.direct} puntos directos (mínimo {snapshot.officialResult.theory.cutoff}); calificación {snapshot.officialResult.theory.mark}/50.</p>
+        {snapshot.officialResult.practical ? <><p>Supuesto: {snapshot.officialResult.practical.direct} puntos directos (mínimo {snapshot.officialResult.practical.cutoff}); calificación {snapshot.officialResult.practical.mark}/50.</p>
+          <p>{snapshot.officialResult.passed ? 'Ejercicio superado' : 'Ejercicio no superado'} · Suma de calificaciones: {snapshot.officialResult.total}/100.</p></> :
+          <p>Ejercicio no superado. El supuesto queda sin calificar porque no se alcanzó el mínimo de conocimientos.</p>}
+      </div> : snapshot.score === null && !snapshot.scorePending ? <div className="legend">Solo consulta · sin preguntas puntuables</div> : snapshot.scorePending ? <div className="legend" role="status">No se calcula una nota neta porque la penalización por error aún no está configurada.</div>
         : <><div className="score" data-count={snapshot.score}>{snapshot.score}<small>/100</small></div><div className="legend">{snapshot.scoringPolicy
           ? `100 × (aciertos × ${snapshot.scoringPolicy.correctPoints} − fallos × ${snapshot.scoringPolicy.wrongPenalty} + blancos × ${snapshot.scoringPolicy.blankPoints}) / (preguntas × ${snapshot.scoringPolicy.correctPoints})`
           : '100 × (aciertos − fallos/3) / total de preguntas'}</div></>}

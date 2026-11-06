@@ -1,0 +1,18 @@
+{
+  "auditArchiveSha256": "7c97025a17ca3f3c746f65e7484793feda7556723f68ba4152804350a9bbbebb",
+  "bank": 16078,
+  "findings": 3519,
+  "auditDate": "2026-11-05",
+  "base": "6b8ce24",
+  "source": "/Users/dramiro/Documents/Codex/2026-11-05/files-mentioned-by-the-user-temario/outputs/Auditoria-TAI-reinicio.zip",
+  "firestoreAuthorization": {
+    "date": "2026-11-05",
+    "decision": "Usuario autoriza las 13 correcciones después de CI e integración",
+    "files": [
+      "T3.08",
+      "T4.07"
+    ],
+    "questions": 13,
+    "deletions": 0
+  }
+}

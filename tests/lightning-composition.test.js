@@ -37,8 +37,8 @@ describe('lightning composition', () => {
     const { services } = setup({
       loadDueQuestionIds: vi.fn(async () => []),
       readQuestionStats: vi.fn(async () => ({})),
-      knownQuestionIds: vi.fn(() => ['scenario', 'context', 'plain']),
-      loadQuestionsById: vi.fn(async () => [question('scenario', { s: true }), question('context', { cp: 'Contexto' }), question('plain')]),
+      knownQuestionIds: vi.fn(() => ['scenario', 'context', 'non-scoring', 'plain']),
+      loadQuestionsById: vi.fn(async () => [question('scenario', { s: true }), question('context', { cp: 'Contexto' }), question('non-scoring', { np: 1 }), question('plain')]),
     });
 
     await expect(services.loadQuestion()).resolves.toMatchObject({ id: 'plain', reason: 'Nueva', reasonKind: 'new' });

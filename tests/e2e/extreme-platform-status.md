@@ -153,3 +153,18 @@ Estados: **Verificado**, **Parcial**, **Pendiente**, **Bloqueado**. “Verificad
 - ATE-010 fija el reloj del fixture de vacaciones; ATE-011 espera pregunta y respuesta observables antes de finalizar. Ambos cerrados con suite focal/global, sin alterar reglas de negocio ni aumentar timeouts. Persiste aviso no bloqueante de jsdom `window.scrollTo`.
 - UX-009 sigue parcial: pendientes tecnología asistiva real, zoom nativo 200/400 y contraste integral. ATE-005 conserva brechas de controles dinámicos/concurrencia. ATE-006 sigue sin ejecución remota: consulta GitHub del 6/11 devuelve cero PR y cero runs en la rama. Siguiente acción: publicar este corte y abrir PR de revisión para activar CI, sin merge ni deploy.
 - No se usó Firebase productivo ni Gemini. Los cambios concurrentes de README y auditoría editorial se preservan.
+
+## Integración de main para CI — 6/11/2026
+
+PR de revisión https://github.com/dramirodev/tai-oposicion/pull/110, sin merge ni deploy. GitHub detectó 19 conflictos y no inició CI. Se prepara integración aislada en `/tmp/tai-audit-integration`, rama `audit/integration-2026-11-06`, preservando el checkout concurrente. Se conservan ambos registros de hallazgos y gates Auth, las nuevas reglas de acceso resuelto de main y el propietario sintético limitado al emulador. Se mantiene la referencia visual aprobada de main 282f692 y sus cuatro capturas Simulacros.
+
+Check de integración: 1.016 aprobadas/29 omitidas; primer arranque de design-flow falló, focal 15/15 y global posterior verde. Autenticación owner/perfiles Emulator 12/12; E2E general en ejecución. El test de configuración de Simulacros usaba la etiqueta antigua «Completo»; main distingue ahora «Configurable» y «Oficial 2025». Se ajusta únicamente el localizador para conservar todas las aserciones de configuración/persistencia. Integración aún IMPLEMENTADA SIN VERIFICAR globalmente.
+
+- Autenticación heredada y Astra tras permitir el puerto loopback 4195: **2/2** Chromium, solo Auth/Firestore Emulator demo-tai-auth. El primer intento falló por DNS del sandbox; reejecución autorizada fuera del sandbox. La primera pasada de test reveló ERR_BLOCKED_BY_CLIENT del guard; no se retiró el guard, se añadió únicamente el puerto del servidor de test.
+- Último check tras restaurar íntegra la resolución de permisos de main y envolver el montaje de fixture en act: **1.016 aprobadas/29 omitidas**; arquitectura/tipos/lint sin error nuevo. El montaje sigue en observación por intermitencia histórica; no declarar estabilidad absoluta por una sola pasada.
+
+- E2E integrado inicial: **292 aprobadas, 30 omitidas, 14 fallidas** (12,9 min). Los 14 fallos son los 2 localizadores de pestaña antiguos y 12 diferencias visuales revisadas de Simulacros/parte2/Por examen. No se alteran umbrales ni se excluyen tests; referencias actualizadas tras revisión individual en ambos motores/temas, con huellas/diffs en `evidence/integration-2026-11-06/`. Reejecución focal de los 14 en curso.
+
+- ATE-012 cerrado: recorrido de configuración/persistencia **2/2** Chromium/WebKit tras actualizar el localizador; Auth **2/2** Chromium después del guard de puerto. ATE-013: montaje React dentro de act, check **1.016/29 omitidas** y tres ejecuciones completas posteriores **1.016/29 cada una**, sin fallo de arranque. Logs conservados. No se elevó timeout.
+
+- Referencias visuales revisadas verificadas: **12/12** Chromium/WebKit, tres rutas × dos temas. Los 14 fallos del E2E inicial quedan cubiertos por reejecuciones posteriores **2/2 + 12/12**, con los otros 292 ya aprobados. No se presenta como una única pasada global verde. Siguiente paso: commit de integración y referencia visual consolidada, push a PR110 y verificar CI remota.

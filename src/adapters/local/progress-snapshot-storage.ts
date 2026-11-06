@@ -32,6 +32,14 @@ export function readProgressSnapshot(storageKey: string): unknown {
   } catch { return null; }
 }
 
+export function readResetGeneration(key: string): string | undefined {
+  try { return localStorage.getItem(key + '.generation') || undefined; } catch { return undefined; }
+}
+
+export function writeResetGeneration(key: string, generation: string): void {
+  try { localStorage.setItem(key + '.generation', generation); } catch { /* The primary and mirror also carry the generation. */ }
+}
+
 export function hasProgressSnapshot(storageKey: string): boolean {
   // Match the legacy store: an empty value is not a usable snapshot.
   try { return !!localStorage.getItem(storageKey); } catch { return false; }

@@ -8,6 +8,7 @@ export interface AppBootstrapDependencies {
   saveRun(): void;
   pauseTrainingSession?(): void;
   routeReady: Promise<void>;
+  onAccessResolved(listener: () => void): () => void;
   resumeSaved(): Promise<unknown> | void;
   prefetchBank(): Promise<unknown> | void;
   loadMetadataAndInitializeSync(): Promise<unknown>;
@@ -18,6 +19,7 @@ export function bootAppServices(dependencies: AppBootstrapDependencies): () => v
   const controller = new AbortController();
   const timers: ReturnType<typeof setTimeout>[] = [];
   let stopped = false;
+  let stopWaitingForAccess: (() => void) | undefined;
   const listen = (target: EventTarget, event: string, listener: () => void) =>
     target.addEventListener(event, listener, { signal: controller.signal });
   const stopWatchingAccount = dependencies.onAccountChange(dependencies.goHome);
@@ -53,7 +55,7 @@ export function bootAppServices(dependencies: AppBootstrapDependencies): () => v
     listen(document, 'visibilitychange', () => {
       if (document.visibilityState === 'hidden') dependencies.saveRun();
     });
-    void dependencies.resumeSaved();
+    stopWaitingForAccess = dependencies.onAccessResolved(() => { if (!stopped) void dependencies.resumeSaved(); });
     timers.push(setTimeout(() => { void dependencies.prefetchBank(); }, 4000));
 
     if (!stopped) {
@@ -63,6 +65,7 @@ export function bootAppServices(dependencies: AppBootstrapDependencies): () => v
 
   return () => {
     stopped = true;
+    stopWaitingForAccess?.();
     controller.abort();
     timers.forEach(clearTimeout);
     stopWatchingAccount();

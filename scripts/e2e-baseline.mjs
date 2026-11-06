@@ -22,7 +22,7 @@ if (!existsSync(refFile)) {
     // La referencia solo genera capturas de rutas. Las comprobaciones funcionales
     // completas corren después contra la versión candidata, donde se mantienen
     // todos los tests de teclado, subrayado, persistencia y navegación.
-    const routeSnapshotNames = 'home|quiz|result|test|sim|examenes|cards|stats|settings|temario|falladas|errores|lectura|relampago|trampas|acceso';
+    const routeSnapshotNames = 'home|quiz|result|test|sim|examenes|cards|stats|settings|temario|planificacion|falladas|errores|lectura|relampago|trampas|acceso';
     run('npx', ['playwright', 'test', 'tests/e2e/routes.spec.ts', '--grep', routeSnapshotNames, '--update-snapshots'], tmp);
     const snapshots = resolve('tests/e2e/snapshots');
     const candidateSnapshots = join(tmp, 'candidate-snapshots');

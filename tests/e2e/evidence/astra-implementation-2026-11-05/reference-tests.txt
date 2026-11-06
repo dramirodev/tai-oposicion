@@ -1,0 +1,27 @@
+
+> tai-pwa@1.1.12 test
+> vitest run --maxWorkers=2
+
+
+ RUN  v5.0.5 /private/var/folders/6n/xz2y1nj50kz7nt_ckhz1c2380000gn/T/tai-astra-origin-7akz95f8
+
+Error: Not implemented: window.scrollTo
+    at module.exports (/Users/dramiro/Documents/Codex/tai-audit-implementation/node_modules/jsdom/lib/jsdom/browser/not-implemented.js:9:17)
+    at /Users/dramiro/Documents/Codex/tai-audit-implementation/node_modules/jsdom/lib/jsdom/browser/Window.js:960:7
+    at grade (/private/var/folders/6n/xz2y1nj50kz7nt_ckhz1c2380000gn/T/tai-astra-origin-7akz95f8/src/features/cards/CardsPage.tsx:156:57)
+    at onClick (/private/var/folders/6n/xz2y1nj50kz7nt_ckhz1c2380000gn/T/tai-astra-origin-7akz95f8/src/features/cards/CardsPage.tsx:124:219)
+    at executeDispatch (/Users/dramiro/Documents/Codex/tai-audit-implementation/node_modules/react-dom/cjs/react-dom-client.development.js:20804:9)
+    at runWithFiberInDEV (/Users/dramiro/Documents/Codex/tai-audit-implementation/node_modules/react-dom/cjs/react-dom-client.development.js:1048:13)
+    at processDispatchQueue (/Users/dramiro/Documents/Codex/tai-audit-implementation/node_modules/react-dom/cjs/react-dom-client.development.js:20854:19)
+    at /Users/dramiro/Documents/Codex/tai-audit-implementation/node_modules/react-dom/cjs/react-dom-client.development.js:21423:9
+    at batchedUpdates$1 (/Users/dramiro/Documents/Codex/tai-audit-implementation/node_modules/react-dom/cjs/react-dom-client.development.js:3437:40)
+    at dispatchEventForPluginEventSystem (/Users/dramiro/Documents/Codex/tai-audit-implementation/node_modules/react-dom/cjs/react-dom-client.development.js:21008:7) undefined
+
+ Test Files  184 passed | 1 skipped (185)
+      Tests  949 passed | 27 skipped (976)
+   Start at  22:42:30
+   Duration  34.61s (environment 47%, tests 34%, setup 14%, import 3%, transform 2%, worker 1%)
+
+Environment  jsdom was created 185 times · 27.18s total, 47% of tracked time
+             create it once per worker with pool: 'vmThreads' (keeps per-file isolation) or isolate: false (shares it across files)
+             learn more: https://vitest.dev/guide/improving-performance#test-environments

@@ -1,4 +1,4 @@
-import { deleteDoc, doc, onSnapshot, collection, setDoc, type DocumentSnapshot, type Firestore, type QuerySnapshot, type Unsubscribe } from 'firebase/firestore';
+import { deleteDoc, doc, getDocFromServer, onSnapshot, collection, setDoc, type DocumentSnapshot, type Firestore, type QuerySnapshot, type Unsubscribe } from 'firebase/firestore';
 import type { Auth, User } from 'firebase/auth';
 import type { AccessLevel, AccessRequest } from '../../core/domain/entities.js';
 import type { AccessRequestRecord } from './dto/access.js';
@@ -31,7 +31,7 @@ export function createFirebaseAccessControl(dependencies: AccessControlDependenc
     listeners = [];
   };
   const setAccess = (level: AccessLevel) => { status.access = level; };
-  const handleError = (error: unknown) => { status.accessErr = String(errorCode(error)); status.accessResolved = true; dependencies.emit(); };
+  const handleError = (error: unknown) => { status.accessErr = String(errorCode(error)); dependencies.emit(); };
 
   function resolve(user: User): void {
     const database = dependencies.database();
@@ -65,9 +65,23 @@ export function createFirebaseAccessControl(dependencies: AccessControlDependenc
     status.state = 'sesión iniciada';
     if (status.access === 'propietario') setAccess('invitado');
     dependencies.emit();
-    listeners.push(onSnapshot(doc(database, 'access', accountId), (snapshot: DocumentSnapshot) => {
+    const grant = doc(database, 'access', accountId);
+    const failGrant = (error: unknown) => {
       if (!isCurrent()) return;
       status.accessResolved = true;
+      handleError(error);
+    };
+    listeners.push(onSnapshot(grant, { includeMetadataChanges: true }, (snapshot: DocumentSnapshot) => {
+      if (!isCurrent()) return;
+      // An empty local cache is not an access denial. Wait for the server before redirecting.
+      if (snapshot.metadata?.fromCache && (!snapshot.exists() || snapshot.data()?.ok !== true)) {
+        // The listener stays live while offline. Settle the UI if the server is unreachable,
+        // but preserve the checkpoint until there is an authoritative grant decision.
+        if (!status.accessResolved) void getDocFromServer(grant).catch(error => { if (!status.accessResolved) failGrant(error); });
+        return;
+      }
+      status.accessResolved = true;
+      status.accessErr = '';
       if (snapshot.exists() && (snapshot.data() || {}).ok === true) {
         if (status.access !== 'aprobado') { setAccess('aprobado'); status.state = 'sincronizando…'; dependencies.startSync(); }
       } else {
@@ -76,7 +90,7 @@ export function createFirebaseAccessControl(dependencies: AccessControlDependenc
         if (wasApproved) { dependencies.stopSync(); status.state = 'sesión iniciada'; }
       }
       dependencies.emit();
-    }, handleError));
+    }, failGrant));
     listeners.push(onSnapshot(doc(database, 'requests', accountId), (snapshot: DocumentSnapshot) => {
       if (!isCurrent()) return;
       status.requested = snapshot.exists();

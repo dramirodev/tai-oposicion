@@ -1,3 +1,4 @@
+import type { OfficialExamRun } from '../domain/simulation-scenarios.js';
 import type { SessionKind } from '../domain/entities.js';
 import type { Confidence, Highlight, SelfAssessment } from '../domain/attempts/transitions.js';
 import type { ExposureKind } from '../domain/attempts/transitions.js';
@@ -6,6 +7,8 @@ import type { TrainingActivityReference } from '../domain/study-training-session
 import type { SimulationScoringPolicy } from '../domain/simulation-scoring.js';
 
 export interface RunCfg {
+  officialExam?: OfficialExamRun;
+  publicSample?: true;
   kind: SessionKind;
   feedback: boolean;
   items: QuestionRecord[];
@@ -71,6 +74,8 @@ export interface CompletedStudyRun {
 }
 
 export interface LastResult {
+  officialExam?: OfficialExamRun;
+  publicSample?: true;
   ses: CompletedStudyRun;
   items: QuestionRecord[];
   feedback?: boolean;

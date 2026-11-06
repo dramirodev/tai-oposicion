@@ -11,7 +11,7 @@ beforeAll(async()=>{
  document.documentElement.innerHTML=readFileSync('index.html','utf8');localStorage.clear();
  vi.stubGlobal('matchMedia',()=>({matches:true}));vi.stubGlobal('scrollTo',()=>{});Element.prototype.scrollIntoView=()=>{};
  vi.stubGlobal('fetch',async url=>{try{return {ok:true,json:async()=>JSON.parse(readFileSync(path.join('public',String(url)),'utf8'))};}catch{return {ok:false,json:async()=>null};}});
- await import('../src/app/main');router=(await import('../src/app/router/route-runtime.js')).router;store=await import('../src/adapters/local/local-progress-store.js');engine=await import('../src/app/composition/study/study-engine-composition.js');recovery=await import('../src/app/composition/study/pending-run-composition.js');await waitText('Sesión rápida');
+ await act(async()=>{ await import('../src/app/main'); });router=(await import('../src/app/router/route-runtime.js')).router;store=await import('../src/adapters/local/local-progress-store.js');engine=await import('../src/app/composition/study/study-engine-composition.js');recovery=await import('../src/app/composition/study/pending-run-composition.js');await waitText('Sesión rápida');
 });
 beforeEach(async()=>{store.resetAll();engine.clearActiveRun();engine.clearLastResult();await navigate('home','Sesión rápida');});
 afterAll(()=>{vi.unstubAllGlobals();});
@@ -21,12 +21,16 @@ it('comunica la selección al cambiar la cantidad del test',async()=>{
  await vi.waitFor(()=>expect([...document.querySelectorAll('[aria-label="Número de preguntas"] button')].find(item=>item.textContent==='10').getAttribute('aria-pressed')).toBe('true'));
  expect([...document.querySelectorAll('[aria-label="Número de preguntas"] button')].find(item=>item.textContent==='15').getAttribute('aria-pressed')).toBe('false');
 });
-it('muestra la advertencia histórica antes de permitir contestar',async()=>{
+it('permite consultar una pregunta histórica sin corregir ni guardar una nota',async()=>{
  const q=JSON.parse(readFileSync('public/data/T3.09.json','utf8')).find(q=>q.i==='AT309-P1-12');
  engine.createRun({kind:'test',feedback:true,items:[q]});await navigate('quiz','pregunta 1');
  expect(document.querySelector('#app').textContent).toContain('Solo estudio');
  expect(document.querySelector('#app').textContent).toContain('original ambiguo');
- expect(store.rec(q.i)).toBeUndefined();
+ expect([...document.querySelectorAll('.opt')].every(option => option.disabled)).toBe(true);
+ document.querySelector('#next').click();await waitText('Solo consulta · sin preguntas puntuables');
+ expect(document.querySelector('.score')).toBeNull();
+ expect(document.querySelector('[data-review] summary').textContent).toContain('Solo consulta');
+ expect(store.rec(q.i)).toBeUndefined();expect(store.getSessions()).toHaveLength(0);
 });
 it('selecciona por separado los motivos de un acierto y actualiza el repaso',async()=>{
  const q=JSON.parse(readFileSync('public/data/T1.01.json','utf8'))[0];
@@ -102,15 +106,20 @@ it('redirige el acceso directo antiguo de tarjetas a Inicio',async()=>{
 it('confirma el cierre desde el mapa si quedan preguntas sin responder',async()=>{
  const qs=JSON.parse(readFileSync('public/data/T1.01.json','utf8')).slice(0,3);
  const run=engine.createRun({kind:'sim',feedback:false,items:qs});await navigate('quiz','pregunta 1');
- document.querySelector('[data-jump="2"]').click();
+ await act(async()=>{document.querySelector('.question-map summary').click();});
+ await act(async()=>{document.querySelector('[data-jump="2"]').click();});
+ const lastQuestion=()=>document.querySelector('[data-jump="2"]');
  await vi.waitFor(()=>{
-  expect(engine.getSnapshot().run.idx).toBe(2);
-  expect(document.querySelector('[data-jump="2"]')?.getAttribute('aria-current')).toBe('step');
+  expect(engine.getCurrentRun().idx).toBe(2);
+  expect(lastQuestion()?.getAttribute('aria-current')).toBe('step');
   expect(document.querySelector('#next')?.textContent).toContain('Terminar');
  });
- document.querySelector(`.opt[data-i="${qs[2].c}"]`).click();
- await vi.waitFor(()=>expect(engine.getSnapshot().run.ans[2]).toBe(qs[2].c));
- await act(async()=>{document.querySelector('#next').click();await Promise.resolve();});
+ await act(async()=>{document.querySelector(`.opt[data-i="${qs[2].c}"]`).click();});
+ await vi.waitFor(()=>{
+  expect(engine.getCurrentRun().ans[2]).toBe(qs[2].c);
+  expect(lastQuestion()?.textContent).toContain('Respondida');
+ });
+ await act(async()=>{document.querySelector('#next').click();});
  await vi.waitFor(()=>expect(document.querySelector('.overlay')).not.toBeNull());
  expect(document.querySelector('.overlay').textContent).toContain('sin responder');
  await act(async()=>{document.querySelector('.overlay [data-v="0"]').click();await Promise.resolve();});

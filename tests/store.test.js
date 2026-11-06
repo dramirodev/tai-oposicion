@@ -1,8 +1,11 @@
 import 'fake-indexeddb/auto';
-import { describe, it, expect, beforeEach, vi } from 'vitest';
+import { IDBFactory } from 'fake-indexeddb';
+import { describe, it, expect, afterEach, beforeEach, vi } from 'vitest';
 const D = 86400000;
 let st;
-beforeEach(async () => { localStorage.clear(); vi.resetModules(); st = await import('../src/adapters/local/local-progress-store.js'); });
+beforeEach(async () => { localStorage.clear(); vi.stubGlobal('indexedDB', new IDBFactory()); vi.resetModules(); st = await import('../src/adapters/local/local-progress-store.js'); });
+
+afterEach(async () => { await st.flushNow(); vi.unstubAllGlobals(); });
 
 describe('repaso espaciado', () => {
   const T0 = 1_800_000_000_000;
@@ -182,6 +185,54 @@ describe('copia de seguridad en IndexedDB', () => {
     expect(await s2.recover()).toBe(true);
     expect(s2.rec('q1')[0]).toBe(1); expect(s2.getSeen()).toEqual(['T1.01', 'T3.04']); expect(s2.getReports().q1.nota).toBe('n');
     expect(JSON.parse(localStorage.getItem('tai.v1:guest')).seen.t).toEqual(['T1.01', 'T3.04']); // y lo vuelve a guardar en localStorage
+  });
+  it('un borrado impide recuperar una copia anterior aunque siga en IndexedDB al recargar', async () => {
+    const storage = await import('../src/adapters/local/progress-snapshot-storage.js');
+    st.switchAccount('reset-race');
+    st.gradeCard('FC-Q-T1.01-998', 2);
+    await st.flushNow();
+    const [oldCopy] = await storage.readMirroredProgress(['state:reset-race']);
+    const oldRecovery = st.recover();
+    st.resetAll();
+    expect(await oldRecovery).toBe(false);
+    await st.flushNow();
+    // Model a browser shutdown before the reset reached IndexedDB.
+    await storage.writeMirroredProgress('state:reset-race', JSON.parse(oldCopy));
+    vi.resetModules();
+    const reloaded = await import('../src/adapters/local/local-progress-store.js');
+    expect(await reloaded.recover()).toBe(false);
+    expect(reloaded.cardRec('FC-Q-T1.01-998')).toBeUndefined();
+    reloaded.gradeCard('FC-Q-T1.01-999', 2);
+    await reloaded.flushNow();
+    localStorage.removeItem('tai.v1:reset-race');
+    vi.resetModules();
+    const recovered = await import('../src/adapters/local/local-progress-store.js');
+    expect(await recovered.recover()).toBe(true);
+    expect(recovered.cardRec('FC-Q-T1.01-999')).toBeDefined();
+    expect(recovered.cardRec('FC-Q-T1.01-998')).toBeUndefined();
+  });
+  it('una pestaña antigua adopta el borrado de su cuenta y sigue admitiendo estudio e importación explícita', async () => {
+    st.switchAccount('dos-pestanas');
+    st.gradeCard('FC-Q-T1.01-998', 2);
+    await st.flushNow();
+    const backup = st.exportAll();
+    vi.resetModules();
+    const otherTab = await import('../src/adapters/local/local-progress-store.js');
+    otherTab.resetAll();
+    otherTab.setSeen(['T2.02']);
+    await otherTab.flushNow();
+    st.record('nuevo', 'T2.02', 1, Date.now());
+    await st.flushNow();
+    expect(st.cardRec('FC-Q-T1.01-998')).toBeUndefined();
+    expect(st.getSeen()).toEqual(['T2.02']);
+    vi.resetModules();
+    const reloaded = await import('../src/adapters/local/local-progress-store.js');
+    await reloaded.recover();
+    expect(reloaded.cardRec('FC-Q-T1.01-998')).toBeUndefined();
+    expect(reloaded.rec('nuevo')[0]).toBe(1);
+    reloaded.importAll(backup);
+    expect(reloaded.cardRec('FC-Q-T1.01-998')).toBeDefined();
+    expect(reloaded.rec('nuevo')[0]).toBe(1);
   });
   it('no pisa datos locales más recientes', async () => {
     st.setSeen(['T1.01']); await st.flushNow();

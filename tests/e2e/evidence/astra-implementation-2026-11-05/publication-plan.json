@@ -1,0 +1,633 @@
+{
+  "project": "tai-oposicion",
+  "readAt": "2026-11-05T21:49:24.861Z",
+  "metaUpdateTime": "2026-10-30T07:13:09.113449Z",
+  "version": 12,
+  "count": 13,
+  "deletions": 0,
+  "changes": [
+    {
+      "id": "GEN-T3.08-57.v2",
+      "topic": "T3.08",
+      "before": {
+        "i": "GEN-T3.08-57.v2",
+        "t": "T3.08",
+        "o": "G",
+        "q": "El prólogo de un documento XML contiene:",
+        "a": [
+          "Los atributos.",
+          "Los datos.",
+          "El elemento raíz.",
+          "Una sentencia que declara el documento como XML, la declaración de tipo de documento y comentarios."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-57",
+        "u": "PRÓLOGO: es opcional y contiene una sentencia que declara el documento como XML, una declaración del tipo de documento y comentarios e instrucciones de procesamiento. … CUERPO: es obligatorio, debe contener solo un elemento raíz (imprescindible para que el documento esté bien formado).",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-57.v2",
+        "t": "T3.08",
+        "o": "G",
+        "q": "¿Cuál de estos elementos puede aparecer en el prólogo de un documento XML 1.0, antes del elemento raíz?",
+        "a": [
+          "El valor de un atributo del elemento raíz.",
+          "El contenido de caracteres del elemento raíz.",
+          "La etiqueta de cierre del elemento raíz.",
+          "Una declaración de tipo de documento (DOCTYPE)."
+        ],
+        "c": 3,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-57",
+        "u": "PRÓLOGO: es opcional y contiene una sentencia que declara el documento como XML, una declaración del tipo de documento y comentarios e instrucciones de procesamiento. [p. 19]",
+        "v": 0,
+        "n": "La declaración DOCTYPE es opcional y, si existe, precede al elemento raíz. Los atributos y el contenido del elemento raíz pertenecen al cuerpo del documento."
+      }
+    },
+    {
+      "id": "GEN-T3.08-316.v1",
+      "topic": "T3.08",
+      "before": {
+        "i": "GEN-T3.08-316.v1",
+        "t": "T3.08",
+        "o": "G",
+        "q": "En HTML5, <input type=\"checkbox\" checked> equivale a:",
+        "a": [
+          "unchecked.",
+          "checked=\"false\".",
+          "checked=\"0\".",
+          "checked=\"checked\"."
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [
+          8,
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-316",
+        "u": "En HTML5, se considera el valor true del atributo booleano con la simple presencia del mismo, dando, por tanto, prioridad a la concisión de la sintaxis. <input type=\"checkbox\" checked>",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-316.v1",
+        "t": "T3.08",
+        "o": "G",
+        "q": "¿Cuál es una forma explícita y conforme con la sintaxis HTML de escribir el atributo booleano checked en una casilla marcada?",
+        "a": [
+          "checked=\"unchecked\".",
+          "checked=\"false\".",
+          "checked=\"0\".",
+          "checked=\"checked\"."
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [
+          8,
+          7
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-316",
+        "u": "<input type=\"checkbox\" checked=\"checked\"> [p. 8]",
+        "v": 0,
+        "n": "Un atributo booleano presente se considera verdadero. Si se le asigna un valor explícito, HTML admite la cadena vacía o el propio nombre del atributo. Los valores false y 0 también dejan la casilla marcada en un navegador, pero su escritura incumple la sintaxis."
+      }
+    },
+    {
+      "id": "GEN-T3.08-416.v2",
+      "topic": "T3.08",
+      "before": {
+        "i": "GEN-T3.08-416.v2",
+        "t": "T3.08",
+        "o": "G",
+        "q": "En XHTML, el salto de línea se escribe:",
+        "a": [
+          "<br />.",
+          "<br>.",
+          "<br></br>.",
+          "<break>."
+        ],
+        "c": 0,
+        "k": "K",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-416",
+        "u": "<span> Contenedor en línea. No comienza en una nueva línea y solo ocupa el ancho necesario. … <br> Salto de línea. Sin etiqueta de cierre. En XHTML <br />.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-416.v2",
+        "t": "T3.08",
+        "o": "G",
+        "q": "En un documento XHTML, ¿qué escritura usa la sintaxis XML de etiqueta vacía para un salto de línea?",
+        "a": [
+          "<br />",
+          "<br>",
+          "<br></br>",
+          "<break />"
+        ],
+        "c": 0,
+        "k": "K",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-416",
+        "u": "Sin etiqueta de cierre. En XHTML <br />. [p. 34]",
+        "v": 0,
+        "n": "La notación XML de etiqueta vacía acaba en />. El par <br></br> también puede representar un elemento sin contenido en XML, pero usa dos etiquetas. El elemento HTML que produce el salto de línea se llama br."
+      }
+    },
+    {
+      "id": "GEN-T3.08-351.v1",
+      "topic": "T3.08",
+      "before": {
+        "i": "GEN-T3.08-351.v1",
+        "t": "T3.08",
+        "o": "G",
+        "q": "El atributo for de <output> especifica:",
+        "a": [
+          "La URL de envío.",
+          "El cálculo a realizar a partir de los elementos usados.",
+          "El id de un formulario.",
+          "El nombre del campo."
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-351",
+        "u": "<output> Representa el resultado de un cálculo. - for: especifica el cálculo a realizar a partir de los elementos usados.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-351.v1",
+        "t": "T3.08",
+        "o": "G",
+        "q": "En <output name=\"x\" for=\"a b\"></output>, ¿qué representa el valor de for?",
+        "a": [
+          "La URL del servidor que recibe el resultado.",
+          "Los identificadores de los controles que contribuyen al resultado.",
+          "El identificador del formulario al que pertenece el resultado.",
+          "El nombre con el que se identifica el resultado en el formulario."
+        ],
+        "c": 1,
+        "k": "K",
+        "x": [
+          7,
+          8
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-351",
+        "u": "=<output name=\"x\" for=\"a b\"></output> [p. 61]",
+        "v": 0,
+        "n": "for enumera los identificadores de los elementos que intervienen en el cálculo. La operación se programa por separado. En el ejemplo del temario, el atributo oninput contiene la suma y for identifica a y b."
+      }
+    },
+    {
+      "id": "GEN-T3.08-540.v2",
+      "topic": "T3.08",
+      "before": {
+        "i": "GEN-T3.08-540.v2",
+        "t": "T3.08",
+        "o": "G",
+        "q": "La pseudoclase :out-range selecciona inputs cuyo valor:",
+        "a": [
+          "No es válido.",
+          "Es de solo lectura.",
+          "Está fuera del rango especificado por min y max.",
+          "Está dentro del rango."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          8,
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-540",
+        "u": ":in-range: elemento input cuyo valor se encuentra dentro del rango (intervalo especificado por atributos min y max). … :invalid: elemento de un formulario cuyo contenido no se puede validar.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-540.v2",
+        "t": "T3.08",
+        "o": "G",
+        "q": "¿En qué caso coincide un control <input type=\"number\" min=\"1\" max=\"5\"> con la pseudoclase CSS :out-of-range?",
+        "a": [
+          "Está vacío y no tiene el atributo required.",
+          "Su valor es 3 y tiene el atributo readonly.",
+          "Su valor es 6.",
+          "Su valor es 1."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          8,
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-540",
+        "u": "elemento input cuyo valor se encuentra fuera del rango [p. 16]",
+        "v": 0,
+        "n": "El valor 6 supera el máximo de 5. El nombre normalizado es :out-of-range (Selectors, §12.3.2). El guion y la palabra «of» forman parte del selector."
+      }
+    },
+    {
+      "id": "GEN-T3.08-545",
+      "topic": "T3.08",
+      "before": {
+        "i": "GEN-T3.08-545",
+        "t": "T3.08",
+        "o": "G",
+        "q": "Según la herencia de CSS, si se define una propiedad en un elemento, sus descendientes:",
+        "a": [
+          "No heredan nada.",
+          "Heredan solo los hermanos.",
+          "Heredan inicialmente ese mismo valor.",
+          "Heredan solo si se usa !important."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 2,
+        "f": "GEN-T3.08-545",
+        "u": "Cuando se establece el valor de alguna propiedad en un elemento, todos sus descendientes heredan inicialmente ese mismo valor.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-545",
+        "t": "T3.08",
+        "o": "G",
+        "q": "Una regla CSS establece color: black en body. Un span es hijo directo de body y ninguna declaración le asigna color. ¿Qué color recibe el span?",
+        "a": [
+          "El color del siguiente hermano.",
+          "Un color transparente.",
+          "El negro heredado de body.",
+          "El color de fondo de body."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 2,
+        "f": "GEN-T3.08-545",
+        "u": "body { font-family: Arial; color: black; } [p. 18]",
+        "v": 0,
+        "n": "color es una propiedad heredada. El hijo sin declaración propia recibe el valor calculado de color de su padre."
+      }
+    },
+    {
+      "id": "GEN-T3.08-1104.v1",
+      "topic": "T3.08",
+      "before": {
+        "i": "GEN-T3.08-1104.v1",
+        "t": "T3.08",
+        "o": "G",
+        "q": "Un comentario multilínea en Python se escribe con:",
+        "a": [
+          "/* */.",
+          "Triple comilla (''' ''').",
+          "## ##.",
+          "<!-- -->."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 2,
+        "f": "GEN-T3.08-1104",
+        "u": "Podemos insertar comentarios dentro de Python de 2 formas: ''' ''': comentario multilínea. #: comentario de una sola línea (estilo consola).",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-1104.v1",
+        "t": "T3.08",
+        "o": "G",
+        "q": "En un archivo de Python 3, ¿cómo se escriben dos líneas consecutivas de comentarios léxicos?",
+        "a": [
+          "Encerrando las líneas entre /* y */.",
+          "Anteponiendo # a cada línea.",
+          "Encerrando las líneas entre comillas triples.",
+          "Encerrando las líneas entre <!-- y -->."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 2,
+        "f": "GEN-T3.08-1104",
+        "u": "#: comentario de una sola línea [p. 5]",
+        "v": 0,
+        "n": "Fuera de una cadena, # inicia un comentario que termina al final de esa línea física. Las comillas triples delimitan un literal de cadena."
+      }
+    },
+    {
+      "id": "GEN-T3.08-1104.v2",
+      "topic": "T3.08",
+      "before": {
+        "i": "GEN-T3.08-1104.v2",
+        "t": "T3.08",
+        "o": "G",
+        "q": "El número de formas de insertar comentarios en Python es:",
+        "a": [
+          "Dos.",
+          "Cuatro.",
+          "Una.",
+          "Tres."
+        ],
+        "c": 0,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 2,
+        "f": "GEN-T3.08-1104",
+        "u": "Podemos insertar comentarios dentro de Python de 2 formas: ''' ''': comentario multilínea. #: comentario de una sola línea (estilo consola).",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-1104.v2",
+        "t": "T3.08",
+        "o": "G",
+        "q": "En la sentencia de Python 3 mensaje = \"#TAI\"  # etiqueta, ¿qué parte inicia un comentario?",
+        "a": [
+          "La primera comilla doble.",
+          "El signo # dentro de la cadena.",
+          "El signo # situado tras la cadena.",
+          "El signo igual."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          8
+        ],
+        "d": 2,
+        "f": "GEN-T3.08-1104",
+        "u": "#: comentario de una sola línea [p. 5]",
+        "v": 0,
+        "n": "El analizador conserva el primer # como contenido de la cadena y trata el segundo como inicio del comentario."
+      }
+    },
+    {
+      "id": "GEN-T3.08-1121",
+      "topic": "T3.08",
+      "before": {
+        "i": "GEN-T3.08-1121",
+        "t": "T3.08",
+        "o": "G",
+        "q": "El método items() de un diccionario Python devuelve:",
+        "a": [
+          "Un iterador sobre las claves.",
+          "Un iterador sobre los valores.",
+          "Un iterador sobre los pares (clave, valor).",
+          "El número de elementos."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          8,
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-1121",
+        "u": "d.keys(): iterador sobre las claves de un diccionario. o d.values(): iterador sobre los valores de un diccionario. o d.items(): iterador sobre los pares (clave,valor) de un diccionario. o d.popitem(): devuelve el último par (clave,valor) añadido. o d.clear(): elimina todos los pares del diccionario.",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-1121",
+        "t": "T3.08",
+        "o": "G",
+        "q": "En Python 3, ¿qué devuelve d.items() cuando d es un diccionario incorporado?",
+        "a": [
+          "Un iterador sobre las claves.",
+          "Una lista independiente de los valores.",
+          "Una vista dinámica de los pares (clave, valor).",
+          "El número de pares."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          8,
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-1121",
+        "u": ">>> a.items() [p. 11]",
+        "v": 0,
+        "n": "La vista dict_items permite recorrer los pares y refleja los cambios de d. iter(d.items()) crea un iterador sobre esa vista."
+      }
+    },
+    {
+      "id": "GEN-T3.08-1124",
+      "topic": "T3.08",
+      "before": {
+        "i": "GEN-T3.08-1124",
+        "t": "T3.08",
+        "o": "G",
+        "q": "El valor no definido en Python es:",
+        "a": [
+          "undefined.",
+          "null.",
+          "None.",
+          "nil."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          8,
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-1124",
+        "u": "No se pueden utilizarse palabras reservadas del lenguaje. A diferencia de otros lenguajes no tienen asociado un tipo y no es necesario declararlas antes de usarlas (tipado dinámico). … # Valor no definido x = None del x",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-1124",
+        "t": "T3.08",
+        "o": "G",
+        "q": "En Python 3, tras ejecutar x = None, ¿qué valor tiene x antes de ejecutar del x?",
+        "a": [
+          "undefined.",
+          "null.",
+          "None.",
+          "nil."
+        ],
+        "c": 2,
+        "k": "C",
+        "x": [
+          7,
+          8,
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-1124",
+        "u": "x = None\ndel x [p. 13]",
+        "v": 0,
+        "n": "La asignación vincula x al objeto None. La instrucción posterior del x elimina el vínculo."
+      }
+    },
+    {
+      "id": "GEN-T3.08-1131.v2",
+      "topic": "T3.08",
+      "before": {
+        "i": "GEN-T3.08-1131.v2",
+        "t": "T3.08",
+        "o": "G",
+        "q": "Si una función Python no indica ningún objeto en return, devuelve:",
+        "a": [
+          "False.",
+          "Nada.",
+          "Una cadena vacía.",
+          "0."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          8,
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-1131",
+        "u": "Para declarar una función se utiliza la siguiente sintaxis: def <nombre-funcion> (<parámetros>): bloque código return <objeto>",
+        "v": 0
+      },
+      "after": {
+        "i": "GEN-T3.08-1131.v2",
+        "t": "T3.08",
+        "o": "G",
+        "q": "En una función ordinaria de Python 3, ¿qué valor devuelve al llamador la ejecución de return sin expresión?",
+        "a": [
+          "False.",
+          "None.",
+          "Una cadena vacía.",
+          "0."
+        ],
+        "c": 1,
+        "k": "C",
+        "x": [
+          7,
+          8,
+          9
+        ],
+        "d": 3,
+        "f": "GEN-T3.08-1131",
+        "u": "Si no se indica ningún objeto [p. 17]",
+        "v": 0,
+        "n": "Un return sin expresión termina la llamada y entrega el objeto None al llamador."
+      }
+    },
+    {
+      "id": "AT407-P1-11",
+      "topic": "T4.07",
+      "before": {
+        "i": "AT407-P1-11",
+        "t": "T4.07",
+        "o": "A",
+        "q": "¿Cuántos hosts puede haber en una red de clase B?",
+        "a": [
+          "216",
+          "216 - 4",
+          "216 - 2",
+          "224 - 2"
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT407-P1-11",
+        "t": "T4.07",
+        "o": "A",
+        "q": "En el direccionamiento IPv4 por clases, ¿cuántas direcciones son asignables a hosts en una red de clase B sin subdividir?",
+        "a": [
+          "2^16",
+          "2^16 − 4",
+          "2^16 − 2",
+          "2^24 − 2"
+        ],
+        "c": 2,
+        "k": "D",
+        "x": [],
+        "d": null,
+        "n": "Una red de clase B sin subdividir tiene prefijo /16. De sus 65.536 direcciones, dos corresponden a red y broadcast. Quedan 65.534 asignables.",
+        "u": "65.534 hosts en cada una de las [p. 27]"
+      }
+    },
+    {
+      "id": "AT407-P1-14",
+      "topic": "T4.07",
+      "before": {
+        "i": "AT407-P1-14",
+        "t": "T4.07",
+        "o": "A",
+        "q": "La subred cuya dirección es 62.54.32.89/10, ¿cuántos hosts podrá direccionar?",
+        "a": [
+          "210 - 2",
+          "212 - 2",
+          "220 - 2",
+          "222 - 2"
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [],
+        "d": null
+      },
+      "after": {
+        "i": "AT407-P1-14",
+        "t": "T4.07",
+        "o": "A",
+        "q": "¿Cuántas direcciones puede asignar a hosts la subred IPv4 que contiene 62.54.32.89/10?",
+        "a": [
+          "2^10 − 2",
+          "2^12 − 2",
+          "2^20 − 2",
+          "2^22 − 2"
+        ],
+        "c": 3,
+        "k": "K",
+        "x": [],
+        "d": null,
+        "n": "El prefijo /10 deja 32 − 10 = 22 bits de host. Tras reservar red y broadcast quedan 4.194.302 direcciones asignables.",
+        "u": "El tamaño del bloque debe ser una potencia de 2. [p. 34]"
+      }
+    }
+  ]
+}

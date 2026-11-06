@@ -8,7 +8,7 @@ export function InitialAppLoadingProvider({ children }: { children: ReactNode })
   const readyFrame = useRef<number | null>(null);
   const nextReadyFrame = useRef<number | null>(null);
   const markReady = useCallback(() => {
-    if (readyFrame.current !== null || ready) return;
+    if (readyFrame.current !== null || nextReadyFrame.current !== null || ready) return;
     // Keep the initial loading gate through a browser style/layout pass. WebKit
     // can retain stale ancestor styles when a subtree with native selects is
     // inserted in the same task as a visibility/theme change (WebKit 326092).
@@ -24,6 +24,7 @@ export function InitialAppLoadingProvider({ children }: { children: ReactNode })
   useEffect(() => () => {
     if (readyFrame.current !== null) cancelAnimationFrame(readyFrame.current);
     if (nextReadyFrame.current !== null) cancelAnimationFrame(nextReadyFrame.current);
+    readyFrame.current = nextReadyFrame.current = null;
   }, []);
 
   useLayoutEffect(() => {

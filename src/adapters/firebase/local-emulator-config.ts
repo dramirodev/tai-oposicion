@@ -1,10 +1,13 @@
 import type { AppFirebaseOptions, FirebaseEmulatorEndpoints } from './firebase-config-loader.js';
 
 export const EMULATOR_OWNER_EMAIL = 'tai-supertest@example.test';
+
 let emulatorRuntime = false;
 export const isFirebaseEmulatorRuntime = (): boolean => emulatorRuntime;
 
 export function configureFirebaseEmulatorRuntime(config: AppFirebaseOptions, hostname: string): FirebaseEmulatorEndpoints | null {
+
+  emulatorRuntime = false;
   const endpoints = localFirebaseEmulators(config, hostname);
   if ((config.taiEmulators || config.projectId === 'demo-tai-auth') && (config.projectId !== 'demo-tai-auth' || !endpoints)) {
     throw new Error('Firebase Emulator requires demo-tai-auth and explicit loopback endpoints');

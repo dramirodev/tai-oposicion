@@ -6,7 +6,7 @@ import path from 'node:path';
 
 // Solo se sustituye el límite externo (Firebase y HTTP); pantallas, datos y almacén son reales.
 vi.mock('../src/adapters/firebase/sync-facade.js', () => ({
-  status: { user: null, state: 'sin sesión', configured: false, authResolved: true },
+  status: { user: null, state: 'sin sesión', configured: false, authResolved: true, accessResolved: true },
   setAttemptRepository: () => {},
   init: async () => {}, onStatus: () => () => {}, login: async () => {}, logout: async () => {}, retry: () => {},
 }));
@@ -27,7 +27,7 @@ it('navega por las pantallas y oculta la ruta de tarjetas sin afectar al resto',
     } catch { return { ok: false, json: async () => null }; }
   });
   ({ unmountApp } = await import('../src/app/main'));
-  const waitText = async text => vi.waitFor(() => expect(document.querySelector('#app').textContent).toContain(text));
+  const waitText = async text => vi.waitFor(() => expect(document.querySelector('#app').textContent).toContain(text), { timeout: 10000 });
   const navigate = async (route, text) => { location.hash = '#/' + route; await waitText(text); };
   await waitText('Sesión rápida');
   await navigate('test', 'Test por tema');

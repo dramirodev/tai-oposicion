@@ -5,6 +5,9 @@ import json
 import os
 import re
 from pathlib import Path
+from tempfile import TemporaryDirectory
+
+from scripts.bank_release import PUBLISHED, prepare_bank
 
 ROOT = Path(__file__).resolve().parent
 
@@ -38,7 +41,7 @@ def conv(q,o):
     d={'i':q['id'],'t':q.get('tema') or 'T?','o':o,'q':q['enunciado'],'a':[q['opciones'][x] for x in l],'c':l.index(q['correcta']),
        'k':q.get('tipo'),'x':q.get('trampas') or [],'d':q.get('dificultad')}
     if o=='G':
-        d['f']=q.get('familia'); d['u']=cita(q); d['v']=0 if q['revision']['estado']=='verificada' else 1
+        d['f']=q.get('familia'); d['u']=cita(q); d['v']=0 if (q.get('revision') or {}).get('estado')=='verificada' else 1
     else:
         if q.get('nota'): d['n']=str(q['nota'])[:300]
         if o=='O':
@@ -46,6 +49,10 @@ def conv(q,o):
             if q.get('plantilla')!='definitiva': d['p']=1
             if q.get('reserva'): d['r']=1
         if o=='A' and q.get('tema_dudoso'): d['z']=1
+    if 'np' in q:
+        if q['np'] not in (0, 1):
+            raise ValueError(f"Valor np inválido en {q['id']}")
+        d['np'] = int(q['np'])
     if q.get('caducable'): d['w']=1
     if q.get('supuesto_id'): d['s']=q['supuesto_id']
     if q.get('contexto_previo'): d['cp']=q['contexto_previo']
@@ -71,9 +78,15 @@ def generate(args):
     for file in sorted((args.bank_dir / 'generadas').glob('banco_generado_T*.json')):
         generadas.extend(load_json(file)['preguntas'])
     temas, sup_q, aliases = collections.defaultdict(list), collections.defaultdict(list), {}
+    ids = set()
     for questions, origen in [(literal, 'O'), (academia, 'A'), (generadas, 'G')]:
         for question in questions:
             data = conv(question, origen)
+            if data['i'] in ids:
+                raise ValueError(f"ID duplicado: {data['i']}")
+            ids.add(data['i'])
+            if not re.fullmatch(r'T[1-4]\.\d{2}|T\?', data['t']):
+                raise ValueError(f"Tema inválido: {data['t']}")
             if origen != 'G' and question.get('supuesto_id'):
                 sup_q[question['supuesto_id']].append(data)
             else:
@@ -94,14 +107,19 @@ def generate(args):
             meta[q['i']] = [tema, q['o'], q['k'] or '', q['x'], q['d'] or 0]
     for alias_id, question in aliases.items():
         canonical_id = question['id']
-        if alias_id in meta:
+        if alias_id in ids:
             raise ValueError(f"ID alias ya utilizado por otra pregunta: {alias_id}")
         if canonical_id not in meta:
             raise ValueError(f"El destino del alias no está en el banco: {canonical_id}")
         meta[alias_id] = [*meta[canonical_id], canonical_id]
     sup = {}
     for key, value in list(supuestos.items()) + list(supuestos_academia.items()):
+        if key in sup:
+            raise ValueError(f'Supuesto duplicado: {key}')
         sup[key] = {'conv': value.get('convocatoria'), 'texto': value['texto'], 'q': sup_q.get(key, [])}
+    missing = set(sup_q) - set(sup)
+    if missing:
+        raise ValueError(f'Supuestos sin contexto: {sorted(missing)}')
     idx['n'] = sum(len(q) for q in temas.values())
     idx['nsup'] = sum(len(v['q']) for v in sup.values())
     output.update({'supuestos.json': sup, 'meta.json': meta, 'index.json': idx})
@@ -112,11 +130,26 @@ def main():
     parser, args = arguments()
     try:
         output = generate(args)
-        # Serializar también antes de escribir: una entrada inválida no debe truncar el banco existente.
-        encoded = {name: json.dumps(data, ensure_ascii=False, separators=(',', ':')) for name, data in output.items()}
-        args.out_dir.mkdir(parents=True, exist_ok=True)
-        for name, text in encoded.items():
-            (args.out_dir / name).write_text(text, encoding='utf-8')
+        destination = args.out_dir.resolve()
+        if destination != PUBLISHED and (ROOT / 'public') in (destination, *destination.parents):
+            raise ValueError('Los candidatos deben generarse fuera de public.')
+        encoded, unreviewed = prepare_bank(output, destination)
+        if destination == PUBLISHED:
+            # All bytes already match the approved release. No rewrite is necessary.
+            print('El banco reconstruido coincide con la edición aprobada.')
+        else:
+            destination.mkdir(parents=True, exist_ok=True)
+            stale = {file.name for file in destination.glob('*.json')} - set(encoded)
+            if stale:
+                raise ValueError(f'La salida contiene JSON ajenos al candidato: {sorted(stale)}')
+            with TemporaryDirectory(dir=destination) as temporary:
+                stage = Path(temporary)
+                for name, data in encoded.items():
+                    (stage / name).write_bytes(data)
+                for name in encoded:
+                    (stage / name).replace(destination / name)
+            if unreviewed:
+                print('Candidato sin aprobación editorial. No publicable.')
     except (OSError, ValueError, KeyError, TypeError, IndexError) as error:
         parser.error(f'No se pudo generar el banco: {error}')
     idx = output['index.json']

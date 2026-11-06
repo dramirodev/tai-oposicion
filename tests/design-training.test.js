@@ -3,6 +3,7 @@ import React from 'react';
 import { afterEach, beforeEach, expect, it, vi } from 'vitest';
 vi.mock('../src/adapters/firebase/sync-facade.js', () => ({ status: { user: null, state: 'sin sesión', configured: false, reqs: [] }, setAttemptRepository: () => {}, onStatus: () => () => {}, login: vi.fn(), logout: vi.fn(), retry: vi.fn() }));
 const question = { i: 'TRAIN-1', t: 'T1.01', o: 'O', k: 'I', x: [1], q: 'Señala la opción que NO es válida durante 30 días.', a: ['Primera opción', 'Segunda opción', 'Tercera opción', 'Cuarta opción'], c: 0, n: 'Pregunta histórica ambigua: conservar solo para estudio.', np: 1 };
+const scorableQuestion = { ...question, i: 'TRAIN-2', n: '', np: 0 };
 let store, services, activeView, rtl;
 async function mount(name) {
  const { MemoryRouter } = await import('react-router');
@@ -15,7 +16,7 @@ beforeEach(async () => {
  vi.resetModules(); localStorage.clear(); document.body.innerHTML = '<main id="app"></main>';
  rtl = await import('@testing-library/react');
  vi.stubGlobal('matchMedia', () => ({ matches: true })); vi.stubGlobal('scrollTo', () => {}); Element.prototype.scrollIntoView = () => {};
- vi.stubGlobal('fetch', async url => ({ ok: true, json: async () => String(url).includes('meta.json') ? { 'TRAIN-1': ['T1.01', 'O', 'I', [1], 2] } : String(url).includes('supuestos') ? {} : [question] }));
+ vi.stubGlobal('fetch', async url => ({ ok: true, json: async () => String(url).includes('meta.json') ? { 'TRAIN-1': ['T1.01', 'O', 'I', [1], 2], 'TRAIN-2': ['T1.01', 'O', 'I', [1], 2] } : String(url).includes('supuestos') ? {} : [question, scorableQuestion] }));
  store = await import('../src/adapters/local/local-progress-store.js'); ({ studyServices: services } = await import('../src/app/app-services-composition.js'));
 });
 afterEach(() => { activeView?.unmount(); activeView = undefined; vi.useRealTimers(); vi.unstubAllGlobals(); });
@@ -44,5 +45,6 @@ it('Relámpago registra una respuesta y revela su corrección', async () => {
  await mount('relampago'); await rtl.screen.findByRole('button', { name: /primera opción/i });
  rtl.fireEvent.click(document.querySelector('.opt'));
  expect(document.querySelector('[role="status"]')?.textContent).toContain('Respuesta:');
- expect(store.rec('TRAIN-1')?.[0]).toBe(1);
+ expect(store.rec('TRAIN-2')?.[0]).toBe(1);
+ expect(store.rec('TRAIN-1')).toBeUndefined();
 });

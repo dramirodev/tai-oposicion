@@ -4,7 +4,7 @@ export interface StudySessionSummary {
   id: string;
   startedAt: number;
   mode: 'simulation' | 'practice';
-  practicePart?: 1 | 2;
+  practicePart?: 1 | 2 | 'both';
   questionCount: number;
   correctCount: number;
   score: number;
@@ -102,7 +102,7 @@ export function slowestQuestions(
 
 export function buildSimulationHistory(sessions: readonly StudySessionSummary[]) {
   const simulations = sessions.filter(session => session.mode === 'simulation' && !session.scorePending).slice().sort((left, right) => left.startedAt - right.startedAt);
-  const previousByPart = new Map<1 | 2, StudySessionSummary>();
+  const previousByPart = new Map<1 | 2 | 'both', StudySessionSummary>();
   return simulations.map(session => {
     const part = session.practicePart || 1;
     const previous = previousByPart.get(part);
@@ -133,7 +133,7 @@ export function compareStudySessions(first: StudySessionSummary, second: StudySe
   const rate = (correct: number, total: number) => total ? Math.round(100 * correct / total) : 0;
   return {
     topics,
-    scoreDelta: scoringKey(first) === scoringKey(second) ? Math.round((second.score - first.score) * 10) / 10 : null,
+    scoreDelta: !first.scorePending && !second.scorePending && scoringKey(first) === scoringKey(second) ? Math.round((second.score - first.score) * 10) / 10 : null,
     accuracyDelta: rate(second.correctCount, second.questionCount) - rate(first.correctCount, first.questionCount),
     secondsPerQuestionDelta: first.questionCount && second.questionCount
       ? Math.round(10 * (second.durationSeconds / second.questionCount - first.durationSeconds / first.questionCount)) / 10

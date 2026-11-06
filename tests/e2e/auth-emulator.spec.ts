@@ -15,7 +15,7 @@ test('Firebase Auth Emulator aísla el estudio al cambiar de cuenta y de día en
   await page.route('**/*', route => {
     const url = new URL(route.request().url());
     const isLoopback = ['localhost', '127.0.0.1', '::1'].includes(url.hostname);
-    const isAppOrEmulatorPort = ['4187', '9099', '8080'].includes(url.port);
+    const isAppOrEmulatorPort = ['4187', '4195', '9099', '8080'].includes(url.port);
     const isStaticGoogleAuthAsset = url.origin === 'https://apis.google.com' && route.request().method() === 'GET'
       && (url.pathname === '/js/api.js' || url.pathname.startsWith('/_/scs/'));
     if ((!isLoopback || !isAppOrEmulatorPort) && !isStaticGoogleAuthAsset) return route.abort('blockedbyclient');
@@ -108,9 +108,11 @@ test('Firebase Auth Emulator aísla el estudio al cambiar de cuenta y de día en
   const continueWithCurrentVersion = page.locator('#initial-update-continue');
   if (await continueWithCurrentVersion.isVisible().catch(() => false)) await continueWithCurrentVersion.click();
   const activities = page.locator('.planning-activity');
-  const priorityActivity = activities.filter({ hasText:'Preguntas del tema prioritario' });
-  await expect(priorityActivity).toHaveCount(1);
-  await expect(priorityActivity).toContainText(firstTopic!);
+  const priority = activities.filter({ hasText:'Preguntas del tema prioritario' });
+  await expect(priority).toHaveCount(1);
+  await expect(priority).toContainText(firstTopic!);
+  await priority.getByText('Instrucciones y motivo').click();
+  await expect(priority).toContainText('Tu autoevaluación de recuerdo en papel fue «Parcialmente» el 29 de octubre de 2026');
 
   await page.goto('/#/settings');
   await page.getByRole('button', { name:'Cerrar sesión' }).click();
@@ -138,7 +140,7 @@ test('Firebase Auth Emulator aísla el estudio al cambiar de cuenta y de día en
   await peerPage.route('**/*', route => {
     const url = new URL(route.request().url());
     const isLoopback = ['localhost', '127.0.0.1', '::1'].includes(url.hostname);
-    const isAppOrEmulatorPort = ['4187', '9099', '8080'].includes(url.port);
+    const isAppOrEmulatorPort = ['4187', '4195', '9099', '8080'].includes(url.port);
     const isStaticGoogleAuthAsset = url.origin === 'https://apis.google.com' && route.request().method() === 'GET'
       && (url.pathname === '/js/api.js' || url.pathname.startsWith('/_/scs/'));
     if ((!isLoopback || !isAppOrEmulatorPort) && !isStaticGoogleAuthAsset) return route.abort('blockedbyclient');

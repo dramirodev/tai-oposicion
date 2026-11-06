@@ -1,0 +1,23 @@
+[WebServer] (node:62090) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+[WebServer] (Use `node --trace-warnings ...` to show where the warning was created)
+
+Running 12 tests using 1 worker
+
+(node:62092) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 [chromium-darwin] › tests/e2e/bridge.spec.ts:164:5 › el diálogo de pausa se dimensiona respecto al viewport aunque viva dentro de #app (1.1s)
+  ✓   2 [chromium-darwin] › tests/e2e/bridge.spec.ts:276:5 › guarda en pagehide y reanuda la sesión y el progreso tras recargar (3.8s)
+  ✓   3 [chromium-darwin] › tests/e2e/bridge.spec.ts:702:5 › el simulacro conserva pendientes al volver y reanudar y corrige solo al finalizar (6.7s)
+  ✓   4 [chromium-darwin] › tests/e2e/routes.spec.ts:63:5 › simulacros por tema deja el skeleton y muestra los tests disponibles (974ms)
+  ✓   5 [chromium-darwin] › tests/e2e/routes.spec.ts:238:5 › inicia una práctica objetiva del tema desde su material y abre una pregunta de Quiz (2.0s)
+  ✓   6 [chromium-darwin] › tests/e2e/stats-charts.spec.ts:53:5 › la evolución explica el estado vacío cuando no hay datos para graficar (1.3s)
+(node:62483) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   7 [webkit-darwin] › tests/e2e/bridge.spec.ts:164:5 › el diálogo de pausa se dimensiona respecto al viewport aunque viva dentro de #app (1.3s)
+  ✓   8 [webkit-darwin] › tests/e2e/bridge.spec.ts:276:5 › guarda en pagehide y reanuda la sesión y el progreso tras recargar (4.1s)
+  ✓   9 [webkit-darwin] › tests/e2e/bridge.spec.ts:702:5 › el simulacro conserva pendientes al volver y reanudar y corrige solo al finalizar (7.8s)
+  ✓  10 [webkit-darwin] › tests/e2e/routes.spec.ts:63:5 › simulacros por tema deja el skeleton y muestra los tests disponibles (1.2s)
+  ✓  11 [webkit-darwin] › tests/e2e/routes.spec.ts:238:5 › inicia una práctica objetiva del tema desde su material y abre una pregunta de Quiz (2.3s)
+  ✓  12 [webkit-darwin] › tests/e2e/stats-charts.spec.ts:53:5 › la evolución explica el estado vacío cuando no hay datos para graficar (1.6s)
+
+  12 passed (35.3s)

@@ -1,3 +1,4 @@
+import { isQuestionEditoriallyQuarantined } from '../../../core/domain/question-review-overrides.js';
 import type { QuestionRecord } from '../../../core/domain/question-record.js';
 import type { QuestionStats } from '../../../core/domain/entities.js';
 import { evaluateTrapAnswer, recordTrapDetections } from '../../../core/domain/traps.js';
@@ -48,7 +49,7 @@ export function createTrapsComposition(dependencies: TrapsCompositionDependencie
       const prioritized = dependencies.shuffle(failed).slice(0, 4);
       const prioritizedSet = new Set(prioritized);
       const selectedIds = [...prioritized, ...dependencies.shuffle(rest).filter(id => !prioritizedSet.has(id)).slice(0, Math.max(0, 40 - prioritized.length))];
-      const questions = (await dependencies.loadQuestionsById(selectedIds)).filter(question => !question.s && question.x?.length).slice(0, 8);
+      const questions = (await dependencies.loadQuestionsById(selectedIds)).filter(question => !question.s && !isQuestionEditoriallyQuarantined(question.i) && question.x?.length).slice(0, 8);
       if (requestOwner !== dependencies.accountId()) return emptyRun();
 
       const items: TrapPrompt[] = questions.map(question => {

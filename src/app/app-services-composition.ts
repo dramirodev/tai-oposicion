@@ -1,3 +1,4 @@
+import { clearBooklet, openBooklet, readBookletDeadline } from '../adapters/local/official-booklet-storage.js';
 import type { SettingsServices, SettingsSnapshot, StudyServices } from '../shared/ui/study-services.js';
 import { questionNotice, sourceHtml } from '../shared/presentation/study-content.js';
 import { VERIFIED_SOURCES } from '../adapters/http/verified-sources.js';
@@ -10,6 +11,7 @@ import { localAcademyMaterialRepository } from '../adapters/local/academy-materi
 import { percentage as pct } from '../shared/presentation/format.js';
 import { normalizeUiPreferences } from '../shared/presentation/ui-preferences.js';
 import { randomStudyOrder as shuffle } from '../shared/ui/study-random.js';
+import { FREE_ENTRY_2025_EXAM, matchesOfficialExamKey, officialExamQuestionIds, scoreOfficialExam, selectHistoricalScenarioPair } from '../core/domain/simulation-scenarios.js';
 import { calculateStudyStreak } from '../core/domain/study-analytics.js';
 import { summarizeReadingSpeedFailures } from '../core/domain/question-performance.js';
 import { previewBackupImport } from '../core/application/settings/backup-preview.js';
@@ -21,7 +23,7 @@ import { APP_VERSION, APP_BUILD } from './build-info.js';
 import { isFull, isOwner, accessLevel, devMode, setDevMode, devRevealed, revealDev } from './composition/access-composition.js';
 import { subscribe as subscribeEngine, configureSessionStateStore, getCurrentRun, getLastResult, createRun, resumeRun, startImmediateRetryFromLastResult, setAttemptTrackingVisible, flushAttemptTracking, quickItems, repasoItems, trapTest, falladasIds, dueQuestionIds, selectQuestionsForTopics, selectWeightedSimulationQuestions, studyQuestionCatalog } from './composition/study/study-engine-composition.js';
 import { sessionStatePort } from './session-state-store.js';
-import { clearRun, pendingRun, saveRun } from './composition/study/pending-run-composition.js';
+import { clearRun, pendingRun, saveRun, watchPrivateRunAccess } from './composition/study/pending-run-composition.js';
 import { createTopicMasteryComposition } from './composition/topics/topic-mastery-composition.js';
 import { createTopicProgressComposition } from './composition/topics/topic-progress-composition.js';
 import { createAcademyStudyProgressComposition } from './composition/topics/academy-study-progress-composition.js';
@@ -212,7 +214,6 @@ async function openMenu() {
 interface SimulationRunConfiguration { includeSecondPart: boolean; secondPartMinutes: number }
 let simulationRunConfiguration: SimulationRunConfiguration | null = null;
 let reviewScenarioQuestions = new Map<string, Question[]>();
-let reviewScenarioTexts = new Map<string, string>();
 let reviewScenarioAccount: string | null = null;
 async function selectSimulationQuestions(index: Awaited<ReturnType<typeof getIndex>>, origins: ReadonlySet<Origin>, count: number, onlyTopics: ReadonlySet<string> | null, optionsPerQuestion?: number) {
   const topics = index.temas.filter(topic => !onlyTopics || onlyTopics.has(topic.id));
@@ -423,8 +424,18 @@ const readingServices = createReadingComposition({
 
 // ───────── arranque ─────────
 export function bootAppServices(): () => void {
-  return startAppBootstrap({
-    onAccountChange: localStudyProgressGateway.onAccountChange,
+  // Firebase may retain its IndexedDB identity after the local active-account key is lost.
+  // Switching from guest storage to that initial identity must preserve a protected deep link.
+  let hydratingFirstAccount = !localStudyProgressGateway.accountId() && !sync.status.authResolved;
+  const stopWatchingAccess = watchPrivateRunAccess(resumeSaved);
+  const stopBootstrap = startAppBootstrap({
+    onAccountChange: listener => localStudyProgressGateway.onAccountChange(() => {
+      if (hydratingFirstAccount && localStudyProgressGateway.accountId() && sync.status.user) {
+        hydratingFirstAccount = false;
+        return;
+      }
+      listener();
+    }),
     goHome: () => go(hashPath('home')),
     recover,
     setAttemptTrackingVisible,
@@ -433,13 +444,28 @@ export function bootAppServices(): () => void {
     saveRun,
     pauseTrainingSession: () => { trainingSession.pauseCurrentActivity(); },
     routeReady: firstReactRouteReady,
-    resumeSaved: () => resumeSaved().catch(() => {}),
+    onAccessResolved: listener => {
+      if (sync.status.accessResolved) { hydratingFirstAccount = false; listener(); return () => {}; }
+      const stop = sync.onStatus(status => {
+        if (!status.accessResolved) return;
+        hydratingFirstAccount = false;
+        stop();
+        listener();
+      });
+      return stop;
+    },
+    resumeSaved: () => {
+      // A service/network error does not revoke an account's checkpoint.
+      if (localStudyProgressGateway.accountId() && (!sync.status.user || sync.status.accessErr || sync.status.state === 'error')) return;
+      return resumeSaved().catch(() => {});
+    },
     prefetchBank: prefetchBanco,
     loadMetadataAndInitializeSync: async () => {
       try { await getMeta(); } catch (error) { console.error(error); }
       try { await sync.init({ temaOf: studyQuestionCatalog.getTopicForQuestion, idsOfTema: studyQuestionCatalog.getAllQuestionIdsForTopic }, progressStore, trainingSession, paperRecall, trainingCalendar, weeklyStudyAgenda, academyStudyProgress, paperTestAttempts); } catch (error) { console.error(error); }
     },
   });
+  return () => { stopWatchingAccess(); stopBootstrap(); };
 }
 
 // Descarga el banco en segundo plano (2 a la vez) para que Test, Simulacro y Repaso arranquen sin esperar a la red
@@ -485,16 +511,16 @@ export const studyServices: StudyServices = {
     getSnapshot() {
       const last = getLastResult(); if (!last) return null;
       const { ses, items, ans, studyStates = [], highlights = [], confidences = [], discardedOptions = [], attemptIds = [] } = last;
-      return { score: ses.scorePending ? null : ses.nota, scorePending: !!ses.scorePending, ...(last.scoringPolicy ? { scoringPolicy: last.scoringPolicy } : {}), correct: ses.a, wrong: ses.f, blank: ses.b, consulted: studyStates.filter(state => state === 'revealed').length,
+      return { ...(last.officialExam ? { officialResult: scoreOfficialExam(last.officialExam, items, ans) } : {}), score: !ses.n || ses.scorePending ? null : ses.nota, scorePending: !!ses.scorePending, ...(last.scoringPolicy ? { scoringPolicy: last.scoringPolicy } : {}), correct: ses.a, wrong: ses.f, blank: ses.b, consulted: items.filter((question, index) => question.np !== 1 && studyStates[index] === 'revealed').length,
         accuracy: ses.a + ses.f ? pct(ses.a, ses.a + ses.f) : null, seconds: ses.secs, title: ses.titulo || '', interrupted: !!ses.interrupted, kind: ses.kind,
         ...(last.exposureKind ? { exposureKind: last.exposureKind } : {}),
-        porTiempo: !!ses.porTiempo, analysis: last.limit && !ses.porTiempo ? createSimulationAnalysisView({ correctIndices: last.items.map(question => question.c), answers: last.ans, answerSeconds: last.times, timeLimitMinutes: last.limit, elapsedSeconds: ses.secs, scoringPolicy: last.scoringPolicy }) : '',
+        porTiempo: !!ses.porTiempo, analysis: !last.officialExam && last.limit && !ses.porTiempo && !last.items.some(question => question.np === 1) ? createSimulationAnalysisView({ correctIndices: last.items.map(question => question.c), answers: last.ans, answerSeconds: last.times, timeLimitMinutes: last.limit, elapsedSeconds: ses.secs, scoringPolicy: last.scoringPolicy }) : '',
         secondPartAvailable: (ses.titulo || '').includes('Parte 1') && !!simulationRunConfiguration?.includeSecondPart,
         topics: Object.entries(ses.temas).sort(([left], [right]) => left.localeCompare(right)).map(([id, [correct, total]]) => ({ id, name: studyQuestionCatalog.getTopicName(id), correct, total })),
         items: items.map((question, index) => {
           const answer = ans[index], revealed = studyStates[index] === 'revealed';
           return { id: question.i, ...(attemptIds[index] ? { attemptId: attemptIds[index] } : {}), topicId: question.t, topicName: studyQuestionCatalog.getTopicName(question.t), statement: question.q, options: question.a, correctIndex: question.c,
-            ...(answer !== undefined ? { answer } : {}), outcome: revealed ? 'revealed' : answer === undefined || answer === -1 ? 'blank' : answer === question.c ? 'correct' : 'wrong',
+            ...(answer !== undefined ? { answer } : {}), outcome: question.np === 1 ? 'non-scoring' : revealed ? 'revealed' : answer === undefined || answer === -1 ? 'blank' : answer === question.c ? 'correct' : 'wrong',
             notice: questionNotice(question), source: sourceHtml(question, VERIFIED_SOURCES), ...(question.u ? { citation: question.u } : {}), ...(question.n ? { note: question.n } : {}),
             ...(confidences[index] ? { confidence: confidences[index] } : {}), discardedOptions: discardedOptions[index] || [], highlights: highlights[index] || [],
             contentRevision: questionContentRevision(question.q, question.a),
@@ -515,7 +541,7 @@ export const studyServices: StudyServices = {
     },
     repeatFailures() {
       const last = getLastResult(); if (!last) return false;
-      return startRun({ kind: 'rev', feedback: true, items: shuffle(last.items.filter((question, index) => last.ans[index] !== question.c)), titulo: 'Repetición de falladas' });
+      return startRun({ kind: 'rev', feedback: true, items: shuffle(last.items.filter((question, index) => question.np !== 1 && last.ans[index] !== question.c)), titulo: 'Repetición de falladas' });
     },
     goHome() { go(hashPath('home')); },
     async loadStrategy() { return renderStrategyReport(await loadStrategyReportForPeriod(365)); },
@@ -526,8 +552,30 @@ export const studyServices: StudyServices = {
     saveReport(id, topicId, reason, note) { localStudyProgressGateway.saveErrorReport({ questionId: id, topicId, reason, note, state: 'abierto', reportedAt: Date.now() }); },
   },
   simulation: {
-    getTab() { const value = localStudyProgressGateway.getPreferences().simtab; return value === 'examen' || value === 'tema' ? value : 'completo'; },
+    getTab() { const value = localStudyProgressGateway.getPreferences().simtab; return value === 'examen' || value === 'tema' || value === 'oficial2025' ? value : 'completo'; },
     setTab(tab) { localStudyProgressGateway.updatePreferences(current => ({ ...current, simtab: tab })); },
+    getOfficialDeadline() { return readBookletDeadline(localStudyProgressGateway.accountId()); },
+    openOfficialBooklet() { return openBooklet(localStudyProgressGateway.accountId()); },
+    async loadOfficialChoices() {
+      const account = localStudyProgressGateway.accountId();
+      const catalog = await studyQuestionCatalog.getScenarios();
+      if (account !== localStudyProgressGateway.accountId()) return [];
+      return (['L2025A-S1', 'L2025A-S2'] as const).flatMap(id => catalog[id]?.text ? [{ id, text: catalog[id].text }] : []);
+    },
+    async startOfficialExam(scenarioId, quota) {
+      if (!['L2025A-S1', 'L2025A-S2'].includes(scenarioId) || !['general', 'norma13'].includes(quota)) return 'empty';
+      const account = localStudyProgressGateway.accountId();
+      const items = await studyQuestionCatalog.getQuestions(officialExamQuestionIds(scenarioId));
+      if (account !== localStudyProgressGateway.accountId()) return 'account-changed';
+      if (!matchesOfficialExamKey(scenarioId, items)) return 'empty';
+      simulationRunConfiguration = null;
+      const deadlineAt = readBookletDeadline(account);
+      if (!deadlineAt) return 'empty';
+      const started = startRun({ kind: 'sim', feedback: false, items, limit: FREE_ENTRY_2025_EXAM.totalMinutes,
+        titulo: 'TAI · Ingreso libre 2025 · Modelo A', officialExam: { profile: 'tai-li-2025', scenarioId, quota, deadlineAt } });
+      if (started) clearBooklet(account);
+      return started ? 'started' : 'empty';
+    },
     getConfiguration() {
       const saved = localStudyProgressGateway.getPreferences().sim || {};
       return { count: saved.n === 40 ? 40 : 80, minutes: ([45, 60, 90, 120].includes(saved.min ?? 0) ? saved.min : 90) as SimulationConfiguration['minutes'],
@@ -576,19 +624,18 @@ export const studyServices: StudyServices = {
   },
   simulationReview: {
     async loadChoices(): Promise<ScenarioChoice[]> {
+      const account = localStudyProgressGateway.accountId();
       const scenarios = await studyQuestionCatalog.getScenarios();
-      const available = Object.entries(scenarios)
-        .filter(([, scenario]) => scenario.questions.filter(question => !(question as Question & { r?: unknown }).r && question.np !== 1).length >= 18 && /libre/i.test(scenario.convocation || '') && !/2018/.test(scenario.convocation || ''));
-      const chosen = shuffle(available).slice(0, 2);
-      reviewScenarioQuestions = new Map(chosen.map(([id, scenario]) => [id, scenario.questions.filter(question => !(question as Question & { r?: unknown }).r && question.np !== 1).slice(0, 20)]));
-      reviewScenarioTexts = new Map(chosen.map(([id, scenario]) => [id, scenario.text]));
-      reviewScenarioAccount = localStudyProgressGateway.accountId();
-      return chosen.map(([id, scenario]) => ({ id, text: scenario.text.slice(0, 700) + (scenario.text.length > 700 ? '…' : '') }));
+      if (account !== localStudyProgressGateway.accountId()) return [];
+      const chosen = selectHistoricalScenarioPair(scenarios, Math.random);
+      reviewScenarioQuestions = new Map(chosen.map(choice => [choice.id, choice.questions.map(question => ({ ...question, supTexto: choice.text }))]));
+      reviewScenarioAccount = account;
+      return chosen.map(choice => ({ id: choice.id, block: choice.block, text: choice.text.slice(0, 700) + (choice.text.length > 700 ? '…' : '') }));
     },
     start(id) {
       const items = reviewScenarioQuestions.get(id);
       if (!items?.length || reviewScenarioAccount !== localStudyProgressGateway.accountId()) return 'unavailable';
-      const started = startRun({ kind: 'sim', feedback: false, items, limit: simulationRunConfiguration?.secondPartMinutes || 40, supTexto: reviewScenarioTexts.get(id), titulo: 'Simulacro · Parte 2 (supuesto)' });
+      const started = startRun({ kind: 'sim', feedback: false, items, limit: simulationRunConfiguration?.secondPartMinutes || 40, titulo: 'Simulacro · Parte 2 (supuesto)' });
       return started ? 'started' : 'unavailable';
     },
   },

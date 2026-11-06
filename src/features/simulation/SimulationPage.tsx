@@ -1,10 +1,11 @@
+import { OfficialExamForm } from './OfficialExamForm.js';
 import { useEffect, useMemo, useState } from 'react';
 import { Link, useSearchParams } from 'react-router';
 import { useStudyService, type SimulationConfiguration, type SimulationExam, type SimulationMilestoneRunOptions, type SimulationTab, type SettingsSnapshot } from '../../shared/ui/study-services.js';
 import { HelpIconLink } from '../../shared/ui/HelpIconLink.js';
 import { PageLoading } from '../../shared/ui/PageLoading.js';
 
-const tabs: readonly [SimulationTab, string][] = [['completo', 'Completo'], ['examen', 'Por examen'], ['tema', 'Por tema']];
+const tabs: readonly [SimulationTab, string][] = [['completo', 'Configurable'], ['oficial2025', 'Oficial 2025'], ['examen', 'Por examen'], ['tema', 'Por tema']];
 const origins = [['G', 'Generadas'], ['O', 'Oficiales'], ['A', 'Academia']] as const;
 type SimulationGroups = { official: readonly SimulationExam[]; academy: readonly SimulationExam[]; topicTests: readonly SimulationExam[] };
 
@@ -38,7 +39,7 @@ function CompleteSimulationForm({ configuration, seen, starting, update, onBegin
       }}>{label}</button>)}</div>
       <label className="chk"><input type="checkbox" checked={configuration.includeSecondPart} onChange={event => update({ includeSecondPart: event.target.checked })} /> Después, parte 2: elegir 1 de 2 supuestos prácticos (20 preguntas)</label>
     </section>}
-    {!(milestoneRequested && !milestone?.simulation) && <div className="note">{milestone?.simulation ? 'Simulacro con corrección al final. La nota no se compara entre reglas de puntuación distintas.' : 'Reparto por temas calcado a los exámenes oficiales. Cada fallo resta 1/3 de acierto; en blanco no resta. No hay corrección hasta el final.'}</div>}
+    {!(milestoneRequested && !milestone?.simulation) && <div className="note">{milestone?.simulation ? 'Simulacro con corrección al final. La nota no se compara entre reglas de puntuación distintas.' : 'Práctica con reloj y nota independientes por parte. Se da cobertura a los temas seleccionados y se alternan los orígenes disponibles entre preguntas nuevas. Cada fallo resta un tercio de acierto; las respuestas en blanco valen cero.'}</div>}
     {!(milestoneRequested && !milestone?.simulation) && <div className="bar2"><button className="btn" disabled={starting} onClick={onBegin}>{starting ? 'Preparando…' : milestone ? 'Empezar este hito' : 'Empezar simulacro'}</button></div>}
   </>;
 }
@@ -96,7 +97,7 @@ export function SimulationPage() {
   }, [settings]);
 
   useEffect(() => {
-    if (tab === 'completo' || groups) return;
+    if (tab === 'completo' || tab === 'oficial2025' || groups) return;
     let active = true;
     void simulation.loadExamGroups().then(value => {
       if (!active) return;
@@ -128,7 +129,7 @@ export function SimulationPage() {
     const next = { ...configuration, ...change, origins: [...(change.origins ?? configuration.origins)] };
     simulation.saveConfiguration(next); setConfiguration(next); setMessage('');
   };
-  const openTab = (next: SimulationTab) => { setTab(next); simulation.setTab(next); setMessage(''); if (next !== 'completo' && !groups) setLoading(true); };
+  const openTab = (next: SimulationTab) => { setTab(next); simulation.setTab(next); setMessage(''); if (next !== 'completo' && next !== 'oficial2025' && !groups) setLoading(true); };
   const begin = async (run: () => Promise<'started' | 'empty' | 'account-changed'>, emptyMessage = 'No hay preguntas disponibles con estos filtros.') => {
     setStarting(true); setMessage('');
     try { const result = await run();
@@ -144,7 +145,7 @@ export function SimulationPage() {
       {tabs.map(([id, label]) => <button key={id} role="tab" className={tab === id ? 'on' : ''} aria-selected={tab === id} onClick={() => openTab(id)}>{label}</button>)}
     </div>}
     {milestoneId && !milestone && <p className="note" role="alert">No se encuentra el hito o no tiene un perfil de simulacro válido. Vuelve a Planificación o configura el evento en Ajustes.</p>}
-    {tab === 'completo' ? <CompleteSimulationForm configuration={configuration} seen={seen} starting={starting} update={update} milestone={milestone} milestoneRequested={!!milestoneId} onBegin={() => {
+    {tab === 'oficial2025' ? <OfficialExamForm starting={starting} onBegin={(scenario, quota) => { void begin(() => simulation.startOfficialExam(scenario, quota), 'No se ha podido verificar el cuaderno completo frente a la plantilla definitiva.'); }} /> : tab === 'completo' ? <CompleteSimulationForm configuration={configuration} seen={seen} starting={starting} update={update} milestone={milestone} milestoneRequested={!!milestoneId} onBegin={() => {
       if (milestone?.simulation) {
         const options: SimulationMilestoneRunOptions = { scoringPolicy: milestone.simulation.scoring, optionsPerQuestion: milestone.simulation.optionsPerQuestion, eventId: milestone.id, title: milestone.title };
         const profile = { ...configuration, count: milestone.simulation.questionCount, minutes: milestone.simulation.durationMinutes, scope: 'vistos' as const, includeSecondPart: false };

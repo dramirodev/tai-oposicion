@@ -186,8 +186,24 @@ export function createStudyQuestionSelection(
           && question.np !== 1
           && question.p !== 1),
         random,
-      ).sort((left, right) => Number(!!progress.getQuestionStats(left.i)) - Number(!!progress.getQuestionStats(right.i)));
-      return [topic.id, available];
+      );
+      // Within each exposure tier, rotate the selected sources so a large pool
+      // of generated questions does not crowd out official or academy questions.
+      const origins = shuffleItems([...allowedOrigins], random);
+      const buckets = new Map(origins.map(origin => [origin, { fresh: [] as Question[], seen: [] as Question[] }]));
+      for (const question of available) {
+        const tier = progress.getQuestionStats(question.i) ? 'seen' : 'fresh';
+        buckets.get(question.o)![tier].push(question);
+      }
+      const ordered: Question[] = [];
+      for (const tier of ['fresh', 'seen'] as const) {
+        const queues = [...buckets.values()].map(bucket => bucket[tier]);
+        const largest = Math.max(0, ...queues.map(queue => queue.length));
+        for (let round = 0; round < largest; round++) {
+          for (const queue of queues) if (round < queue.length) ordered.push(queue[round]);
+        }
+      }
+      return [topic.id, ordered];
     }));
     return composeWeightedQuestions(topics, pools, count, random, question => question.f || question.i);
   }

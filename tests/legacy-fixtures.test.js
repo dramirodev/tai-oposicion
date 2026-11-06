@@ -47,8 +47,15 @@ describe('fixtures de compatibilidad anteriores al historial por intento', () =>
     expect(exported.cards).toEqual(progressFixture.cards);
   });
 
+  it('caduca una respuesta antigua sin clave verificable y mantiene su progreso histórico', async () => {
+    store.importAll(JSON.stringify(progressFixture));
+    localStorage.setItem('tai.run:guest', JSON.stringify(runsFixture.practiceAnswered));
+    expect(await recovery.pendingRun(true)).toBeNull();
+    expect(store.rec('TAI2024B-P1-01')).toEqual(progressFixture.stats['TAI2024B-P1-01']);
+    expect(localStorage.getItem('tai.run:guest')).toBeNull();
+  });
+
   it.each([
-    ['práctica contestada', 'practiceAnswered', 0, 'test'],
     ['práctica pendiente', 'practicePending', undefined, 'test'],
     ['simulacro en curso', 'simulationInProgress', undefined, 'sim'],
   ])('reanuda la %s con las respuestas y modalidad antiguas', async (_label, key, answer, kind) => {

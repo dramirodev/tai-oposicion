@@ -1,3 +1,4 @@
+import { officialSessionQuota } from '../../core/domain/simulation-scenarios.js';
 import { useEffect, useState } from 'react';
 import { useStudyService } from '../../shared/ui/study-services.js';
 import type { StatsSnapshot, StatsWeek } from '../../core/application/stats/statistics-model.js';
@@ -47,7 +48,7 @@ export function StatsPage() {
   const [firstSimulation, setFirstSimulation] = useState('');
   const [secondSimulation, setSecondSimulation] = useState('');
   const [message, setMessage] = useState('');
-  useEffect(() => { let active = true; void stats.load().then(value => { if (active) { setSnapshot(value); setFirstSimulation(value.simulations.at(-2)?.id || value.simulations.at(-1)?.id || ''); setSecondSimulation(value.simulations.at(-1)?.id || ''); } }).catch(() => { if (active) setError('No se pudo cargar el progreso. Inténtalo de nuevo.'); }); return () => { active = false; }; }, [stats]);
+  useEffect(() => { let active = true; void stats.load().then(value => { if (active) { setSnapshot(value); const comparable = value.simulations.filter(item => item.part === 'p1'); setFirstSimulation(comparable.at(-2)?.id || comparable.at(-1)?.id || ''); setSecondSimulation(comparable.at(-1)?.id || ''); } }).catch(() => { if (active) setError('No se pudo cargar el progreso. Inténtalo de nuevo.'); }); return () => { active = false; }; }, [stats]);
   useEffect(() => { let active = true; void stats.loadStudyActivity(12).then(value => { if (active) { setQuestionWeeks(value.questionEvolution); setStudyTime(value.observedStudyTime); setStudyActivityLoaded(true); } }).catch(() => { if (active) { setStudyActivityLoaded(true); setMessage('No se pudo leer el historial detallado. El resto del progreso sigue disponible.'); } }); return () => { active = false; }; }, [stats]);
   useEffect(() => {
     let active = true;
@@ -77,7 +78,7 @@ export function StatsPage() {
     {tab === 'temas' && <StatsTopicsSection snapshot={snapshot} stats={stats} topics={topics} domainOrder={domainOrder} setDomainOrder={setDomainOrder} formattedDays={formattedDays} setMessage={setMessage} />}
     {tab === 'sims' && <StatsSimulationSection snapshot={snapshot} visibleSimulations={visibleSimulations} firstSimulation={firstSimulation} secondSimulation={secondSimulation} setFirstSimulation={setFirstSimulation} setSecondSimulation={setSecondSimulation} trend={trend} />}
     {tab === 'evo' && <StatsEvolutionSection snapshot={snapshot} stats={stats} questionWeeks={questionWeeks} weekly={weekly} evolution={evolution} saveEvolution={saveEvolution} onlyCorrect={slowOnlyCorrect} setOnlyCorrect={setSlowOnlyCorrect} setMessage={setMessage} strategy={strategy} setStrategy={setStrategy} strategyDays={strategyDays} setStrategyDays={setStrategyDays} strategyBusy={strategyBusy} setStrategyBusy={setStrategyBusy} />}
-      <h2>Últimas sesiones</h2><div className="card">{snapshot.sessions.map(session => <div className="line" key={session.id}><span>{date(session.ts)} · {session.kind === 'sim' ? 'Simulacro' : session.kind === 'rev' ? 'Repaso' : 'Test'} {session.n}p</span><span>{session.scorePending ? 'Nota pendiente' : session.kind === 'sim' ? `${session.nota}/100` : `${Math.round(100 * session.a / Math.max(1, session.n))}%`}</span></div>)}{!snapshot.sessions.length && <p className="sub">Sin sesiones todavía.</p>}</div>
+      <h2>Últimas sesiones</h2><div className="card">{snapshot.sessions.map(session => <div className="line" key={session.id}><span>{date(session.ts)} · {session.kind === 'sim' ? 'Simulacro' : session.kind === 'rev' ? 'Repaso' : 'Test'} {session.n}p</span><span>{session.scorePending ? (officialSessionQuota(session.id) ? 'Parte 1 no superada' : 'Nota pendiente') : session.kind === 'sim' ? `${session.nota}/100` : `${Math.round(100 * session.a / Math.max(1, session.n))}%`}</span></div>)}{!snapshot.sessions.length && <p className="sub">Sin sesiones todavía.</p>}</div>
     {message && <p role="status" className="note">{message}</p>}
   </>;
 }

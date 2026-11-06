@@ -1,6 +1,6 @@
 {
   "name": "tai-pwa",
-  "version": "1.1.12",
+  "version": "1.1.14",
   "private": true,
   "scripts": {
     "dev": "vite --host 127.0.0.1",
@@ -35,7 +35,8 @@
     "test:e2e:extreme": "playwright test --config=playwright.extreme.config.ts",
     "test:explorer:quick": "TAI_EXPLORER_PROFILE=fast TAI_EXPLORER_SCENARIOS=tests/e2e/missions/tai-profile-stress.yaml bash scripts/e2e/run-agentic-explorer.sh",
     "test:explorer:intensive": "TAI_EXPLORER_PROFILE=intensive TAI_EXPLORER_SCENARIOS=tests/e2e/missions/tai-profile-stress.yaml bash scripts/e2e/run-agentic-explorer.sh",
-    "test:explorer:extreme": "TAI_EXPLORER_PROFILE=extreme TAI_EXPLORER_SCENARIOS=tests/e2e/missions/tai-profile-stress.yaml bash scripts/e2e/run-agentic-explorer.sh"
+    "test:explorer:extreme": "TAI_EXPLORER_PROFILE=extreme TAI_EXPLORER_SCENARIOS=tests/e2e/missions/tai-profile-stress.yaml bash scripts/e2e/run-agentic-explorer.sh",
+    "test:editorial": "python3 -m unittest discover -s tools/question-editorial -p \"test_*.py\""
   },
   "dependencies": {
     "fflate": "^0.8.3",

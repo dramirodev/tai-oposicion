@@ -1,0 +1,170 @@
+[
+  {
+    "id": "GEN-T3.08-57.v2",
+    "beforeSha256": "cb9a49ee475d3c80418290e053ef628aa7153ce1e8f287a5dadce84dad87e0cc",
+    "afterSha256": "c0dc7c9abba084a2e7b653086c5743c9b4cac3517dee0ee8b7c6bcca30d30704",
+    "before": {
+      "q": "El prólogo de un documento XML contiene:",
+      "a": [
+        "Los atributos.",
+        "Los datos.",
+        "El elemento raíz.",
+        "Una sentencia que declara el documento como XML, la declaración de tipo de documento y comentarios."
+      ],
+      "c": 3,
+      "n": null,
+      "u": "PRÓLOGO: es opcional y contiene una sentencia que declara el documento como XML, una declaración del tipo de documento y comentarios e instrucciones de procesamiento. … CUERPO: es obligatorio, debe contener solo un elemento raíz (imprescindible para que el documento esté bien formado)."
+    },
+    "reviewedOptions": [
+      "El valor se escribe dentro de la etiqueta inicial del elemento raíz.",
+      "El contenido de caracteres está dentro del elemento.",
+      "El cierre pertenece al cuerpo del documento.",
+      "DOCTYPE puede aparecer antes de la raíz."
+    ],
+    "temario": {
+      "pdf": "T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario.pdf",
+      "sha256": "980aaf92d3f84a4a632d5324ef15fde8d6ce8c71f385ec2a57fb3d806c9c0bc5",
+      "page": 19,
+      "quote": "PRÓLOGO: es opcional y contiene una sentencia que declara el documento como XML, una declaración del tipo de documento y comentarios e instrucciones de procesamiento."
+    },
+    "normativeSource": "https://www.w3.org/TR/xml/#sec-prolog-dtd",
+    "after": {
+      "q": "¿Cuál de estos elementos puede aparecer en el prólogo de un documento XML 1.0, antes del elemento raíz?",
+      "a": [
+        "El valor de un atributo del elemento raíz.",
+        "El contenido de caracteres del elemento raíz.",
+        "La etiqueta de cierre del elemento raíz.",
+        "Una declaración de tipo de documento (DOCTYPE)."
+      ],
+      "c": 3,
+      "n": "La declaración DOCTYPE es opcional y, si existe, precede al elemento raíz. Los atributos y el contenido del elemento raíz pertenecen al cuerpo del documento.",
+      "u": "PRÓLOGO: es opcional y contiene una sentencia que declara el documento como XML, una declaración del tipo de documento y comentarios e instrucciones de procesamiento. [p. 19]"
+    }
+  },
+  {
+    "id": "GEN-T3.08-316.v1",
+    "beforeSha256": "7dafe7ebcc9896206442322803d9633ccfafa2fdf7f2e2226c2a24e0cda2612b",
+    "afterSha256": "76256587f019c720e55b00fff8fea3d100aa619282b7847b45cc639a54deaae5",
+    "before": {
+      "q": "En HTML5, <input type=\"checkbox\" checked> equivale a:",
+      "a": [
+        "unchecked.",
+        "checked=\"false\".",
+        "checked=\"0\".",
+        "checked=\"checked\"."
+      ],
+      "c": 3,
+      "n": null,
+      "u": "En HTML5, se considera el valor true del atributo booleano con la simple presencia del mismo, dando, por tanto, prioridad a la concisión de la sintaxis. <input type=\"checkbox\" checked>"
+    },
+    "reviewedOptions": [
+      "unchecked no es valor conforme.",
+      "false no es valor conforme aunque la presencia del atributo marca la casilla.",
+      "0 no es valor conforme aunque la presencia del atributo marca la casilla.",
+      "El nombre del atributo es un valor explícito conforme."
+    ],
+    "temario": {
+      "pdf": "T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - HTML.pdf",
+      "sha256": "3481a610ced055ed9c38c313cd78ba950d6219498a7dbf38511046146c7ba5ba",
+      "page": 8,
+      "quote": "<input type=\"checkbox\" checked=\"checked\">"
+    },
+    "normativeSource": "https://html.spec.whatwg.org/multipage/common-microsyntaxes.html#boolean-attributes",
+    "after": {
+      "q": "¿Cuál es una forma explícita y conforme con la sintaxis HTML de escribir el atributo booleano checked en una casilla marcada?",
+      "a": [
+        "checked=\"unchecked\".",
+        "checked=\"false\".",
+        "checked=\"0\".",
+        "checked=\"checked\"."
+      ],
+      "c": 3,
+      "n": "Un atributo booleano presente se considera verdadero. Si se le asigna un valor explícito, HTML admite la cadena vacía o el propio nombre del atributo. Los valores false y 0 también dejan la casilla marcada en un navegador, pero su escritura incumple la sintaxis.",
+      "u": "<input type=\"checkbox\" checked=\"checked\"> [p. 8]"
+    }
+  },
+  {
+    "id": "GEN-T3.08-351.v1",
+    "beforeSha256": "0ea3b336b4d583fe0173917203994b37e13cada827eea451ae9d7d013352ab7e",
+    "afterSha256": "e29dce41996d8d7d181f9590cd0947c60a2e225bceaa786a65ae294cf76266ae",
+    "before": {
+      "q": "El atributo for de <output> especifica:",
+      "a": [
+        "La URL de envío.",
+        "El cálculo a realizar a partir de los elementos usados.",
+        "El id de un formulario.",
+        "El nombre del campo."
+      ],
+      "c": 1,
+      "n": null,
+      "u": "<output> Representa el resultado de un cálculo. - for: especifica el cálculo a realizar a partir de los elementos usados."
+    },
+    "reviewedOptions": [
+      "La URL de envío se indica con action en el formulario.",
+      "a y b son identificadores de elementos que aportan datos.",
+      "La asociación a un formulario se establece mediante form.",
+      "El nombre del resultado se establece con name."
+    ],
+    "temario": {
+      "pdf": "T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - HTML.pdf",
+      "sha256": "3481a610ced055ed9c38c313cd78ba950d6219498a7dbf38511046146c7ba5ba",
+      "page": 61,
+      "quote": "=<output name=\"x\" for=\"a b\"></output>"
+    },
+    "normativeSource": "https://html.spec.whatwg.org/multipage/form-elements.html#attr-output-for",
+    "after": {
+      "q": "En <output name=\"x\" for=\"a b\"></output>, ¿qué representa el valor de for?",
+      "a": [
+        "La URL del servidor que recibe el resultado.",
+        "Los identificadores de los controles que contribuyen al resultado.",
+        "El identificador del formulario al que pertenece el resultado.",
+        "El nombre con el que se identifica el resultado en el formulario."
+      ],
+      "c": 1,
+      "n": "for enumera los identificadores de los elementos que intervienen en el cálculo. La operación se programa por separado. En el ejemplo del temario, el atributo oninput contiene la suma y for identifica a y b.",
+      "u": "=<output name=\"x\" for=\"a b\"></output> [p. 61]"
+    }
+  },
+  {
+    "id": "GEN-T3.08-416.v2",
+    "beforeSha256": "1540d31441c9e730b87c3dece6228a4d60bc1bf6c2d33afb083ba7b29ba3eab5",
+    "afterSha256": "1414ee0af867c2c87e69b25cc25b66a084ef1650523299e9d2c1ea565b2e374c",
+    "before": {
+      "q": "En XHTML, el salto de línea se escribe:",
+      "a": [
+        "<br />.",
+        "<br>.",
+        "<br></br>.",
+        "<break>."
+      ],
+      "c": 0,
+      "n": null,
+      "u": "<span> Contenedor en línea. No comienza en una nueva línea y solo ocupa el ancho necesario. … <br> Salto de línea. Sin etiqueta de cierre. En XHTML <br />."
+    },
+    "reviewedOptions": [
+      "br es el nombre correcto y usa la notación vacía.",
+      "Es una etiqueta de apertura.",
+      "Contiene una etiqueta inicial y otra final.",
+      "break no es el elemento XHTML de salto de línea."
+    ],
+    "temario": {
+      "pdf": "T3.08 Aplicaciones Web/T3.08 Aplicaciones Web - Temario - HTML.pdf",
+      "sha256": "3481a610ced055ed9c38c313cd78ba950d6219498a7dbf38511046146c7ba5ba",
+      "page": 34,
+      "quote": "Sin etiqueta de cierre. En XHTML <br />."
+    },
+    "normativeSource": "https://www.w3.org/TR/xml/#sec-starttags",
+    "after": {
+      "q": "En un documento XHTML, ¿qué escritura usa la sintaxis XML de etiqueta vacía para un salto de línea?",
+      "a": [
+        "<br />",
+        "<br>",
+        "<br></br>",
+        "<break />"
+      ],
+      "c": 0,
+      "n": "La notación XML de etiqueta vacía acaba en />. El par <br></br> también puede representar un elemento sin contenido en XML, pero usa dos etiquetas. El elemento HTML que produce el salto de línea se llama br.",
+      "u": "Sin etiqueta de cierre. En XHTML <br />. [p. 34]"
+    }
+  }
+]
