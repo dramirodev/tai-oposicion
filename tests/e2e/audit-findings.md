@@ -578,3 +578,18 @@ Supertest12/12 sobre demo-tai-auth, propietario sintético: Oficial2025(11), Por
 - **Solución/archivos:** tests/e2e/synthetic-auth.ts recorre nextPageToken con máximo100 páginas y detección de repetición; selecciona identidad ya visible en el popup y solo crea si falta. No Admin, no SDK productivo ni permisos modificados.
 - **Estado:** CORREGIDO Y VERIFICADO.
 - **Pruebas/resultado:** Supertest49763:13/13,1,7min, código0 desde emuladores nuevos. Incluye segunda autenticación y posterior limpieza/preparación de los otros perfiles. Evidencia compartida con ATE-015 en evidence/history-sync-2026-11-06.
+
+
+### ATE-017 — Carrera al leer la identidad tras cambiar de cuenta
+
+- **Categoría/prioridad:** Fiabilidad E2E / P1.
+- **Evidencia:** CI42196589639 falla auth-emulator.spec.ts:122 al conceder acceso al segundo usuario; el helper leía la primera identidad persistida inmediatamente después de cerrar popup, sin comprobar email.
+- **Causa probable:** IndexedDB aún conserva la identidad anterior; se prepara access para UID incorrecto.
+- **Corrección:** Esperar identidad persistida cuyo email coincida con el solicitado antes de preparar access; mantener aserciones UI y plazo15s.
+- **Archivos:** tests/e2e/auth-emulator.spec.ts.
+- **Estado:** CORREGIDO SIN VERIFICAR.
+- **Pruebas/resultado:** Auth local6/6 (dos recorridos ×tres repeticiones),42,5s. Typecheck y YAML correctos. Pendiente CI nueva para cierre remoto. No se modifica producto ni reglas.
+
+### ATE-005 — Importación sin conexión y recuperación longitudinal
+
+6/11: Supertest14/14(2,1min), variante online/offline de300 sesiones. Dos importaciones con red cortada conservan los DTO; reconectar guarda300 documentos, y otro contexto autenticado recupera exactamente el mismo historial y delta+20. Evidencia en evidence/history-sync-2026-11-06. ATE-015/016 permanecen cerrados; ATE-005 global sigue EN CORRECCIÓN por cobertura residual.

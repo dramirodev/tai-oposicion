@@ -61,7 +61,16 @@ jobs:
           retention-days: 14
 
       - name: Recarga, permisos y cambio de cuenta con Auth real en emuladores
+        id: auth
         run: npx --yes firebase-tools@13.35.1 emulators:exec --only auth,firestore --project demo-tai-auth "TAI_AUTH_EMULATOR=1 npx playwright test --config=playwright.astra-auth.config.ts"
+      - name: Conservar evidencias del cambio de cuenta
+        if: always() && steps.auth.outcome != 'skipped' && steps.auth.outcome != ''
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: tai-auth-${{ github.run_id }}
+          path: test-results/astra-auth/
+          if-no-files-found: warn
+          retention-days: 14
       - name: Reconstruir referencia visual y verificar Chromium y WebKit
         id: regression
         run: npm run test:e2e:ci

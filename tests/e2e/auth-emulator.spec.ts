@@ -33,30 +33,37 @@ test('Firebase Auth Emulator aísla el estudio al cambiar de cuenta y de día en
     await page.getByRole('button', { name:'Entrar con Google' }).click();
     const popup = await popupPromise;
     await popup.waitForLoadState();
-    await popup.getByRole('button', { name:'Add new account' }).click();
-    await popup.getByLabel('Email').fill(email);
     const closed = popup.waitForEvent('close');
-    await popup.getByRole('button', { name:'Sign in with Google.com' }).click();
+    const existing = popup.getByText(email, { exact:true });
+    if (await existing.count()) await existing.click();
+    else {
+      await popup.getByRole('button', { name:'Add new account' }).click();
+      await popup.getByLabel('Email').fill(email);
+      await popup.getByRole('button', { name:'Sign in with Google.com' }).click();
+    }
     await closed;
-    const uid = await page.evaluate(async () => {
-      const database = await new Promise<IDBDatabase>((resolve, reject) => {
-        const request = indexedDB.open('firebaseLocalStorageDb');
-        request.onsuccess = () => resolve(request.result);
-        request.onerror = () => reject(request.error);
-      });
-      try {
-        const storeName = Array.from(database.objectStoreNames).find(name => name === 'firebaseLocalStorage');
-        if (!storeName) throw new Error('Firebase Auth IndexedDB store not found');
-        const entries = await new Promise<Array<{ value?: { uid?: string; user?: { uid?: string } } }>>((resolve, reject) => {
-          const request = database.transaction(storeName, 'readonly').objectStore(storeName).getAll();
+    let uid = '';
+    await expect.poll(async () => {
+      uid = await page.evaluate(async expectedEmail => {
+        const database = await new Promise<IDBDatabase>((resolve, reject) => {
+          const request = indexedDB.open('firebaseLocalStorageDb');
           request.onsuccess = () => resolve(request.result);
           request.onerror = () => reject(request.error);
         });
-        const user = entries.map(entry => entry.value?.user ?? entry.value).find(value => typeof value?.uid === 'string');
-        if (!user?.uid) throw new Error('Synthetic Firebase Auth user was not found in IndexedDB');
-        return user.uid;
-      } finally { database.close(); }
-    });
+        try {
+          const storeName = Array.from(database.objectStoreNames).find(name => name === 'firebaseLocalStorage');
+          if (!storeName) throw new Error('Firebase Auth IndexedDB store not found');
+          const entries = await new Promise<Array<{ value?: { uid?: string; email?: string; user?: { uid?: string; email?: string } } }>>((resolve, reject) => {
+            const request = database.transaction(storeName, 'readonly').objectStore(storeName).getAll();
+            request.onsuccess = () => resolve(request.result);
+            request.onerror = () => reject(request.error);
+          });
+          const user = entries.map(entry => entry.value?.user ?? entry.value).find(value => typeof value?.uid === 'string' && value.email === expectedEmail);
+          return user?.uid || '';
+        } finally { database.close(); }
+      }, email);
+      return uid;
+    }, { timeout:15_000 }).not.toBe('');
     await emulator.withSecurityRulesDisabled(async context => {
       await setDoc(doc(context.firestore(), 'access', uid), { ok:true, email, name:'TAI E2E ficticio' });
     });

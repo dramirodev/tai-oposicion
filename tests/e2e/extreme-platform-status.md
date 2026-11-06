@@ -223,3 +223,9 @@ Check integrado:1046 aprobadas/29 omitidas,196 archivos/3 omitidos; arquitectura
 ### ATE-005: historial extenso reproducible
 
 Nuevos fixtures locales versionados0/2/300 sesiones y recorrido Progreso con comparación y persistencia exacta tras recarga.6/6 Chromium/WebKit a320px; typecheck correcto. Se mantienen reglas de retención300 y lista reciente15, sin alterarlas para el test. Evidencia en study-profiles-2026-11-06. Perfil autenticado longitudinal pendiente; esta cobertura es local. Global session58416 aún en curso; CI42190272937 para2e85f9e activo. No publicar otro push hasta registrar el resultado remoto para evitar su cancelación.
+
+## Cierre de PR110 autorizado — 6/11
+
+El usuario autoriza completar e integrar PR110 y continuar la auditoría restante. Headpublicadoebef00a falla CI42196589639 en Auth al segundo login (permiso esperado no visible); ATE-017 registra la carrera del helper que leía una identidad persistida sin comprobar email. Corrección espera el email solicitado y reutiliza proveedor existente; no cambia reglas ni timeout. Se añade artefacto específico Auth incluso si falla antes de la regresión global. Variante300 offline/online en verificación; después repetir Auth, publicar headfinal y exigir CI verde antes de integrar. La integración activa el despliegue automático existente de main; comprobar su resultado sin ejecutar escrituras de prueba en producción.
+
+Verificación previa a publicar: Supertest14/14(2,1min), Auth6/6(42,5s; tres repeticiones), typecheck/diff-check/YAML correctos. Sin cambios de producto desdecheck1049/29 omitidas. Publicar revisión y esperar CI del SHAfinal antes de integrar.

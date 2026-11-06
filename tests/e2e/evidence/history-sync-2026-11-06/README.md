@@ -30,3 +30,9 @@ La tercera ejecución89922 supera el nuevo recorrido completo (captura restaurad
 ## Resultado final verificado
 
 Supertest49763: **13/13**,1,7min, código0. La nueva prueba pasa en12,5s; los otros12 recorridos/perfiles pasan tras reutilizar el proveedor. Historial remoto300, recuperación exacta de los300 DTO en contexto limpio, comparación+20 y ausencia de duplicados. Captura `authenticated-history-restored.png` inspeccionada a320px. Sync26/26, check1049/29 omitidas y typecheck final pasan. ATE-015/016 cerrados con esta evidencia; cobertura global ATE-005 sigue abierta.
+
+## Variante sin red
+
+Se parametriza el mismo recorrido con conexión inicial y con desconexión durante ambas importaciones. Antes de reconectar se comprueba igualdad exacta local; después, colección remota completa y recuperación en otro contexto. El escenario offline pasa en10,8s; online en11,0s (ejecución73937). Capturas separadas con sufijos offline/online. El resultado integral de la suite se registra en el handoff al finalizar.
+
+Resultado integral de73937: **14/14**,2,1min, código0; emuladores detenidos correctamente. La variante offline no cambia producción ni usa Gemini. Typecheck y diff-check pasan.
