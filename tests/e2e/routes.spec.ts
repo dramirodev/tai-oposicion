@@ -209,6 +209,9 @@ test('el tema recomendado muestra su material de academia en móvil y escritorio
   await activeSection.getByRole('button', { name:'Terminar comprobación y volver a la sesión' }).waitFor({ state:'visible' });
   await page.goto('/#/planificacion');
   await page.getByRole('button', { name:'Pausar tiempo' }).click();
+  // Pausing refreshes loadOverview (including cards/index.json). Wait for its
+  // persisted paused state to be rendered before destroying this document.
+  await expect(page.getByRole('button', { name:'Pausar tiempo' })).toHaveCount(0);
   await page.reload();
   await expect(page.getByRole('button', { name:/Continuar actividad/ })).toBeVisible();
   await page.getByRole('button', { name:/Continuar actividad/ }).click();
