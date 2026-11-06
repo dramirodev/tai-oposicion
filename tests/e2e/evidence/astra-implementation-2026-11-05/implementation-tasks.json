@@ -70406,9 +70406,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave B («Perfect Forward Secrecy.»). PFS aísla sesiones anteriores frente a la pérdida posterior de secretos de larga duración. IPComp comprime antes del cifrado. Con la clave de tráfico de la SA comprometida sí puede descifrarse ese tráfico. La clave marcada no cumple la garantía enunciada.",
     "location": "public/data/T4.09.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Corregir la premisa conforme al pasaje del temario corroborado por fuentes IEEE/RFC, registrando la discrepancia y conservando clave/opciones/IDs/flags.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI e integración del futuro PR de redes",
+      "Autorización específica de dos registros y plan CAS contra copia real posterior al lote ocho"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -70417,13 +70418,29 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T4.09-70",
       "topic": "T4.09",
       "origin": "G",
       "family": "GEN-T4.09-70",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-network2.json",
+      "beforeSha256": "e1fb4dd1f742d572b627889daeb1c3ba70458ec979778945bdc18bb89d487c80",
+      "afterSha256": "c6abf0083405e66a3d3a13c718e98e1e90ecdeb6249ba98372cd9bb82891f9dc",
+      "source": {
+        "pdf": "01_Temario/T4.09 Seguridad en Redes/T4.09 Seguridad en Redes - Temario.pdf",
+        "page": 49,
+        "quote": "La opción de Perfect Forward Secrecy",
+        "sha256": "38ebb19d13455c4a1570159b22f6b3a550d7920fd21bbb519f76c7b1d9fb52c1",
+        "visualCheck": true
+      },
+      "publication": "NOT_AUTHORIZED_NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY",
+      "validation": "72PythonPASS1Linuxskip,1087unit29skip,architecture/lint/types/build1.1.22/cards/render2ChromiumWebKit3931280PASS",
+      "newPeerModelSignature": false
     }
   },
   {
@@ -71850,9 +71867,10 @@
     "classification": "Incorrecta",
     "originalJudgment": "Clave A («IEEE 802.3cd.»). 802.3bq especifica cobre balanceado Cat 8 a 30 m para 25/40G. 800 Gbit/s no alcanza por sí mismo 1 Tbit/s. IEEE 802.3cd no define el PHY 50GBASE-T de par trenzado presentado; confunde variantes de 50G sobre otros medios.",
     "location": "public/data/T4.10.json",
-    "solution": "Revisión de la edición y de cada opción; adjudicación y prueba de elegibilidad por modalidad.",
+    "solution": "Corregir la premisa conforme al pasaje del temario corroborado por fuentes IEEE/RFC, registrando la discrepancia y conservando clave/opciones/IDs/flags.",
     "dependencies": [
-      "Confirmar fuente de la edición y cuatro alternativas antes de aplicar cambio"
+      "CI e integración del futuro PR de redes",
+      "Autorización específica de dos registros y plan CAS contra copia real posterior al lote ocho"
     ],
     "risk": "Alterar claves históricas o publicar una interpretación sin respaldo",
     "acceptance": "ID conservado, revisión de cada opción, huella anterior y nueva, transformación reproducible y rollback",
@@ -71861,13 +71879,29 @@
       "Integridad del catálogo",
       "Compatibilidad de muestras y sesiones"
     ],
-    "status": "PENDIENTE",
+    "status": "CORREGIDO_LOCAL_PENDIENTE_CI_AUTORIZACION_PUBLICACION",
     "dataAffected": {
       "id": "GEN-T4.10-32.v2",
       "topic": "T4.10",
       "origin": "G",
       "family": "GEN-T4.10-32",
       "scenario": null
+    },
+    "implementation": {
+      "ledger": "scripts/bank-editorial/reviewed-network2.json",
+      "beforeSha256": "d08db63028d0a47cad271ca06f198bcd158d850bf9b851de4cdb72550f6d3923",
+      "afterSha256": "59ca9cab128151bbf9f252ceb512323b3dedf0127c83d5be7e801a9d16e7797e",
+      "source": {
+        "pdf": "01_Temario/T4.10 Redes Locales/T4.10 Redes Locales - Temario.pdf",
+        "page": 17,
+        "quote": "50GBase-SR 802.3cd 50 Gbps Fibra multimodo",
+        "sha256": "7a360f7f2f0279b47691155a5cdda67a5394114a70718a162878ac4414c8a710",
+        "visualCheck": true
+      },
+      "publication": "NOT_AUTHORIZED_NOT_PUBLISHED",
+      "scoring": "EXACT_APPROVED_CONTENT_ONLY",
+      "validation": "72PythonPASS1Linuxskip,1087unit29skip,architecture/lint/types/build1.1.22/cards/render2ChromiumWebKit3931280PASS",
+      "newPeerModelSignature": false
     }
   },
   {
